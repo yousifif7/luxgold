@@ -330,11 +330,6 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        <i class="ti ti-chart-bar-popular"></i><span>Analytics</span>
-                                    </a>
-                                </li>
-                                <li>
                                     <a href="{{ route('provider-profile') }}">
                                         <i class="ti ti-user"></i><span>Profile & Settings</span>
                                     </a>
