@@ -9,22 +9,30 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowedProviderController extends Controller
 {
-    public function store(Provider $provider)
-    {
-        $existingFollow = FollowedProvider::where('user_id', Auth::id())
-            ->where('provider_id', $provider->id)
-            ->first();
-
-        if ($existingFollow) {
-            $existingFollow->delete();
-            return response()->json(['followed' => false, 'message' => 'Provider unfollowed']);
-        }
-
-        FollowedProvider::create([
-            'user_id' => Auth::id(),
-            'provider_id' => $provider->id
-        ]);
-
-        return response()->json(['followed' => true, 'message' => 'Provider followed successfully']);
+ public function store(Provider $provider)
+{
+    if (!Auth::check()) {
+        return response()->json([
+            'followed' => false,
+            'message' => 'Kindly login first'
+        ], 401);
     }
+
+    $existingFollow = FollowedProvider::where('user_id', Auth::id())
+        ->where('provider_id', $provider->id)
+        ->first();
+
+    if ($existingFollow) {
+        $existingFollow->delete();
+        return response()->json(['followed' => false, 'message' => 'Provider unfollowed']);
+    }
+
+    FollowedProvider::create([
+        'user_id' => Auth::id(),
+        'provider_id' => $provider->id
+    ]);
+
+    return response()->json(['followed' => true, 'message' => 'Provider followed successfully']);
+}
+
 }

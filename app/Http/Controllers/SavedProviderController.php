@@ -9,25 +9,38 @@ use Illuminate\Support\Facades\Auth;
 
 class SavedProviderController extends Controller
 {
-    public function store(Provider $provider)
-    {
-        $existingSave = SavedProvider::where('user_id', Auth::id())
-            ->where('provider_id', $provider->id)
-            ->first();
-
-        if ($existingSave) {
-            $existingSave->delete();
-            return response()->json(['saved' => false, 'message' => 'Provider removed from saved list']);
-        }
-
-        SavedProvider::create([
-            'user_id' => Auth::id(),
-            'provider_id' => $provider->id
-        ]);
-
-        return response()->json(['saved' => true, 'message' => 'Provider saved successfully']);
+ public function store(Provider $provider)
+{
+    // Check if user is logged in
+    if (!Auth::check()) {
+        return response()->json([
+            'saved' => false,
+            'message' => 'Kindly login first'
+        ], 401);
     }
 
+    $existingSave = SavedProvider::where('user_id', Auth::id())
+        ->where('provider_id', $provider->id)
+        ->first();
+
+    if ($existingSave) {
+        $existingSave->delete();
+        return response()->json([
+            'saved' => false,
+            'message' => 'Provider removed from saved list'
+        ]);
+    }
+
+    SavedProvider::create([
+        'user_id' => Auth::id(),
+        'provider_id' => $provider->id
+    ]);
+
+    return response()->json([
+        'saved' => true,
+        'message' => 'Provider saved successfully'
+    ]);
+}
     public function index()
     {
         $savedProviders = Auth::user()->savedProviders()->with('provider')->get();
