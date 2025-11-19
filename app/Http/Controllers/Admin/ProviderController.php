@@ -242,9 +242,6 @@ class ProviderController extends Controller
     {
         DB::transaction(function () use ($provider) {
             // Delete related records first
-            $provider->inquiries()->delete();
-            $provider->reviews()->delete();
-            $provider->subscription()->delete();
             
             // Delete provider and user
             $user = $provider->user;
