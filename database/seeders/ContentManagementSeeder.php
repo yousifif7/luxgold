@@ -20,7 +20,6 @@ class ContentManagementSeeder extends Seeder
     {
         // Clear existing data
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        Category::truncate();
         City::truncate();
         HeroContent::truncate();
         Testimonial::truncate();
