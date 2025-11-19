@@ -1525,7 +1525,7 @@ function saveProvider(providerId, button) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showToast(error.message, 'error');
+        showToast('Kindly Login First', 'error');
     });
 }
 
@@ -1552,7 +1552,7 @@ function followProvider(providerId, button) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showToast(error.message, 'error');
+        showToast('Kindly Login First', 'error');
     });
 }
 
