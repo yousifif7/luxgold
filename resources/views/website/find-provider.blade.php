@@ -164,7 +164,8 @@
 @endphp
 
 <div class="program-card provider-card position-relative" data-id="p{{ $provider->id }}">
-    @if(!empty($provider->logo_path))
+
+    @if(!empty($provider->logo_path) && file_exists(public_path($provider->logo_path)) )
         <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->business_name }}">
     
     @endif
