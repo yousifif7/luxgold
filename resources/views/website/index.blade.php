@@ -87,7 +87,6 @@
     </div>
 </section>
 
-@if(count($providers)>0)
 <section class="second-section ">
     <div class="container">
         
@@ -219,8 +218,7 @@
         </div>
 
 </section>
-@endif
-@if(count($latestEvents)>0)
+
 <section class="sixth-section">
     <div class="container">
         <h3>Latest Events</h3>
@@ -316,7 +314,6 @@
         </div>
     </div>
 </section>
-@endif
 <!-- Categories Section (Keeping Static as requested) -->
 <section class="third-section">
     <div class="container">
