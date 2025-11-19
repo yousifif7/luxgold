@@ -39,7 +39,7 @@
 
     <div class="header-actions">
         <div class="pill" onclick="downloadProviderInfo()">
-            <i class="ti ti-download me-2"></i>Download 
+            <i class="ti ti-download me-2"></i>Download
         </div>
         <div class="pill" onclick="printProviderInfo()">
             <i class="ti ti-printer me-2"></i>Print
@@ -68,14 +68,11 @@
                 
                 @php
                     $facilityPhotos = json_decode($provider->facility_photos_paths ?? '[]', true);
-                    $mainImage = !empty($facilityPhotos) ? ($facilityPhotos[0]) : ($provider->logo_path);
+                    $mainImage = !empty($facilityPhotos) ? asset($facilityPhotos[0]) : asset('images/default-provider.jpg');
                 @endphp
-                @if($mainImage && file_exists(public_path($mainImage)))
-    <img src="{{ asset($mainImage) }}"
-         class="school-profile-main-image-large"
-         id="mainImage"
-         alt="{{ $provider->business_name ?? 'Provider' }} Main Image">
-@endif
+                <img src="{{ $mainImage }}"
+                    class="school-profile-main-image-large" id="mainImage" alt="{{ $provider->business_name ?? 'Provider' }} Main Image">
+                
                 @if(!empty($facilityPhotos) && count($facilityPhotos) > 1)
                 <div class="school-profile-thumbnail-gallery-row">
                     @foreach($facilityPhotos as $photo)
@@ -206,9 +203,7 @@
                                         </div>
                                         @endif
                                         
-                                        <a href="{{ route('event.detail', $event->id) }}" class="btn btn-sm btn-outline-primary">
-                                            View Details
-                                        </a>
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -623,7 +618,7 @@
                 <!-- Reviews List -->
                 @foreach($reviews as $review)
                     <div class="long-keyword-review-box">
-                        <h6><i class="bi bi-person-circle me-1"></i> {{ $review->user->name ?? 'Anonymous' }} <small class="text-muted">• {{ $review->created_at->diffForHumans() }}</small></h6>
+                        <h6><i class="bi bi-person-circle me-1"></i> {{ $review->user->first_name ?? 'Anonymous' }} <small class="text-muted">• {{ $review->created_at->diffForHumans() }}</small></h6>
                         <div class="text-warning">
                             @for($i = 1; $i <= 5; $i++)
                                 <i class="bi bi-star{{ $i <= $review->rating ? '-fill' : '' }}"></i>
@@ -730,7 +725,7 @@
                             </p>
                             @endif
                             <div class="event-actions">
-                                <a href="{{ route('event.detail', $event->id) }}" class="btn btn-sm btn-primary">View Details</a>
+                                <a href="#" class="btn btn-sm btn-primary">View Details</a>
                             </div>
                         </div>
                     </div>

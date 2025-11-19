@@ -18,13 +18,13 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-
+EventSeeder::class,/*
             RoleSeeder::class,
             UserSeeder::class,
             PlansTableSeeder::class,
             CategoriesTableSeeder::class,
             ContentManagementSeeder::class,
-            ProviderSeeder::class,
+            ProviderSeeder::class,*/
         ]);
     }
 }

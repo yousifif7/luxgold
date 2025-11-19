@@ -25,9 +25,9 @@ class EventSeeder extends Seeder
             'current_capacity'  => 0,
             'age_group'         => null,
             'published_at'      => now(),
-            'image_url'         => null,
+            'image_url'         => 'events/1.png',
             'author'            => 'System',
-            'provider_id'       => 1,
+            'provider_id'       => 16,
         ]);
     }
 }
