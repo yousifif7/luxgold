@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
             CategoriesTableSeeder::class,
             ContentManagementSeeder::class,
             ProviderSeeder::class,
-            EventSeeder::class,
         ]);
     }
 }
