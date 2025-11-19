@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Auth;
-use App\Models\Provider;
-use App\Models\HeroContent;
 use App\Models\City;
-use App\Models\Resource;
-use App\Models\Testimonial;
 use App\Models\Category;
+use App\Models\Provider;
+use App\Models\Resource;
+use App\Models\HeroContent;
+use App\Models\Testimonial;
+use Illuminate\Http\Request;
 use App\Models\RecentlyViewed;
+use App\Models\Promotion;
 use App\Models\Event;
 use Session;
 
@@ -21,7 +22,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-   
+
 
     /**
      * Show the application dashboard.
@@ -59,72 +60,77 @@ class HomeController extends Controller
 
         return view('website.compare-page',compact('providers'));
     }
-public function findProvider(Request $request)
-{
-    $query = Provider::query();
-    
-    // Search by business name or description
-    if ($request->has('search') && $request->search) {
-        $searchTerm = $request->search;
-        $query->where(function($q) use ($searchTerm) {
-            $q->where('business_name', 'like', "%{$searchTerm}%")
-              ->orWhere('service_description', 'like', "%{$searchTerm}%")
-              ->orWhere('contact_person', 'like', "%{$searchTerm}%");
-        });
-    }
-    
-    // Filter by location
-    if ($request->has('location') && $request->location) {
-        $location = $request->location;
-        $query->where(function($q) use ($location) {
-            $q->where('physical_address', 'like', "%{$location}%")
-              ->orWhere('city', 'like', "%{$location}%")
-              ->orWhere('zip_code', 'like', "%{$location}%");
-        });
-    }
-    
-    // Filter by category
-    if ($request->has('category') && $request->category != 'all') {
-        $query->where('category', $request->category);
-    }
-    
-    // Filter by price range
-    if ($request->has('price_min') && $request->price_min) {
-        $query->where('price_amount', '>=', $request->price_min);
-    }
-    if ($request->has('price_max') && $request->price_max) {
-        $query->where('price_amount', '<=', $request->price_max);
-    }
-    
-    // Filter by rating
-    if ($request->has('rating') && $request->rating) {
-        $query->where('rating', '>=', $request->rating);
-    }
-    
-    // Get results
-    $providers = $query->get();
-    
-    return view('website.find-provider', compact('providers'));
-}
-    public function providerDetail($id){
+    public function findProvider(Request $request)
+    {
+        $query = Provider::query();
 
+        // Search by business name or description
+        if ($request->has('search') && $request->search) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('business_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('service_description', 'like', "%{$searchTerm}%")
+                    ->orWhere('contact_person', 'like', "%{$searchTerm}%");
+            });
+        }
 
-     if (Auth::user()) {
-RecentlyViewed::updateOrCreate(
-    [
-        'user_id' => Auth::id(),
-        'provider_id' => $id,
-    ],
-    [] // optional: fields to update if record exists
-);
-     }
+        // Filter by location
+        if ($request->has('location') && $request->location) {
+            $location = $request->location;
+            $query->where(function ($q) use ($location) {
+                $q->where('physical_address', 'like', "%{$location}%")
+                    ->orWhere('city', 'like', "%{$location}%")
+                    ->orWhere('zip_code', 'like', "%{$location}%");
+            });
+        }
 
+        // Filter by category
+        if ($request->has('category') && $request->category != 'all') {
+            $query->where('category', $request->category);
+        }
 
- $provider=Provider::where('id',$id)->first();
-        return view('website.provider-detail',compact('provider'));
+        // Filter by price range
+        if ($request->has('price_min') && $request->price_min) {
+            $query->where('price_amount', '>=', $request->price_min);
+        }
+        if ($request->has('price_max') && $request->price_max) {
+            $query->where('price_amount', '<=', $request->price_max);
+        }
+
+        // Filter by rating
+        if ($request->has('rating') && $request->rating) {
+            $query->where('rating', '>=', $request->rating);
+        }
+
+        // Get results
+        $providers = $query->get();
+
+        return view('website.find-provider', compact('providers'));
+    }
+    public function providerDetail($id)
+    {
+
+        $provider = Provider::where('id', $id)->first();
+
+        if (Auth::user()) {
+
+        $recent_view = RecentlyViewed::updateOrCreate(
+            [
+                'user_id' => auth()->id(),
+                'provider_id' => $provider->id,
+            ],
+            [
+                'viewed_at' => now(),
+            ]
+        );
+        
+            // code...
+        }
+
+        return view('website.provider-detail', compact('provider'));
     }
 
-     public function logout(Request $request)
+    public function logout(Request $request)
     {
         Auth::logout();
 

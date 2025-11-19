@@ -10,40 +10,62 @@ class Provider extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','category','email','phone','location','membership','status','revenue','rating','avatar','user_id','profile_views','website','description','contact_person','business_type','license_number','age_range','capacity','hours','notify_inquiry',
-        'business_name',
-        'contact_person',
-        'role_title',
-        'phone_number',
-        'email',
-        'physical_address',
-        'city',
-        'state',
-        'zip_code',
-        'service_categories',
-        'service_description',
-        'price_amount',
-        'pricing_description',
-        'available_days',
-        'start_time',
-        'end_time',
-        'plans_id',
-        'availability_notes',
-        'license_number',
-        'years_operation',
-        'insurance_coverage',
-        'diversity_badges',
-        'special_features',
-        'website',
-        'facebook',
-        'instagram',
-        'logo_path',
-        'facility_photos_paths',
-        'license_docs_paths',
-        'status',
-        'user_id',
-        'is_featured'
-    ];
+    'name',
+    'category',
+    'email',
+    'phone',
+    'location',
+    'membership',
+    'status',
+    'revenue',
+    'rating',
+    'avatar',
+    'user_id',
+    'profile_views',
+    'website',
+    'description',
+    'contact_person',
+    'business_type',
+    'license_number',
+    'age_range',
+    'capacity',
+    'hours',
+    'notify_inquiry',
+    'business_name',
+    'role_title',
+    'phone_number',
+    'physical_address',
+    'city',
+    'state',
+    'zip_code',
+    'service_categories',
+    'service_description',
+    'price_amount',
+    'pricing_description',
+    'available_days',
+    'start_time',
+    'end_time',
+    'plans_id',
+    'availability_notes',
+    'years_operation',
+    'insurance_coverage',
+    'diversity_badges',
+    'special_features',
+    'facebook',
+    'instagram',
+    'logo_path',
+    'facility_photos_paths',
+    'license_docs_paths',
+    'is_featured',
+    // Newly added columns
+    'ages_served',
+    'operating_hours',
+    'care_type',
+    'programs_offered',
+    'views',
+    'clicks',
+    'inquiries'
+];
 
     /**
      * The provider belongs to a user record (role = 'provider').
@@ -59,11 +81,20 @@ class Provider extends Model
     }*/
 
     protected $casts = [
-        'revenue' => 'decimal:2',
-        'rating' => 'float',
-        'profile_views' => 'integer',
-        'notify_inquiry' => 'boolean',
-    ];
+    'revenue' => 'decimal:2',
+    'rating' => 'float',
+    'profile_views' => 'integer',
+    'views' => 'integer',
+    'clicks' => 'integer',
+    'inquiries' => 'integer',
+    'notify_inquiry' => 'boolean',
+    'service_categories' => 'array',
+    'available_days' => 'array',
+    'diversity_badges' => 'array',
+    'special_features' => 'array',
+    'facility_photos_paths' => 'array',
+    'license_docs_paths' => 'array',
+];
 
 
     public function reviews()
@@ -82,7 +113,7 @@ class Provider extends Model
     }
 
     public function events(){
-return $this->hasMany(Event::class,'provider_id','user_id');
+return $this->hasMany(Event::class);
 
     }
 

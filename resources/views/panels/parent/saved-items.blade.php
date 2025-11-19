@@ -1,7 +1,8 @@
 @extends('layouts.parent-layout')
 
 @section('parent-title', 'Saved Items - Parent Portal')
-@section('parent-content')
+@section('content')
+
 <div class="page-wrapper">
 
     <!-- Start Content -->

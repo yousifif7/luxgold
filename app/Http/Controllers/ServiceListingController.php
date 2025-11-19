@@ -20,6 +20,95 @@ class ServiceListingController extends Controller
          return view('service_listing.edit', compact('serviceListing'));
     }
 
+    public function create()
+    {
+        return view('service_listing.create');
+    }
+
+    /**
+     * Store a new service listing
+     */
+    public function store(Request $request)
+    {
+        try {
+            \DB::beginTransaction();
+
+            // Handle file uploads
+            $logoPath = $this->handleLogoUpload($request);
+            $facilityPhotosPaths = $this->handleFacilityPhotosUpload($request);
+            $licenseDocsPaths = $this->handleLicenseDocsUpload($request);
+
+            // Create service listing
+            $serviceListing = ServiceListing::create([
+                'business_name' => $request->business_name,
+                'contact_person' => $request->contact_person,
+                'role_title' => $request->role_title,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'physical_address' => $request->physical_address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'zip_code' => $request->zip_code,
+                
+                'service_categories' => $request->service_categories,
+                'service_description' => $request->service_description,
+                
+                'pricing_type' => $request->pricing_type,
+                'price_amount' => $request->price_amount,
+                'pricing_description' => $request->pricing_description,
+                'available_days' => $request->available_days,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'availability_notes' => $request->availability_notes,
+                
+                'license_number' => $request->license_number,
+                'years_operation' => $request->years_operation,
+                'insurance_coverage' => $request->insurance_coverage,
+                'diversity_badges' => $request->diversity_badges,
+                'special_features' => $request->special_features,
+                'website' => $request->website,
+                'facebook' => $request->facebook,
+                'instagram' => $request->instagram,
+                
+                'logo_path' => $logoPath,
+                'facility_photos_paths' => $facilityPhotosPaths,
+                'license_docs_paths' => $licenseDocsPaths,
+                
+                'status' => 'pending',
+                'user_id' => auth()->id(),
+            ]);
+
+            \DB::commit();
+
+            return redirect()->route('provider.listings.index')
+                ->with('success', 'Service listing submitted successfully! It will be reviewed before going live.');
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            
+            \Log::error('Service listing creation failed: ' . $e->getMessage());
+            
+            return back()->with('error', 'Failed to create service listing. Please try again.')
+                ->withInput();
+        }
+    }
+
+    /**
+     * Show the form for editing the service listing
+     */
+    public function edit($id)
+    {
+        // Authorization check - ensure user can only edit their own listings
+        /*if ($serviceListing->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }*/
+        $serviceListing=ServiceListing::where('id',$id)->first();
+        return view('service_listing.edit', compact('serviceListing'));
+    }
+
+    /**
+     * Update the service listing
+     */
     public function update(Request $request, $id)
     {
         // Authorization check
@@ -83,15 +172,16 @@ class ServiceListingController extends Controller
 
             \DB::commit();
 
-                    return handleResponse($request, 'Provider profile has been updated successfully!', 'provider/listing/profile');
+            return redirect()->route('provider.listings.profile')
+                ->with('success', 'Service listing updated successfully!');
 
         } catch (\Exception $e) {
             \DB::rollBack();
             
             \Log::error('Service listing update failed: ' . $e->getMessage());
             
-                 return handleResponse($request,  $e->getMessage(), 'provider/listing/profile');
-
+            return back()->with('error', 'Failed to update service listing. Please try again.')
+                ->withInput();
         }
     }
 
@@ -135,7 +225,7 @@ private function handleFacilityPhotosUpload($request, $serviceListing = null)
 
     // Merge existing photos if editing
     if ($serviceListing && !empty($serviceListing->facility_photos_paths)) {
-        $paths = array_merge(json_decode($serviceListing->facility_photos_paths), $paths);
+        $paths = array_merge($serviceListing->facility_photos_paths, $paths);
     }
 
     return $paths;

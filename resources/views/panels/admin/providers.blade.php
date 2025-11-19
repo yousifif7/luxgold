@@ -20,9 +20,9 @@
             </div>
             <div class="gap-2 d-flex align-items-center flex-wrap">
                 
-                <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh" data-bs-original-title="Refresh"><i class="ti ti-refresh"></i></a>
-                <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Print" data-bs-original-title="Print"><i class="ti ti-printer"></i></a>
-                <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download"><i class="ti ti-cloud-download"></i></a>
+                <a id="providersRefreshBtn" href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh" data-bs-original-title="Refresh"><i class="ti ti-refresh"></i></a>
+                <a id="providersPrintBtn" href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Print" data-bs-original-title="Print"><i class="ti ti-printer"></i></a>
+                <a id="providersDownloadBtn" href="{{ route('admin.providers.export') }}" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download"><i class="ti ti-cloud-download"></i></a>
                 <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#addproviderModal"  class="btn btn-primary"><i class="ti ti-square-rounded-plus me-1"></i>New Provider</a>
             </div>
         </div>
@@ -30,6 +30,43 @@
         
         <!-- card start -->
         <div class="card mb-0">
+
+            <!-- Insights widgets -->
+            <div class="card-body border-bottom">
+              <div class="row g-3">
+                <div class="col-md-3">
+                  <div class="bg-white p-3 border rounded h-100">
+                    <p class="mb-1 small text-muted">Top Performing Provider (This Month)</p>
+                    <h6 class="mb-0">{{ $topProviderName ?? '—' }}</h6>
+                    <div class="text-success">${{ number_format($topProviderRevenue ?? 0,2) }}</div>
+                    <canvas id="topRevenueSpark" height="40"></canvas>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="bg-white p-3 border rounded h-100">
+                    <p class="mb-1 small text-muted">Revenue Trend (30d)</p>
+                    <h6 class="mb-0">Recent Revenue</h6>
+                    <canvas id="revenueTrendChart" height="60"></canvas>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="bg-white p-3 border rounded h-100">
+                    <p class="mb-1 small text-muted">Average Rating</p>
+                    <h6 class="mb-0">{{ number_format($avgRating ?? 0,1) }} ★</h6>
+                    <p class="small text-muted">Across approved reviews</p>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="bg-white p-3 border rounded h-100">
+                    <p class="mb-1 small text-muted">Providers by City</p>
+                    @foreach($byCity ?? [] as $city)
+                      <div class="d-flex justify-content-between small"><div>{{ $city->city }}</div><div>{{ $city->cnt }}</div></div>
+                    @endforeach
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <div class="card-header d-flex align-items-center flex-wrap gap-2 justify-content-between">
                 <h6 class="d-inline-flex align-items-center mb-0">Total Providers <span class="badge bg-danger ms-2">280</span></h6>
@@ -177,6 +214,41 @@
 </div>
 <!-- table end -->
 </div>
+
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try{
+    var labels = @json($revenueTrendLabels ?? []);
+    var data = @json($revenueTrendData ?? []);
+    var ctx = document.getElementById('revenueTrendChart');
+    if (ctx && labels.length) {
+      new Chart(ctx.getContext('2d'), {
+        type: 'line',
+        data: { labels: labels, datasets: [{ label: 'Revenue', data: data, borderColor: '#198754', backgroundColor: 'rgba(25,135,84,0.08)', fill:true, tension:0.3 }] },
+        options: { plugins:{legend:{display:false}}, scales:{x:{display:false}, y:{display:false}} }
+      });
+    }
+  } catch(e){ console.warn(e); }
+});
+// Refresh and Print handlers
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    var refreshBtn = document.getElementById('providersRefreshBtn');
+    var printBtn = document.getElementById('providersPrintBtn');
+    if (refreshBtn) refreshBtn.addEventListener('click', function(){
+      this.classList.add('disabled');
+      window.location.reload();
+    });
+    if (printBtn) printBtn.addEventListener('click', function(){
+      window.print();
+    });
+  } catch(e){ console.warn(e); }
+});
+</script>
+@endpush
 
 
         </div>

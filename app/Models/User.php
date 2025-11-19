@@ -89,6 +89,20 @@ class User extends Authenticatable
     }
 
     /**
+     * Simple profile verification check.
+     * Returns true if the user has verified email and has key profile fields filled.
+     */
+    public function getIsVerifiedAttribute(): bool
+    {
+        // Consider profile complete when email verified and core contact/location fields present
+        $hasName = !empty($this->first_name) || !empty($this->last_name) || !empty($this->name);
+        $hasContact = !empty($this->phone) && !empty($this->email);
+        $hasLocation = !empty($this->city) && !empty($this->state) && !empty($this->zip_code);
+
+        return !is_null($this->email_verified_at) && $hasName && $hasContact && $hasLocation;
+    }
+
+    /**
      * Get recent notifications
      */
     public function recentNotifications($limit = 10)

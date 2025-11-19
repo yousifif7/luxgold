@@ -19,14 +19,12 @@
       <div class="card">
       <div class="card-body">
         <table class="table datatable">
-          <thead><tr><th>Name</th><th>Slug</th><th>Services</th><th>Revenue</th><th></th></tr></thead>
+          <thead><tr><th>Name</th><th>Slug</th><th></th></tr></thead>
           <tbody>
             @foreach($cats as $c)
             <tr>
               <td><i class="fa {{ $c->icon }}"></i> {{ $c->name }}</td>
               <td>{{ $c->slug }}</td>
-              <td>{{ $stats[$c->id]['services_count'] ?? 0 }}</td>
-              <td>{{ isset($stats[$c->id]) ? number_format($stats[$c->id]['revenue'],2) : '0.00' }}</td>
              <td class="text-end">
   <a href="javascript:void(0);" class="btn btn-icon btn-sm btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
     <i class="ti ti-dots-vertical"></i>
@@ -58,8 +56,8 @@
           @endforeach
         </tbody>
       </table>
-      <div class="d-flex justify-content-end">{{ $cats->links() }}</div>
     </div>
+    
   </div>
 </div>
 

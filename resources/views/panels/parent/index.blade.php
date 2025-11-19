@@ -1,7 +1,7 @@
 @extends('layouts.parent-layout')
 
 @section('parent-title', 'Dashboard - Parent Portal')
-@section('parent-content')
+@section('content')
 <div class="page-wrapper">
 
     <!-- Start Content -->
@@ -164,7 +164,7 @@
                     @endforelse
 
                     @if($recentlyViewed->count() > 0)
-                    <a href="{{ route('providers.recent') }}" class="btn btn-primary w-100 mt-3">View All Recent</a>
+                    <a href="{{ url('providers.recent') }}" class="btn btn-primary w-100 mt-3">View All Recent</a>
                     @else
                     <a href="{{ route('website.find-provider') }}" class="btn btn-primary w-100 mt-3">Browse Providers</a>
                     @endif

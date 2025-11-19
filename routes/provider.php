@@ -11,5 +11,4 @@ Route::prefix('provider')->middleware(['auth', 'role:provider'])->group(function
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
     // Other provider routes...
     Route::get('/inquiries', [InquiryController::class, 'index'])->name('provider-inquiries');
-    
 });

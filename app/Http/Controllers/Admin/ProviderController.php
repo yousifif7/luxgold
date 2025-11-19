@@ -7,6 +7,7 @@ use App\Models\Provider;
 use App\Models\User;
 use App\Models\Subscription;
 use App\Models\Plan;
+use App\Models\RecentlyViewed;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

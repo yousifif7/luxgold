@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
 
 class ProfileController extends Controller
 {
@@ -54,8 +55,15 @@ class ProfileController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('provider.profile.edit')
-            ->with('success', 'Password updated successfully.');
+        // If request expects JSON (AJAX from parent profile), return JSON; otherwise redirect back.
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Password updated successfully.'
+            ]);
+        }
+
+        return back()->with('success', 'Password updated successfully.');
     }
 
     public function show()

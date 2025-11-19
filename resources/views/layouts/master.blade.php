@@ -36,18 +36,16 @@
 
     <meta name="theme-color" content="#ffffff">
 
+    {{-- Page-specific meta pushed from views (meta_title, meta_description, og overrides) --}}
+    @stack('meta')
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
     @stack('links')
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/logo.png') }}">
           <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
-<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" type="text/css">
-<style>
-* {
- font-family: 'Poppins', sans-serif;
-}
-</style>
+
 </head>
 
 

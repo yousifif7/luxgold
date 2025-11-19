@@ -35,7 +35,7 @@
         <h6 class="askroro-footer-heading text-teal fw-bold mb-3">For Providers</h6>
         <ul class="list-unstyled askroro-footer-links">
           <li><a href="{{ route('website.for-provider') }}" class="text-decoration-none">List Your Service</a></li>
-          <li><a href="#" class="text-decoration-none">Provider Dashboard</a></li>
+          {{-- <li><a href="#" class="text-decoration-none">Provider Dashboard</a></li> --}}
         </ul>
       </div>
 
@@ -43,6 +43,7 @@
       <div class="col-lg-3 col-md-6">
         <h6 class="askroro-footer-heading text-teal fw-bold mb-3">Support</h6>
         <ul class="list-unstyled askroro-footer-links">
+          <li><a href="{{ route('support.index') }}" class="text-decoration-none">Contact & Support</a></li>
           <li><a href="{{ route('website.about') }}" class="text-decoration-none">About Us</a></li>
           <li><a href="{{ route('website.privacy-policy') }}" class="text-decoration-none">Privacy Policy</a></li>
           <li><a href="{{ route('website.services') }}" class="text-decoration-none">Terms of Service</a></li>
@@ -54,7 +55,7 @@
 
     <!-- Bottom Bar -->
     <div class="askroro-footer-bottom text-center mt-4 pt-3 border-top border-secondary">
-      <p class="mb-1">© {{ date('Y') }} ASKRORO. All rights reserved.</p>
+      <p class="mb-1">©2026 ASKRORO. All rights reserved.</p>
       <p class="mb-0">Powered by Privy Consulting LLC</p>
     </div>
   </div>

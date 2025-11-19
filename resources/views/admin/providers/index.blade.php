@@ -19,13 +19,9 @@
                 </div>
             </div>
             <div class="gap-2 d-flex align-items-center flex-wrap">
-                <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh" data-bs-original-title="Refresh" onclick="refreshTable()">
-                    <i class="ti ti-refresh"></i>
-                </a>
-              
-                <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download" onclick="exportToCSV()">
-                    <i class="ti ti-cloud-download"></i>
-                </a>
+                <a id="providersRefreshBtn" href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh" data-bs-original-title="Refresh"><i class="ti ti-refresh"></i></a>
+                <a id="providersPrintBtn" href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Print" data-bs-original-title="Print"><i class="ti ti-printer"></i></a>
+                <a id="providersDownloadBtn" href="{{ route('admin.providers.export') }}" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download"><i class="ti ti-cloud-download"></i></a>
                 <a href="#" data-size="lg" data-url="{{ route('admin.providers.create') }}" data-ajax-popup="true" data-title="{{__('New Provider')}}" class="btn btn-primary">New Provider</a>
             </div>
         </div>
@@ -94,6 +90,41 @@
                 </div>
             </div>
         </div>
+
+                    <div class="card-body border-bottom mb-5">
+              <div class="row g-3">
+                <div class="col-md-3">
+                  <div class="bg-white p-3 border rounded h-100">
+                    <p class="mb-1 small text-muted">Top Performing Provider (This Month)</p>
+                    <h6 class="mb-0">{{ $topProviderName ?? '—' }}</h6>
+                    <div class="text-success">${{ number_format($topProviderRevenue ?? 0,2) }}</div>
+                    <canvas id="topRevenueSpark" height="40"></canvas>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="bg-white p-3 border rounded h-100">
+                    <p class="mb-1 small text-muted">Revenue Trend (30d)</p>
+                    <h6 class="mb-0">Recent Revenue</h6>
+                    <canvas id="revenueTrendChart" height="60"></canvas>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="bg-white p-3 border rounded h-100">
+                    <p class="mb-1 small text-muted">Average Rating</p>
+                    <h6 class="mb-0">{{ number_format($avgRating ?? 0,1) }} ★</h6>
+                    <p class="small text-muted">Across approved reviews</p>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="bg-white p-3 border rounded h-100">
+                    <p class="mb-1 small text-muted">Providers by City</p>
+                    @foreach($byCity ?? [] as $city)
+                      <div class="d-flex justify-content-between small"><div>{{ $city->city }}</div><div>{{ $city->cnt }}</div></div>
+                    @endforeach
+                  </div>
+                </div>
+              </div>
+            </div>
 
         <!-- card start -->
         <div class="card mb-0">
@@ -420,11 +451,28 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    try{
+        var labels = @json($revenueTrendLabels ?? []);
+        var data = @json($revenueTrendData ?? []);
+        var ctx = document.getElementById('revenueTrendChart');
+        if (ctx && labels.length) {
+            new Chart(ctx.getContext('2d'), {
+                type: 'line',
+                data: { labels: labels, datasets: [{ label: 'Revenue', data: data, borderColor: '#198754', backgroundColor: 'rgba(25,135,84,0.08)', fill:true, tension:0.3 }] },
+                options: { plugins:{legend:{display:false}}, scales:{x:{display:false}, y:{display:false}} }
+            });
+        }
+    } catch(e){ console.warn(e); }
+});
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    loadStats();
-    initializeFilters();
-    initializeBulkActions();
+        loadStats();
+        initializeFilters();
+        initializeBulkActions();
 });
 
 // Load dashboard stats
@@ -624,8 +672,8 @@ function printTable() {
 }
 
 function exportToCSV() {
-    // Implement CSV export functionality
-    alert('CSV export functionality would be implemented here.');
+    // Navigate to the server CSV export endpoint
+    window.location.href = '{{ route('admin.providers.export') }}';
 }
 
 function showToast(message, type = 'info') {
@@ -646,13 +694,77 @@ function showToast(message, type = 'info') {
     }, 3000);
 }
 
-// Apply filters when checkboxes change
-document.querySelectorAll('.status-filter, .city-filter').forEach(filter => {
+    // Apply filters when checkboxes change
+    document.querySelectorAll('.status-filter, .city-filter').forEach(filter => {
     filter.addEventListener('change', function() {
         // Update hidden form fields
         updateFilterForm();
         // Submit form
         document.getElementById('filterForm').submit();
+    });
+});
+
+function updateFilterForm() {
+    // Clear existing status and city inputs
+    document.querySelectorAll('input[name="status[]"], input[name="city[]"]').forEach(input => input.remove());
+    
+    // Add status filters
+
+    }
+}
+
+// Page initialization + helpers
+document.addEventListener('DOMContentLoaded', function(){
+    // init existing behaviors
+    try { loadStats(); } catch(e){ console.warn('loadStats missing', e); }
+    try { initializeFilters(); } catch(e){ console.warn('initializeFilters missing', e); }
+    try { initializeBulkActions(); } catch(e){ console.warn('initializeBulkActions missing', e); }
+
+    // fetch wrapper adding CSRF header
+    window.adminFetch = function(url, opts = {}){
+        opts = opts || {};
+        opts.headers = opts.headers || {};
+        if (!opts.headers['X-CSRF-TOKEN']) opts.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
+        return fetch(url, opts);
+    };
+
+    // delegated handler for ajax popup links
+    document.body.addEventListener('click', function(e){
+        var el = e.target.closest('[data-ajax-popup]');
+        if (!el) return;
+        e.preventDefault();
+        var url = el.getAttribute('data-url');
+        var title = el.getAttribute('data-title') || '';
+        var size = el.getAttribute('data-size') || 'lg';
+
+        var modal = document.getElementById('ajaxModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'ajaxModal';
+            modal.className = 'modal fade';
+            modal.innerHTML = `\
+            <div class="modal-dialog modal-${size} modal-dialog-centered">\
+              <div class="modal-content">\
+                <div class="modal-header">\
+                  <h5 class="modal-title">${title}</h5>\
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\
+                </div>\
+                <div class="modal-body p-3">Loading...</div>\
+              </div>\
+            </div>`;
+            document.body.appendChild(modal);
+        }
+
+        var bsModal = bootstrap.Modal.getOrCreateInstance(modal);
+        bsModal.show();
+
+        adminFetch(url).then(function(res){ return res.text(); }).then(function(html){
+            modal.querySelector('.modal-body').innerHTML = html;
+            if (title) modal.querySelector('.modal-title').textContent = title;
+        }).catch(function(err){
+            modal.querySelector('.modal-body').innerHTML = '<div class="text-danger">Error loading content.</div>';
+            console.error(err);
+        });
     });
 });
 

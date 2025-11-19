@@ -180,7 +180,7 @@
                         <h5 class="card-title mb-0">Quick Actions</h5>
                     </div>
                     <div class="card-body">
-                        <div class="quick-actions-grid mb-4">
+                        {{-- <div class="quick-actions-grid mb-4">
                             <a href="{{ route('admin.events.create') }}" class="quick-action-btn">
                                 <div class="action-icon bg-primary">
                                     <i class="ti ti-calendar-plus"></i>
@@ -217,7 +217,7 @@
                                 </div>
                                 <span>Edit Profile</span>
                             </a>
-                        </div>
+                        </div> --}}
 
                         <!-- Mini Stats -->
                         <div class="mini-stats">

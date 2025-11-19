@@ -25,21 +25,6 @@ if (! function_exists('handleResponse')) {
     }
 }  
 
-if (! function_exists('handleAjaxResponse')) {
-    function handleAjaxResponse($request, string $message, string $redirectRoute, $statusCode = 200, array $extra = []): JsonResponse|RedirectResponse
-    {
-            return response()->json(array_merge([
-                'status' => $statusCode,
-                'message' => $message,
-                'redirect_url' => route($redirectRoute),
-            ], $extra))->setEncodingOptions(JSON_NUMERIC_CHECK)->setStatusCode($statusCode);
-        
-
-        
-    }
-}  
-
-
 if (! function_exists('generateSlug')) {
 
     function generateSlug($text, string $divider = '-')

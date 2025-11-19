@@ -1046,6 +1046,30 @@
                                 <input type="text" class="form-control" name="support_text" value="{{ $heroContent->support_text ?? '' }}" required>
                             </div>
                             <div class="col-md-12 mb-3">
+                                <label class="form-label">Meta Title</label>
+                                <input type="text" class="form-control" name="meta_title" value="{{ $heroContent->meta_title ?? '' }}">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Meta Description</label>
+                                <textarea class="form-control" name="meta_description" rows="2">{{ $heroContent->meta_description ?? '' }}</textarea>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">CTA Text (button)</label>
+                                <input type="text" class="form-control" name="cta_text" value="{{ $heroContent->cta_text ?? '' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">CTA URL (button target)</label>
+                                <input type="url" class="form-control" name="cta_url" value="{{ $heroContent->cta_url ?? '' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Hero Image Alt Text</label>
+                                <input type="text" class="form-control" name="hero_alt_text" value="{{ $heroContent->hero_alt_text ?? '' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Hero Image Thumbnail URL</label>
+                                <input type="url" class="form-control" name="hero_image_thumbnail" value="{{ $heroContent->hero_image_thumbnail ?? '' }}">
+                            </div>
+                            <div class="col-md-12 mb-3">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" value="1" name="status" id="heroStatus" {{ ($heroContent->status ?? true) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="heroStatus">Active</label>

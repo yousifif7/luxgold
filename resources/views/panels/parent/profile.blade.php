@@ -1,7 +1,8 @@
 @extends('layouts.parent-layout')
 
 @section('parent-title', 'Profile - Parent Portal')
-@section('parent-content')
+@section('content')
+
 <div class="page-wrapper">
 
     <!-- Start Content -->
@@ -145,6 +146,34 @@
                     </button>
                 </form>
             </div>
+
+            <hr class="my-4">
+
+            <div class="mb-4">
+                <h6 class="mb-3"><i class="fas fa-key me-2"></i> Change Password</h6>
+                <div class="section-subtitle">Update your account password</div>
+                <form id="passwordChangeForm">
+                    @csrf
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-control" name="current_password" id="currentPassword" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-control" name="password" id="newPassword" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" name="password_confirmation" id="confirmPassword" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3" id="passwordChangeBtn">
+                        <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+                        Change Password
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
     <!-- End Content -->            
@@ -177,6 +206,49 @@ function showMessage(message, type = 'success') {
     setTimeout(() => {
         alert.classList.add('d-none');
     }, 5000);
+}
+
+// Clear field-level errors for a form
+function clearFieldErrors(form) {
+    // remove invalid classes and feedback nodes
+    const invalids = form.querySelectorAll('.is-invalid');
+    invalids.forEach(el => el.classList.remove('is-invalid'));
+    const feedbacks = form.querySelectorAll('.invalid-feedback');
+    feedbacks.forEach(f => f.remove());
+}
+
+// Show field-level errors (Laravel format: { field: [messages] })
+function showFieldErrors(form, errors) {
+    if (!errors || typeof errors !== 'object') return;
+    let firstEl = null;
+    Object.keys(errors).forEach(field => {
+        const messages = errors[field];
+        // try to find control by name
+        const control = form.querySelector(`[name="${field}"]`) || form.querySelector(`#${field}`);
+        if (control) {
+            control.classList.add('is-invalid');
+            // create feedback container
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.textContent = (Array.isArray(messages) ? messages[0] : messages);
+            // Insert after the control
+            if (control.parentNode) {
+                // if control is inside .input-group or similar, append after parent
+                if (control.parentNode.classList.contains('input-group')) {
+                    control.parentNode.parentNode.insertBefore(feedback, control.parentNode.nextSibling);
+                } else {
+                    control.parentNode.insertBefore(feedback, control.nextSibling);
+                }
+            }
+            if (!firstEl) firstEl = control;
+        }
+    });
+
+    // focus and scroll to first invalid field
+    if (firstEl) {
+        firstEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        try { firstEl.focus(); } catch (e) {}
+    }
 }
 
 // Load profile data
@@ -223,13 +295,17 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const btn = document.getElementById('personalInfoBtn');
         const spinner = btn.querySelector('.spinner-border');
-        
+    const form = this;
+    // Prevent double submissions if a request is already in progress
+    if (form.dataset.submitting === '1') return;
+    form.dataset.submitting = '1';
+    clearFieldErrors(form);
         btn.disabled = true;
         spinner.classList.remove('d-none');
-        
         fetch('{{ route("parent.profile.personal-info") }}', {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
@@ -240,16 +316,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 phone: document.getElementById('phone').value
             })
         })
-        .then(response => response.json())
+        .then(async response => {
+            const data = await response.json().catch(() => null);
+            if (response.ok) return data;
+            if (response.status === 422 && data && data.errors) {
+                showFieldErrors(form, data.errors);
+                throw data;
+            }
+            throw data || new Error('Request failed');
+        })
         .then(data => {
-            showMessage(data.message, data.success ? 'success' : 'danger');
+            data = data || {};
+            const msg = data.message || 'Personal information updated successfully.';
+            const ok = (typeof data.success !== 'undefined') ? data.success : true;
+            showMessage(msg, ok ? 'success' : 'danger');
         })
         .catch(error => {
-            showMessage('An error occurred while updating personal information.', 'danger');
+            if (error && error.errors) {
+                // errors already shown
+            } else {
+                showMessage('An error occurred while updating personal information.', 'danger');
+            }
         })
         .finally(() => {
             btn.disabled = false;
             spinner.classList.add('d-none');
+            delete form.dataset.submitting;
         });
     });
 
@@ -258,13 +350,16 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const btn = document.getElementById('locationPreferencesBtn');
         const spinner = btn.querySelector('.spinner-border');
-        
+    const form = this;
+    if (form.dataset.submitting === '1') return;
+    form.dataset.submitting = '1';
+    clearFieldErrors(form);
         btn.disabled = true;
         spinner.classList.remove('d-none');
-        
         fetch('{{ route("parent.profile.location-preferences") }}', {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
@@ -275,16 +370,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 search_radius: document.getElementById('radius').value
             })
         })
-        .then(response => response.json())
+        .then(async response => {
+            const data = await response.json().catch(() => null);
+            if (response.ok) return data;
+            if (response.status === 422 && data && data.errors) {
+                showFieldErrors(form, data.errors);
+                throw data;
+            }
+            throw data || new Error('Request failed');
+        })
         .then(data => {
-            showMessage(data.message, data.success ? 'success' : 'danger');
+            data = data || {};
+            const msg = data.message || 'Location preferences updated successfully.';
+            const ok = (typeof data.success !== 'undefined') ? data.success : true;
+            showMessage(msg, ok ? 'success' : 'danger');
         })
         .catch(error => {
-            showMessage('An error occurred while updating location preferences.', 'danger');
+            if (error && error.errors) {
+                // shown above
+            } else {
+                showMessage('An error occurred while updating location preferences.', 'danger');
+            }
         })
         .finally(() => {
             btn.disabled = false;
             spinner.classList.add('d-none');
+            delete form.dataset.submitting;
         });
     });
 
@@ -293,7 +404,10 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const btn = document.getElementById('notificationPreferencesBtn');
         const spinner = btn.querySelector('.spinner-border');
-        
+    const form = this;
+    if (form.dataset.submitting === '1') return;
+    form.dataset.submitting = '1';
+    clearFieldErrors(form);
         btn.disabled = true;
         spinner.classList.remove('d-none');
         
@@ -306,21 +420,99 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch('{{ route("parent.profile.notification-preferences") }}', {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             body: JSON.stringify(preferences)
         })
-        .then(response => response.json())
+        .then(async response => {
+            const data = await response.json().catch(() => null);
+            if (response.ok) return data;
+            if (response.status === 422 && data && data.errors) {
+                showFieldErrors(form, data.errors);
+                throw data;
+            }
+            throw data || new Error('Request failed');
+        })
         .then(data => {
-            showMessage(data.message, data.success ? 'success' : 'danger');
+            data = data || {};
+            const msg = data.message || 'Notification preferences updated successfully.';
+            const ok = (typeof data.success !== 'undefined') ? data.success : true;
+            showMessage(msg, ok ? 'success' : 'danger');
         })
         .catch(error => {
-            showMessage('An error occurred while updating notification preferences.', 'danger');
+            if (error && error.errors) {
+                // errors already shown
+            } else {
+                showMessage('An error occurred while updating notification preferences.', 'danger');
+            }
         })
         .finally(() => {
             btn.disabled = false;
             spinner.classList.add('d-none');
+            delete form.dataset.submitting;
+        });
+    });
+
+    // Password Change Form
+    document.getElementById('passwordChangeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('passwordChangeBtn');
+        const spinner = btn.querySelector('.spinner-border');
+    const form = this;
+    if (form.dataset.submitting === '1') return;
+    form.dataset.submitting = '1';
+    clearFieldErrors(form);
+        btn.disabled = true;
+        spinner.classList.remove('d-none');
+
+        fetch('{{ route("parent.profile.password") }}', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                current_password: document.getElementById('currentPassword').value,
+                password: document.getElementById('newPassword').value,
+                password_confirmation: document.getElementById('confirmPassword').value
+            })
+        })
+        .then(async response => {
+            const data = await response.json().catch(() => null);
+            if (response.ok) return data;
+            if (response.status === 422 && data && data.errors) {
+                showFieldErrors(form, data.errors);
+                throw data;
+            }
+            throw data || new Error('Request failed');
+        })
+        .then(data => {
+            data = data || {};
+            const msg = data.message || 'Password updated successfully.';
+            const ok = (typeof data.success !== 'undefined') ? data.success : true;
+            showMessage(msg, ok ? 'success' : 'danger');
+            if (ok) {
+                // clear fields
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+            }
+        })
+        .catch(err => {
+            if (err && err.errors) {
+                // field errors already shown
+            } else {
+                const msg = (err && err.message) ? err.message : 'Failed to update password.';
+                showMessage(msg, 'danger');
+            }
+        })
+        .finally(() => {
+            btn.disabled = false;
+            spinner.classList.add('d-none');
+            delete form.dataset.submitting;
         });
     });
 });

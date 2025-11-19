@@ -43,6 +43,11 @@ class ContentController extends Controller
             'title_part1' => 'required|string|max:255',
             'title_part2' => 'required|string|max:255',
             'description' => 'required|string',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'cta_text' => 'nullable|string|max:100',
+            'cta_url' => 'nullable|url',
+            'hero_alt_text' => 'nullable|string|max:255',
             'providers_count' => 'required|integer',
             'rating' => 'required|numeric',
             'support_text' => 'required|string|max:255',
@@ -50,7 +55,21 @@ class ContentController extends Controller
         ]);
 
         $heroContent = HeroContent::firstOrNew([]);
-        $heroContent->fill($request->all());
+        // Only fill allowed fields to avoid mass-assignment issues
+        $heroContent->fill($request->only([
+            'title_part1',
+            'title_part2',
+            'description',
+            'meta_title',
+            'meta_description',
+            'cta_text',
+            'cta_url',
+            'hero_alt_text',
+            'providers_count',
+            'rating',
+            'support_text',
+            'status'
+        ]));
         $heroContent->save();
         
         return redirect()->back()->with('success', 'Hero content updated successfully!');

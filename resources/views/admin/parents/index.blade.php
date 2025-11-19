@@ -21,6 +21,7 @@
             <div class="gap-2 d-flex align-items-center flex-wrap">
                 
                 <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh" data-bs-original-title="Refresh"><i class="ti ti-refresh"></i></a>
+                <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Print" data-bs-original-title="Print"><i class="ti ti-printer"></i></a>
                 <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download"><i class="ti ti-cloud-download"></i></a>
                 <a href="javascript:void(0);"  data-size="lg" data-url="{{ route('admin.parents.create') }}" data-ajax-popup="true"  data-title="{{__('New Parent')}}" class="btn btn-primary"  class="btn btn-primary"><i class="ti ti-square-rounded-plus me-1"></i>New Parent</a>
             </div>

@@ -297,7 +297,7 @@
             <div class="sidebar-logo">
                 <div>
                     <!-- Logo Normal -->
-                    <a href="{{ route('admin-home') }}" class="logo logo-normal">
+                    <a href="/home" class="logo logo-normal">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" height="40px" alt="Logo">
                         <h4>AskRoro</h4>
                     </a>
@@ -329,58 +329,58 @@
                                 </li>
         
                                 <li>
-                                    <a href="{{ route('admin-providers') }}">
+                                    <a href="{{ route('admin.providers.index') }}">
                                         <i class="ti ti-users"></i><span>Providers</span>
                                     </a>
                                 </li>
-        
+
                                 <li>
-                                    <a href="{{ route('admin-parents') }}">
+                                    <a href="{{ route('admin.parents.index') }}">
                                         <i class="ti ti-mood-boy"></i><span>Parents</span>
                                     </a>
                                 </li>
-        
+
                                 <li>
-                                    <a href="{{ route('admin-events') }}">
+                                    <a href="{{ route('admin.events.index') }}">
                                         <i class="ti ti-calendar-event"></i><span>Events</span>
                                     </a>
                                 </li>
-        
+
                                 <li>
-                                    <a href="{{ route('admin-reviews') }}">
+                                    <a href="{{ route('admin.reviews.index') }}">
                                         <i class="ti ti-message-2"></i><span>Reviews & Moderation</span>
                                     </a>
                                 </li>
-        
+
                                 <li>
-                                    <a href="{{ route('admin-content-management') }}">
+                                    <a href="{{ route('admin.content-management') }}">
                                         <i class="ti ti-file-text"></i><span>Content Management</span>
                                     </a>
                                 </li>
-        
+
                                 <li>
-                                    <a href="{{ route('admin-pricing') }}">
+                                    <a href="{{ route('admin.pricing.index') }}">
                                         <i class="ti ti-currency-dollar"></i>
                                         <span>Monetization & Pricing</span>
                                     </a>
                                 </li>
-        
+
                                 <li>
-                                    <a href="{{ route('admin-analytics') }}">
+                                    <a href="{{ route('admin.analytics') }}">
                                         <i class="ti ti-chart-bar"></i>
                                         <span>Analytics & Reporting</span>
                                     </a>
                                 </li>
-        
+
                                 <li>
-                                    <a href="{{ route('admin-settings') }}">
+                                    <a href="{{ route('admin.settings') }}">
                                         <i class="ti ti-settings"></i>
                                         <span>System Settings</span>
                                     </a>
                                 </li>
-        
+
                                 <li>
-                                    <a href="{{ route('admin-integrations') }}">
+                                    <a href="{{ route('admin.payments.index') }}">
                                         <i class="ti ti-plug"></i>
                                         <span>Integrations</span>
                                     </a>
@@ -488,7 +488,6 @@
       </script>
 
 @stack("parentscripts")
-@stack("scripts")
 
 </body>
 

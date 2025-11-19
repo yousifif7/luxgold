@@ -234,12 +234,9 @@
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-md p-2">
                             <div class="d-flex align-items-center bg-light rounded-3 p-2 mb-2">
                                 <img src="{{ asset('provider/assets/img/users/avatar-5.jpg') }}" class="rounded-circle" width="42" height="42" alt="provider/">
-                                 <div class="ms-2">
-    <p class="fw-medium text-dark mb-0">{{ Auth::user()->first_name }}</p>
-    <span class="d-block fs-13">
-        {{ ucfirst(Auth::user()->getRoleNames()->first()) ?? 'No Role Assigned' }}
-    </span>
-</div>
+                                <div class="ms-2">
+                                    <p class="fw-medium text-dark mb-0">{{ Auth::user()->first_name ?? 'Provider' }} {{ Auth::user()->last_name ?? '' }}</p>
+                                </div>
                             </div>
                     
                             <!-- Item -->
@@ -279,18 +276,18 @@
             <div class="sidebar-logo">
                 <div>
                     <!-- Logo Normal -->
-                    <a href="{{ route('admin-home') }}" class="logo logo-normal">
+                    <a href="/home" class="logo logo-normal">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" height="40px" alt="Logo">
                         <h4>AskRoro</h4>
                     </a>
         
                     <!-- Logo Small -->
-                    <a href="{{ route('admin-home') }}" class="logo-small">
+                    <a href="/home" class="logo-small">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" alt="Logo">
                     </a>
         
                     <!-- Logo Dark -->
-                    <a href="{{ route('admin-home') }}" class="dark-logo">
+                    <a href="/home" class="dark-logo">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" alt="Logo">
                     </a>
                 </div>
@@ -329,6 +326,11 @@
                                         <i class="ti ti-credit-card"></i><span>Subscription</span>
                                     </a>
                                 </li>
+                                {{-- <li>
+                                    <a href="#">
+                                        <i class="ti ti-chart-bar-popular"></i><span>Analytics</span>
+                                    </a>
+                                </li> --}}
                                 <li>
                                     <a href="{{ route('provider-profile') }}">
                                         <i class="ti ti-user"></i><span>Profile & Settings</span>

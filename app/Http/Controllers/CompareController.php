@@ -53,6 +53,17 @@ class CompareController extends Controller
         
         return response()->json(['providers' => $providers]);
     }
+
+    /**
+     * Show the compare page with providers loaded from session
+     */
+    public function page()
+    {
+        $compareList = Session::get('compare_list', []);
+        $providers = Provider::whereIn('id', $compareList)->get();
+
+        return view('website.compare-page', compact('providers'));
+    }
     
     public function clear()
     {

@@ -19,6 +19,11 @@
           <a class="nav-link {{ request()->is('find-provider') ? 'active' : '' }}" href="{{ route('website.find-provider') }}">Find Providers</a>
         </li>
 
+        @if (Request::is('/') || Request::is('home'))          
+        <li class="nav-item">
+          <a class="nav-link" href="#how-it-works-section">How It Works</a>
+        </li>
+        @endif
 
         <li class="nav-item">
           <a class="nav-link {{ request()->is('for-provider') ? 'active' : '' }}" href="{{ route('website.for-provider') }}">For Provider</a>

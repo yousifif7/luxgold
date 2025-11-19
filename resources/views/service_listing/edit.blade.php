@@ -1323,6 +1323,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Form submission with file handling
+    if (submitBtn) {
+        submitBtn.addEventListener('click', function() {
+            if (validateStep(currentStep)) {
+                submitForm();
+            }
+        });
+    }
+
     // Submit form with file data
     async function submitForm() {
         const submitBtn = document.getElementById('submitFormBtn');

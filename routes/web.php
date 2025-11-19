@@ -20,7 +20,6 @@ use App\Http\Controllers\ProviderPanelController;
 Route::get('/', [HomeController::class,'index']);
 Route::get('/about', fn() => view('website.about'))->name('website.about');
 Route::get('compare', [HomeController::class,'compare'])->name('website.compare');
-
 Route::get('/find-provider', [HomeController::class,'findProvider'])->name('website.find-provider');
 Route::get('/for-provider', fn() => view('website.for-provider'))->name('website.for-provider');
 Route::get('/terms-of-services', fn() => view('website.term-of-services'))->name('website.services');
@@ -29,11 +28,13 @@ Route::get('/privacy-policy', fn() => view('website.privacy-policy'))->name('web
 Route::get('/cookies-policy', fn() => view('website.cookies-policy'))->name('website.cookies-policy');
 Route::get('/faqs', fn() => view('website.faqs'))->name('website.faqs');
 
+// Support / Contact
+Route::get('/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support.index');
+Route::post('/support', [App\Http\Controllers\SupportController::class, 'store'])->name('support.store');
+Route::get('/support/{ticket}', [App\Http\Controllers\SupportController::class, 'show'])->name('support.show');
+Route::get('/support/{ticket}/messages', [App\Http\Controllers\SupportMessageController::class, 'index']);
+Route::post('/support/messages', [App\Http\Controllers\SupportMessageController::class, 'store'])->name('support.messages.store');
 
- Route::get('/messages', [InquiryController::class, 'index'])->name('messages.index');
-    Route::get('/inquiries/{inquiryId}/messages', [InquiryController::class, 'getMessages']);
-    Route::post('/inquiries/messages', [InquiryController::class, 'sendMessage']);
-    Route::patch('/inquiries/{inquiry}/status', [InquiryController::class, 'update'])->name('inquiries.update')->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
     // Parent profile routes
@@ -42,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/parent/profile/location-preferences', [ProfileController::class, 'updateLocationPreferences'])->name('parent.profile.location-preferences');
     Route::post('/parent/profile/notification-preferences', [ProfileController::class, 'updateNotificationPreferences'])->name('parent.profile.notification-preferences');
     Route::get('/parent/profile/data', [ProfileController::class, 'getProfileData'])->name('parent.profile.data');
+        // Parent password update
+        Route::post('/parent/profile/password', [ProfileController::class, 'updatePassword'])->name('parent.profile.password');
 });
 
 
@@ -66,7 +69,6 @@ Route::post('/stripe/webhook', [SubscriptionController::class, 'webhook'])->name
 Route::middleware(RoleMiddleware::class . ':parent')->group(function () {
 
 Route::get('/parent/dashboard', [ParentPanelController::class,'index'])->name('parent-home');
-Route::get('/parent/comparse', [ParentPanelController::class,'compare'])->name('providers.recent');
 
 
 Route::get('/parent/compare', [ParentPanelController::class,'compare'])->name('parent-compare');
@@ -84,9 +86,9 @@ Route::get('/provider/events', fn() => view('panels.provider.events'))->name('pr
 
 Route::get('/provider/subscription', [ProviderPanelController::class,'subscription'])->name('provider-subscription');
 
-    Route::post('/subscriptions/change-plan/{plan}', [ProviderPanelController::class, 'changePlan'])->name('subscriptions.change-plan');
+    Route::post('/subscriptions/change-plan/{plan}', [App\Http\Controllers\ProviderPanelController::class, 'changePlan'])->name('subscriptions.change-plan');
     Route::post('/subscriptions/toggle-auto-renewal', [SubscriptionController::class, 'toggleAutoRenewal'])->name('subscriptions.toggle-auto-renewal');
-    Route::get('/invoices/{payment}/download', [ParentPanelController::class, 'downloadInvoice'])->name('invoices.download');
+    Route::get('/invoices/{payment}/download', [App\Http\Controllers\ProviderPanelController::class, 'downloadInvoice'])->name('invoices.download');
 
 
 
@@ -110,14 +112,20 @@ Route::get('/compare/count', [CompareController::class, 'count'])->name('compare
 Route::get('/compare/list', [CompareController::class, 'list'])->name('compare.list');
 Route::post('/compare/clear', [CompareController::class, 'clear'])->name('compare.clear');
 
+    Route::patch('/inquiries/{inquiry}/status', [InquiryController::class, 'update'])->name('inquiries.update')->middleware('auth');
 
 // Inquiry routes
 Route::post('/inquiries', [InquiryController::class, 'store'])->name('inquiries.store');
 Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiries.index')->middleware('auth');
 Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show'])->name('inquiries.show')->middleware('auth');
+Route::put('/inquiries/{inquiry}', [InquiryController::class, 'update'])->name('inquiries.update')->middleware('auth');
+Route::post('/inquiries/{inquiry}/cancel', [InquiryController::class, 'cancel'])->name('inquiries.cancel')->middleware('auth');
 
 
 
+ Route::get('/messages', [InquiryController::class, 'index'])->name('messages.index');
+    Route::get('/inquiries/{inquiryId}/messages', [InquiryController::class, 'getMessages']);
+    Route::post('/inquiries/messages', [InquiryController::class, 'sendMessage']);
 
 
 Route::get('logout', [HomeController::class,'logout']);
@@ -127,12 +135,14 @@ Route::get('logout', [HomeController::class,'logout']);
 
 /*Route::get('/admin/dashboard', fn() => view('panels.admin.index'))->name('admin-home');
 Route::get('/admin/analytics', fn() => view('panels.admin.analytics'))->name('admin-analytics');
-Route::get('/admin/content-management', fn() => view('panels.admin.content-management'))->name('admin-content-management');
+// Admin content-management is handled by admin routes (see routes/admin.php)
 Route::get('/admin/events', fn() => view('panels.admin.events'))->name('admin-events');
 Route::get('/admin/integrations', fn() => view('panels.admin.integrations'))->name('admin-integrations');
 Route::get('/admin/parents', fn() => view('panels.admin.parents'))->name('admin-parents');
 Route::get('/admin/pricing', fn() => view('panels.admin.pricing'))->name('admin-pricing');
-Route::get('/admin/providers', fn() => view('panels.admin.providers'))->name('admin-providers');
+use App\Http\Controllers\Admin\ProvidersAdminController;
+
+Route::get('/admin/providers', [ProvidersAdminController::class, 'index'])->name('admin-providers');
 Route::get('/admin/reviews', fn() => view('panels.admin.reviews'))->name('admin-reviews');
 Route::get('/admin/settings', fn() => view('panels.admin.settings'))->name('admin-settings');*/
 

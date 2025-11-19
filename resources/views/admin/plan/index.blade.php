@@ -31,25 +31,25 @@
             <div class="col-md-3">
                 <div class="bg-white border border-1 ps-3 pt-3 pb-2 h-100">
                     <p class="mb-2">Monthly Recurring Revenue</p>
-                    <h6>${{ number_format($revenueStats['monthly_revenue'], 2) }}</h6>
+                    <h6>${{ number_format((float)($revenueStats['monthly_revenue'] ?? 0), 2) }}</h6>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="bg-white border border-1 ps-3 pt-3 pb-2 h-100">
                     <p class="mb-2">Annual Recurring Revenue</p>
-                    <h6>${{ number_format($revenueStats['annual_revenue'], 2) }}</h6>
+                    <h6>${{ number_format((float)($revenueStats['annual_revenue'] ?? 0), 2) }}</h6>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="bg-white border border-1 ps-3 pt-3 pb-2 h-100">
                     <p class="mb-2">Active Subscribers</p>
-                    <h6>{{ $revenueStats['active_subscribers'] }}</h6>
+                    <h6>{{ (int)($revenueStats['active_subscribers'] ?? 0) }}</h6>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="bg-white border border-1 ps-3 pt-3 pb-2 h-100">
                     <p class="mb-2">Average Revenue Per User</p>
-                    <h6>${{ number_format($revenueStats['average_revenue_per_user'], 2) }}</h6>
+                    <h6>${{ number_format((float)($revenueStats['average_revenue_per_user'] ?? 0), 2) }}</h6>
                 </div>
             </div>
         </div>
@@ -104,19 +104,34 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-semibold">${{ number_format($plan->monthly_fee, 2) }}/month</span>
-                                                        <span class="text-muted small">${{ number_format($plan->annual_fee, 2) }}/year</span>
+                                                        <span class="fw-semibold">${{ number_format((float)($plan->monthly_fee ?? 0), 2) }}/month</span>
+                                                        <span class="text-muted small">${{ number_format((float)($plan->annual_fee ?? 0), 2) }}/year</span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column">
-                                                        @forelse(array_slice($plan->features, 0, 3) as $key=>$feature)
-                                                            <span class="text-muted small">{{ $key }}</span>
+                                                        @php
+                                                            $rawFeatures = is_array($plan->features)
+                                                                ? $plan->features
+                                                                : (json_decode($plan->features ?? '[]', true) ?: []);
+                                                            $displayFeatures = [];
+                                                            foreach ($rawFeatures as $k => $v) {
+                                                                if (is_string($v) && trim((string)$v) !== '') {
+                                                                    $displayFeatures[] = $v;
+                                                                } elseif (is_numeric($k)) {
+                                                                    $displayFeatures[] = $v;
+                                                                } else {
+                                                                    $displayFeatures[] = $k;
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        @forelse(array_slice($displayFeatures, 0, 3) as $feature)
+                                                            <span class="text-muted small">{{ $feature }}</span>
                                                         @empty
                                                             <span class="text-muted small">No features</span>
                                                         @endforelse
-                                                        @if(count($plan->features) > 3)
-                                                            <span class="text-primary small">+{{ count($plan->features) - 3 }} more</span>
+                                                        @if(count($displayFeatures) > 3)
+                                                            <span class="text-primary small">+{{ count($displayFeatures) - 3 }} more</span>
                                                         @endif
                                                     </div>
                                                 </td>
@@ -127,9 +142,9 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-semibold">{{ $plan->subscribers_count }}</span>
+                                                        <span class="fw-semibold">{{ (int)($plan->subscribers_count ?? 0) }}</span>
                                                         <span class="text-muted small">
-                                                            ${{ number_format(($plan->monthly_fee * $plan->subscribers_count), 2) }}/mo
+                                                            ${{ number_format((float)($plan->monthly_fee ?? 0) * (int)($plan->subscribers_count ?? 0), 2) }}/mo
                                                         </span>
                                                     </div>
                                                 </td>
@@ -201,11 +216,12 @@
                                                 <canvas id="subscriptionDist"></canvas>
                                             </div>
                                             <ul class="list-unstyled mt-3 text-center">
-                                                @foreach($chartData['subscription_distribution']['data'] as $index => $plan)
+                                                @php $subs = $chartData['subscription_distribution']['data'] ?? []; @endphp
+                                                @foreach(array_slice($subs, 0, 12) as $index => $plan)
                                                     <li>
                                                         <span class="legend-dot" style="background-color: {{ $plan['color'] }}; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px;"></span>
-                                                        {{ $plan['count'] }} subscribers 
-                                                        <small>${{ number_format($plan['revenue'], 2) }}/mo</small>
+                                                        {{ (int)($plan['count'] ?? 0) }} subscribers 
+                                                        <small>${{ number_format((float)($plan['revenue'] ?? 0), 2) }}/mo</small>
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -226,63 +242,43 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Revenue Trends Chart
-        const ctxBar = document.getElementById('revenueTrends').getContext('2d');
-        new Chart(ctxBar, {
-            type: 'bar',
-            data: {
-                labels: @json($chartData['revenue_trends']['labels']),
-                datasets: [{
-                    label: 'Monthly Revenue',
-                    backgroundColor: '#5f7f7a',
-                    data: @json($chartData['revenue_trends']['data'])
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { 
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value.toLocaleString();
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: (ctx) => `$${ctx.parsed.y.toLocaleString()}`
-                        }
-                    }
-                }
-            }
-        });
+        // Defensive data extraction with fallbacks
+        const revenueLabels = @json($chartData['revenue_trends']['labels'] ?? []);
+        const revenueData = @json($chartData['revenue_trends']['data'] ?? []);
 
-        // Subscription Distribution Chart
-        const ctxDoughnut = document.getElementById('subscriptionDist').getContext('2d');
-        new Chart(ctxDoughnut, {
-            type: 'doughnut',
-            data: {
-                labels: @json($chartData['subscription_distribution']['labels']),
-                datasets: [{
-                    data: @json(array_column($chartData['subscription_distribution']['data'], 'count')),
-                    backgroundColor: @json(array_column($chartData['subscription_distribution']['data'], 'color')),
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                cutout: '65%',
-                plugins: { 
-                    legend: { display: false } 
+        const subscriptionLabels = @json($chartData['subscription_distribution']['labels'] ?? []);
+        const subscriptionCounts = @json(array_column($chartData['subscription_distribution']['data'] ?? [], 'count'));
+        const subscriptionColors = @json(array_column($chartData['subscription_distribution']['data'] ?? [], 'color'));
+
+        // Revenue Trends Chart (guarded)
+        const revenueEl = document.getElementById('revenueTrends');
+        if (revenueEl && revenueEl.getContext) {
+            const ctxBar = revenueEl.getContext('2d');
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: revenueLabels,
+                    datasets: [{ label: 'Monthly Revenue', backgroundColor: '#5f7f7a', data: revenueData }]
                 },
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, ticks: { callback: function(value) { return '$' + value.toLocaleString(); } } } },
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `$${ctx.parsed.y.toLocaleString()}` } } }
+                }
+            });
+        }
+
+        // Subscription Distribution Chart (guarded)
+        const distEl = document.getElementById('subscriptionDist');
+        if (distEl && distEl.getContext) {
+            const ctxDoughnut = distEl.getContext('2d');
+            new Chart(ctxDoughnut, {
+                type: 'doughnut',
+                data: { labels: subscriptionLabels, datasets: [{ data: subscriptionCounts, backgroundColor: subscriptionColors, borderWidth: 0 }] },
+                options: { cutout: '65%', plugins: { legend: { display: false } }, responsive: true, maintainAspectRatio: false }
+            });
+        }
     });
 </script>
 @endpush

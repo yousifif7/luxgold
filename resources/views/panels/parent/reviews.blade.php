@@ -1,7 +1,8 @@
 @extends('layouts.parent-layout')
 
 @section('parent-title', 'Reviews - Parent Portal')
-@section('parent-content')
+@section('content')
+
 <div class="page-wrapper">
 
     <!-- Start Content -->
@@ -20,19 +21,19 @@
                 </div>
                 <div class="col-md-3">
                     <div class="stat-card text-center">
-                        <div class="stat-number">{{ $reviews->where('status', 'approved')->count() }}</div>
+                        <div class="stat-number">{{ $reviews->where('is_approved', true)->count() }}</div>
                         <div class="stat-label">Approved</div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="stat-card text-center">
-                        <div class="stat-number">{{ $reviews->where('status', 'pending')->count() }}</div>
+                        <div class="stat-number">{{ $reviews->where('is_approved', false)->count() }}</div>
                         <div class="stat-label">Pending</div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="stat-card text-center">
-                        <div class="stat-number">{{ $reviews->where('status', 'rejected')->count() }}</div>
+                        <div class="stat-number">{{ $reviews->where('is_approved', null)->count() }}</div>
                         <div class="stat-label">Rejected</div>
                     </div>
                 </div>
@@ -54,11 +55,11 @@
                     </div>
                     <div class="text-end">
                         <!-- Approval Status Badge -->
-                        @if($review->status === 'approved')
+                        @if($review->is_approved === true)
                         <span class="approval-badge approval-approved">
                             <i class="fas fa-check-circle"></i> Approved
                         </span>
-                        @elseif($review->status === 'pending')
+                        @elseif($review->is_approved === false)
                         <span class="approval-badge approval-pending">
                             <i class="fas fa-clock"></i> Pending
                         </span>
@@ -99,7 +100,7 @@
                             <i class="fas fa-trash me-1"></i> Delete
                         </button>
                     </form>
-                    <a  href="{{ url('provider-detail',$review->provider_id) }}" class="btn btn-light border border-1 btn-sm ms-2">View Public Review</a>
+                    <button class="btn btn-light border border-1 btn-sm ms-2">View Public Review</button>
                 </div>
             </div>
             @empty
@@ -107,7 +108,7 @@
                 <i class="fas fa-comment-slash fa-3x text-muted mb-3"></i>
                 <h5>No Reviews Yet</h5>
                 <p class="text-muted">You haven't written any reviews yet.</p>
-                <a href="{{ url('find-provider') }}" class="btn btn-primary">Write Your First Review</a>
+                {{-- <a href="#" class="btn btn-primary">Write Your First Review</a> --}}
             </div>
             @endforelse
 

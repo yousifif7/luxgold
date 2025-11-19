@@ -2,30 +2,6 @@
 
 @section('admin-title', 'Dashboard - Admin Panel')
 
-@push('styles')
-<style>
-    .hover-shadow:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        transform: translateY(-2px);
-        transition: all 0.3s ease;
-    }
-    .stat-card {
-        transition: all 0.3s ease;
-    }
-    .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    }
-    .action-card {
-        border-left: 3px solid;
-        transition: all 0.3s ease;
-    }
-    .action-card:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-</style>
-@endpush
-
 @section('content')
 <div class="page-wrapper">
     <!-- Start Content -->
@@ -34,19 +10,20 @@
         <div class="d-flex align-items-center justify-content-between gap-2 mb-4 flex-wrap">
             <div class="breadcrumb-arrow">
                 <h4 class="mb-1">Welcome, Admin</h4>
-                <p class="mb-0">Today you have <strong>{{ $stats['new_inquiries'] }}</strong> new inquiries</p>
+                <p class="mb-0">Today you have {{ $stats['new_inquiries'] }} new inquiries</p>
             </div>
-            <div class="d-flex gap-2">
-               
-            </div>
+           {{--  <div id="reportrange" class="reportrange-picker d-flex align-items-center">
+                <i class="ti ti-calendar text-body fs-14 me-1"></i>
+                <span class="reportrange-picker-field">{{ now()->format('d M Y') }}</span>
+            </div> --}}
         </div>
         <!-- End Page Header -->
 
         <!-- Statistics Cards -->
         <div class="row">
             <!-- Total Providers -->
-            <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card stat-card pb-3">
+            <div class="col-xl-3 col-md-6">
+                <div class="card pb-3">
                     <div class="d-flex align-items-center justify-content-between p-3 pb-0 mb-1">
                         <div class="d-flex align-items-center">
                             <span class="avatar avatar-icon bg-primary rounded-circle flex-shrink-0">
@@ -62,16 +39,16 @@
             </div>
 
             <!-- Total Parents -->
-            <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card stat-card pb-3">
+            <div class="col-xl-3 col-md-6">
+                <div class="card pb-3">
                     <div class="d-flex align-items-center justify-content-between p-3 pb-0 mb-1">
                         <div class="d-flex align-items-center">
-                            <span class="avatar avatar-icon bg-success rounded-circle flex-shrink-0">
+                            <span class="avatar avatar-icon bg-primary rounded-circle flex-shrink-0">
                                 <i class="ti ti-users fs-20"></i>
                             </span>
                             <div class="ms-3">
                                <p class="mb-1 text-truncate">Total Parents</p>
-                               <h6 class="mb-0 fw-semibold">{{ $stats['total_parents'] }}</h6>
+                               <h6 class="mb-0 fsw-semibold">{{ $stats['total_parents'] }}</h6>
                             </div>
                         </div>
                     </div>
@@ -79,11 +56,11 @@
             </div>
 
             <!-- Active Events -->
-            <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card stat-card pb-3">
+            <div class="col-xl-3 col-md-6">
+                <div class="card pb-3">
                     <div class="d-flex align-items-center justify-content-between p-3 pb-0 mb-1">
                         <div class="d-flex align-items-center">
-                            <span class="avatar avatar-icon bg-info rounded-circle flex-shrink-0">
+                            <span class="avatar avatar-icon bg-primary rounded-circle flex-shrink-0">
                                 <i class="ti ti-calendar-event fs-20"></i>
                             </span>
                             <div class="ms-3">
@@ -96,11 +73,11 @@
             </div>
 
             <!-- Total Revenue -->
-            <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card stat-card pb-3">
+            <div class="col-xl-3 col-md-6">
+                <div class="card pb-3">
                     <div class="d-flex align-items-center justify-content-between p-3 pb-0 mb-1">
                         <div class="d-flex align-items-center">
-                            <span class="avatar avatar-icon bg-warning rounded-circle flex-shrink-0">
+                            <span class="avatar avatar-icon bg-primary rounded-circle flex-shrink-0">
                                 <i class="ti ti-currency-dollar fs-20"></i>
                             </span>
                             <div class="ms-3">
@@ -113,8 +90,8 @@
             </div>
 
             <!-- Pending Approvals -->
-            <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card stat-card pb-3">
+            <div class="col-xl-3 col-md-6">
+                <div class="card pb-3">
                     <div class="d-flex align-items-center justify-content-between p-3 pb-0 mb-1">
                         <div class="d-flex align-items-center">
                             <span class="avatar avatar-icon bg-warning rounded-circle flex-shrink-0">
@@ -130,8 +107,8 @@
             </div>
 
             <!-- Featured Providers -->
-            <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card stat-card pb-3">
+            <div class="col-xl-3 col-md-6">
+                <div class="card pb-3">
                     <div class="d-flex align-items-center justify-content-between p-3 pb-0 mb-1">
                         <div class="d-flex align-items-center">
                             <span class="avatar avatar-icon bg-success rounded-circle flex-shrink-0">
@@ -147,8 +124,8 @@
             </div>
 
             <!-- New Inquiries -->
-            <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card stat-card pb-3">
+            <div class="col-xl-3 col-md-6">
+                <div class="card pb-3">
                     <div class="d-flex align-items-center justify-content-between p-3 pb-0 mb-1">
                         <div class="d-flex align-items-center">
                             <span class="avatar avatar-icon bg-info rounded-circle flex-shrink-0">
@@ -164,8 +141,8 @@
             </div>
 
             <!-- Reported Reviews -->
-            <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card stat-card pb-3">
+            <div class="col-xl-3 col-md-6">
+                <div class="card pb-3">
                     <div class="d-flex align-items-center justify-content-between p-3 pb-0 mb-1">
                         <div class="d-flex align-items-center">
                             <span class="avatar avatar-icon bg-danger rounded-circle flex-shrink-0">
@@ -181,189 +158,111 @@
             </div>
         </div>
 
-        <!-- Data Visualization Charts -->
-        <div class="row mb-4">
-            <!-- User Growth Chart -->
-            <div class="col-xl-8 mb-3">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">User Growth Trends</h5>
-                        <div class="btn-group btn-group-sm" role="group">
-                            <button type="button" class="btn btn-outline-primary active" onclick="updateGrowthChart('weekly')">Weekly</button>
-                            <button type="button" class="btn btn-outline-primary" onclick="updateGrowthChart('monthly')">Monthly</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="userGrowthChart" height="80"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Category Distribution -->
-            <div class="col-xl-4 mb-3">
+        <!-- Admin Quick Controls (expanded) -->
+        <div class="row mt-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Provider Categories</h5>
+                        <h6 class="mb-0">Pending Approvals</h6>
                     </div>
                     <div class="card-body">
-                        <canvas id="categoryChart" height="180"></canvas>
+                        @if($pendingProviders->isEmpty())
+                            <div class="text-muted">No pending providers</div>
+                        @else
+                            <ul class="list-unstyled mb-0">
+                                @foreach($pendingProviders as $p)
+                                    <li class="d-flex align-items-center justify-content-between py-2">
+                                        <div>
+                                            <div class="fw-medium">
+                                                <a href="{{ route('admin.providers.show', $p->id) }}" class="text-decoration-none">
+                                                    {{ $p->business_name ?? 'Unnamed' }}
+                                                </a>
+                                            </div>
+                                            <small class="text-muted">{{ $p->created_at->format('d M') }}</small>
+                                        </div>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-success btn-approve" data-id="{{ $p->id }}">Approve</button>
+                                            <button class="btn btn-danger btn-reject" data-id="{{ $p->id }}">Reject</button>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Revenue and Engagement Charts -->
-        <div class="row mb-4">
-            <!-- Revenue Trend -->
-            <div class="col-xl-8 mb-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Revenue Trends (Last 12 Months)</h5>
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h6 class="mb-0">Reported Reviews</h6>
+                        <a href="{{ route('admin.reviews.index', ['status' => 'flagged']) }}" class="small">View all</a>
                     </div>
                     <div class="card-body">
-                        <canvas id="revenueChart" height="80"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Engagement Heatmap -->
-            <div class="col-xl-4 mb-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Activity Overview</h5>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="engagementChart" height="180"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Action Cards -->
-        <div class="row mb-4">
-            <!-- Pending Provider Approvals -->
-            <div class="col-xl-4 mb-3">
-                <div class="card action-card" style="border-left-color: #f59e0b;">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">
-                            <i class="ti ti-hourglass-high text-warning me-2"></i>
-                            Pending Approvals
-                        </h5>
-                        <a href="{{ route('admin.providers.index') }}?status=pending" class="btn btn-sm btn-outline-warning">View All</a>
-                    </div>
-                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                        @forelse($pendingProviders as $provider)
-                        <div class="border-bottom pb-2 mb-2">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">{{ $provider['business_name'] }}</h6>
-                                    <p class="text-muted small mb-1">{{ $provider['contact_person'] }}</p>
-                                    <p class="text-muted small mb-1">
-                                        <i class="ti ti-category me-1"></i>{{ $provider['category'] }}
-                                    </p>
-                                    <p class="text-muted small mb-0">
-                                        Submitted: {{ $provider['submitted_date'] }} 
-                                        <span class="badge badge-soft-warning">{{ $provider['days_pending'] }} days pending</span>
-                                    </p>
-                                </div>
-                                <div class="d-flex gap-1 flex-shrink-0 ms-2">
-                                    <button class="btn btn-sm btn-success" onclick="approveProvider({{ $provider['id'] }})" title="Approve">
-                                        <i class="ti ti-check"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger" onclick="rejectProvider({{ $provider['id'] }})" title="Reject">
-                                        <i class="ti ti-x"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        @empty
-                        <p class="text-center text-muted">No pending approvals</p>
-                        @endforelse
-                    </div>
-                </div>
-            </div>
-
-            <!-- Reported Reviews -->
-            <div class="col-xl-4 mb-3">
-                <div class="card action-card" style="border-left-color: #ef4444;">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">
-                            <i class="ti ti-flag text-danger me-2"></i>
-                            Reported Reviews
-                        </h5>
-                        <a href="{{ route('admin.reviews.index') }}?status=flagged" class="btn btn-sm btn-outline-danger">View All</a>
-                    </div>
-                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                        @forelse($reportedReviews as $review)
-                        <div class="border-bottom pb-2 mb-2">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">{{ $review['user_name'] }}</h6>
-                                    <p class="text-muted small mb-1">Provider: {{ $review['provider_name'] }}</p>
-                                    <div class="mb-1">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <i class="ti ti-star{{ $i <= $review['rating'] ? '-filled text-warning' : ' text-muted' }}"></i>
-                                        @endfor
+                        @if($reportedReviews->isEmpty())
+                            <div class="text-muted">No reported reviews</div>
+                        @else
+                            @foreach($reportedReviews as $rv)
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <strong>{{ $rv->provider->business_name ?? 'Provider' }}</strong>
+                                            <div class="small text-muted">{{ \Illuminate\Support\Str::limit($rv->comment ?? $rv->content ?? '', 80) }}</div>
+                                        </div>
+                                        <div>
+                                            <a href="{{ route('admin.reviews.show', $rv->id) }}" class="btn btn-sm btn-outline-primary">Moderate</a>
+                                        </div>
                                     </div>
-                                    <p class="small mb-1">{{ Str::limit($review['comment'], 100) }}</p>
-                                    <p class="text-muted small mb-0">Reported: {{ $review['reported_date'] }}</p>
                                 </div>
-                            </div>
-                            <div class="d-flex gap-1">
-                                <button class="btn btn-sm btn-success" onclick="moderateReview({{ $review['id'] }}, 'approved')">Approve</button>
-                                <button class="btn btn-sm btn-warning" onclick="moderateReview({{ $review['id'] }}, 'hidden')">Hide</button>
-                                <button class="btn btn-sm btn-danger" onclick="moderateReview({{ $review['id'] }}, 'rejected')">Reject</button>
-                            </div>
-                        </div>
-                        @empty
-                        <p class="text-center text-muted">No reported reviews</p>
-                        @endforelse
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Inquiries Preview -->
-            <div class="col-xl-4 mb-3">
-                <div class="card action-card" style="border-left-color: #3b82f6;">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">
-                            <i class="ti ti-mail text-info me-2"></i>
-                            Recent Inquiries
-                        </h5>
-                        <a href="{{ route('admin.inquiries.index') }}" class="btn btn-sm btn-outline-info">View All</a>
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h6 class="mb-0">New Inquiries</h6>
+                        <a href="{{ route('admin.inquiries.index') }}" class="small">View all</a>
                     </div>
-                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                        @forelse($recentInquiries->take(3) as $inquiry)
-                        <div class="border-bottom pb-2 mb-2">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">{{ $inquiry['parent_name'] }}</h6>
-                                    <p class="text-muted small mb-1">{{ $inquiry['parent_email'] }}</p>
-                                    <p class="text-muted small mb-1">Provider: {{ $inquiry['provider_name'] }}</p>
-                                    <p class="small mb-1">{{ Str::limit($inquiry['message'], 80) }}</p>
-                                    <p class="text-muted small mb-0">{{ $inquiry['date_time'] }}</p>
+                    <div class="card-body">
+                        @if($newInquiries->isEmpty())
+                            <div class="text-muted">No new inquiries</div>
+                        @else
+                            @foreach($newInquiries as $inq)
+                                <div class="d-flex align-items-center justify-content-between py-2">
+                                    <div>
+                                        <div class="fw-medium">{{ $inq->name }} — <small class="text-muted">{{ $inq->provider->business_name ?? 'N/A' }}</small></div>
+                                        <small class="text-muted">{{ $inq->created_at->diffForHumans() }}</small>
+                                    </div>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-danger btn-delete-inquiry" data-id="{{ $inq->id }}">Delete</button>
+                                    </div>
                                 </div>
-                            </div>
-                            @if($inquiry['status'] === 'pending')
-                            @else
-                            <span class="badge badge-soft-success">{{ ucfirst($inquiry['status']) }}</span>
-                            @endif
-                        </div>
-                        @empty
-                        <p class="text-center text-muted">No recent inquiries</p>
-                        @endforelse
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h6 class="mb-0">Revenue Actions</h6>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ route('admin.payments.export') }}" class="btn btn-outline-secondary w-100 mb-2">Export CSV</a>
+                        <a href="{{ route('admin.payments.index') }}" class="btn btn-primary w-100">View Transaction Log</a>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Quick Actions -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <h5 class="mb-3">Quick Actions</h5>
-            </div>
+        <div class="row">
             <!-- All Providers -->
-            <div class="col-xl-2 col-md-4 col-6 mb-3">
+            <div class="col-xl-2 col-md-4 col-6">
                 <a href="{{ route('admin.providers.index') }}" class="card hover-shadow">
                     <div class="card-body text-center">
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
@@ -375,7 +274,7 @@
             </div>
 
             <!-- All Parents -->
-            <div class="col-xl-2 col-md-4 col-6 mb-3">
+            <div class="col-xl-2 col-md-4 col-6">
                 <a href="{{ route('admin.parents.index') }}" class="card hover-shadow">
                     <div class="card-body text-center">
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
@@ -387,7 +286,7 @@
             </div>
 
             <!-- Events -->
-            <div class="col-xl-2 col-md-4 col-6 mb-3">
+            <div class="col-xl-2 col-md-4 col-6">
                 <a href="{{ route('admin.events.index') }}" class="card hover-shadow">
                     <div class="card-body text-center">
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
@@ -399,7 +298,7 @@
             </div>
 
             <!-- Reviews -->
-            <div class="col-xl-2 col-md-4 col-6 mb-3">
+            <div class="col-xl-2 col-md-4 col-6">
                 <a href="{{ route('admin.reviews.index') }}" class="card hover-shadow">
                     <div class="card-body text-center">
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
@@ -411,7 +310,7 @@
             </div>
 
             <!-- Content Management -->
-            <div class="col-xl-2 col-md-4 col-6 mb-3">
+            <div class="col-xl-2 col-md-4 col-6">
                 <a href="{{ route('admin.content-management') }}" class="card hover-shadow">
                     <div class="card-body text-center">
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
@@ -423,7 +322,7 @@
             </div>
 
             <!-- Monetization -->
-            <div class="col-xl-2 col-md-4 col-6 mb-3">
+            <div class="col-xl-2 col-md-4 col-6">
                 <a href="{{ route('admin.pricing.index') }}" class="card hover-shadow">
                     <div class="card-body text-center">
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
@@ -435,11 +334,120 @@
             </div>
         </div>
 
-        <!-- Full Inquiries Table -->
-        <div class="card shadow flex-fill w-100 mb-0">
+        <!-- Real-Time Feed -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Real-Time Feed Panel</h5>
+                        <small class="text-muted">What's happening right now</small>
+                    </div>
+                    <div class="card-body">
+                        <div id="realtimeFeed" class="row">
+                            <div class="col-md-4">
+                                <h6 class="mb-2">New Users</h6>
+                                <ul id="feed-users" class="list-unstyled small text-muted"></ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="mb-2">Recent Inquiries</h6>
+                                <ul id="feed-inquiries" class="list-unstyled small text-muted"></ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="mb-2">Flagged Reviews</h6>
+                                <ul id="feed-reviews" class="list-unstyled small text-muted"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div>
+                            <p class="mb-1 text-truncate">Opened Support Tickets</p>
+                            <h6 class="mb-0 fw-semibold">{{ $openSupportCount ?? 0 }}</h6>
+                        </div>
+                        <div>
+                            <a href="{{ route('admin.support.index') }}" class="btn btn-sm btn-primary">View Tickets</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-xl-6">
+                <div class="card mb-3">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">New Users (Providers + Parents)</h5>
+                        <small class="text-muted">Monthly / Weekly</small>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="usersChart" height="120"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="card mb-3">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Providers by Category</h5>
+                        <small class="text-muted">Distribution</small>
+                    </div>
+                    <div class="card-body d-flex justify-content-center">
+                        <canvas id="categoriesPie" height="120" style="max-width:360px; height: 225px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card mb-3">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Revenue Trend</h5>
+                        <small class="text-muted">Monthly revenue (cumulative)</small>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="revenueChart" height="120"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4">
+                <div class="card mb-3">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Engagement by City</h5>
+                        <small class="text-muted">Top cities</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped" id="engagementTable">
+                                <thead>
+                                    <tr>
+                                        <th>City</th>
+                                        <th>Inquiries</th>
+                                        <th>Reviews</th>
+                                        <th>Events</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Inquiries Table -->
+        <div class="card shadow flex-fill w-100 mb-0 mt-4">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="fw-bold mb-0 text-truncate">All Provider Inquiries</h5> 
-                <a href="{{ route('admin.inquiries.index') }}" class="btn btn-sm btn-outline-light flex-shrink-0">View All</a>
+                <h5 class="fw-bold mb-0 text-truncate">Last 5 Provider Inquiries</h5> 
+                <a href="#" class="btn btn-sm btn-outline-light flex-shrink-0">View All</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive table-nowrap">
@@ -478,13 +486,9 @@
                                     <div class="d-flex align-items-center">
                                         <div>
                                             <h6 class="fs-14 mb-0 fw-medium">
-                                                @if($inquiry['provider_id'])
                                                 <a href="{{ route('admin.providers.show', $inquiry['provider_id']) }}">
                                                     {{ $inquiry['provider_name'] }}
                                                 </a>
-                                                @else
-                                                {{ $inquiry['provider_name'] }}
-                                                @endif
                                             </h6>
                                         </div>
                                     </div>
@@ -497,11 +501,11 @@
                                             'pending' => ['class' => 'badge-soft-info', 'text' => 'New'],
                                             'contacted' => ['class' => 'badge-soft-warning', 'text' => 'Contacted'],
                                             'approved' => ['class' => 'badge-soft-success', 'text' => 'Approved'],
-                                            'closed' => ['class' => 'badge-soft-danger', 'text' => 'Closed']
+                                            'rejected' => ['class' => 'badge-soft-danger', 'text' => 'Rejected']
                                         ];
                                         $config = $statusConfig[$inquiry['status']] ?? $statusConfig['pending'];
                                     @endphp
-                                    <span class="badge {{ $config['class'] }} border py-1 ps-1">
+                                    <span class="badge {{ $config['class'] }} border border-{{ explode('-', $config['class'])[1] }} text-{{ explode('-', $config['class'])[1] }} py-1 ps-1">
                                         {{ $config['text'] }}
                                     </span>
                                 </td>
@@ -512,12 +516,11 @@
                                         </a>
                                         <ul class="dropdown-menu p-2">
                                             <li>
-                                                <a href="#" class="dropdown-item d-flex align-items-center view-inquiry" 
+                                                <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center view-inquiry" 
                                                    data-inquiry="{{ json_encode($inquiry) }}">
                                                     <i class="ti ti-eye me-1"></i>View Details
                                                 </a>
                                             </li>
-                                            
                                             <li>
                                                 <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center text-danger delete-inquiry" 
                                                    data-inquiry-id="{{ $inquiry['id'] }}">
@@ -567,243 +570,14 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Chart Data from Backend
-const categoryData = @json($categoryDistribution);
-const revenueData = @json($revenueData);
-const engagementData = @json($engagementData);
-
-// Initialize Charts
 document.addEventListener('DOMContentLoaded', function() {
-    initializeCharts();
-    initializeEventListeners();
-});
-
-function initializeCharts() {
-    // User Growth Chart
-    const growthCtx = document.getElementById('userGrowthChart').getContext('2d');
-    window.userGrowthChart = new Chart(growthCtx, {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [
-                {
-                    label: 'Providers',
-                    data: [],
-                    borderColor: 'rgb(59, 130, 246)',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    tension: 0.4
-                },
-                {
-                    label: 'Parents',
-                    data: [],
-                    borderColor: 'rgb(16, 185, 129)',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    tension: 0.4
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    
-    // Load initial monthly data
-    updateGrowthChart('monthly');
-
-    // Category Distribution Pie Chart
-    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-    new Chart(categoryCtx, {
-        type: 'doughnut',
-        data: {
-            labels: categoryData.labels,
-            datasets: [{
-                data: categoryData.data,
-                backgroundColor: [
-                    'rgb(59, 130, 246)',
-                    'rgb(16, 185, 129)',
-                    'rgb(245, 158, 11)',
-                    'rgb(239, 68, 68)',
-                    'rgb(139, 92, 246)',
-                    'rgb(236, 72, 153)',
-                    'rgb(20, 184, 166)',
-                    'rgb(251, 146, 60)'
-                ],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        boxWidth: 12,
-                        padding: 10
-                    }
-                }
-            }
-        }
-    });
-
-    // Revenue Trend Chart
-    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-    new Chart(revenueCtx, {
-        type: 'bar',
-        data: {
-            labels: revenueData.labels,
-            datasets: [
-                {
-                    label: 'Monthly Revenue',
-                    data: revenueData.monthly,
-                    backgroundColor: 'rgba(245, 158, 11, 0.7)',
-                    borderColor: 'rgb(245, 158, 11)',
-                    borderWidth: 1
-                },
-                {
-                    label: 'Cumulative Revenue',
-                    data: revenueData.cumulative,
-                    type: 'line',
-                    borderColor: 'rgb(16, 185, 129)',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    yAxisID: 'y1'
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                }
-            },
-            scales: {
-                y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return value.toLocaleString();
-                        }
-                    }
-                },
-                y1: {
-                    type: 'linear',
-                    display: true,
-                    position: 'right',
-                    beginAtZero: true,
-                    grid: {
-                        drawOnChartArea: false,
-                    },
-                    ticks: {
-                        callback: function(value) {
-                            return + value.toLocaleString();
-                        }
-                    }
-                }
-            }
-        }
-    });
-
-    // Engagement Chart (Activity Radar)
-    const engagementCtx = document.getElementById('engagementChart').getContext('2d');
-    new Chart(engagementCtx, {
-        type: 'line',
-        data: {
-            labels: engagementData.labels,
-            datasets: [
-                {
-                    label: 'Inquiries',
-                    data: engagementData.inquiries,
-                    borderColor: 'rgb(59, 130, 246)',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                },
-                {
-                    label: 'Reviews',
-                    data: engagementData.reviews,
-                    borderColor: 'rgb(245, 158, 11)',
-                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                },
-                {
-                    label: 'Events',
-                    data: engagementData.events,
-                    borderColor: 'rgb(16, 185, 129)',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        boxWidth: 12,
-                        padding: 8
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}
-
-function updateGrowthChart(period) {
-    // Update button states
-    const buttons = document.querySelectorAll('.btn-group button');
-    buttons.forEach(btn => btn.classList.remove('active'));
-     // Fetch data
-    fetch(`/admin/dashboard/chart-data?period=${period}`)
-        .then(response => response.json())
-        .then(data => {
-            window.userGrowthChart.data.labels = data.labels;
-            window.userGrowthChart.data.datasets[0].data = data.providers;
-            window.userGrowthChart.data.datasets[1].data = data.parents;
-            window.userGrowthChart.update();
-        })
-        .catch(error => console.error('Error fetching chart data:', error));
-}
-
-function initializeEventListeners() {
     // View inquiry details
     const viewButtons = document.querySelectorAll('.view-inquiry');
     viewButtons.forEach(button => {
         button.addEventListener('click', function() {
             const inquiry = JSON.parse(this.dataset.inquiry);
             showInquiryDetails(inquiry);
-            new bootstrap.Modal(document.getElementById('viewInquiryModal')).show();
         });
     });
 
@@ -816,253 +590,305 @@ function initializeEventListeners() {
         });
     });
 
+    function showInquiryDetails(inquiry) {
+        const detailsContainer = document.getElementById('inquiryDetails');
+        detailsContainer.innerHTML = `
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Parent Information</h6>
+                    <p><strong>Name:</strong> ${inquiry.parent_name}</p>
+                    <p><strong>Email:</strong> ${inquiry.parent_email}</p>
+                </div>
+                <div class="col-md-6">
+                    <h6>Inquiry Details</h6>
+                    <p><strong>ID:</strong> ${inquiry.inquiry_id}</p>
+                    <p><strong>Date:</strong> ${inquiry.date_time}</p>
+                    <p><strong>Status:</strong> <span class="badge bg-${getStatusColor(inquiry.status)}">${inquiry.status}</span></p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h6>Provider</h6>
+                    <p><strong>Name:</strong> ${inquiry.provider_name}</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h6>Message</h6>
+                    <div class="border rounded p-3 bg-light">
+                        ${inquiry.message}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function getStatusColor(status) {
+        const colors = {
+            'pending': 'info',
+            'contacted': 'warning',
+            'approved': 'success',
+            'rejected': 'danger'
+        };
+        return colors[status] || 'secondary';
+    }
+
     // Delete inquiry
     const deleteButtons = document.querySelectorAll('.delete-inquiry');
     deleteButtons.forEach(button => {
         button.addEventListener('click', function() {
             const inquiryId = this.dataset.inquiryId;
             if (confirm('Are you sure you want to delete this inquiry?')) {
-                deleteInquiry(inquiryId);
+                // AJAX call to delete inquiry
+                fetch(`/admin/inquiries/${inquiryId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error deleting inquiry');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error deleting inquiry');
+                });
             }
         });
     });
-}
+});
+</script>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Fetch chart data and render charts
+    fetch("{{ route('dashboard.chart-data') }}")
+        .then(res => res.json())
+        .then(data => {
+            renderUsersChart(data);
+            renderCategoriesPie(data);
+            renderRevenueChart(data);
+            renderEngagementTable(data.engagement_by_city || []);
+        }).catch(err => console.error('Chart data error', err));
 
-function showInquiryDetails(inquiry) {
-    const detailsContainer = document.getElementById('inquiryDetails');
-    detailsContainer.innerHTML = `
-        <div class="row">
-            <div class="col-md-6">
-                <h6>Parent Information</h6>
-                <p><strong>Name:</strong> ${inquiry.parent_name}</p>
-                <p><strong>Email:</strong> ${inquiry.parent_email}</p>
-            </div>
-            <div class="col-md-6">
-                <h6>Inquiry Details</h6>
-                <p><strong>ID:</strong> ${inquiry.inquiry_id}</p>
-                <p><strong>Date:</strong> ${inquiry.date_time}</p>
-                <p><strong>Status:</strong> <span class="badge bg-${getStatusColor(inquiry.status)}">${inquiry.status}</span></p>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12">
-                <h6>Provider</h6>
-                <p><strong>Name:</strong> ${inquiry.provider_name}</p>
-                <p><strong>Service Type:</strong> ${inquiry.service_type}</p>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12">
-                <h6>Message</h6>
-                <div class="border rounded p-3 bg-light">
-                    ${inquiry.message}
-                </div>
-            </div>
-        </div>
-    `;
-}
+    function renderUsersChart(data) {
+        const ctx = document.getElementById('usersChart');
+        if (!ctx) return;
+        const labels = data.labels || [];
+        const providers = data.providers || [];
+        const parents = data.parents || [];
 
-function getStatusColor(status) {
-    const colors = {
-        'pending': 'info',
-        'contacted': 'warning',
-        'approved': 'success',
-        'rejected': 'danger'
-    };
-    return colors[status] || 'secondary';
-}
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Providers',
+                        data: providers,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59,130,246,0.08)',
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Parents',
+                        data: parents,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16,185,129,0.08)',
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'top' } }
+            }
+        });
+    }
+function renderCategoriesPie(data) {
+    const ctx = document.getElementById('categoriesPie');
+    if (!ctx) return;
 
-// Provider Approval/Rejection
-function approveProvider(providerId) {
-    if (!confirm('Are you sure you want to approve this provider?')) return;
-    
-    fetch(`/admin/providers/${providerId}/approve`, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showNotification('success', 'Provider approved successfully!');
-            setTimeout(() => location.reload(), 1500);
-        } else {
-            showNotification('error', 'Error approving provider');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('error', 'Error approving provider');
-    });
-}
+    ctx.style.height = "220px"; // 👈 set height here
 
-function rejectProvider(providerId) {
-    if (!confirm('Are you sure you want to reject this provider?')) return;
-    
-    fetch(`/admin/providers/${providerId}/reject`, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showNotification('success', 'Provider rejected');
-            setTimeout(() => location.reload(), 1500);
-        } else {
-            showNotification('error', 'Error rejecting provider');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('error', 'Error rejecting provider');
-    });
-}
+    const categories = data.categories || {};
+    const labels = Object.keys(categories);
+    const values = Object.values(categories);
+    const colors = labels.map((_,i) => getColor(i));
 
-// Review Moderation
-function moderateReview(reviewId, action) {
-    const actionText = action === 'approve' ? 'approve' : action === 'hide' ? 'hide' : 'reject';
-    if (!confirm(`Are you sure you want to ${actionText} this review?`)) return;
-    
-    fetch(`/admin/reviews/${reviewId}/moderate`, {
-        method: 'PUT',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: colors
+            }]
         },
-        body: JSON.stringify({ status: action })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data) {
-            showNotification('success', `Review ${actionText}d successfully!`);
-            setTimeout(() => location.reload(), 1500);
-        } else {
-            console.log(data)
-            showNotification('error', 'Error moderating review');
+        options: {
+            responsive: true,
+            maintainAspectRatio: false // 👈 required when setting custom height
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('error', 'Error moderating review');
     });
 }
 
-// Mark Inquiry as Resolved
-function markResolved(inquiryId) {
-    if (!confirm('Mark this inquiry as resolved?')) return;
-    
-    fetch(`/admin/inquiries/${inquiryId}/resolve`, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showNotification('success', 'Inquiry marked as resolved!');
-            setTimeout(() => location.reload(), 1500);
-        } else {
-            showNotification('error', 'Error updating inquiry');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('error', 'Error updating inquiry');
+
+    function renderRevenueChart(data) {
+        const ctx = document.getElementById('revenueChart');
+        if (!ctx) return;
+        const labels = data.labels || [];
+        const revenue = data.revenue || [];
+
+        // cumulative
+        let cum = 0;
+        const cumulative = revenue.map(v => cum = cum + Number(v));
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Monthly Revenue',
+                        data: revenue,
+                        borderColor: '#f97316',
+                        backgroundColor: 'rgba(249,115,22,0.06)',
+                        tension: 0.25
+                    },
+                    {
+                        label: 'Cumulative Revenue',
+                        data: cumulative,
+                        borderColor: '#ef4444',
+                        backgroundColor: 'rgba(239,68,68,0.06)',
+                        tension: 0.25
+                    }
+                ]
+            },
+            options: { responsive: true }
+        });
+    }
+
+    function renderEngagementTable(rows) {
+        const tbody = document.querySelector('#engagementTable tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        let max = 0;
+        rows.forEach(r => {
+            const total = (r.inquiries||0) + (r.reviews||0) + (r.events||0);
+            if (total > max) max = total;
+        });
+
+        rows.forEach(r => {
+            const tr = document.createElement('tr');
+            const total = (r.inquiries||0) + (r.reviews||0) + (r.events||0);
+            tr.innerHTML = `
+                <td>${r.city}</td>
+                <td style="background:${shadeForValue(r.inquiries, max)}">${r.inquiries}</td>
+                <td style="background:${shadeForValue(r.reviews, max)}">${r.reviews}</td>
+                <td style="background:${shadeForValue(r.events, max)}">${r.events}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function getColor(i) {
+        const palette = ['#6366f1','#ef4444','#f97316','#10b981','#06b6d4','#8b5cf6','#ec4899','#f59e0b'];
+        return palette[i % palette.length];
+    }
+
+    function shadeForValue(value, max) {
+        if (!max || value <= 0) return 'transparent';
+        const ratio = value / max;
+        const alpha = 0.15 + (ratio * 0.6);
+        return `rgba(59,130,246,${alpha})`;
+    }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const token = '{{ csrf_token() }}';
+
+    // Approve / Reject provider
+    document.querySelectorAll('.btn-approve, .btn-reject').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const isApprove = this.classList.contains('btn-approve');
+            const status = isApprove ? 'approved' : 'rejected';
+            if (!confirm(`${isApprove ? 'Approve' : 'Reject'} this provider?`)) return;
+            fetch(`/admin/providers/${id}/status`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token },
+                body: JSON.stringify({ status })
+            }).then(r => r.json()).then(resp => {
+                if (resp.success ?? true) location.reload();
+                else alert('Error');
+            }).catch(e => { console.error(e); alert('Error'); });
+        });
     });
-}
 
-// Delete Inquiry
-function deleteInquiry(inquiryId) {
-    fetch(`/admin/inquiries/${inquiryId}`, {
-        method: 'DELETE',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showNotification('success', 'Inquiry deleted successfully!');
-            setTimeout(() => location.reload(), 1500);
-        } else {
-            showNotification('error', 'Error deleting inquiry');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('error', 'Error deleting inquiry');
+    // Resolve inquiry
+    document.querySelectorAll('.btn-resolve-inquiry').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.dataset.id;
+            if (!confirm('Mark inquiry as resolved?')) return;
+            fetch(`/admin/inquiries/${id}/resolve`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token }
+            }).then(r => r.json()).then(resp => { if (resp.success) location.reload(); else alert('Error'); }).catch(e => { console.error(e); alert('Error'); });
+        });
     });
-}
 
-// Export Revenue
-function exportRevenue() {
-    window.location.href = '/admin/dashboard/export-revenue?format=csv';
-}
+    // Delete inquiry (admin)
+    document.querySelectorAll('.btn-delete-inquiry').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.dataset.id;
+            if (!confirm('Permanently delete this inquiry?')) return;
+            fetch(`/admin/inquiries/${id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token }
+            }).then(r => r.json()).then(resp => { if (resp.success) location.reload(); else alert('Error'); }).catch(e => { console.error(e); alert('Error'); });
+        });
+    });
+});
+</script>
+@endpush
 
-// Notification Helper
-function showNotification(type, message) {
-    // You can integrate with your existing notification system
-    // For now, using a simple alert
-    const bgColor = type === 'success' ? '#10b981' : '#ef4444';
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${bgColor};
-        color: white;
-        padding: 15px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 9999;
-        animation: slideIn 0.3s ease;
-    `;
-    notification.textContent = message;
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
-}
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const feedEl = {
+        users: document.getElementById('feed-users'),
+        inquiries: document.getElementById('feed-inquiries'),
+        reviews: document.getElementById('feed-reviews')
+    };
 
-// Add CSS animations
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
+    function renderFeed(payload) {
+        if (!payload) return;
+        feedEl.users && (feedEl.users.innerHTML = payload.users.map(u => `<li><strong>${u.name}</strong> <div class="small text-muted">${u.created_at}</div></li>`).join(''));
+        feedEl.inquiries && (feedEl.inquiries.innerHTML = payload.inquiries.map(i => `<li><strong>${i.name}</strong> <div class="small text-muted">${i.provider} • ${i.created_at}</div></li>`).join(''));
+        feedEl.reviews && (feedEl.reviews.innerHTML = payload.flagged_reviews.map(r => `<li><strong>${r.provider}</strong> <div class="small text-muted">${r.snippet} • ${r.created_at}</div></li>`).join(''));
+    }
+
+    async function fetchFeed() {
+        try {
+            const res = await fetch("{{ route('admin.realtime.feed') }}");
+            if (!res.ok) return;
+            const data = await res.json();
+            renderFeed(data);
+        } catch (e) {
+            console.error('Realtime feed error', e);
         }
     }
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
+
+    fetchFeed();
+    setInterval(fetchFeed, 30000); // poll every 30s
+});
 </script>
 @endpush

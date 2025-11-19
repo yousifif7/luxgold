@@ -22,25 +22,12 @@ class CategoryController extends Controller
             $query->where('status', request('status'));
         }
 
-        $cats = $query->paginate(25)->appends(request()->query());
+        $cats = $query->get();
 
         $catIds = $cats->pluck('id')->all();
-        $stats = [];
-        if (Schema::hasTable('services')) {
-            $rows = DB::table('services')
-                ->select('category_id', DB::raw('count(*) as services_count'), DB::raw('sum(price) as revenue'))
-                ->whereIn('category_id', $catIds)
-                ->groupBy('category_id')
-                ->get();
-            foreach ($rows as $r) {
-                $stats[$r->category_id] = [
-                    'services_count' => $r->services_count,
-                    'revenue' => $r->revenue
-                ];
-            }
-        }
+        
 
-        return view('admin.categories.index', compact('cats', 'stats'));
+        return view('admin.categories.index', compact('cats'));
     }
 
     public function create()

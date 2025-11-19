@@ -77,7 +77,7 @@ class RegisterController extends Controller
                 'business_name'      => $data['business_name'],
                 'phone'              => $data['phone'],
                 'category'           => $data['category'],
-                'plans_id'       => $data['pricing_plan'],
+                'plans_id'           => $data['pricing_plan'],
                 'years_experience'   => $data['years_experience'],
                 'address'            => $data['address'],
                 'city'               => $data['city'],
