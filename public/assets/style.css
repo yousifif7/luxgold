@@ -493,6 +493,10 @@ background-color: rgb(51, 125, 124);
   background-color: #337d7c21;
 }
 
+.btn-compare.compare-btn.in-compare{
+  font-size: 10px !important;
+}
+
 .sixth-section {
   padding-top: 60px;
   padding-bottom: 60px;
