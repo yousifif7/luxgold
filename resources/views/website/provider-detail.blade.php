@@ -142,7 +142,7 @@
 
             <!-- Provider Events Section -->
             @php
-                $providerEvents = $provider->events()->where('status', 'active')->where('start_date', '>=', now())->orderBy('start_date')->get();
+                $providerEvents = $provider->events()->where('start_date', '>=', now())->orderBy('start_date')->get();
             @endphp
             
             @if($providerEvents->count() > 0)
@@ -725,7 +725,7 @@
                             </p>
                             @endif
                             <div class="event-actions">
-                                <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                                <a href="{{ route('event.detail', $event->id) }}" class="btn btn-sm btn-primary">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -1525,7 +1525,7 @@ function saveProvider(providerId, button) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showToast('Kindly Login First', 'error');
+     showToast('Kindly Login First', 'error');
     });
 }
 
@@ -1552,7 +1552,7 @@ function followProvider(providerId, button) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showToast('Kindly Login First', 'error');
+       showToast('Kindly Login First', 'error');
     });
 }
 
