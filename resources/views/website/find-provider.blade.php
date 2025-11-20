@@ -161,9 +161,7 @@
                             @endforeach
                         </select>
             
-                        <h6 class="filter-title">Distance: <span id="distanceBadge">25 miles</span></h6>
-                        <input type="range" name="distance" id="distanceRange" min="1" max="100" value="{{ request('distance', 25) }}" class="custom mb-2">
-            
+                      
                           <h6 class="filter-title">Minimum Rating: <span id="ratingBadge">{{ request('rating', 0) }}+</span></h6>
                         <input type="range" name="rating" id="ratingRange" min="0" max="5" step="0.5" 
                                value="{{ request('rating', 0) }}" class="custom mb-2">
@@ -399,8 +397,7 @@
                             @endforeach
                         </select>
             
-                         <h6 class="filter-title">Distance: <span id="distanceBadge">25 miles</span></h6>
-                        <input type="range" name="distance" id="distanceRange" min="1" max="100" value="{{ request('distance', 25) }}" class="custom mb-2">
+                       
             
                         <h6 class="filter-title">Minimum Rating: <span id="ratingBadge">{{ request('rating', 0) }}+</span></h6>
                         <input type="range" name="rating" id="ratingRange" min="0" max="5" step="0.5" 

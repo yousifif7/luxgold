@@ -2,9 +2,6 @@
 @section('title', 'Welcome to AskRoro - Find Trusted Family Services')
 @section('content')
 <section class="hero-section">
-    <div class="circle circle-1"></div>
-    <div class="circle circle-2"></div>
-    <div class="circle circle-3"></div>
     <div class="container">
         <div class="row align-items-center">
             <!-- Left Content -->
