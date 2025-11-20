@@ -18,7 +18,7 @@
                 <div class="col-md-6">
                     <div class="input-group-div green">
                         <i class="bi bi-geo-alt "></i>
-                        <input type="text" name="location" placeholder="What service do you need?">
+                        <input type="text" name="location" placeholder="Where do you need?">
                     </div>
                 </div>
                 <div class="col-md-12">
