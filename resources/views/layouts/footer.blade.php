@@ -43,7 +43,6 @@
       <div class="col-lg-3 col-md-6">
         <h6 class="askroro-footer-heading text-teal fw-bold mb-3">Support</h6>
         <ul class="list-unstyled askroro-footer-links">
-          <li><a href="{{ route('support.index') }}" class="text-decoration-none">Contact & Support</a></li>
           <li><a href="{{ route('website.about') }}" class="text-decoration-none">About Us</a></li>
           <li><a href="{{ route('website.privacy-policy') }}" class="text-decoration-none">Privacy Policy</a></li>
           <li><a href="{{ route('website.services') }}" class="text-decoration-none">Terms of Service</a></li>

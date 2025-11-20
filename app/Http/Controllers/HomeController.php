@@ -63,6 +63,13 @@ class HomeController extends Controller
         ));
     }
 
+    public function resourceDetails($slug){
+
+        $resource=Resource::where('slug',$slug)->first();
+
+        return view('website.resource',compact('resource'));
+    }
+
      public function compare(){
 
 

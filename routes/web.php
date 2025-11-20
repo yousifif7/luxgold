@@ -27,6 +27,8 @@ Route::get('/terms-of-services', fn() => view('website.term-of-services'))->name
 Route::get('/provider-detail/{id}', [HomeController::class,'providerDetail'])->name('website.provider-detail');
 Route::get('/event-detail/{id}', [HomeController::class,'eventDetail'])->name('website.event-detail');
 Route::get('/find-event', [HomeController::class,'findEvents'])->name('website.find-event');
+Route::get('/resource/{slug}', [HomeController::class,'resourceDetails'])->name('website.resource');
+
 
 Route::get('/privacy-policy', fn() => view('website.privacy-policy'))->name('website.privacy-policy');
 Route::get('/cookies-policy', fn() => view('website.cookies-policy'))->name('website.cookies-policy');

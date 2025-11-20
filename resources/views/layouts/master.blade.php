@@ -45,7 +45,8 @@
     @stack('links')
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/logo.png') }}">
           <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
-
+@stack('styles')
+@yield('styles')
 </head>
 
 

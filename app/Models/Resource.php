@@ -131,8 +131,7 @@ class Resource extends Model
      */
     public function relatedResources($limit = 3)
     {
-        return static::where('category', $this->category)
-                    ->where('id', '!=', $this->id)
+        return static::where('id', '!=', $this->id)
                     ->active()
                     ->ordered()
                     ->limit($limit)

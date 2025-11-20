@@ -526,7 +526,7 @@
                 <div class="custom-card-body">
                     <h3 class="custom-card-title">{{ $resource->title }}</h3>
                     <p class="custom-card-text">{{ $resource->description }}</p>
-                    <a href="#" class="custom-card-link">
+                    <a href="{{ route('website.resource',$resource->slug) }}" class="custom-card-link">
                         Read More <i class="bi bi-chevron-right"></i>
                     </a>
                 </div>
