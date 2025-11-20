@@ -88,7 +88,7 @@
           </div>
       </div>
       <div class="d-flex justify-content-center align-items-center">
-        <button >List Your Services - Free <i class="bi bi-chevron-right ms-1"></i></button>
+        <button onclick="openLoginModal()">List Your Services - Free <i class="bi bi-chevron-right ms-1"></i></button>
       </div>
     </div>
   </section>
