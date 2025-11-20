@@ -164,7 +164,7 @@
             <div class="right-col">
                 <div class="providers-header">
                     <div>
-                        <div class="providers-left">{{ count($events) }} providers found</div>
+                        <div class="providers-left">{{ count($events) }} event found</div>
                         <div class="small-muted">Showing results for your search criteria</div>
                     </div>
     
@@ -279,7 +279,7 @@
                     <!-- Same filter form content as desktop -->
                     <form id="mobileSearchForm" method="GET" action="{{ route('website.find-event') }}">
                         <input type="text" name="search" class="input-ghost" 
-                               placeholder="🔍 Search providers..." value="{{ request('search') }}">
+                               placeholder="🔍 Search event..." value="{{ request('search') }}">
                         <input type="text" name="location" class="input-ghost" 
                                placeholder="📍 Enter location..." value="{{ request('location') }}">
             
