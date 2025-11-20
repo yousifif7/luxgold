@@ -129,6 +129,7 @@ class ContentManagementSeeder extends Seeder
         ];
 
         foreach ($cities as $city) {
+            $city->icon_url=asset($city->icon_url);
             City::create($city);
         }
     }
