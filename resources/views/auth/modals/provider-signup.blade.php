@@ -226,7 +226,14 @@
                             <div class="serviceflow-form-row">
                                 <div class="serviceflow-form-group">
                                     <label class="serviceflow-form-label">City</label>
-                                    <input type="text" name="city" class="serviceflow-form-control" placeholder="City" required>
+                                    <select class="serviceflow-form-control" name="city">
+                                        @foreach(App\Models\City::active()->ordered()->get() as $city)
+
+                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+
+                                        @endforeach
+                                        
+                                    </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="serviceflow-form-group">

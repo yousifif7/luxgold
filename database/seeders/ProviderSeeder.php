@@ -584,7 +584,7 @@ class ProviderSeeder extends Seeder
                     'plans_id' => '2',
                     'email' => $providerData['email'],
                     'physical_address' => $providerData['location'] . ', TX',
-                    'city' => 'Prosper',
+                    'city' => 2,
                     'state' => 'TX',
                     'zip_code' => '75078',
                     'sub_categories' => [],
