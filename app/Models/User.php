@@ -28,6 +28,7 @@ class User extends Authenticatable
         'zip_code',
         'email',
         'password',
+        'profile_picture'
     ];
 
     /**
