@@ -18,13 +18,20 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-EventSeeder::class,/*
+            AgesServedSeeder::class,
+            DiversityBadgesSeeder::class,
+            ServicesOfferdSeeder::class,
+            SpecialFeaturesSeeder::class,
+            ProgramsOfferedSeeder::class,
+            CareTypesSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
             PlansTableSeeder::class,
             CategoriesTableSeeder::class,
             ContentManagementSeeder::class,
-            ProviderSeeder::class,*/
+            ProviderSeeder::class,
+            EventSeeder::class,
+
         ]);
     }
 }

@@ -264,7 +264,7 @@
                                                     {{ $provider->business_name ?? $provider->name }}
                                                 </a>
                                             </span>
-                                            <span class="small text-muted">{{ $provider->category }}</span>
+                                            <span class="small text-muted">{{ $provider->category->name??'' }}</span>
                                         </div>
                                     </div>
                                 </td>

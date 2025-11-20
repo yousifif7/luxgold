@@ -14,6 +14,13 @@ use App\Models\RecentlyViewed;
 use App\Models\Promotion;
 use App\Models\Event;
 use Session;
+use App\Models\CareType;
+use App\Models\AgesServed;
+use App\Models\DiversityBadge;
+use App\Models\ProgramsOffered;
+use App\Models\SpecialFeatures;
+use App\Models\ServicesOfferd;
+use Illuminate\Database\Eloquent\Builder; // Correct one for Eloquent
 
 class HomeController extends Controller
 {
@@ -75,37 +82,34 @@ class HomeController extends Controller
         }
 
         // Filter by location
-        if ($request->has('location') && $request->location) {
-            $location = $request->location;
-            $query->where(function ($q) use ($location) {
-                $q->where('physical_address', 'like', "%{$location}%")
-                    ->orWhere('city', 'like', "%{$location}%")
-                    ->orWhere('zip_code', 'like', "%{$location}%");
-            });
-        }
-
+        
         // Filter by category
         if ($request->has('category') && $request->category != 'all') {
-            $query->where('category', $request->category);
+            $query->where('categories_id', $request->category);
+        }
+        if ($request->has('age_group') && $request->age_group != 'all') {
+            $query->where('ages_served_id', $request->age_group);
         }
 
-        // Filter by price range
-        if ($request->has('price_min') && $request->price_min) {
-            $query->where('price_amount', '>=', $request->price_min);
-        }
-        if ($request->has('price_max') && $request->price_max) {
-            $query->where('price_amount', '<=', $request->price_max);
-        }
+        if ($request->filled('price_min') && $request->filled('price_max')) {
+    $query->whereBetween('price_amount', [(float)$request->price_min, (float)$request->price_max]);
+}
 
-        // Filter by rating
+
         if ($request->has('rating') && $request->rating) {
-            $query->where('rating', '>=', $request->rating);
-        }
-
+    $query->whereHas('approvedReviews', function (Builder $q) use ($request) {
+        $q->selectRaw('avg(rating) as avg_rating')
+          ->havingRaw('avg(rating) >= ?', [$request->rating]);
+    });
+}
         // Get results
-        $providers = $query->get();
+        $providers = $query->paginate(9);
+        $categories=Category::whereNull('parent_id')->get();
+        $ages_served=AgesServed::get();
+        $programs_offerd=ProgramsOffered::get();
+        $services_offerd=ServicesOfferd::get();
 
-        return view('website.find-provider', compact('providers'));
+        return view('website.find-provider', compact('providers','categories','ages_served','services_offerd'));
     }
     public function providerDetail($id)
     {

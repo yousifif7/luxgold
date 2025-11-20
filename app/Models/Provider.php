@@ -10,62 +10,69 @@ class Provider extends Model
     use HasFactory;
 
     protected $fillable = [
-    'name',
-    'category',
-    'email',
-    'phone',
-    'location',
-    'membership',
-    'status',
-    'revenue',
-    'rating',
-    'avatar',
-    'user_id',
-    'profile_views',
-    'website',
-    'description',
-    'contact_person',
-    'business_type',
-    'license_number',
-    'age_range',
-    'capacity',
-    'hours',
-    'notify_inquiry',
-    'business_name',
-    'role_title',
-    'phone_number',
-    'physical_address',
-    'city',
-    'state',
-    'zip_code',
-    'service_categories',
-    'service_description',
-    'price_amount',
-    'pricing_description',
-    'available_days',
-    'start_time',
-    'end_time',
-    'plans_id',
-    'availability_notes',
-    'years_operation',
-    'insurance_coverage',
-    'diversity_badges',
-    'special_features',
-    'facebook',
-    'instagram',
-    'logo_path',
-    'facility_photos_paths',
-    'license_docs_paths',
-    'is_featured',
-    // Newly added columns
-    'ages_served',
-    'operating_hours',
-    'care_type',
-    'programs_offered',
-    'views',
-    'clicks',
-    'inquiries'
-];
+        'name',
+        'phone',
+        'categories_id',
+        'business_name',
+        'contact_person',
+        'role_title',
+        'phone_number',
+        'plans_id',
+        'email',
+        'physical_address',
+        'city',
+        'state',
+        'zip_code',
+        'sub_categories',
+        'services_offerd',
+        'service_description',
+        'ages_served_id',
+        'operating_hours',
+        'care_types_id',
+        'programs_offered_id',
+        'price_amount',
+        'pricing_description',
+        'available_days',
+        'start_time',
+        'end_time',
+        'availability_notes',
+        'license_number',
+        'years_operation',
+        'insurance_coverage',
+        'diversity_badges',
+        'special_features',
+        'website',
+        'facebook',
+        'instagram',
+        'logo_path',
+        'facility_photos_paths',
+        'license_docs_paths',
+        'status',
+        'is_featured',
+        'user_id',
+        'avatar',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     */
+    protected $casts = [
+        'categories_id' => 'integer',
+        'price_amount' => 'decimal:2',
+        'sub_categories' => 'array',
+        'services_offerd' => 'array',
+        'available_days' => 'array',
+        'diversity_badges' => 'array',
+        'special_features' => 'array',
+        'facility_photos_paths' => 'array',
+        'license_docs_paths' => 'array',
+        'is_featured' => 'boolean',
+        'status' => 'string',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     /**
      * The provider belongs to a user record (role = 'provider').
@@ -75,26 +82,14 @@ class Provider extends Model
         return $this->belongsTo(User::class);
     }
 
-/*    public function listings()
+    public function category()
     {
-        return $this->hasMany(\App\Models\Listing::class);
-    }*/
-
-    protected $casts = [
-    'revenue' => 'decimal:2',
-    'rating' => 'float',
-    'profile_views' => 'integer',
-    'views' => 'integer',
-    'clicks' => 'integer',
-    'inquiries' => 'integer',
-    'notify_inquiry' => 'boolean',
-    'service_categories' => 'array',
-    'available_days' => 'array',
-    'diversity_badges' => 'array',
-    'special_features' => 'array',
-    'facility_photos_paths' => 'array',
-    'license_docs_paths' => 'array',
-];
+        return $this->belongsTo(Category::class,'categories_id');
+    }
+      public function ages()
+    {
+        return $this->belongsTo(AgesServed::class,'ages_served_id');
+    }
 
 
     public function reviews()
@@ -125,6 +120,16 @@ return $this->hasMany(Event::class,'provider_id','user_id');
     {
         return $this->reviews()->where('status', 'approved');
     }
+
+    public function averageRating()
+{
+    $approvedReviews = $this->approvedReviews(); // Only approved reviews
+    $average = $approvedReviews->avg('rating'); // Calculate average
+    
+    return $average ? round($average, 1) : null; // Round to 1 decimal or return null
+}
+
+
 
     public function updateRating()
     {

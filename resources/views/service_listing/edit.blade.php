@@ -165,6 +165,95 @@
                             @enderror
                         </div>
                     </div>
+
+                    <div class="col-md-6">
+    <div class="service-listing-form-group-container">
+        <label class="service-listing-form-label-text">
+            Care Type <span class="service-listing-required-field-indicator">*</span>
+        </label>
+        <select class="service-listing-form-input-field @error('care_types_id') is-invalid @enderror" 
+                id="careType" name="care_types_id" required>
+            <option value="">Select Care Type</option>
+            @foreach($care_types as $care)
+                <option value="{{ $care->id }}" {{ old('care_types_id', $serviceListing->care_types_id) == $care->id ? 'selected' : '' }}>
+                    {{ $care->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('care_types_id')
+            <div class="service-listing-error-message-text show">{{ $message }}</div>
+        @else
+            <div class="service-listing-error-message-text">Care Type is required</div>
+        @enderror
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="service-listing-form-group-container">
+        <label class="service-listing-form-label-text">
+            Category <span class="service-listing-required-field-indicator">*</span>
+        </label>
+        <select class="service-listing-form-input-field @error('categories_id') is-invalid @enderror" 
+                id="programOffered" name="categories_id" required>
+            <option value="">Select Program</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ old('categories_id', $serviceListing->categories_id) == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('categories_id')
+            <div class="service-listing-error-message-text show">{{ $message }}</div>
+        @else
+            <div class="service-listing-error-message-text">Category is required</div>
+        @enderror
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="service-listing-form-group-container">
+        <label class="service-listing-form-label-text">
+            Ages Served <span class="service-listing-required-field-indicator">*</span>
+        </label>
+        <select class="service-listing-form-input-field @error('ages_served_id') is-invalid @enderror" 
+                id="agesServed" name="ages_served_id" required>
+            <option value="">Select Ages Served</option>
+            @foreach($ages_served as $age)
+                <option value="{{ $age->id }}" {{ old('ages_served_id', $serviceListing->ages_served_id) == $age->id ? 'selected' : '' }}>
+                    {{ $age->title }}
+                </option>
+            @endforeach
+        </select>
+        @error('ages_served_id')
+            <div class="service-listing-error-message-text show">{{ $message }}</div>
+        @else
+            <div class="service-listing-error-message-text">Ages Served is required</div>
+        @enderror
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="service-listing-form-group-container">
+        <label class="service-listing-form-label-text">
+            Program Offered <span class="service-listing-required-field-indicator">*</span>
+        </label>
+        <select class="service-listing-form-input-field @error('programs_offered_id') is-invalid @enderror" 
+                id="serviceOffered" name="programs_offered_id" required>
+            <option value="">Select Service</option>
+            @foreach($programs_offerd as $program_offerd)
+                <option value="{{ $program_offerd->id }}" {{ old('programs_offered_id', $serviceListing->programs_offered_id) == $program_offerd->id ? 'selected' : '' }}>
+                    {{ $program_offerd->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('programs_offered_id')
+            <div class="service-listing-error-message-text show">{{ $message }}</div>
+        @else
+            <div class="service-listing-error-message-text">Program Offered is required</div>
+        @enderror
+    </div>
+</div>
+
                     <div class="col-md-6">
                         <div class="service-listing-form-group-container">
                             <label class="service-listing-form-label-text">
@@ -259,24 +348,50 @@
                     </label>
                     <div class="service-listing-checkbox-group-container">
                         @php
-                            $oldServices = old('service_categories', json_decode($serviceListing->service_categories) ?? []);
+                            $oldServices = old('sub_categories', ($serviceListing->sub_categories) ?? []);
 
                         @endphp
-                        @foreach(\App\Models\Category::whereNull('parent_id')->get() as $category)
-                        <div class="service-listing-checkbox-item-wrapper" data-service="{{ $category->name }}">
-                            <input type="checkbox" id="service-{{ $category->slug }}" name="service_categories[]" value="{{ $category->name }}" 
-                                   class="service-listing-service-checkbox form-check-input mt-0 @error('service_categories') is-invalid @enderror"
-                                   {{ in_array($category->name, $oldServices) ? 'checked' : '' }}>
+                        @foreach(\App\Models\Category::whereNotNull('parent_id')->get() as $category)
+                        <div class="service-listing-checkbox-item-wrapper" data-service="{{ $category->id }}">
+                            <input type="checkbox" id="service-{{ $category->slug }}" name="sub_categories[]" value="{{ $category->id }}" 
+                                   class="service-listing-service-checkbox form-check-input mt-0 @error('sub_categories') is-invalid @enderror"
+                                   {{ in_array($category->id, $oldServices) ? 'checked' : '' }}>
                             <label for="service-{{ $category->slug }}">{{ $category->name }}</label>
                         </div>
                         @endforeach
                     </div>
-                    @error('service_categories')
+                    @error('sub_categories')
+                        <div class="service-listing-error-message-text show">{{ $message }}</div>
+                    @else
+                        <div class="service-listing-error-message-text">Please select at least one category</div>
+                    @enderror
+                </div>
+
+                                <div class="service-listing-form-group-container">
+                    <label class="service-listing-form-label-text">
+                        Services Offerd <span class="service-listing-required-field-indicator">*</span>
+                    </label>
+                    <div class="service-listing-checkbox-group-container">
+                        @php
+                            $oldServices = old('services_offerd', ($serviceListing->services_offerd) ?? []);
+
+                        @endphp
+                        @foreach($services_offerd as $service)
+                        <div class="service-listing-checkbox-item-wrapper" data-service="{{ $service->id }}">
+                            <input type="checkbox" id="service-{{ $service->slug }}" name="services_offerd[]" value="{{ $service->id }}" 
+                                   class="service-listing-service-checkbox form-check-input mt-0 @error('services_offerd') is-invalid @enderror"
+                                   {{ in_array($service->id, $oldServices) ? 'checked' : '' }}>
+                            <label for="service-{{ $service->slug }}">{{ $service->title }}</label>
+                        </div>
+                        @endforeach
+                    </div>
+                    @error('services_offerd')
                         <div class="service-listing-error-message-text show">{{ $message }}</div>
                     @else
                         <div class="service-listing-error-message-text">Please select at least one service</div>
                     @enderror
                 </div>
+
 
                 <div class="service-listing-form-group-container">
                     <label class="service-listing-form-label-text">Service Description</label>
@@ -349,7 +464,7 @@
                     
                     <div class="service-listing-form-group-container mt-4">
                         <label class="service-listing-form-label-text">Price Amount <span class="service-listing-required-field-indicator">*</span></label>
-                        <div class="input-group">
+                        <div class="d-flex" style="display: flex;">
                             <span class="input-group-text">$</span>
                             <input type="number" class="service-listing-form-input-field @error('price_amount') is-invalid @enderror" 
                                    id="price-amount" name="price_amount" 
@@ -382,7 +497,7 @@
                             <label class="service-listing-form-label-text">Available Days</label>
                             <div class="service-listing-checkbox-group-container">
                                 @php
-                                    $oldDays = old('available_days', json_decode($serviceListing->available_days) ?? []);
+                                    $oldDays = old('available_days', ($serviceListing->available_days) ?? []);
                                 @endphp
                                 <div><input type="checkbox" name="available_days[]" value="monday" 
                                            class="form-check-input me-2 @error('available_days') is-invalid @enderror"
@@ -496,7 +611,7 @@
                     <label class="service-listing-form-label-text">Diversity & Ownership Badges</label>
                     <div class="service-listing-checkbox-group-container">
                         @php
-                            $oldBadges = old('diversity_badges', json_decode($serviceListing->diversity_badges) ?? []);
+                            $oldBadges = old('diversity_badges', $serviceListing->diversity_badges ?? []);
                         @endphp
                         <div><input type="checkbox" class="form-check-input me-2 @error('diversity_badges') is-invalid @enderror" 
                                    id="badge-women" name="diversity_badges[]" value="women"
@@ -523,7 +638,7 @@
                     <label class="service-listing-form-label-text">Special Features</label>
                     <div class="service-listing-checkbox-group-container">
                         @php
-                            $oldFeatures = old('special_features', json_decode($serviceListing->special_features) ?? []);
+                            $oldFeatures = old('special_features', $serviceListing->special_features ?? []);
                         @endphp
                         <div><input type="checkbox" class="form-check-input me-2 @error('special_features') is-invalid @enderror" 
                                    id="feature-stem" name="special_features[]" value="stem"
@@ -625,11 +740,11 @@
                     @endif
 
 
-                    @if($serviceListing->facility_photos_paths && count(json_decode($serviceListing->facility_photos_paths)) > 0)
+                    @if($serviceListing->facility_photos_paths && count($serviceListing->facility_photos_paths) > 0)
                     <div class="existing-file-item mb-3">
                         <label class="service-listing-form-label-text">Current Facility Photos:</label>
                         <div class="row">
-                            @foreach(json_decode($serviceListing->facility_photos_paths) as $index => $photo)
+                            @foreach($serviceListing->facility_photos_paths as $index => $photo)
                             <div class="col-md-3 mb-2">
                                 <div class="position-relative">
                                     <img src="{{ asset( $photo) }}" alt="Facility Photo {{ $index + 1 }}" 
@@ -645,11 +760,11 @@
                     </div>
                     @endif
 
-                    @if($serviceListing->license_docs_paths && count(json_decode($serviceListing->license_docs_paths)) > 0)
+                    @if($serviceListing->license_docs_paths && count($serviceListing->license_docs_paths) > 0)
                     <div class="existing-file-item mb-3">
                         <label class="service-listing-form-label-text">Current License Documents:</label>
                         <div class="row">
-                            @foreach(json_decode($serviceListing->license_docs_paths) as $index => $doc)
+                            @foreach($serviceListing->license_docs_paths as $index => $doc)
                             <div class="col-md-4 mb-2">
                                 <div class="d-flex align-items-center gap-2 p-2 border rounded">
                                     <i class="fas fa-file-pdf text-danger"></i>
@@ -1051,7 +1166,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             case 2:
                 // Validate services
-                const serviceCheckboxes = document.querySelectorAll('input[name="service_categories[]"]:checked');
+                const serviceCheckboxes = document.querySelectorAll('input[name="sub_categories[]"]:checked');
                 if (serviceCheckboxes.length === 0) {
                     isValid = false;
                     // Highlight service categories container
@@ -1324,83 +1439,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Form submission with file handling
-    if (submitBtn) {
-        submitBtn.addEventListener('click', function() {
-            if (validateStep(currentStep)) {
-                submitForm();
-            }
-        });
-    }
-
-    // Submit form with file data
-    async function submitForm() {
-        const submitBtn = document.getElementById('submitFormBtn');
-        const originalText = submitBtn.innerHTML;
-        
-        try {
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
-
-            // Collect all form data
-            const finalFormData = new FormData();
-            
-            // Add all text/number/select fields
-            const formFields = document.querySelectorAll('input, textarea, select');
-            formFields.forEach(field => {
-                if (field.type !== 'file' && field.type !== 'button' && field.type !== 'submit') {
-                    if (field.type === 'checkbox' || field.type === 'radio') {
-                        if (field.checked) {
-                            if (field.name.endsWith('[]')) {
-                                finalFormData.append(field.name, field.value);
-                            } else {
-                                finalFormData.set(field.name, field.value);
-                            }
-                        }
-                    } else {
-                        finalFormData.set(field.name, field.value);
-                    }
-                }
-            });
-
-            // Add files from formData
-            for (let [key, value] of formData.entries()) {
-                finalFormData.append(key, value);
-            }
-
-            // Submit to backend
-            const response = await fetch(document.getElementById('serviceListingForm').action, {
-                method: 'POST',
-                body: finalFormData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                showSuccessMessage(result.message);
-                if (result.redirect) {
-                    setTimeout(() => {
-                        window.location.href = result.redirect;
-                    }, 2000);
-                }
-            } else {
-                showErrorMessage(result.message || 'Update failed');
-            }
-
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            showErrorMessage('An error occurred while updating your listing. Please try again.');
-        } finally {
-            // Reset button state
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
-        }
-    }
-
+    
     function showSuccessMessage(message) {
         // You can use SweetAlert or your preferred notification method
         alert('Success: ' + message);

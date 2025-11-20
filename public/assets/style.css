@@ -3,11 +3,23 @@
 body {
   font-family: "Inter";
 }
+.rating-stars{
+  display: flex !important;
+  justify-content: center !important;
+}
 .navbar .navbar-brand span {
   color: rgb(255, 107, 71);
   font-weight: 700;
 
   font-size: 20px;
+}
+.active>.page-link, .page-link.active {
+    z-index: 3;
+    background-color: #337d7c;
+    border-color: #337d7c;
+}
+.page-link{
+  color: #337d7c;
 }
 .navbar .navbar-brand img {
   width: auto;

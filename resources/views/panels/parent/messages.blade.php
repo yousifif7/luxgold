@@ -2,7 +2,6 @@
 
 @section('parent-title', 'Messages - Parent Portal')
 @section('content')
-
 <div class="page-wrapper">
 
     <!-- Start Content -->
@@ -24,7 +23,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="stat-card text-center">
-                        <div class="stat-number">{{ $inquiries->where('status', 'new')->count() }}</div>
+                        <div class="stat-number">{{ $inquiries->where('status', 'pending')->count() }}</div>
                         <div class="stat-label">New</div>
                     </div>
                 </div>
@@ -43,13 +42,7 @@
             </div>
 
             <!-- Inquiries List -->
-            @php
-                $active = $inquiries->filter(function($i) { return !in_array($i->status, ['closed','rejected']); });
-                $past = $inquiries->filter(function($i) { return in_array($i->status, ['closed','rejected']); });
-            @endphp
-
-            <h5 class="mt-3">Active Requests</h5>
-            @forelse($active as $inquiry)
+            @forelse($inquiries as $inquiry)
             <div class="message-card">
                 <div class="message-header">
                     <div class="d-flex align-items-center">
@@ -57,14 +50,14 @@
                             {{ substr($inquiry->provider->name ?? 'P', 0, 1) }}
                         </div>
                         <div>
-                            <div class="provider-name">{{ $inquiry->provider->name ?? 'Provider' }}@includeWhen($inquiry->provider && $inquiry->provider->user, 'components.verified-badge', ['user' => $inquiry->provider->user ?? null])</div>
+                            <div class="provider-name">{{ $inquiry->provider->name ?? 'Provider' }}</div>
                             <div class="provider-type">{{ $inquiry->provider->type ?? 'Childcare Provider' }}</div>
                             <div class="mt-2"><strong>{{ $inquiry->subject ?? 'Inquiry' }}</strong></div>
                         </div>
                     </div>
                     <div class="text-end">
-                        <span class="status-badge status-{{ $inquiry->status }}" id="status-badge-{{ $inquiry->id }}">
-                            @if($inquiry->status === 'new')
+                        <span class="status-badge status-{{ $inquiry->status }}">
+                            @if($inquiry->status === 'pending')
                                 New
                             @elseif($inquiry->status === 'responded')
                                 Provider Responded
@@ -72,20 +65,11 @@
                                 Closed
                             @endif
                         </span>
-                        <div class="btn-group">
-                            <button class="btn btn-light border btn-sm chat-toggle" 
-                                    data-inquiry-id="{{ $inquiry->id }}"
-                                    data-provider-name="{{ $inquiry->provider->name ?? 'Provider' }}">
-                                Contact Provider
-                            </button>
-                            <button class="btn btn-outline-secondary btn-sm reschedule-btn" 
-                                    data-inquiry-id="{{ $inquiry->id }}">
-                                Reschedule
-                            </button>
-                            <button class="btn btn-danger btn-sm cancel-btn" data-inquiry-id="{{ $inquiry->id }}">
-                                Cancel
-                            </button>
-                        </div>
+                        <button class="btn btn-light border btn-sm ms-2 chat-toggle" 
+                                data-inquiry-id="{{ $inquiry->id }}"
+                                data-provider-name="{{ $inquiry->provider->name ?? 'Provider' }}">
+                            View Chat
+                        </button>
                     </div>
                 </div>
                 <p class="mb-2">{{ Str::limit($inquiry->message, 150) }}</p>
@@ -105,42 +89,6 @@
                 </button>
             </div>
             @endforelse
-
-            @if($past->count())
-            <h5 class="mt-4">Past Requests</h5>
-            @foreach($past as $inquiry)
-            <div class="message-card muted">
-                <div class="message-header">
-                    <div class="d-flex align-items-center">
-                        <div class="provider-avatar bg-secondary me-3">
-                            {{ substr($inquiry->provider->name ?? 'P', 0, 1) }}
-                        </div>
-                        <div>
-                            <div class="provider-name">{{ $inquiry->provider->name ?? 'Provider' }}</div>
-                            <div class="provider-type">{{ $inquiry->provider->type ?? 'Childcare Provider' }}</div>
-                            <div class="mt-2"><strong>{{ $inquiry->subject ?? 'Inquiry' }}</strong></div>
-                        </div>
-                    </div>
-                    <div class="text-end">
-                        <span class="status-badge status-{{ $inquiry->status }}">
-                            Closed
-                        </span>
-                        <button class="btn btn-light border btn-sm ms-2 chat-toggle" 
-                                data-inquiry-id="{{ $inquiry->id }}"
-                                data-provider-name="{{ $inquiry->provider->name ?? 'Provider' }}">
-                            View Chat
-                        </button>
-                    </div>
-                </div>
-                <p class="mb-2 text-muted">{{ Str::limit($inquiry->message, 150) }}</p>
-                <div class="text-muted small">
-                    <i class="far fa-clock me-1"></i> 
-                    {{ $inquiry->created_at->format('M d, Y') }} • 
-                    {{ $inquiry->messages->count() }} messages
-                </div>
-            </div>
-            @endforeach
-            @endif
 
             <!-- Pagination -->
             @if($inquiries->hasPages())
@@ -408,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 chatMessages.innerHTML = '';
                 data.messages.forEach(message => {
                     const div = document.createElement('div');
-                    div.className = `message-bubble ${message.sender_type === 'user' ? 'user-message' : 'provider-message'}`;
+                    div.className = `message-bubble ${message.sender_type === 'parent' ? 'user-message' : 'provider-message'}`;
                     div.innerHTML = `
                         <div class="message-content">${message.message}</div>
                         <div class="message-time">${message.created_at}</div>
@@ -484,77 +432,4 @@ document.addEventListener('DOMContentLoaded', function() {
     background-color: #f8f9fa;
 }
 </style>
-@endpush
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // CSRF token helper
-    function csrfToken() {
-        const tokenInput = document.querySelector('input[name="_token"]');
-        return tokenInput ? tokenInput.value : '';
-    }
-
-    // Handle Cancel button
-    document.querySelectorAll('.cancel-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            if (!confirm('Are you sure you want to cancel this request?')) return;
-            const id = this.getAttribute('data-inquiry-id');
-            const url = `/inquiries/${id}/cancel`;
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken()
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    const badge = document.getElementById('status-badge-' + id);
-                    if (badge) {
-                        badge.textContent = 'Closed';
-                        badge.className = 'status-badge status-closed';
-                    }
-                } else {
-                    alert('Failed to cancel. Please try again.');
-                }
-            })
-            .catch(() => alert('Server error while cancelling.'));
-        });
-    });
-
-    // Handle Reschedule (open chat modal with prefilled message)
-    document.querySelectorAll('.reschedule-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const id = this.getAttribute('data-inquiry-id');
-            // find provider name from related chat-toggle (best-effort)
-            const chatToggle = document.querySelector(`.chat-toggle[data-inquiry-id='${id}']`);
-            const providerName = chatToggle ? chatToggle.getAttribute('data-provider-name') : 'Provider';
-
-            const chatModalEl = document.getElementById('chatModal');
-            const chatForm = chatModalEl.querySelector('form');
-            chatForm.querySelector('#currentInquiryId').value = id;
-            chatForm.querySelector('#chatMessage').value = 'Hello ' + providerName + ",\nI'd like to reschedule our appointment. Proposed new date/time: [please enter your proposed time]";
-
-            document.getElementById('chatProviderName').textContent = 'Chat with ' + providerName;
-            const chatModal = new bootstrap.Modal(chatModalEl);
-            chatModal.show();
-        });
-    });
-
-    // Cleanup fallback: ensure backdrops and body class are removed when modal is hidden
-    const chatModalEl = document.getElementById('chatModal');
-    if (chatModalEl) {
-        chatModalEl.addEventListener('hidden.bs.modal', function () {
-            // remove any leftover backdrops
-            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-            // ensure body scroll is restored
-            document.body.classList.remove('modal-open');
-            document.body.style.paddingRight = '';
-        });
-    }
-});
-</script>
 @endpush

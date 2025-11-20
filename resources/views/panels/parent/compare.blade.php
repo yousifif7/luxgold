@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="provider-info">
                                     <div class="provider-name">{{ $provider->business_name ?? $provider->name }}</div>
-                                    <div class="provider-type">{{ $provider->service_categories ?? $provider->category ?? 'Provider' }}</div>
+                                    <div class="provider-type">{{ $provider->service_categories ?? $provider->category->name ?? 'Provider' }}</div>
                                 </div>
                                 <button class="btn btn-sm btn-danger" onclick="removeFromCompare({{ $provider->id }})">
                                     <i class="fas fa-times"></i>
@@ -52,8 +52,8 @@
                             <td style="text-align: left; font-weight: 600;">Rating</td>
                             @foreach($providers as $provider)
                             <td>
-                                @if($provider->rating)
-                                <i class="ti ti-star-filled me-1" style="color: orange;"></i>{{ number_format($provider->rating, 1) }}
+                                @if($provider->averageRating())
+                                <i class="ti ti-star-filled me-1" style="color: orange;"></i>{{ number_format($provider->averageRating(), 1) }}
                                 @else
                                 <span class="text-muted">No ratings</span>
                                 @endif

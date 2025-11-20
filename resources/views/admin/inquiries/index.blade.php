@@ -88,7 +88,7 @@
                                             <em>(deleted)</em>
                                         @endif
                                     </td>
-                                    <td>{{ $inq->provider->category ?? 'General' }}</td>
+                                    <td>{{ $inq->provider->category->name ?? 'General' }}</td>
                                     <td>{{ $inq->created_at->format('d M Y, h:i A') }}</td>
                                     <td>{{ ucfirst($inq->status) }}</td>
                                     <td>
@@ -106,8 +106,7 @@
                                             @if($inq->status == "closed")
                                             <button class="btn btn-sm btn-success btn-resolve-inquiry disabled" data-id="{{ $inq->id }}">Resolved</button>
                                             @else
-                                            <button class="btn btn-sm btn-success btn-resolve-inquiry" data-id="{{ $inq->id }}">Resolve</button>
-
+                                            
                                             @endif
                                             <button class="btn btn-sm btn-danger btn-delete-inquiry" data-id="{{ $inq->id }}">Delete</button>
                                         </div>

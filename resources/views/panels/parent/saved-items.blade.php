@@ -38,7 +38,7 @@
                             <div class="provider-type">{{ $savedProvider->provider->type ?? 'Childcare Provider' }}</div>
                             <div class="mt-2">
                                 <i class="fas fa-star text-warning"></i>
-                                <span class="rating-number">{{ number_format($savedProvider->provider->average_rating ?? 0, 1) }}</span>
+                                <span class="rating-number">{{ number_format($savedProvider->provider->averageRating() ?? 0, 1) }}</span>
                                 <span class="ms-3"><i class="fas fa-map-marker-alt"></i> {{ $savedProvider->provider->location ?? 'N/A' }}</span>
                             </div>
                             <div class="mt-1">

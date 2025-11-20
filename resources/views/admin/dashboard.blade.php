@@ -493,7 +493,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ $inquiry['service_type'] }}</td>
+                                <td>{{ $inquiry['service_type']->name }}</td>
                                 <td>{{ $inquiry['date_time'] }}</td>
                                 <td>
                                     @php

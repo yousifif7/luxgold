@@ -9,6 +9,7 @@
         <!-- noUiSlider for price range -->
         <link href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css" rel="stylesheet">
     @endpush
+    <div class="container-fluid">
     <div class="find-provider-page">
         <div class="site-header">
             <div class="left-head">
@@ -47,15 +48,19 @@
                         <h6 class="filter-title">Service Category</h6>
                         <select name="category" id="categorySelect" class="form-select mb-3">
                             <option value="all">All Categories</option>
-                            <option value="daycare" {{ request('category') == 'daycare' ? 'selected' : '' }}>Daycare</option>
-                            <option value="after-school" {{ request('category') == 'after-school' ? 'selected' : '' }}>After School</option>
+                            @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                            @endforeach
                         </select>
             
                         <h6 class="filter-title">Age Group</h6>
                         <select name="age_group" id="ageSelect" class="form-select mb-3">
                             <option value="all">All Ages</option>
-                            <option {{ request('age_group') == '0 - 1 years' ? 'selected' : '' }}>0 - 1 years</option>
-                            <option {{ request('age_group') == '1 - 3 years' ? 'selected' : '' }}>1 - 3 years</option>
+                            @foreach($ages_served as $age)
+
+                            <option value="{{ $age->id }}" {{ request('age_group') == $age->id ? 'selected' : '' }}>{{ $age->title }}</option>
+
+                            @endforeach
                         </select>
             
                         <h6 class="filter-title">Distance: <span id="distanceBadge">25 miles</span></h6>
@@ -76,20 +81,14 @@
             
                         <h6 class="filter-title mt-3 service-filter-title">Services Offered</h6>
                         <div style="max-height:140px; overflow:auto;" class="mb-3">
-                            @php
-                                $services = [
-                                    'Full Day Care', 'Half Day Care', 'Drop-in Care', 'Meals Included', 
-                                    'Transportation', 'Educational Programs', 'Arts & Crafts', 'Music Classes',
-                                    'Sports Programs', 'Special Needs Support', 'Bilingual Programs', 'Extended Hours'
-                                ];
-                            @endphp
-                            @foreach($services as $service)
+                            
+                            @foreach($services_offerd as $service)
                                 <div class="form-check mb-2">
                                     <input class="form-check-input" type="checkbox" name="services[]" 
-                                           value="{{ strtolower(str_replace(' ', '_', $service)) }}"
-                                           {{ in_array(strtolower(str_replace(' ', '_', $service)), (array)request('services', [])) ? 'checked' : '' }}>
+                                           value="{{ $service->id }}"
+                                           {{ in_array($service->id, (array)request('services', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label">
-                                        {{ $service }}
+                                        {{ $service->title }}
                                     </label>
                                 </div>
                             @endforeach
@@ -137,12 +136,12 @@
     $category = $provider->category;
     
     // Parse service categories if available
-    $serviceCategories = json_decode($provider->service_categories ?? '[]', true) ?: [];
+    $serviceCategories = $provider->sub_categories ?? [];
     $firstCategory = !empty($serviceCategories) ? $serviceCategories[0] : ($category ?: 'Provider');
     
     // Parse special features for tags
-    $specialFeatures = json_decode($provider->special_features ?? '[]', true) ?: [];
-    $diversityBadges = json_decode($provider->diversity_badges ?? '[]', true) ?: [];
+    $specialFeatures = $provider->special_features ?? [];
+    $diversityBadges = $provider->diversity_badges ?? [];
     
     // Combine tags from various sources
     $allTags = array_merge($specialFeatures, $diversityBadges);
@@ -154,7 +153,7 @@
     $pricingDescription = $provider->pricing_description ?: 'Price varies';
     
     // Get availability information
-    $availableDays = json_decode($provider->available_days ?? '[]', true) ?: [];
+    $availableDays = $provider->available_days ?? [];
     $startTime = $provider->start_time ? \Carbon\Carbon::parse($provider->start_time)->format('g:i A') : 'N/A';
     $endTime = $provider->end_time ? \Carbon\Carbon::parse($provider->end_time)->format('g:i A') : 'N/A';
     $hoursDisplay = $startTime . ' - ' . $endTime;
@@ -170,8 +169,8 @@
     
     @endif
     
-    @if($firstCategory)
-        <div class="card-badge provider-badge">{{ $firstCategory }}</div>
+    @if(isset($provider->category->name))
+        <div class="card-badge provider-badge">{{ $provider->category->name??'' }}</div>
     @endif
     
     <div class="card-body">
@@ -223,9 +222,9 @@
             @endif
         </div>
         
-        @if($ageGroup)
+        @if($provider->ages)
             <div class="info">
-                Ages: <b class="ageText-class">{{ $ageGroup }}</b>
+                Ages: <b class="ageText-class">{{ $provider->ages->title??'' }}</b>
             </div>
         @endif
         
@@ -266,9 +265,19 @@
     
     
                     </div>
+                   <div class="col-md-12">
+                        @if($providers->hasPages())
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                        {{ $providers->links() }}
+                    </div>
+                @endif
+                   </div>
                 </div>
+
             </div>
+
     
+        </div>
         </div>
     
         <!-- Enhanced Compare bottom bar -->

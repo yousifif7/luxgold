@@ -7,6 +7,13 @@ use App\Models\Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Models\CareType;
+use App\Models\AgesServed;
+use App\Models\DiversityBadge;
+use App\Models\ProgramsOffered;
+use App\Models\SpecialFeatures;
+use App\Models\ServicesOfferd;
+use App\Models\Category;
 
 class ServiceListingController extends Controller
 {
@@ -16,95 +23,16 @@ class ServiceListingController extends Controller
     public function index()
     {
         $serviceListing = Provider::where('user_id', auth()->id())->first();
+        $care_types=CareType::get();
+        $categories=Category::get();
+        $ages_served=AgesServed::get();
+        $programs_offerd=ProgramsOffered::get();
+        $services_offerd=ServicesOfferd::get();
 
-         return view('service_listing.edit', compact('serviceListing'));
+
+         return view('service_listing.edit', compact('categories','serviceListing','care_types','ages_served','programs_offerd','services_offerd'));
     }
 
-    public function create()
-    {
-        return view('service_listing.create');
-    }
-
-    /**
-     * Store a new service listing
-     */
-    public function store(Request $request)
-    {
-        try {
-            \DB::beginTransaction();
-
-            // Handle file uploads
-            $logoPath = $this->handleLogoUpload($request);
-            $facilityPhotosPaths = $this->handleFacilityPhotosUpload($request);
-            $licenseDocsPaths = $this->handleLicenseDocsUpload($request);
-
-            // Create service listing
-            $serviceListing = ServiceListing::create([
-                'business_name' => $request->business_name,
-                'contact_person' => $request->contact_person,
-                'role_title' => $request->role_title,
-                'phone_number' => $request->phone_number,
-                'email' => $request->email,
-                'physical_address' => $request->physical_address,
-                'city' => $request->city,
-                'state' => $request->state,
-                'zip_code' => $request->zip_code,
-                
-                'service_categories' => $request->service_categories,
-                'service_description' => $request->service_description,
-                
-                'pricing_type' => $request->pricing_type,
-                'price_amount' => $request->price_amount,
-                'pricing_description' => $request->pricing_description,
-                'available_days' => $request->available_days,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
-                'availability_notes' => $request->availability_notes,
-                
-                'license_number' => $request->license_number,
-                'years_operation' => $request->years_operation,
-                'insurance_coverage' => $request->insurance_coverage,
-                'diversity_badges' => $request->diversity_badges,
-                'special_features' => $request->special_features,
-                'website' => $request->website,
-                'facebook' => $request->facebook,
-                'instagram' => $request->instagram,
-                
-                'logo_path' => $logoPath,
-                'facility_photos_paths' => $facilityPhotosPaths,
-                'license_docs_paths' => $licenseDocsPaths,
-                
-                'status' => 'pending',
-                'user_id' => auth()->id(),
-            ]);
-
-            \DB::commit();
-
-            return redirect()->route('provider.listings.index')
-                ->with('success', 'Service listing submitted successfully! It will be reviewed before going live.');
-
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            
-            \Log::error('Service listing creation failed: ' . $e->getMessage());
-            
-            return back()->with('error', 'Failed to create service listing. Please try again.')
-                ->withInput();
-        }
-    }
-
-    /**
-     * Show the form for editing the service listing
-     */
-    public function edit($id)
-    {
-        // Authorization check - ensure user can only edit their own listings
-        /*if ($serviceListing->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
-        }*/
-        $serviceListing=ServiceListing::where('id',$id)->first();
-        return view('service_listing.edit', compact('serviceListing'));
-    }
 
     /**
      * Update the service listing
@@ -141,7 +69,8 @@ class ServiceListingController extends Controller
                 'state' => $request->state,
                 'zip_code' => $request->zip_code,
                 
-                'service_categories' => $request->service_categories,
+                'sub_categories' => $request->sub_categories,
+                'services_offerd' => $request->services_offerd,
                 'service_description' => $request->service_description,
                 
                 'pricing_type' => $request->pricing_type,
@@ -224,9 +153,12 @@ private function handleFacilityPhotosUpload($request, $serviceListing = null)
     }
 
     // Merge existing photos if editing
-    if ($serviceListing && !empty($serviceListing->facility_photos_paths)) {
-        $paths = array_merge($serviceListing->facility_photos_paths, $paths);
-    }
+   $existingPaths = is_array($serviceListing->facility_photos_paths)
+    ? $serviceListing->facility_photos_paths
+    : json_decode($serviceListing->facility_photos_paths, true) ?? [];
+
+$paths = array_merge($existingPaths, $paths);
+
 
     return $paths;
 }
@@ -246,9 +178,9 @@ private function handleLicenseDocsUpload($request, $serviceListing = null)
     }
 
     // Merge existing docs if editing
-    if ($serviceListing && !empty($serviceListing->license_docs_paths)) {
-        $paths = array_merge($serviceListing->license_docs_paths, $paths);
-    }
+   if ($serviceListing && !empty($serviceListing->license_docs_paths) && is_array($serviceListing->license_docs_paths)) {
+    $paths = array_merge($serviceListing->license_docs_paths, $paths);
+}
 
     return $paths;
 }
@@ -256,17 +188,17 @@ private function handleLicenseDocsUpload($request, $serviceListing = null)
 private function handleFileRemovals(Request $request, $provider)
 {
     // Handle logo removal
-    if ($request->has('remove_logo') && $serviceListing->logo_path) {
-        if (file_exists(public_path($serviceListing->logo_path))) {
-            unlink(public_path($serviceListing->logo_path));
+    if ($request->has('remove_logo') && $provider->logo_path) {
+        if (file_exists(public_path($provider->logo_path))) {
+            unlink(public_path($provider->logo_path));
         }
-        $serviceListing->update(['logo_path' => null]);
+        $provider->update(['logo_path' => null]);
     }
 
     // Handle facility photos removal
     if ($request->has('remove_facility_photos')) {
         $photosToRemove = $request->remove_facility_photos;
-        $currentPhotos = $serviceListing->facility_photos_paths ?? [];
+        $currentPhotos = $provider->facility_photos_paths ?? [];
 
         $updatedPhotos = array_filter($currentPhotos, fn($photo) => !in_array($photo, $photosToRemove));
 
@@ -276,13 +208,13 @@ private function handleFileRemovals(Request $request, $provider)
             }
         }
 
-        $serviceListing->update(['facility_photos_paths' => array_values($updatedPhotos)]);
+        $provider->update(['facility_photos_paths' => array_values($updatedPhotos)]);
     }
 
     // Handle license docs removal
     if ($request->has('remove_license_docs')) {
         $docsToRemove = $request->remove_license_docs;
-        $currentDocs = $serviceListing->license_docs_paths ?? [];
+        $currentDocs = $provider->license_docs_paths ?? [];
 
         $updatedDocs = array_filter($currentDocs, fn($doc) => !in_array($doc, $docsToRemove));
 
@@ -292,7 +224,7 @@ private function handleFileRemovals(Request $request, $provider)
             }
         }
 
-        $serviceListing->update(['license_docs_paths' => array_values($updatedDocs)]);
+        $provider->update(['license_docs_paths' => array_values($updatedDocs)]);
     }
 }
 

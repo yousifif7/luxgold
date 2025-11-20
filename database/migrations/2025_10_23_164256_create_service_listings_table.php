@@ -14,7 +14,7 @@ return new class extends Migration
             // Basic Info
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
-            $table->string('category')->nullable();
+            $table->foreignId('categories_id')->constrained()->onDelete('cascade');
             $table->string('business_name')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('role_title')->nullable();
@@ -27,7 +27,8 @@ return new class extends Migration
             $table->string('zip_code')->nullable();
             
             // Services
-            $table->json('service_categories')->nullable(); // Store as JSON array
+            $table->json('sub_categories')->nullable(); // Store as JSON array
+            $table->json('services_offerd')->nullable();
             $table->text('service_description')->nullable();
             
             // Pricing & Schedule
@@ -57,13 +58,7 @@ return new class extends Migration
             $table->enum('status', ['draft', 'pending', 'approved', 'rejected'])->default('pending');
             $table->boolean('is_featured')->default(0)->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('revenue', 10, 2)->default(0.00);
-            $table->decimal('rating', 3, 2)->nullable();
             $table->string('avatar')->nullable();
-            $table->unsignedInteger('profile_views')->default(0);
-            $table->unsignedBigInteger('views')->default(0);
-            $table->unsignedInteger('clicks')->default(0);
-            $table->unsignedInteger('inquiries')->default(0);
             $table->timestamps();
                     });
     }

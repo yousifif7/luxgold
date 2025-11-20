@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('child_count')->nullable();
             $table->text('message');
             $table->boolean('newsletter_opt_in')->default(false);
-            $table->enum('status', ['pending', 'contacted', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'contacted', 'closed'])->default('pending');
             $table->timestamp('responded_at')->nullable();
             $table->string('ip_address')->nullable();
             $table->text('user_agent')->nullable();

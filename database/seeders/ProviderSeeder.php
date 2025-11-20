@@ -10,6 +10,14 @@ use App\Models\Plan;
 use App\Models\Subscription;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Models\Category;
+use App\Models\CareType;
+use App\Models\AgesServed;
+use App\Models\DiversityBadge;
+use App\Models\ProgramsOffered;
+use App\Models\SpecialFeatures;
+use App\Models\ServicesOfferd;
+
 
 class ProviderSeeder extends Seeder
 {
@@ -190,7 +198,7 @@ class ProviderSeeder extends Seeder
                 'category' => 'Childcare & Early Learning',
             ],
 
-            // School Age Education & Tutoring
+            // Education & Tutoring
             [
                 'name' => 'Prosper ISD',
                 'business_name' => 'Prosper Independent School District',
@@ -202,7 +210,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Public',
                 'programs_offered' => 'Education',
                 'email' => 'info@prosper-isd.org',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
             [
                 'name' => 'PRESTONWOOD CHRISTIAN ACADEMY - North',
@@ -215,7 +223,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Faith-Based',
                 'programs_offered' => 'Education',
                 'email' => 'info@prestonwoodchristian.org',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
             [
                 'name' => 'KinderCare - Prosper',
@@ -228,7 +236,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Education',
                 'email' => 'prosper@kindercare.com',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
             [
                 'name' => 'Founders Classical Academy',
@@ -241,7 +249,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Charter',
                 'programs_offered' => 'Education',
                 'email' => 'info@foundersclassical.org',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
             [
                 'name' => 'Children\'s Lighthouse',
@@ -254,7 +262,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Education',
                 'email' => 'prosper@childrenslighthouse.com',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
             [
                 'name' => 'Kiddie Academy',
@@ -267,7 +275,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Education',
                 'email' => 'prosper@kiddieacademy.com',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
             [
                 'name' => 'Sylvan Learning - Prosper',
@@ -280,7 +288,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Tutoring',
                 'email' => 'prosper@sylvanlearning.com',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
             [
                 'name' => 'Best Brains Learning Center - Prosper',
@@ -293,7 +301,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Tutoring',
                 'email' => 'prosper@bestbrains.com',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
             [
                 'name' => 'Kumon',
@@ -306,7 +314,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Tutoring',
                 'email' => 'prosper@kumon.com',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
             [
                 'name' => 'Mathnasium - The Math Learning Center',
@@ -319,10 +327,10 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Tutoring',
                 'email' => 'prosper@mathnasium.com',
-                'category' => 'School Age Education & Tutoring',
+                'category' => 'Education & Tutoring',
             ],
 
-            // AfterSchool Program
+            // After-School Programs
             [
                 'name' => 'Premier Christian Academy - After School',
                 'business_name' => 'Premier Christian Academy',
@@ -334,7 +342,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Faith-Based',
                 'programs_offered' => 'General After-School Care',
                 'email' => 'afterschool@premierchristianacademy.com',
-                'category' => 'AfterSchool Program',
+                'category' => 'After-School Programs',
             ],
             [
                 'name' => 'Kids R Kids - After School',
@@ -347,7 +355,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'General After-School Care',
                 'email' => 'afterschool@kidsrkids.com',
-                'category' => 'AfterSchool Program',
+                'category' => 'After-School Programs',
             ],
             [
                 'name' => 'Pro Black Belt Academy',
@@ -360,7 +368,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Sports & Athletics',
                 'email' => 'info@problackbeltacademy.com',
-                'category' => 'AfterSchool Program',
+                'category' => 'After-School Programs',
             ],
             [
                 'name' => 'Eagle Wings Athletics',
@@ -373,7 +381,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Sports & Athletics',
                 'email' => 'info@eaglewingsathletics.com',
-                'category' => 'AfterSchool Program',
+                'category' => 'After-School Programs',
             ],
             [
                 'name' => 'A Joyful Mess',
@@ -386,7 +394,7 @@ class ProviderSeeder extends Seeder
                 'care_type' => 'Private',
                 'programs_offered' => 'Performing Arts',
                 'email' => 'info@ajoyfulmess.com',
-                'category' => 'AfterSchool Program',
+                'category' => 'After-School Programs',
             ],
 
             // Wellness & Development
@@ -558,13 +566,17 @@ class ProviderSeeder extends Seeder
 
                 // Determine subcategory based on category and care type
                 $subcategory = $this->getSubcategory($providerData['category'], $providerData['care_type'], $providerData['programs_offered']);
+                $category=Category::firstOrCreate(['name'=>$providerData['category']]);
+                $care_type=CareType::firstOrCreate(['name'=>$providerData['care_type']]);
+                $programs_offered=ProgramsOffered::firstOrCreate(['name'=>$providerData['programs_offered']]);
+                $ages_served=AgesServed::firstOrCreate(['title'=>$providerData['ages_served']]);
 
                 // Create Provider Profile
                 $provider = Provider::create([
                     'user_id' => $providerUser->id,
                     'name' => $providerData['name'],
                     'phone' => $providerData['phone'],
-                    'category' => $providerData['category'],
+                    'categories_id' => $category->id,
                     'business_name' => $providerData['business_name'],
                     'contact_person' => $providerData['name'],
                     'role_title' => 'Director',
@@ -575,36 +587,30 @@ class ProviderSeeder extends Seeder
                     'city' => 'Prosper',
                     'state' => 'TX',
                     'zip_code' => '75078',
-                    'service_categories' => json_encode([$providerData['category'], $subcategory]),
+                    'sub_categories' => [],
                     'service_description' => $providerData['description'],
-                    'ages_served' => $providerData['ages_served'],
+                    'ages_served_id' => $ages_served->id,
                     'operating_hours' => $providerData['hours'],
-                    'care_type' => $providerData['care_type'],
-                    'programs_offered' => $providerData['programs_offered'],
+                    'care_types_id' => $care_type->id,
+                    'programs_offered_id' => $programs_offered->id,
                     'price_amount' => null,
                     'pricing_description' => '',
-                    'available_days' => json_encode(['monday', 'tuesday', 'wednesday', 'thursday', 'friday']),
+                    'available_days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
                     'start_time' => '07:00:00',
                     'end_time' => '18:00:00',
                     'availability_notes' => $providerData['hours'],
                     'license_number' => '',
                     'years_operation' => '',
                     'insurance_coverage' => '',
-                    'diversity_badges' => json_encode([]),
-                    'special_features' => json_encode([]),
+                    'diversity_badges' => [],
+                    'special_features' => [],
                     'website' => '',
                     'facebook' => '',
                     'instagram' => '',
                     'logo_path' => 'service-listings/logos/'.strtolower(str_replace(' ', '_', $providerData['name'])) . '.png',
-                    'facility_photos_paths' => json_encode([]),
-                    'license_docs_paths' => json_encode([]),
+                    'facility_photos_paths' => [],
+                    'license_docs_paths' => [],
                     'status' => 'approved',
-                    'revenue' => rand(8000, 20000),
-                    'rating' => round(rand(40, 50) / 10, 1),
-                    'profile_views' => rand(1000, 5000),
-                    'views' => rand(2000, 8000),
-                    'clicks' => rand(200, 600),
-                    'inquiries' => rand(50, 150),
                 ]);
 
                 // Create subscription for provider
@@ -644,14 +650,14 @@ class ProviderSeeder extends Seeder
                     return 'Daycare / Preschool';
                 }
 
-            case 'School Age Education & Tutoring':
+            case 'Education & Tutoring':
                 if (str_contains(strtolower($programsOffered), 'tutoring')) {
                     return 'Tutoring';
                 } else {
                     return 'Education';
                 }
 
-            case 'AfterSchool Program':
+            case 'After-School Programs':
                 if (str_contains(strtolower($programsOffered), 'sports') || str_contains(strtolower($programsOffered), 'athletics')) {
                     return 'Sports & Athletics';
                 } elseif (str_contains(strtolower($programsOffered), 'arts')) {

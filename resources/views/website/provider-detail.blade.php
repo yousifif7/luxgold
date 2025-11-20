@@ -67,7 +67,7 @@
                 @endif
                 
                 @php
-                    $facilityPhotos = json_decode($provider->facility_photos_paths ?? '[]', true);
+                    $facilityPhotos = $provider->facility_photos_paths ?? [];
                     $mainImage = !empty($facilityPhotos) ? ($facilityPhotos[0]) : ($provider->logo_path);
                 @endphp
                 @if($mainImage && file_exists(public_path($mainImage)))
@@ -237,7 +237,7 @@
                 @endphp
                 
                 @if($category)
-                <div class="school-information-badge-category">{{ $category }}</div>
+                <div class="school-information-badge-category">{{ $category->name }}</div>
                 @endif
                 
                 <h2 class="school-information-name-heading">{{ $provider->business_name ?? $provider->name }}</h2>
@@ -430,8 +430,8 @@
         @endif
         
         @php
-            $specialFeatures = json_decode($provider->special_features ?? '[]', true);
-            $diversityBadges = json_decode($provider->diversity_badges ?? '[]', true);
+            $specialFeatures = $provider->special_features ?? [];
+            $diversityBadges = $provider->diversity_badges ?? [];
             $amenities = array_merge($specialFeatures ?? [], $diversityBadges ?? []);
         @endphp
         
@@ -623,7 +623,7 @@
                 <!-- Reviews List -->
                 @foreach($reviews as $review)
                     <div class="long-keyword-review-box">
-                        <h6><i class="bi bi-person-circle me-1"></i> {{ $review->user->name ?? 'Anonymous' }} <small class="text-muted">• {{ $review->created_at->diffForHumans() }}</small></h6>
+                        <h6><i class="bi bi-person-circle me-1"></i> {{ $review->user->first_name ?? 'Anonymous' }} <small class="text-muted">• {{ $review->created_at->diffForHumans() }}</small></h6>
                         <div class="text-warning">
                             @for($i = 1; $i <= 5; $i++)
                                 <i class="bi bi-star{{ $i <= $review->rating ? '-fill' : '' }}"></i>
@@ -661,7 +661,7 @@
             <div class="long-keyword-hours-box">
                 <h6>Hours of Operation</h6>
                 @php
-                    $availableDays = json_decode($provider->available_days ?? '[]', true);
+                    $availableDays = $provider->available_days ?? [];
                     $daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
                     $startTime = \Carbon\Carbon::parse($provider->start_time)->format('g:i A');
                     $endTime = \Carbon\Carbon::parse($provider->end_time)->format('g:i A');

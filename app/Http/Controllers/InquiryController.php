@@ -12,58 +12,65 @@ use App\Models\Message;
 use Auth;
 class InquiryController extends Controller
 {
-    public function store(Request $request)
-    {
-        $request->validate([
-            'provider_id' => 'required|exists:providers,id',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'message' => 'required|string|min:10',
-            'newsletter' => 'boolean'
+public function store(Request $request)
+{
+    // Check if user is logged in
+    if (!auth()->check()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Please login first to send an inquiry.'
+        ], 401); // 401 Unauthorized
+    }
+
+    $request->validate([
+        'provider_id' => 'required|exists:providers,id',
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'nullable|string|max:20',
+        'message' => 'required|string|min:10',
+        'newsletter' => 'nullable'
+    ]);
+
+    try {
+        $provider = Provider::findOrFail($request->provider_id);
+        
+        $inquiry = Inquiry::create([
+            'provider_id' => $request->provider_id,
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'message' => $request->message,
+            'newsletter_opt_in' => $request->boolean('newsletter'),
+            'status' => 'pending',
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent()
         ]);
 
-        try {
-            $provider = Provider::findOrFail($request->provider_id);
-            
-            $inquiry = Inquiry::create([
-                'provider_id' => $request->provider_id,
-                'user_id' => auth()->id(),
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-               
-                'message' => $request->message,
-                'newsletter_opt_in' => $request->boolean('newsletter'),
-                'status' => 'pending',
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent()
-            ]);
-
-              Message::create([
+        Message::create([
             'inquiry_id' => $inquiry->id,
             'sender_type' => 'parent',
             'message' => $request->message
         ]);
 
-            // Send email notifications
-            $this->sendEmailNotifications($inquiry, $provider);
+        // Send email notifications
+        $this->sendEmailNotifications($inquiry, $provider);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Inquiry sent successfully!',
-                'inquiry_id' => $inquiry->id
-            ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Inquiry sent successfully!',
+            'inquiry_id' => $inquiry->id
+        ]);
 
-        } catch (\Exception $e) {
-            \Log::error('Inquiry creation failed: ' . $e->getMessage());
-            
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to send inquiry. Please try again.'
-            ], 500);
-        }
+    } catch (\Exception $e) {
+        \Log::error('Inquiry creation failed: ' . $e->getMessage());
+        
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to send inquiry. Please try again.'
+        ], 500);
     }
+}
 
     private function sendEmailNotifications(Inquiry $inquiry, Provider $provider)
     {

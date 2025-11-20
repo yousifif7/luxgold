@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::table('providers', function (Blueprint $table) {
             // Add the missing columns
-            $table->text('ages_served')->nullable()->after('service_description');
-            $table->text('operating_hours')->nullable()->after('ages_served');
-            $table->string('care_type')->nullable()->after('operating_hours');
-            $table->text('programs_offered')->nullable()->after('care_type');
+            $table->text('ages_served_id')->nullable()->after('service_description');
+            $table->text('operating_hours')->nullable()->after('ages_served_id');
+            $table->string('care_types_id')->nullable()->after('operating_hours');
+            $table->text('programs_offered_id')->nullable()->after('care_types_id');
         });
     }
 
@@ -27,13 +27,10 @@ return new class extends Migration
     {
         Schema::table('providers', function (Blueprint $table) {
             $table->dropColumn([
-                'ages_served',
+                'ages_served_id',
                 'operating_hours',
-                'care_type',
-                'programs_offered',
-                'views',
-                'clicks',
-                'inquiries'
+                'care_types_id',
+                'programs_offered_id'
             ]);
         });
     }

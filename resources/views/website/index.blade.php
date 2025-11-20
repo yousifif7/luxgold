@@ -105,12 +105,12 @@
         $category = $provider->category;
         
         // Parse service categories if available
-        $serviceCategories = json_decode($provider->service_categories ?? '[]', true) ?: [];
+        $serviceCategories = $provider->service_categories ?? [];
         $firstCategory = !empty($serviceCategories) ? $serviceCategories[0] : ($category ?: 'Provider');
         
         // Parse special features for tags
-        $specialFeatures = json_decode($provider->special_features ?? '[]', true) ?: [];
-        $diversityBadges = json_decode($provider->diversity_badges ?? '[]', true) ?: [];
+        $specialFeatures = $provider->special_features ?? [];
+        $diversityBadges = $provider->diversity_badges ?? [];
         
         // Combine tags from various sources
         $allTags = array_merge($specialFeatures, $diversityBadges);
@@ -122,7 +122,7 @@
         $pricingDescription = $provider->pricing_description ?: 'Price varies';
         
         // Get availability information
-        $availableDays = json_decode($provider->available_days ?? '[]', true) ?: [];
+        $availableDays = $provider->available_days ?? [];
         $startTime = $provider->start_time ? \Carbon\Carbon::parse($provider->start_time)->format('g:i A') : 'N/A';
         $endTime = $provider->end_time ? \Carbon\Carbon::parse($provider->end_time)->format('g:i A') : 'N/A';
         $hoursDisplay = $startTime . ' - ' . $endTime;
@@ -404,7 +404,7 @@
                         @endif
                         
                         <!-- Explore Providers Link -->
-                        <div onclick="window.location.href='{{ route('website.find-provider', ['category' => $category->slug]) }}'" class="edu-footer">
+                        <div onclick="window.location.href='{{ route('website.find-provider', ['category' => $category->id]) }}'" class="edu-footer">
                             Explore providers <i class="bi bi-chevron-right"></i>
                         </div>
                     </div>
