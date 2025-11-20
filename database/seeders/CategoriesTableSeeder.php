@@ -54,7 +54,7 @@ class CategoriesTableSeeder extends Seeder
                 'providers_count' => 45,
                 'icon' => 'fa-solid fa-heart-pulse',
                 'tags' => json_encode(['Therapy', 'Counseling', 'Support', 'Neurodivergent', 'Development']),
-                'image_url' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=1080&q=80',
+                'image_url' => 'https://blog.schoolspecialty.com/wp-content/uploads/2023/02/social-emotional-wellness-GettyImages-185096653-1200x624.jpg',
                 'sort_order' => 3,
                 'status' => true,
                 'created_at' => Carbon::now(),
