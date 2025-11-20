@@ -112,9 +112,7 @@
             </div>
     
             <div class="header-actions">
-                <div class="pill">
-                    <i class="ti ti-heart me-2"></i>Favorites
-                </div>
+               
                 <div class="pill compare-count-badge" onclick="showCompareModal()" id="comparePill">
                     0 to compare
                 </div>
