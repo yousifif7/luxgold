@@ -473,20 +473,8 @@
         </div>
         @else
         <!-- Fallback static coming soon cities -->
-        <div class="coming-soon">🚀 Coming Soon! 🚀</div>
-        <div class="row justify-content-center gap-4 mt-4">
-            <div class="col-md-2 col-6">
-                <div class="soon-card">
-                    <div class="city-icon yellow-bg"><img src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png" width="30"></div>
-                    <div class="soon-card-title">Allen, TX</div>
-                    <div class="soon-badge">Launching Soon!</div>
-                </div>
-            </div>
-            <!-- Add more fallback coming soon cities as needed -->
-        </div>
         @endif
-        <div class="request-city">😟 Don't see your city? We're expanding rapidly across Texas!</div>
-        <button class="request-btn">🚀 Request Your City</button>
+        
     </div>
 </section>
 <!-- How It Works Section - Dynamic -->
