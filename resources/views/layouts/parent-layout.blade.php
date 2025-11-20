@@ -239,8 +239,10 @@
                             class="topbar-link dropdown-toggle drop-arrow-none position-relative"
                             data-bs-toggle="dropdown" data-bs-offset="0,22" aria-haspopup="false"
                             aria-expanded="false">
+                            @if(!empty(auth()->user()->profile_picture)) <img src="{{ asset(auth()->user()->profile_picture) }}" width="32"
+                                class="rounded-2 d-flex" alt="user-image"> @else
                             <img src="{{ asset('panel/assets/img/users/avatar-5.jpg') }}" width="32"
-                                class="rounded-2 d-flex" alt="user-image">
+                                class="rounded-2 d-flex" alt="user-image">@endif
                             <span class="online text-success">
                                 <i
                                     class="ti ti-circle-filled d-flex bg-white rounded-circle border border-1 border-white"></i>

@@ -75,33 +75,53 @@ class ProfileController extends Controller
     /**
      * Update personal information.
      */
-    public function updatePersonalInfo(Request $request)
-    {
-        $user = Auth::user();
+  public function updatePersonalInfo(Request $request)
+{
+    $user = Auth::user();
 
-        $validated = $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'phone' => ['nullable', 'string', 'max:20'],
-        ]);
+    $validated = $request->validate([
+        'first_name' => ['required', 'string', 'max:255'],
+        'last_name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+        'phone' => ['nullable', 'string', 'max:20'],
+        'profile_picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // 2MB max
+    ]);
 
-        try {
-            $user->update($validated);
-            
-            return response()->json([
-                'success' => true,
-                'message' => 'Personal information updated successfully!',
-                'user' => $user
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update personal information.'
-            ], 500);
+    try {
+      // Handle profile picture upload
+if ($request->hasFile('profile_picture')) {
+    // Delete old profile picture if exists
+    if ($user->profile_picture) {
+        $oldImagePath = public_path($user->profile_picture);
+        if (file_exists($oldImagePath)) {
+            unlink($oldImagePath);
         }
     }
-
+    
+    // Store new profile picture in public folder
+    $image = $request->file('profile_picture');
+    $imageName = time() . '_' . $image->getClientOriginalName();
+    $imagePath = 'profile-pictures/' . $imageName;
+    
+    // Move file to public directory
+    $image->move(public_path('profile-pictures'), $imageName);
+    $validated['profile_picture'] = $imagePath;
+}
+        $user->update($validated);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Personal information updated successfully!',
+            'user' => $user
+        ]);
+    } catch (\Exception $e) {
+        \Log::error('Profile update error: ' . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to update personal information.'
+        ], 500);
+    }
+}
     /**
      * Update location preferences.
      */

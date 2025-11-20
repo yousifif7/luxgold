@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Auth;
+
 class Event extends Model
 {
     use HasFactory;
@@ -39,7 +41,10 @@ class Event extends Model
         'cost' => 'decimal:2',
     ];
 
-    public function provider(){ return $this->belongsTo(User::class); }
+    public function provider()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function registrations(): HasMany
     {
@@ -62,10 +67,40 @@ class Event extends Model
             ->exists();
     }
 
+    /**
+     * Check if the event has ended
+     */
+    public function hasEnded(): bool
+    {
+        return $this->end_date->isPast();
+    }
+
+    /**
+     * Check if the event is full (reached maximum capacity)
+     */
+    public function isFull(): bool
+    {
+        return $this->max_capacity > 0 && $this->current_capacity >= $this->max_capacity;
+    }
+
+    /**
+     * Increment the current capacity by the given amount
+     */
+    public function incrementCapacity(int $amount = 1): bool
+    {
+        // Check if incrementing would exceed max capacity (if max capacity is set)
+        if ($this->max_capacity > 0 && ($this->current_capacity + $amount) > $this->max_capacity) {
+            return false;
+        }
+
+        $this->current_capacity += $amount;
+        return $this->save();
+    }
+
     // Scopes
     public function scopeUpcoming($query)
     {
-        return $query->where('date', '>=', now())->orderBy('date');
+        return $query->where('start_date', '>=', now())->orderBy('start_date');
     }
 
     public function scopePublic($query)

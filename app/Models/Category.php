@@ -29,6 +29,18 @@ class Category extends Model
         'tags' => 'array',
     ];
 
+    public function providers(){
+
+        return $this->hasMany(Provider::class,'categories_id');
+    }
+
+    public function totalProvider(){
+
+        $providers=$this->providers();
+
+        return $providers->count();
+    }
+
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');

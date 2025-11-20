@@ -14,6 +14,7 @@ use App\Models\RecentlyViewed;
 use App\Models\Promotion;
 use App\Models\Event;
 use Session;
+use App\Models\Review;
 use App\Models\CareType;
 use App\Models\AgesServed;
 use App\Models\DiversityBadge;
@@ -46,6 +47,8 @@ class HomeController extends Controller
         $categories=Category::get();
         $providers=Provider::where('is_featured',1)->get();
         $latestEvents=Event::where('start_date', '>=', now())->where('status','active')->get();
+        $avgRating=Review::where('status','approved')->avg('rating');
+        $totalProvider=Provider::count();
 
         return view('website.index', compact(
             'heroContent',
@@ -54,7 +57,9 @@ class HomeController extends Controller
             'testimonials',
             'categories',
             'providers',
-            'latestEvents'
+            'latestEvents',
+            'avgRating',
+            'totalProvider'
         ));
     }
 
@@ -95,7 +100,7 @@ $query = Event::query();
 
         
         // Get results
-        $events = $query->paginate(9);
+        $events = $query->paginate(12);
         $categories=Category::whereNull('parent_id')->get();
         $ages_served=AgesServed::get();
         $programs_offerd=ProgramsOffered::get();
@@ -140,7 +145,7 @@ $query = Event::query();
     });
 }
         // Get results
-        $providers = $query->paginate(9);
+        $providers = $query->paginate(12);
         $categories=Category::whereNull('parent_id')->get();
         $ages_served=AgesServed::get();
         $programs_offerd=ProgramsOffered::get();

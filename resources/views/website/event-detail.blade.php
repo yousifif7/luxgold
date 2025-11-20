@@ -4,7 +4,20 @@
 @section('content')
 <style>
 
-
+:root {
+    --primary-color: #00bfa6;
+    --primary-dark: #00a892;
+    --primary-light: #e6f7f5;
+    --secondary-color: #6c757d;
+    --dark-text: #2d3748;
+    --light-bg: #f8f9fa;
+    --border-radius: 16px;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --gradient-primary: linear-gradient(135deg, #00bfa6 0%, #00a892 100%);
+    --gradient-secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
     .event-detail-section-main-wrapper {
         padding: 2rem 0;
     }
@@ -301,11 +314,6 @@
     }
 </style>
 
-<!-- Success Alert -->
-<div class="alert alert-success event-success-alert d-flex align-items-center" id="eventSuccessAlert">
-    <i class="ti ti-check me-2"></i>
-    <span id="eventSuccessMessage">Event saved successfully!</span>
-</div>
 
 <div class="find-provider-page">
     <div class="site-header">

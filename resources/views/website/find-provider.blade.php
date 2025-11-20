@@ -257,6 +257,9 @@
                         <div class="program-card provider-card position-relative" data-id="p{{ $provider->id }}">
                            @if(!empty($provider->logo_path) && file_exists(public_path($provider->logo_path)) )
         <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->business_name }}">
+        @else
+        <div style="height: 180px;"><h2>                                    {{ $provider->business_name ?? $provider->name }} 
+</h2></div>
     
     @endif
                                
@@ -437,14 +440,14 @@
         <div id="compareBar" class="compare-bar" aria-hidden="true">
             <div class="compare-header">
                 <h3 class="compare-title">Compare Providers</h3>
-                <button id="closeCompare"
+                <button id="closeCompare" onclick="hideCompareModal()" 
                     style="background:none; border:none; font-size:18px; color:#6b7280; cursor:pointer;">✕</button>
             </div>
     
             <div class="compare-list" id="compareList"></div>
     
             <div class="compare-actions">
-                <button id="clearCompare" class="compare-clear">Clear All</button>
+                <button id="clearCompare" onclick="clearCompareList()" class="compare-clear">Clear All</button>
                 <button id="doCompare" class="compare-final-btn">View Detail Comparision (0)</button>
             </div>
         </div>
@@ -455,6 +458,7 @@
     <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
     <script>
   
+
 
         // Mobile filter modal handlers
         function initializeMobileFilters() {
@@ -703,7 +707,8 @@ function toggleCompareProvider(providerId, button) {
             
      
         } else {
-            
+                        showToast(data.message, 'warning');
+
         }
         
         updateCompareBadge();
@@ -739,6 +744,12 @@ function updateCompareBadge() {
                 badge.remove();
             }
         });
+}
+
+function hideCompareModal(){
+                const compareBar = document.getElementById('compareBar');
+                compareBar.classList.remove('open');
+
 }
 
 function showCompareModal() {
@@ -825,8 +836,8 @@ function clearCompareList() {
             updateCompareBadge();
             
             // Close modal
-            const compareModal = bootstrap.Modal.getInstance(document.getElementById('compareModal'));
-            compareModal.hide();
+            const compareModal = document.getElementById('compareBar');
+            compareModal.classList.remove('open');
             
             // Update current page if needed
             const compareButton = document.getElementById('compareButton');

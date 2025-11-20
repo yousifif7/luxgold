@@ -29,6 +29,18 @@ class City extends Model
         'status' => 'boolean'
     ];
 
+    public function providers(){
+
+        return $this->hasMany(Provider::class,'city');
+    }
+
+    public function totalProvider(){
+
+        $providers=$this->providers();
+
+        return $providers->count();
+    }
+
     /**
      * Get the full location name
      */

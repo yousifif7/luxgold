@@ -66,6 +66,12 @@ public function destroy(SavedEvent $savedEvent)
 
     public function store(Request $request)
     {
+
+        if (!auth()->user()) {
+             return response()->json([
+                'success' => false,
+                'message' => 'Kindly login first to complete event registration']);
+        }
         $request->validate([
             'event_id' => 'required|exists:events,id',
             'name' => 'required|string|max:255',

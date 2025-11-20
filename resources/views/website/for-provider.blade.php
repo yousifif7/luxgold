@@ -9,7 +9,7 @@
         </h1>
       <p class="text-center">Join thousands of providers who trust ASKRORO to connect with families in their community.<br> Stand out where families are actively looking and grow your business.</p>
       <div class="d-flex justify-content-center align-items-center gap-2  mt-3">
-        <button onclick="openLoginModal()">List Your Services - Free </button>
+        @if(Auth::user()) <a href="{{ url('parent/dashboard') }}" class="p2-button">List Your Services - Free </a>@else <button class="p2-button" onclick="openLoginModal()">List Your Services - Free </button> @endif
       <span class="text-muted small">Be part of the family ecosystem parents trust</span>
       </div>
     </div>
@@ -88,8 +88,7 @@
           </div>
       </div>
       <div class="d-flex justify-content-center align-items-center">
-        <button onclick="openLoginModal()">List Your Services - Free <i class="bi bi-chevron-right ms-1"></i></button>
-      </div>
+@if(Auth::user()) <a href="{{ url('parent/dashboard') }}" class="p2-button">List Your Services - Free </a>@else <button class="p2-button" onclick="openLoginModal()">List Your Services - Free </button> @endif      </div>
     </div>
   </section>
 @endsection

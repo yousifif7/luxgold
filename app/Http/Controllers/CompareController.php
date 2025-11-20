@@ -23,10 +23,10 @@ class CompareController extends Controller
             ]);
         } else {
             // Add to compare (limit to 4 providers)
-            if (count($compareList) >= 4) {
+            if (count($compareList) >= 3) {
                 return response()->json([
                     'in_compare' => false,
-                    'message' => 'You can only compare up to 4 providers'
+                    'message' => 'You can only compare up to 3 providers'
                 ], 422);
             }
             

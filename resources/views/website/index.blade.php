@@ -51,11 +51,11 @@
                 <!-- Stats -->
                 <div class="d-flex gap-4 mt-4 stats-box">
                     <div style="background-color: #fff">
-                        <h4 style="color: #337d7c">{{ $heroContent->providers_count ?? '500' }}+</h4>
+                        <h4 style="color: #337d7c">{{ $totalProvider ?? '500' }}+</h4>
                         <p style="color: #337d7c">Providers</p>
                     </div>
                     <div style="background-color: #fff">
-                        <h4 style="color: #337d7c">{{ $heroContent->rating ?? '4.8' }}</h4>
+                        <h4 style="color: #337d7c">{{ $avgRating??0 }}</h4>
                         <p style="color: #337d7c">Avg Rating</p>
                     </div>
                     <div style="background-color: #fff">
@@ -325,7 +325,7 @@
                     <img src="{{ $category->image_url ?? 'https://images.unsplash.com/photo-1650504148053-ae51b12dc1d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080' }}" alt="{{ $category->name }}">
                     
                     <!-- Providers Count Badge -->
-                    <div class="edu-badge">{{ $category->providers_count }}+ providers</div>
+                    <div class="edu-badge">{{ $category->totalProvider() }}+ providers</div>
                     
                     <div class="edu-body">
                         <!-- Category Icon -->
@@ -369,35 +369,6 @@
                             <div class="edu-tag">+{{ count($category->tags) - 3 }} more</div>
                             @endif
                         </div>
-                        @else
-                        <!-- Fallback tags based on category name -->
-                        <div class="edu-tags">
-                            @if(str_contains(strtolower($category->name), 'learning') || str_contains(strtolower($category->name), 'care'))
-                            <div class="edu-tag">Daycare</div>
-                            <div class="edu-tag">Child-care</div>
-                            <div class="edu-tag">Preschool</div>
-                            @elseif(str_contains(strtolower($category->name), 'school') || str_contains(strtolower($category->name), 'education'))
-                            <div class="edu-tag">Private Elementary</div>
-                            <div class="edu-tag">Private Middle School</div>
-                            <div class="edu-tag">Private High School</div>
-                            @elseif(str_contains(strtolower($category->name), 'tutoring') || str_contains(strtolower($category->name), 'after'))
-                            <div class="edu-tag">Afterschool Programs</div>
-                            <div class="edu-tag">Tutoring Services</div>
-                            <div class="edu-tag">Enrichment Activities</div>
-                            @elseif(str_contains(strtolower($category->name), 'wellness') || str_contains(strtolower($category->name), 'health'))
-                            <div class="edu-tag">Pediatric Wellness</div>
-                            <div class="edu-tag">Therapy</div>
-                            <div class="edu-tag">Yoga</div>
-                            @elseif(str_contains(strtolower($category->name), 'event') || str_contains(strtolower($category->name), 'activity'))
-                            <div class="edu-tag">Birthday Parties</div>
-                            <div class="edu-tag">Summer Camps</div>
-                            <div class="edu-tag">Family Events</div>
-                            @else
-                            <div class="edu-tag">Services</div>
-                            <div class="edu-tag">Providers</div>
-                            <div class="edu-tag">Family Care</div>
-                            @endif
-                        </div>
                         @endif
                         
                         <!-- Explore Providers Link -->
@@ -431,7 +402,7 @@
                         <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" width="30">
                     </div>
                     <div class="city-title">{{ $city->name }}, {{ $city->state }}</div>
-                    <a href="#" class="city-link">{{ $city->providers_count }}+ providers</a>
+                    <a href="#" class="city-link">{{ $city->totalProvider() }}+ providers</a>
                     <div class="city-families">{{ $city->families_count }}+ families</div>
                 </div>
             </div>
@@ -534,8 +505,9 @@
         <p class="tagline">Join thousands of providers who trust AskRoro to connect with families in their community.
         Stand<br> out where families are actively looking and grow your business.</p>
         <div class="d-flex justify-content-center align-items-center">
-            <button >List Your Services - Free <i
-            class="bi bi-chevron-right ms-1"></i></button>
+           @if(Auth::user()) <a href="{{ url('parent/dashboard') }}" class="p1-button">List Your Services - Free <i
+            class="bi bi-chevron-right ms-1"></i></a> @else <button class="p1-button" onclick="openLoginModal()" >List Your Services - Free <i
+            class="bi bi-chevron-right ms-1"></i></button> @endif
         </div>
     </div>
 </section>
