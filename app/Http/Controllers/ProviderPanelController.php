@@ -39,8 +39,8 @@ class ProviderPanelController extends Controller
         $chartData = $this->getChartData($provider);
         $inquiryStats = $this->getInquiryStats($provider);
         $notifications = $this->getNotifications($provider);
-        echo json_encode($this->getSubscriptionStatus($provider)); exit;
-
+/*        echo json_encode($this->getSubscriptionStatus($provider)); exit;
+*/
         return view('panels.provider.index', compact('stats', 'chartData', 'inquiryStats', 'notifications'));
     }
 
