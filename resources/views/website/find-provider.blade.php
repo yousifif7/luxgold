@@ -11,7 +11,7 @@
          <style>
              .mobile-filter-btn {
             display: none;
-            background: #3b82f6;
+            background: #ff6b47;
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;

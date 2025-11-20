@@ -1433,7 +1433,7 @@ font-weight: 600;
 .find-provider-page .cards-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 @media (max-width: 1000px) {
   .find-provider-page .cards-grid {
@@ -1808,10 +1808,11 @@ height: fit-content;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
+  text-align: center;
 }
 .school-profile-main-image-large {
-  width: 100%;
-  height: 360px;
+/*  width: 100%;
+*/  height: 360px;
   border-radius: 16px;
 }
 .school-profile-thumbnail-gallery-row {
