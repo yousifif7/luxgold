@@ -39,8 +39,16 @@ class ProviderPanelController extends Controller
         $chartData = $this->getChartData($provider);
         $inquiryStats = $this->getInquiryStats($provider);
         $notifications = $this->getNotifications($provider);
-/*        echo json_encode($this->getSubscriptionStatus($provider)); exit;
-*/
+        $subscription=$this->getSubscriptionStatus($provider);
+
+        if (empty($subscription) || $subscription==null) {
+
+            if ($provider->currentPlan->monthly_fee>0) {
+                return redirect()->route('subscriptions.checkout', ['plan' => $provider->plans_id]);
+            }
+            
+        }
+
         return view('panels.provider.index', compact('stats', 'chartData', 'inquiryStats', 'notifications'));
     }
 
@@ -269,18 +277,13 @@ class ProviderPanelController extends Controller
 
     private function getSubscriptionStatus(Provider $provider)
     {
+
         $subscription = Subscription::where('provider_id', $provider->id)
             ->where('status', 'active')
             ->first();
 
         if (!$subscription) {
-            return [
-                'status' => 'inactive',
-                'plan_name' => 'Basic',
-                'renews_at' => null,
-                'is_premium' => false,
-                'days_remaining' => 0
-            ];
+            return $subscription;
         }
 
         $plan = Plan::find($subscription->plan_id);
@@ -291,7 +294,7 @@ class ProviderPanelController extends Controller
             'plan_name' => $plan->name ?? 'Unknown',
             'renews_at' => $subscription->renews_at,
             'is_premium' => $plan && $plan->type !== 'Basic',
-            'days_remaining' => max(0, $daysRemaining)
+            'days_remaining' => max(0, round($daysRemaining,0))
         ];
     }
 
@@ -307,7 +310,7 @@ class ProviderPanelController extends Controller
 
     public function subscription()
     {
-        $provider = auth()->user();
+        $provider = auth()->user()->provider;
         $plans = Plan::where('is_active', true)->get();
         
         // Get current active subscription

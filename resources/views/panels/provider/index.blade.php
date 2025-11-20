@@ -12,7 +12,7 @@
                 <p class="mb-0">Here's what's happening with your account today.</p>
             </div>
             <div class="subscription-status">
-                @if($stats['subscription_status']['status'] === 'active')
+                @if(isset($stats['subscription_status']['status']) && $stats['subscription_status']['status'] === 'active')
                     <span class="badge bg-success">
                         <i class="ti ti-crown me-1"></i>
                         {{ $stats['subscription_status']['plan_name'] }} Plan

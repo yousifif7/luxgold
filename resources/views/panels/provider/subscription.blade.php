@@ -181,7 +181,7 @@
                     <tbody>
                         @forelse($billingHistory as $payment)
                         <tr>
-                            <td>{{ $payment->subscription->plan->name ?? $payment->subscription->plan }}</td>
+                            <td>{{ $payment->subscription->plan->name ?? '' }}</td>
                             <td>${{ number_format($payment->amount, 2) }} {{ $payment->currency }}</td>
                             <td>{{ $payment->paid_at}}</td>
                             <td>

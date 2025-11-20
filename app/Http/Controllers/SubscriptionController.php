@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 use Stripe\Webhook;
+use Auth;
 
 class SubscriptionController extends Controller
 {
@@ -22,7 +23,7 @@ class SubscriptionController extends Controller
        
         // Create subscription (pending, awaiting Stripe confirmation)
         $subscription = Subscription::create([
-            'provider_id' => auth()->id(),
+            'provider_id' => Auth::user()->provider->id,
             'plan_id' => $plan->id,
             'amount' => $plan->monthly_fee,
             'currency' => $plan->currency ?? 'USD',
@@ -57,7 +58,7 @@ class SubscriptionController extends Controller
         // Create initial payment record
         Payment::create([
             'subscription_id' => $subscription->id,
-            'provider_id' => auth()->id(),
+            'provider_id' => Auth::user()->provider->id,
             'payment_method' => 'stripe',
             'transaction_id' => $session->id,
             'amount' => $plan->monthly_fee,
@@ -84,6 +85,7 @@ class SubscriptionController extends Controller
             if ($subscription) {
                 
                 $subscription->update([
+                    'status'=>'active',
                     'is_active' => true,
                      'renews_at' => now()->addMonth(),
                 ]);
