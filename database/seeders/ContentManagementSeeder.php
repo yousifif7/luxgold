@@ -198,6 +198,7 @@ class ContentManagementSeeder extends Seeder
         ];
 
         foreach ($testimonials as $testimonial) {
+            $testimonial->avatar_url=asset($testimonial->avatar_url);
             Testimonial::create($testimonial);
         }
     }
