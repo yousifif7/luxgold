@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
 class Event extends Model
 {
     use HasFactory;
@@ -41,9 +41,25 @@ class Event extends Model
 
     public function provider(){ return $this->belongsTo(User::class); }
 
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+
     public function savedByUsers()
     {
         return $this->hasMany(SavedEvent::class);
+    }
+   
+    public function isSavedByUser()
+    {
+        if (!Auth::check()) {
+            return false;
+        }
+
+        return $this->savedByUsers()
+            ->where('user_id', Auth::id())
+            ->exists();
     }
 
     // Scopes

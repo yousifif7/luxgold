@@ -26,7 +26,7 @@
                 <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download" onclick="exportToCSV()">
                     <i class="ti ti-cloud-download"></i>
                 </a>
-                <a href="#" data-size="lg" data-url="{{ route('admin.providers.create') }}" data-ajax-popup="true" data-title="{{__('New Provider')}}" class="btn btn-primary">New Provider</a>
+                <a href="#" data-size="xl" data-url="{{ route('admin.providers.create') }}" data-ajax-popup="true" data-title="{{__('New Provider')}}" class="btn btn-primary">New Provider</a>
             </div>
         </div>
         <!-- End Page Header -->
@@ -318,7 +318,7 @@
                                         </a>
                                         <ul class="dropdown-menu p-2">
                                             <li>
-                                                <a href="#" data-size="lg" 
+                                                <a href="#" data-size="xl" 
                                                    data-url="{{ route('admin.providers.show', $provider->id) }}" 
                                                    data-ajax-popup="true"  
                                                    data-title="{{ __('Show Provider') }}"  class="dropdown-item">
@@ -326,7 +326,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#" data-size="lg" 
+                                                <a href="#" data-size="xl" 
                                                    data-url="{{ route('admin.providers.edit', $provider->id) }}" 
                                                    data-ajax-popup="true"  
                                                    data-title="{{ __('Edit Provider') }}" 
@@ -422,23 +422,10 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    loadStats();
     initializeFilters();
     initializeBulkActions();
 });
 
-// Load dashboard stats
-function loadStats() {
-    fetch('{{ route("admin.providers.stats") }}')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('total-providers').textContent = data.total;
-            document.getElementById('pending-providers').textContent = data.pending;
-            document.getElementById('active-providers').textContent = data.approved;
-            document.getElementById('total-revenue').textContent = '$' + data.revenue;
-        })
-        .catch(error => console.error('Error loading stats:', error));
-}
 
 // Initialize filters
 function initializeFilters() {

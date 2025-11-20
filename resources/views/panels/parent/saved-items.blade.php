@@ -96,8 +96,8 @@
                             </div>
                         </div>
                         <div class="text-end">
-                            <div><strong>{{ $savedEvent->event->date->format('M d, Y') }}</strong></div>
-                            <div class="text-muted">{{ $savedEvent->event->start_time->format('g:i A') }}</div>
+                            <div><strong>{{ $savedEvent->event->created_at->format('M d, Y') }}</strong></div>
+                            <div class="text-muted">{{ $savedEvent->event->start_time }}</div>
                             <form action="{{ route('saved-events.destroy', $savedEvent->id) }}" method="POST" class="d-inline mt-2">
                                 @csrf
                                 @method('DELETE')

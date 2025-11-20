@@ -82,6 +82,11 @@ class Provider extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function inquiries(){
+
+        return $this->hasMany(Inquiry::class,'provider_id');
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class,'categories_id');
@@ -129,6 +134,19 @@ return $this->hasMany(Event::class,'provider_id','user_id');
     return $average ? round($average, 1) : null; // Round to 1 decimal or return null
 }
 
+public function totalInquiries(){
+   $inq=$this->inquiries();
+
+   return $inq->count();
+
+}
+
+public function totalView(){
+
+    $views=$this->recentlyViewed();
+    return $views->count();
+}
+
 
 
     public function updateRating()
@@ -160,7 +178,7 @@ return $this->hasMany(Event::class,'provider_id','user_id');
 
     public function recentlyViewed()
     {
-        return $this->hasMany(RecentlyViewed::class);
+        return $this->hasMany(RecentlyViewed::class,'provider_id');
     }
 
 

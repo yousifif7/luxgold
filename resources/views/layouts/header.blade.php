@@ -18,6 +18,9 @@
         <li class="nav-item">
           <a class="nav-link {{ request()->is('find-provider') ? 'active' : '' }}" href="{{ route('website.find-provider') }}">Find Providers</a>
         </li>
+         <li class="nav-item">
+          <a class="nav-link {{ request()->is('find-event') ? 'active' : '' }}" href="{{ route('website.find-event') }}">Find Event</a>
+        </li>
 
         @if (Request::is('/') || Request::is('home'))          
         <li class="nav-item">
@@ -30,7 +33,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('compare') ? 'active' : '' }}" href="{{ route('website.compare') }}">Write a Review</a>
+          <a class="nav-link {{ request()->is('compare') ? 'active' : '' }}" href="{{ route('website.compare') }}">Compare</a>
         </li>
 
 

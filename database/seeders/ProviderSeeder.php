@@ -593,7 +593,7 @@ class ProviderSeeder extends Seeder
                     'operating_hours' => $providerData['hours'],
                     'care_types_id' => $care_type->id,
                     'programs_offered_id' => $programs_offered->id,
-                    'price_amount' => null,
+                    'price_amount' => 0,
                     'pricing_description' => '',
                     'available_days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
                     'start_time' => '07:00:00',

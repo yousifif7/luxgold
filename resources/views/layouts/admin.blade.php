@@ -534,6 +534,39 @@
     @stack('parentscripts')
     @stack('scripts')
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Select2 on all multiple select elements
+    const multiSelects = document.querySelectorAll('select[multiple]');
+    
+    multiSelects.forEach(select => {
+        $(select).select2({
+            placeholder: 'Select options',
+            allowClear: true,
+            width: '100%',
+            theme: 'bootstrap-5'
+        });
+    });
+
+    // Optional: If you want to initialize Select2 on single select elements as well
+    const singleSelects = document.querySelectorAll('select:not([multiple])');
+    
+    singleSelects.forEach(select => {
+        $(select).select2({
+            placeholder: 'Select an option',
+            allowClear: true,
+            width: '100%',
+            theme: 'bootstrap-5'
+        });
+    });
+});
+</script>
 </body>
 
 

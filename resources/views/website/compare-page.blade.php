@@ -58,7 +58,7 @@
                   <tr>
                     <td>Category</td>
                     @foreach($providers as $provider)
-                    <td data-label="Category">{{ $provider->category }}</td>
+                    <td data-label="Category">{{ $provider->category->name }}</td>
                     @endforeach
                   </tr>
                   <tr>
@@ -66,7 +66,7 @@
                     @foreach($providers as $provider)
                     <td data-label="Service Categories">
                         @php
-                            $categories = json_decode($provider->service_categories, true) ?? [];
+                            $categories = $provider->service_categories ?? [];
                         @endphp
                         {{ implode(', ', $categories) }}
                     </td>
@@ -91,7 +91,7 @@
                     @foreach($providers as $provider)
                     <td data-label="Available Days">
                         @php
-                            $days = json_decode($provider->available_days, true) ?? [];
+                            $days = $provider->available_days ?? [];
                             $dayNames = array_map('ucfirst', $days);
                         @endphp
                         {{ implode(', ', $dayNames) }}
@@ -103,7 +103,7 @@
                     @foreach($providers as $provider)
                     <td data-label="Special Features">
                         @php
-                            $features = json_decode($provider->special_features, true) ?? [];
+                            $features = $provider->special_features ?? [];
                             $formattedFeatures = array_map(function($feature) {
                                 return str_replace('_', ' ', ucfirst($feature));
                             }, $features);
@@ -138,7 +138,7 @@
                     @foreach($providers as $provider)
                     <td data-label="Diversity Badges">
                         @php
-                            $badges = json_decode($provider->diversity_badges, true) ?? [];
+                            $badges = $provider->diversity_badges ?? [];
                             $formattedBadges = array_map(function($badge) {
                                 return str_replace('_', ' ', ucfirst($badge));
                             }, $badges);
@@ -160,8 +160,8 @@
                     <td>Profile Performance</td>
                     @foreach($providers as $provider)
                     <td data-label="Profile Performance">
-                        Views: {{ $provider->profile_views }}<br>
-                        Inquiries: {{ $provider->inquiries }}
+                        Views: {{ $provider->totalView() }}<br>
+                        Inquiries: {{ $provider->totalInquiries() }}
                     </td>
                     @endforeach
                   </tr>

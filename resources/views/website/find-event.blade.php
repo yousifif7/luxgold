@@ -112,12 +112,7 @@
             </div>
     
             <div class="header-actions">
-                <div class="pill">
-                    <i class="ti ti-heart me-2"></i>Favorites
-                </div>
-                <div class="pill compare-count-badge" onclick="showCompareModal()" id="comparePill">
-                    0 to compare
-                </div>
+                
             </div>
         </div>
     
@@ -137,37 +132,17 @@
                         <span class="text-muted" style="font-size: 0.8rem;">Refine your search</span>
                     </div>
 
-                    <form id="searchForm" method="GET" action="{{ route('website.find-provider') }}">
+                    <form id="searchForm" method="GET" action="{{ route('website.find-event') }}">
                         <input type="text" name="search" id="searchInput" class="input-ghost" 
-                               placeholder="🔍 Search providers..." value="{{ request('search') }}">
+                               placeholder="🔍 Search Event..." value="{{ request('search') }}">
                         <input type="text" name="location" id="locationInput" class="input-ghost" 
                                placeholder="📍 Enter location..." value="{{ request('location') }}">
             
-                        <h6 class="filter-title">Service Category</h6>
-                        <select name="category" id="categorySelect" class="form-select mb-3">
-                            <option value="all">All Categories</option>
-                            @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-            
-                        <h6 class="filter-title">Age Group</h6>
-                        <select name="age_group" id="ageSelect" class="form-select mb-3">
-                            <option value="all">All Ages</option>
-                            @foreach($ages_served as $age)
-
-                            <option value="{{ $age->id }}" {{ request('age_group') == $age->id ? 'selected' : '' }}>{{ $age->title }}</option>
-
-                            @endforeach
-                        </select>
-            
+                       
                         <h6 class="filter-title">Distance: <span id="distanceBadge">25 miles</span></h6>
                         <input type="range" name="distance" id="distanceRange" min="1" max="100" value="{{ request('distance', 25) }}" class="custom mb-2">
             
-                          <h6 class="filter-title">Minimum Rating: <span id="ratingBadge">{{ request('rating', 0) }}+</span></h6>
-                        <input type="range" name="rating" id="ratingRange" min="0" max="5" step="0.5" 
-                               value="{{ request('rating', 0) }}" class="custom mb-2">
-            
+                       
                         <h6 class="filter-title">Price Range</h6>
                         <div id="priceSlider" class="mb-3"></div>
                         <div class="d-flex gap-2">
@@ -177,21 +152,7 @@
                                    placeholder="Max price" value="{{ request('price_max') }}">
                         </div>
             
-                        <h6 class="filter-title mt-3 service-filter-title">Services Offered</h6>
-                        <div style="max-height:140px; overflow:auto;" class="mb-3">
-                            
-                            @foreach($services_offerd as $service)
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="services[]" 
-                                           value="{{ $service->id }}"
-                                           {{ in_array($service->id, (array)request('services', [])) ? 'checked' : '' }}>
-                                    <label class="form-check-label">
-                                        {{ $service->title }}
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-
+                       
                         <div class="mt-4">
                               <button type="submit" class="add-services-btn mt-3 w-100">Apply Filters</button>
                         <button type="button" id="resetFilters" class="btn btn-outline-secondary mt-2 w-100">Reset Filters</button>
@@ -204,7 +165,7 @@
             <div class="right-col">
                 <div class="providers-header">
                     <div>
-                        <div class="providers-left">{{ count($providers) }} providers found</div>
+                        <div class="providers-left">{{ count($events) }} providers found</div>
                         <div class="small-muted">Showing results for your search criteria</div>
                     </div>
     
@@ -221,146 +182,88 @@
                 <!-- cards wrapper -->
                 <div id="cardsContainer">
                     <div id="cards" class="cards-grid">
-                        @foreach($providers as $provider)
-                        @php
-                            // Calculate average rating and review count
-                            $reviews = $provider->reviews()->where('status', 'approved')->get();
-                            $averageRating = $provider->averageRating();
-                            $reviewCount = $reviews->count();
-                            
-                            // Get provider category name
-                            $category = $provider->category;
-                            
-                            // Parse service categories if available
-                            $serviceCategories = $provider->service_categories ?? [];
-                            $firstCategory = !empty($serviceCategories) ? $serviceCategories[0] : ($category ?: 'Provider');
-                            
-                            // Parse special features for tags
-                            $specialFeatures = $provider->special_features ??  [];
-                            $diversityBadges =$provider->diversity_badges ??  [];
-                            
-                            // Combine tags from various sources
-                            $allTags = array_merge($specialFeatures, $diversityBadges);
-                            $displayTags = array_slice($allTags, 0, 4);
-                            $remainingTags = count($allTags) - count($displayTags);
-                            
-                            // Get pricing information
-                            $priceDisplay = $provider->price_amount ? '$' . number_format($provider->price_amount, 0) : 'Contact for pricing';
-                            $pricingDescription = $provider->pricing_description ?: 'Price varies';
-                            
-                            // Get availability information
-                            $availableDays = $provider->available_days ?? [];
-                            $startTime = $provider->start_time ? \Carbon\Carbon::parse($provider->start_time)->format('g:i A') : 'N/A';
-                            $endTime = $provider->end_time ? \Carbon\Carbon::parse($provider->end_time)->format('g:i A') : 'N/A';
-                            $hoursDisplay = $startTime . ' - ' . $endTime;
-                            
-                            // Age group information
-                            $ageGroup = $provider->age_group ?: 'Contact for ages';
-                        @endphp
+                        @foreach($events as $event)
+                    <div class="program-card position-relative">
+                        {{-- Event Image --}}
+                        @if(!empty($event->image_url))
+                            <img class="provider-media" 
+                                 src="{{ $event->image_url }}" 
+                                 alt="{{ $event->title }}">
+                        @else
+                            <div class="provider-media placeholder-media">
+                                <i class="ti ti-calendar-event"></i>
+                            </div>
+                        @endif
 
-                        <div class="program-card provider-card position-relative" data-id="p{{ $provider->id }}">
-                           @if(!empty($provider->logo_path) && file_exists(public_path($provider->logo_path)) )
-        <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->business_name }}">
-    
-    @endif
-                               
-                            
-                            @if($firstCategory)
-                                <div class="card-badge provider-badge">{{ $firstCategory->name }}</div>
+                        <div class="card-body">
+                            {{-- Event Title --}}
+                            <div class="program-title">
+                                {{ $event->title }}
+                                @if($event->provider && $event->provider->status === 'approved')
+                                    <i style="color:#00bfa6" class="ms-1 bi bi-check2-circle"></i>
+                                @endif
+                            </div>
+
+                            {{-- Provider Name --}}
+                            @if($event->provider)
+                                <div class="info small-muted">
+                                    <i class="bi bi-building"></i>
+                                    {{ $event->provider->business_name ?? $event->provider_name }}
+                                </div>
                             @endif
-                            
-                            <div class="card-body">
-                                <div class="program-title card-title">
-                                    {{ $provider->business_name ?? $provider->name }} 
-                                    @if($provider->status === 'approved')
-                                        <i style="color:#00bfa6" class="ms-1 bi bi-check2-circle"></i>
-                                    @endif
+
+                            {{-- Event Dates --}}
+                            @if($event->start_date && $event->end_date)
+                                <div class="info small-muted">
+                                    <i class="bi bi-calendar-event"></i>
+                                    {{ $event->start_date->format('M d, Y') }} - {{ $event->end_date->format('M d, Y') }}
                                 </div>
-                                
-                                @if($averageRating)
-                                    <div class="rating rating-text">
-                                        <i class="bi bi-star-fill"></i>
-                                        {{ number_format($averageRating, 1) }} 
-                                        @if($reviewCount > 0)
-                                            ({{ $reviewCount }})
-                                        @endif
-                                    </div>
-                                @else
-                                    <div class="rating rating-text text-muted">
-                                        <i class="bi bi-star"></i>
-                                        No reviews yet
-                                    </div>
-                                @endif
-                                
-                                <div class="meta-row">
-                                    @if($provider->physical_address)
-                                        <div class="info small-muted">
-                                            <i class="bi bi-geo-alt"></i> 
-                                            {{ \Illuminate\Support\Str::limit($provider->physical_address, 30) }}
-                                        </div>
-                                    @endif
-                                    
-                                    @if($provider->start_time && $provider->end_time)
-                                        <div class="info small-muted">
-                                            <i class="bi bi-clock"></i> 
-                                            {{ $hoursDisplay }}
-                                        </div>
-                                    @endif
-                                    
-                                    @if($provider->price_amount)
-                                        <div class="info small-muted">
-                                            <i class="bi bi-currency-dollar"></i> 
-                                            {{ $priceDisplay }}
-                                            @if($provider->pricing_description)
-                                                <small>({{ $provider->pricing_description }})</small>
-                                            @endif
-                                        </div>
-                                    @endif
+                            @endif
+
+                            {{-- Event Location --}}
+                            @if($event->location)
+                                <div class="info small-muted">
+                                    <i class="bi bi-geo-alt"></i>
+                                    {{ \Illuminate\Support\Str::limit($event->location, 40) }}
                                 </div>
-                                
-                                @if($ageGroup)
-                                    <div class="info">
-                                        Ages: <b class="ageText-class">{{ $ageGroup }}</b>
-                                    </div>
-                                @endif
-                                
-                                @if(!empty($displayTags))
-                                    <div class="tags">
-                                        @foreach($displayTags as $tag)
-                                            <div class="tag tag-gray">{{ ucfirst($tag) }}</div>
-                                        @endforeach
-                                        
-                                        @if($remainingTags > 0)
-                                            <div class="tag tag-gray">+{{ $remainingTags }} more</div>
-                                        @endif
-                                    </div>
-                                @endif
-                                
-                                @if($provider->service_description)
-                                    <div class="service-description mt-2">
-                                        <p class="small text-muted mb-0">
-                                            {{ \Illuminate\Support\Str::limit(strip_tags($provider->service_description), 80) }}
-                                        </p>
-                                    </div>
-                                @endif
-                            </div>
-                            
-                            <div class="card-footer">
-                                <button data-id="p{{ $provider->id }}" data-provider-id="{{ $provider->id }}" class="btn-compare compare-btn">
-                                    Compare
-                                </button>
-                                <a class="btn-view" href="{{ route('website.provider-detail', $provider->id) }}">
-                                    View Details
-                                </a>
-                            </div>
+                            @endif
+
+                            {{-- Event Cost --}}
+                            @if(!is_null($event->cost))
+                                <div class="info small-muted">
+                                    <i class="bi bi-currency-dollar"></i>
+                                    {{ number_format($event->cost, 2) }}
+                                </div>
+                            @endif
+
+                            {{-- Age Group --}}
+                            @if($event->age_group)
+                                <div class="info">
+                                    Ages: <b>{{ $event->age_group }}</b>
+                                </div>
+                            @endif
+
+                            {{-- Category --}}
+                            @if($event->category)
+                                <div class="tags mt-2">
+                                    <div class="tag tag-gray">{{ ucfirst($event->category) }}</div>
+                                </div>
+                            @endif
                         </div>
-                        @endforeach
+
+                        <div class="card-footer">
+                            <a class="btn-view" href="{{ route('website.event-detail', $event->id) }}">
+                                View Details
+                            </a>
+                        </div>
+                </div>
+            @endforeach
                     </div>
                 </div>
                  <div class="col-md-12">
-                        @if($providers->hasPages())
+                        @if($events->hasPages())
                 <div class="d-flex justify-content-between align-items-center mt-3">
-                        {{ $providers->links() }}
+                        {{ $events->links() }}
                     </div>
                 @endif
             </div>
@@ -375,30 +278,13 @@
                 </div>
                 <div class="filter-sidebar">
                     <!-- Same filter form content as desktop -->
-                    <form id="mobileSearchForm" method="GET" action="{{ route('website.find-provider') }}">
+                    <form id="mobileSearchForm" method="GET" action="{{ route('website.find-event') }}">
                         <input type="text" name="search" class="input-ghost" 
                                placeholder="🔍 Search providers..." value="{{ request('search') }}">
                         <input type="text" name="location" class="input-ghost" 
                                placeholder="📍 Enter location..." value="{{ request('location') }}">
             
-                        <h6 class="filter-title">Service Category</h6>
-                        <select name="category" id="categorySelect" class="form-select mb-3">
-                            <option value="all">All Categories</option>
-                            @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-            
-                        <h6 class="filter-title">Age Group</h6>
-                        <select name="age_group" id="ageSelect" class="form-select mb-3">
-                            <option value="all">All Ages</option>
-                            @foreach($ages_served as $age)
-
-                            <option value="{{ $age->id }}" {{ request('age_group') == $age->id ? 'selected' : '' }}>{{ $age->title }}</option>
-
-                            @endforeach
-                        </select>
-            
+                       
                          <h6 class="filter-title">Distance: <span id="distanceBadge">25 miles</span></h6>
                         <input type="range" name="distance" id="distanceRange" min="1" max="100" value="{{ request('distance', 25) }}" class="custom mb-2">
             
@@ -415,20 +301,7 @@
                                    placeholder="Max price" value="{{ request('price_max') }}">
                         </div>
             
-                        <h6 class="filter-title mt-3 service-filter-title">Services Offered</h6>
-                        <div style="max-height:140px; overflow:auto;" class="mb-3">
-                            
-                            @foreach($services_offerd as $service)
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="services[]" 
-                                           value="{{ $service->id }}"
-                                           {{ in_array($service->id, (array)request('services', [])) ? 'checked' : '' }}>
-                                    <label class="form-check-label">
-                                        {{ $service->title }}
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
+                      
                     </form>
                 </div>
                 <div class="filter-actions-mobile">
@@ -456,80 +329,10 @@
     </div>
     </div>
 
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
-    <script>
-  
+   @endsection
 
-        // Mobile filter modal handlers
-        function initializeMobileFilters() {
-            const filterModal = document.getElementById('filterModal');
-            const mobileFilterBtn = document.getElementById('mobileFilterBtn');
-            const closeFilterModal = document.getElementById('closeFilterModal');
-            const mobileApplyFilters = document.getElementById('mobileApplyFilters');
-            const mobileResetFilters = document.getElementById('mobileResetFilters');
 
-            if (mobileFilterBtn) {
-                mobileFilterBtn.addEventListener('click', function() {
-                    filterModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                });
-            }
 
-            if (closeFilterModal) {
-                closeFilterModal.addEventListener('click', function() {
-                    filterModal.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            }
-
-            if (mobileApplyFilters) {
-                mobileApplyFilters.addEventListener('click', function() {
-                    document.getElementById('mobileSearchForm').submit();
-                });
-            }
-
-            if (mobileResetFilters) {
-                mobileResetFilters.addEventListener('click', function() {
-                    const form = document.getElementById('mobileSearchForm');
-                    form.reset();
-                    // Reset price slider
-                    if (window.mobilePriceSlider) {
-                        window.mobilePriceSlider.set([0, 1000]);
-                    }
-                    // Reset range badges
-                    document.getElementById('mobileDistanceBadge').textContent = '25 miles';
-                    document.getElementById('mobileRatingBadge').textContent = '0+';
-                });
-            }
-
-            // Close modal when clicking outside
-            filterModal.addEventListener('click', function(e) {
-                if (e.target === filterModal) {
-                    filterModal.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            });
-        }
-
-        // Reset filters handler
-        document.getElementById('resetFilters')?.addEventListener('click', function() {
-            document.getElementById('searchForm').reset();
-            if (window.priceSlider) {
-                window.priceSlider.set([0, 1000]);
-            }
-            document.getElementById('distanceBadge').textContent = '25 miles';
-            document.getElementById('ratingBadge').textContent = '0+';
-        });
-
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-
-            initializeMobileFilters();
-        });
-    </script>
-    @endpush
-@endsection
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>

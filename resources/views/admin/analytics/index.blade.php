@@ -287,7 +287,6 @@
             <tr>
               <th>Provider</th>
               <th>Views</th>
-              <th>Clicks</th>
               <th>Inquiries</th>
               <th>Rating</th>
               <th>Conversion Rate</th>
@@ -301,7 +300,6 @@
                   <div class="fw-semibold">{{ $p['name'] }}</div>
                 </td>
                 <td>{{ number_format($p['views']) }}</td>
-                <td>{{ $p['clicks'] }}</td>
                 <td>{{ $p['inquiries'] }}</td>
                 <td>
                   <div class="d-flex align-items-center">

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\RecentlyViewed;
 use App\Models\Inquiry;
 use App\Models\Review;
+use App\Models\Provider;
 
 class AnalyticsService
 {
@@ -514,42 +515,39 @@ class AnalyticsService
     }
 
     public function getTopProviders(int $limit = 6): array
-    {
-        if (Schema::hasTable('providers')) {
-            $rows = DB::table('providers')
-                ->select('business_name as name', 'views', 'clicks', 'inquiries', 'rating')
-                ->where('status', 'approved')
-                ->orderByDesc('views')
-                ->limit($limit)
-                ->get();
+{
+    if (Schema::hasTable('providers')) {
+        $rows = Provider::with('approvedReviews', 'inquiries', 'recentlyViewed') // load relationships
+            ->select('business_name as name') // you can only select columns from table itself
+            ->where('status', 'approved')
+            ->get()
+            ->map(function ($r) {
+                $totalView = $r->totalView();
+                $totalInquiries = $r->totalInquiries();
+                $averageRating = $r->averageRating();
 
-            return $rows->map(function($r){
-                $conversion = $r->views > 0 ? ($r->inquiries / $r->views) * 100 : 0;
+                $conversion = $totalView > 0 ? ($totalInquiries / $totalView) * 100 : 0;
                 $performance = $conversion >= 2 ? 'High' : ($conversion >= 1 ? 'Medium' : 'Low');
-                
+
                 return [
                     'name' => $r->name,
-                    'views' => $r->views ?? 0,
-                    'clicks' => $r->clicks ?? 0,
-                    'inquiries' => $r->inquiries ?? 0,
-                    'rating' => $r->rating ?? 0,
+                    'views' => $totalView,
+                    'inquiries' => $totalInquiries,
+                    'rating' => $averageRating,
                     'conversion' => round($conversion, 1),
                     'performance' => $performance
                 ];
-            })->toArray();
-        }
+            })
+            ->sortByDesc('views') // sort after mapping
+            ->take($limit)
+            ->values()
+            ->toArray();
 
-        // Fallback sample data
-        return [
-            ['name'=>'Little Learners Academy','views'=>1247,'clicks'=>89,'inquiries'=>23,'conversion'=>1.8,'performance'=>'Medium'],
-            ['name'=>'ABC Childcare Center','views'=>892,'clicks'=>67,'inquiries'=>18,'conversion'=>2.0,'performance'=>'High'],
-            ['name'=>'Bright Stars Preschool','views'=>756,'clicks'=>45,'inquiries'=>12,'conversion'=>1.6,'performance'=>'Medium'],
-            ['name'=>'Fun Time Activities','views'=>634,'clicks'=>38,'inquiries'=>15,'conversion'=>2.4,'performance'=>'High'],
-            ['name'=>'Creative Kids Studio','views'=>523,'clicks'=>29,'inquiries'=>8,'conversion'=>1.5,'performance'=>'Low'],
-            ['name'=>'Happy Hearts Academy','views'=>478,'clicks'=>33,'inquiries'=>9,'conversion'=>1.9,'performance'=>'Medium'],
-        ];
+        return $rows;
     }
 
+    return [];
+}
     // New methods for review and click analytics
     public function getReviewAnalytics(): array
     {

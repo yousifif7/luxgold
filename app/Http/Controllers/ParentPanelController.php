@@ -12,6 +12,8 @@ use App\Models\Event;
 use App\Models\RecentlyViewed;
 use Auth;
 use App\Models\Message;
+use App\Models\SavedEvent;
+
 class ParentPanelController extends Controller
 {
 
@@ -235,10 +237,10 @@ private function getProviderRecommendations($user)
         ->latest()
         ->get();
 
-        $savedEvents = []/* SavedEvent::with(['event.provider'])
+        $savedEvents =  SavedEvent::with(['event.provider'])
             ->where('user_id', Auth::id())
             ->latest()
-            ->get()*/;
+            ->get();
 
           return view('panels.parent.saved-items',compact('savedProviders','savedEvents'));
     }

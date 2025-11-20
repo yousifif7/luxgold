@@ -275,7 +275,7 @@
 
                 <!-- Upcoming Events -->
                 <div class="section-card mt-3">
-                    <div class="section-title">Upcoming Events</div>
+                    <div class="section-title">Saved Events</div>
                     <div class="section-subtitle">Don't miss these important dates</div>
 
                     @forelse($upcomingEvents as $event)
@@ -302,7 +302,7 @@
                     @endforelse
 
                     @if($upcomingEvents->count() > 0)
-                    <a href="{{ route('events.index') }}" class="btn btn-outline-primary w-100 mt-3">View All Events</a>
+                    <a href="{{ route('parent-saved-items') }}" class="btn btn-outline-primary w-100 mt-3">View All Events</a>
                     @endif
                 </div>
             </div>

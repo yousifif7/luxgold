@@ -14,6 +14,7 @@ use App\Http\Controllers\ParentPanelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ProviderPanelController;
+use App\Http\Controllers\EventRegistrationController;
 
 //Website Routes
 
@@ -24,6 +25,9 @@ Route::get('/find-provider', [HomeController::class,'findProvider'])->name('webs
 Route::get('/for-provider', fn() => view('website.for-provider'))->name('website.for-provider');
 Route::get('/terms-of-services', fn() => view('website.term-of-services'))->name('website.services');
 Route::get('/provider-detail/{id}', [HomeController::class,'providerDetail'])->name('website.provider-detail');
+Route::get('/event-detail/{id}', [HomeController::class,'eventDetail'])->name('website.event-detail');
+Route::get('/find-event', [HomeController::class,'findEvents'])->name('website.find-event');
+
 Route::get('/privacy-policy', fn() => view('website.privacy-policy'))->name('website.privacy-policy');
 Route::get('/cookies-policy', fn() => view('website.cookies-policy'))->name('website.cookies-policy');
 Route::get('/faqs', fn() => view('website.faqs'))->name('website.faqs');
@@ -34,6 +38,27 @@ Route::post('/support', [App\Http\Controllers\SupportController::class, 'store']
 Route::get('/support/{ticket}', [App\Http\Controllers\SupportController::class, 'show'])->name('support.show');
 Route::get('/support/{ticket}/messages', [App\Http\Controllers\SupportMessageController::class, 'index']);
 Route::post('/support/messages', [App\Http\Controllers\SupportMessageController::class, 'store'])->name('support.messages.store');
+
+Route::post('/events/{event}/save', [EventRegistrationController::class, 'save'])
+    ->middleware('auth')
+    ->name('events.save');
+
+Route::post('/event-registration', [EventRegistrationController::class, 'store'])
+    ->name('event.registration.store');
+
+Route::get('/registration/{code}', [EventRegistrationController::class, 'show'])
+    ->name('event.registration.show');
+
+Route::post('/registration/{code}/cancel', [EventRegistrationController::class, 'cancel'])
+    ->name('event.registration.cancel');
+
+Route::get('/my-registrations', [EventRegistrationController::class, 'userRegistrations'])
+    ->name('user.registrations')
+    ->middleware('auth');
+Route::delete('/saved-events/{savedEvent}', [EventRegistrationController::class, 'destroy'])
+    ->name('saved-events.destroy');
+
+
 
 
 Route::middleware(['auth'])->group(function () {

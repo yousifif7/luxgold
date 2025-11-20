@@ -67,6 +67,43 @@ class HomeController extends Controller
 
         return view('website.compare-page',compact('providers'));
     }
+
+    public function findEvents(Request $request){
+$query = Event::query();
+
+        // Search by business name or description
+        if ($request->has('search') && $request->search) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', "%{$searchTerm}%")
+                    ->orWhere('subtitle', 'like', "%{$searchTerm}%")
+                    ->orWhere('description', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // Filter by location
+        
+     
+        if ($request->has('age_group') && $request->age_group != 'all') {
+            $query->where('ages_served_id', $request->age_group);
+        }
+
+        if ($request->filled('price_min') && $request->filled('price_max')) {
+    $query->whereBetween('cost', [(float)$request->price_min, (float)$request->price_max]);
+}
+
+
+        
+        // Get results
+        $events = $query->paginate(9);
+        $categories=Category::whereNull('parent_id')->get();
+        $ages_served=AgesServed::get();
+        $programs_offerd=ProgramsOffered::get();
+        $services_offerd=ServicesOfferd::get();
+
+        return view('website.find-event', compact('events','categories','ages_served','services_offerd'));
+
+    }
     public function findProvider(Request $request)
     {
         $query = Provider::query();
@@ -110,6 +147,13 @@ class HomeController extends Controller
         $services_offerd=ServicesOfferd::get();
 
         return view('website.find-provider', compact('providers','categories','ages_served','services_offerd'));
+    }
+
+    public function eventDetail($id){
+        
+        $event = Event::where('id', $id)->first();
+
+return view('website.event-detail', compact('event'));
     }
     public function providerDetail($id)
     {

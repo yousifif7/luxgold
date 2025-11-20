@@ -296,7 +296,7 @@
                         </div>
 
                         <div class="card-footer">
-                            <a class="btn-view" href="{{ route('website.provider-detail', $event->provider->provider->id) }}">
+                            <a class="btn-view" href="{{ route('website.event-detail', $event->id) }}">
                                 View Details
                             </a>
                         </div>
@@ -308,7 +308,7 @@
         {{-- View All --}}
         <div class="d-flex justify-content-center align-items-center">
             <button class="view-all-providers_btn" 
-                    onclick="window.location.href='{{ route('website.find-provider') }}'">
+                    onclick="window.location.href='{{ route('website.find-event') }}'">
                 View All Events <i class="bi bi-chevron-right"></i>
             </button>
         </div>
