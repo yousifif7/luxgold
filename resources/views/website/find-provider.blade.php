@@ -258,7 +258,7 @@
                            @if(!empty($provider->logo_path) && file_exists(public_path($provider->logo_path)) )
         <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->business_name }}">
         @else
-        <div style="height: 180px;"><h2>                                    {{ $provider->business_name ?? $provider->name }} 
+        <div style="height: 180px; display: flex; align-items: center; text-align: center; justify-content: center;"><h2 style="color:#337d7c; font-weight: 600">                                    {{ $provider->business_name ?? $provider->name }} 
 </h2></div>
     
     @endif
