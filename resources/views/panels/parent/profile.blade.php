@@ -45,11 +45,7 @@
                                     <button type="button" class="btn btn-outline-primary btn-sm" onclick="document.getElementById('profilePictureInput').click()">
                                         <i class="fas fa-upload me-1"></i> Upload Photo
                                     </button>
-                                    @if(auth()->user()->profile_picture)
-                                    <button type="button" class="btn btn-outline-danger btn-sm ms-2" onclick="removeProfilePicture()">
-                                        <i class="fas fa-trash me-1"></i> Remove
-                                    </button>
-                                    @endif
+                                    
                                 </div>
                             </div>
                         </div>
