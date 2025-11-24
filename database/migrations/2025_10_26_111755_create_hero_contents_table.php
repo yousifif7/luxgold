@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('hero_alt_text')->nullable();
             $table->string('hero_image_thumbnail')->nullable();
 
-            $table->integer('providers_count')->default(0);
+            $table->integer('cleaners_count')->default(0);
             $table->decimal('rating', 3, 1)->default(0.0);
 
             $table->string('support_text')->nullable();

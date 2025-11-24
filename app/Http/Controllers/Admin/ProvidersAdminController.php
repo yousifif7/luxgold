@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 
 class ProvidersAdminController extends Controller
 {
@@ -19,9 +19,9 @@ class ProvidersAdminController extends Controller
         $endOfMonth = now()->endOfMonth();
 
         $top = DB::table('payments')
-            ->select('provider_id', DB::raw('SUM(amount) as revenue'))
+            ->select('cleaner_id', DB::raw('SUM(amount) as revenue'))
             ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-            ->groupBy('provider_id')
+            ->groupBy('cleaner_id')
             ->orderByDesc('revenue')
             ->first();
 
@@ -31,8 +31,8 @@ class ProvidersAdminController extends Controller
         $revenueTrendData = [];
 
         if ($top) {
-            $p = Provider::find($top->provider_id);
-            $topProviderName = $p->business_name ?? $p->name ?? 'Provider ' . $top->provider_id;
+            $p = Provider::find($top->cleaner_id);
+            $topProviderName = $p->business_name ?? $p->name ?? 'Cleaner ' . $top->cleaner_id;
             $topProviderRevenue = (float) $top->revenue;
 
             // revenue trend last 30 days for this provider
@@ -40,7 +40,7 @@ class ProvidersAdminController extends Controller
             $end = now()->endOfDay();
             $rows = DB::table('payments')
                 ->select(DB::raw('DATE(created_at) as day'), DB::raw('SUM(amount) as revenue'))
-                ->where('provider_id', $top->provider_id)
+                ->where('Cleaner_id', $top->cleaner_id)
                 ->whereBetween('created_at', [$start, $end])
                 ->groupBy('day')
                 ->orderBy('day')
@@ -97,7 +97,7 @@ class ProvidersAdminController extends Controller
         $callback = function() use ($columns) {
             $out = fopen('php://output', 'w');
             fputcsv($out, $columns);
-            \App\Models\Provider::chunk(200, function($providers) use ($out, $columns) {
+            Provider::chunk(200, function($providers) use ($out, $columns) {
                 foreach ($providers as $p) {
                     $row = [];
                     foreach ($columns as $c) { $row[] = $p->{$c} ?? ''; }

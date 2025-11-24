@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Session;
-class Provider extends Model
+class Cleaner extends Model
 {
     use HasFactory;
 
@@ -84,7 +84,7 @@ class Provider extends Model
 
     public function inquiries(){
 
-        return $this->hasMany(Inquiry::class,'provider_id');
+        return $this->hasMany(Inquiry::class,'cleaner_id');
     }
 
     public function currentPlan(){
@@ -109,16 +109,16 @@ class Provider extends Model
 
     public function savedByUsers()
     {
-        return $this->hasMany(SavedProvider::class);
+        return $this->hasMany(SavedCleaner::class);
     }
 
     public function followedByUsers()
     {
-        return $this->hasMany(FollowedProvider::class);
+        return $this->hasMany(FollowedCleaner::class);
     }
 
     public function events(){
-return $this->hasMany(Event::class,'provider_id','user_id');
+        return $this->hasMany(Event::class,'cleaner_id','user_id');
 
     }
 
@@ -183,7 +183,7 @@ public function totalView(){
 
     public function recentlyViewed()
     {
-        return $this->hasMany(RecentlyViewed::class,'provider_id');
+        return $this->hasMany(RecentlyViewed::class,'cleaner_id');
     }
 
 

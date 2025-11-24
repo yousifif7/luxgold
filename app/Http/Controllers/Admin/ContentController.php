@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\HeroContent;
 use App\Models\Category;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 use App\Models\City;
 use App\Models\Testimonial;
 use App\Models\Resource;
@@ -48,7 +48,7 @@ class ContentController extends Controller
             'cta_text' => 'nullable|string|max:100',
             'cta_url' => 'nullable|url',
             'hero_alt_text' => 'nullable|string|max:255',
-            'providers_count' => 'required|integer',
+            'cleaners_count' => 'required|integer',
             'rating' => 'required|numeric',
             'support_text' => 'required|string|max:255',
             'status'=>'nullable|string'
@@ -81,7 +81,7 @@ class ContentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'providers_count' => 'required|integer',
+            'cleaners_count' => 'required|integer',
             'families_count' => 'required|integer',
             'icon_url' => 'required|url',
             'status' => 'string',
@@ -97,7 +97,7 @@ class ContentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'providers_count' => 'required|integer',
+            'cleaners_count' => 'required|integer',
             'families_count' => 'required|integer',
             'icon_url' => 'required|url',
             'status' => 'string',
@@ -236,7 +236,7 @@ class ContentController extends Controller
                 Category::whereIn('id', $ids)->delete();
                 break;
             case 'providers':
-                FeaturedProvider::whereIn('id', $ids)->delete();
+                FeaturedCleaner::whereIn('id', $ids)->delete();
                 break;
             case 'cities':
                 City::whereIn('id', $ids)->delete();
@@ -257,7 +257,7 @@ class ContentController extends Controller
                 Category::whereIn('id', $ids)->update(['status' => $status]);
                 break;
             case 'providers':
-                FeaturedProvider::whereIn('id', $ids)->update(['status' => $status]);
+                FeaturedCleaner::whereIn('id', $ids)->update(['status' => $status]);
                 break;
             case 'cities':
                 City::whereIn('id', $ids)->update(['status' => $status]);
@@ -293,7 +293,7 @@ class ContentController extends Controller
     public function toggleStatus(Request $request, $id)
     {
         $request->validate([
-            'type' => 'required|string|in:category,provider,city,testimonial,resource',
+            'type' => 'required|string|in:category,cleaner,city,testimonial,resource',
             'status' => 'required|string'
         ]);
         
@@ -311,7 +311,7 @@ class ContentController extends Controller
     {
         switch ($type) {
             case 'category': return Category::class;
-            case 'provider': return FeaturedProvider::class;
+            case 'cleaner': return FeaturedCleaner::class;
             case 'city': return City::class;
             case 'testimonial': return Testimonial::class;
             case 'resource': return Resource::class;
@@ -335,7 +335,7 @@ class ContentController extends Controller
                         $q->where('title', 'like', "%{$search}%")
                           ->orWhere('subtitle', 'like', "%{$search}%");
                         break;
-                    case 'provider':
+                    case 'cleaner':
                         $q->where('name', 'like', "%{$search}%")
                           ->orWhere('location', 'like', "%{$search}%");
                         break;

@@ -1,4 +1,4 @@
-<form id="providerForm" method="POST" action="{{ isset($provider) ? route('admin.providers.update', $provider->id) : route('admin.providers.store') }}" enctype="multipart/form-data">
+<form id="providerForm" method="POST" action="{{ isset($provider) ? route('admin.cleaners.update', ['cleaner' => $provider->id]) : route('admin.cleaners.store') }}" enctype="multipart/form-data">
     @csrf
     @if(isset($provider))
         @method('PUT')

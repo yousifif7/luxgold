@@ -13,7 +13,7 @@ class EventSeeder extends Seeder
             'title'             => 'Prosper Christmas Festival',
             'subtitle'          => null,
             'description'       => 'The Prosper Christmas Festival is a beloved hometown tradition, a place to make holiday memories and celebrate the season.',
-            'provider_name'     => null,
+            'cleaner_name'     => null,
             'category'          => 'Festival',
             'location'          => 'Prosper Town Hall, 250 W. First St.',
             'city'              => 'Prosper',
@@ -27,7 +27,7 @@ class EventSeeder extends Seeder
             'published_at'      => now(),
             'image_url'         => 'events/1.png',
             'author'            => 'System',
-            'provider_id'       => 16,
+            'cleaner_id'       => 16,
         ]);
     }
 }

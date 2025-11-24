@@ -135,7 +135,7 @@
                         <span class="text-muted" style="font-size: 0.8rem;">Refine your search</span>
                     </div>
 
-                    <form id="searchForm" method="GET" action="{{ route('website.find-provider') }}">
+                    <form id="searchForm" method="GET" action="{{ route('website.find-cleaner') }}">
                         <input type="text" name="search" id="searchInput" class="input-ghost" 
                                placeholder="🔍 Search providers..." value="{{ request('search') }}">
                         <input type="text" name="location" id="locationInput" class="input-ghost" 
@@ -265,7 +265,7 @@
                                
                             
                             @if($firstCategory)
-                                <div class="card-badge provider-badge">{{ $firstCategory->name }}</div>
+                                <div class="card-badge provider-badge">{{ data_get($firstCategory, 'name', $firstCategory) }}</div>
                             @endif
                             
                             <div class="card-body">
@@ -348,7 +348,7 @@
                                 <button data-id="p{{ $provider->id }}" data-provider-id="{{ $provider->id }}" class="btn-compare compare-btn">
                                     Compare
                                 </button>
-                                <a class="btn-view" href="{{ route('website.provider-detail', $provider->id) }}">
+                                <a class="btn-view" href="{{ route('website.cleaner-detail', $provider->id) }}">
                                     View Details
                                 </a>
                             </div>
@@ -374,7 +374,7 @@
                 </div>
                 <div class="filter-sidebar">
                     <!-- Same filter form content as desktop -->
-                    <form id="mobileSearchForm" method="GET" action="{{ route('website.find-provider') }}">
+                    <form id="mobileSearchForm" method="GET" action="{{ route('website.find-cleaner') }}">
                         <input type="text" name="search" class="input-ghost" 
                                placeholder="🔍 Search providers..." value="{{ request('search') }}">
                         <input type="text" name="location" class="input-ghost" 

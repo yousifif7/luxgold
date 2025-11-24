@@ -10,11 +10,11 @@
         <!-- Page Header -->
         <div class="d-flex align-items-center justify-content-between gap-2 mb-4 flex-wrap">
             <div class="breadcrumb-arrow">
-                <h4 class="mb-1">Parents</h4>
+                <h4 class="mb-1">Customers</h4>
                 <div class="text-end">
                     <ol class="breadcrumb m-0 py-0">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>                            
-                        <li class="breadcrumb-item active">Parents</li>
+                        <li class="breadcrumb-item active">Customers</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh" data-bs-original-title="Refresh"><i class="ti ti-refresh"></i></a>
                 <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Print" data-bs-original-title="Print"><i class="ti ti-printer"></i></a>
                 <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download"><i class="ti ti-cloud-download"></i></a>
-                <a href="javascript:void(0);"  data-size="lg" data-url="{{ route('admin.parents.create') }}" data-ajax-popup="true"  data-title="{{__('New Parent')}}" class="btn btn-primary"  class="btn btn-primary"><i class="ti ti-square-rounded-plus me-1"></i>New Parent</a>
+                <a href="javascript:void(0);"  data-size="lg" data-url="{{ route('admin.customers.create') }}" data-ajax-popup="true"  data-title="{{__('New Parent')}}" class="btn btn-primary"  class="btn btn-primary"><i class="ti ti-square-rounded-plus me-1"></i>New Parent</a>
             </div>
         </div>
         <!-- End Page Header -->
@@ -32,7 +32,7 @@
         <div class="card mb-0">
 
             <div class="card-header d-flex align-items-center flex-wrap gap-2 justify-content-between">
-                <h6 class="d-inline-flex align-items-center mb-0">Total Parents <span class="badge bg-danger ms-2">{{ $users->count() }}</span></h6>
+                <h6 class="d-inline-flex align-items-center mb-0">Total Customers <span class="badge bg-danger ms-2">{{ $users->count() }}</span></h6>
                 <div class="search-set">
                     <div class="d-flex align-items-center flex-wrap gap-2">
                         <div class="table-search d-flex align-items-center mb-0">
@@ -139,7 +139,7 @@
                             <div class="d-flex align-items-center">
                                 <span class="avatar avatar-sm rounded-circle bg-primary text-white me-2">{{ strtoupper(substr($p->name,0,2)) }}</span>
                                 <div class="d-flex flex-column">
-                                    <span class="fw-semibold"><a href="{{ route('admin.parents.show', $p) }}">{{ $p->name }}</a></span>
+                                    <span class="fw-semibold"><a href="{{ route('admin.customers.show', $p) }}">{{ $p->name }}</a></span>
                                     <span class="small text-muted"><i class="ti ti-map-pin me-1"></i> {{ $p->city ?? '—' }}</span>
                                 </div>
                             </div>
@@ -189,7 +189,7 @@
     <li>
       <a href="#" 
          data-size="md" 
-         data-url="{{ route('admin.parents.edit', $p->id) }}" 
+         data-url="{{ route('admin.customers.edit', $p->id) }}" 
          data-ajax-popup="true"  
          data-title="{{ __('Edit Parent') }}" 
          class="dropdown-item">
@@ -197,7 +197,7 @@
       </a>
     </li>
     <li>
-      <form action="{{ route('admin.parents.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?');">
+      <form action="{{ route('admin.customers.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?');">
         @csrf
         @method('DELETE')
         <button type="submit" class="dropdown-item text-danger">

@@ -99,7 +99,7 @@
                             <i class="fas fa-trash me-1"></i> Delete
                         </button>
                     </form>
-                    <a  href="{{ url('provider-detail',$review->provider_id) }}" class="btn btn-light border border-1 btn-sm ms-2">View Public Review</a>
+                    <a  href="{{ route('website.cleaner-detail', $review->provider_id) }}" class="btn btn-light border border-1 btn-sm ms-2">View Public Review</a>
                 </div>
             </div>
             @empty
@@ -107,7 +107,7 @@
                 <i class="fas fa-comment-slash fa-3x text-muted mb-3"></i>
                 <h5>No Reviews Yet</h5>
                 <p class="text-muted">You haven't written any reviews yet.</p>
-                <a href="{{ url('find-provider') }}" class="btn btn-primary">Write Your First Review</a>
+                <a href="{{ route('website.find-cleaner') }}" class="btn btn-primary">Write Your First Review</a>
             </div>
             @endforelse
 

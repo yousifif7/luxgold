@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('state')->default('TX');
-            $table->integer('providers_count')->default(0);
+            $table->integer('cleaners_count')->default(0);
             $table->integer('families_count')->default(0);
             $table->string('icon_url');
             $table->string('link')->nullable();

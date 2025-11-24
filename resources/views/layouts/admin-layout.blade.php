@@ -329,7 +329,7 @@
                                 </li>
         
                                 <li>
-                                    <a href="{{ route('admin.providers.index') }}">
+                                    <a href="{{ route('admin.cleaners.index') }}">
                                         <i class="ti ti-users"></i><span>Providers</span>
                                     </a>
                                 </li>

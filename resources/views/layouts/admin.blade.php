@@ -325,14 +325,14 @@
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('admin.providers.index') }}">
-                                        <i class="ti ti-users"></i><span>Providers</span>
+                                    <a href="{{ route('admin.cleaners.index') }}">
+                                        <i class="ti ti-users"></i><span>Cleaners</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('admin.parents.index') }}">
-                                        <i class="ti ti-mood-boy"></i><span>Parents</span>
+                                    <a href="{{ route('admin.customers.index') }}">
+                                        <i class="ti ti-mood-boy"></i><span>Customers</span>
                                     </a>
                                 </li>
 

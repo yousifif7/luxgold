@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
-use App\Models\Provider;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\InquirySent;
-use App\Mail\InquiryReceived;
 use App\Models\Message;
-use Auth;
+use App\Mail\InquirySent;
+use Illuminate\Http\Request;
+use App\Mail\InquiryReceived;
+use App\Models\Cleaner as Provider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 class InquiryController extends Controller
 {
 public function store(Request $request)
@@ -23,7 +23,7 @@ public function store(Request $request)
     }
 
     $request->validate([
-        'provider_id' => 'required|exists:providers,id',
+        'cleaner_id' => 'required|exists:cleaners,id',
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
         'phone' => 'nullable|string|max:20',
@@ -32,10 +32,10 @@ public function store(Request $request)
     ]);
 
     try {
-        $provider = Provider::findOrFail($request->provider_id);
+        $provider = Provider::findOrFail($request->cleaner_id);
         
         $inquiry = Inquiry::create([
-            'provider_id' => $request->provider_id,
+            'cleaner_id' => $request->cleaner_id,
             'user_id' => auth()->id(),
             'name' => $request->name,
             'email' => $request->email,
@@ -49,7 +49,7 @@ public function store(Request $request)
 
         Message::create([
             'inquiry_id' => $inquiry->id,
-            'sender_type' => 'parent',
+            'sender_type' => 'customer',
             'message' => $request->message
         ]);
 
@@ -92,12 +92,20 @@ public function store(Request $request)
 
     public function index(Request $request)
     {
-        $inquiries = Inquiry::with('provider')
-            ->where('provider_id', auth()->user()->provider->id)
+        $user = Auth::user();
+        $cleaner = $user->cleaner ?? null;
+
+        if (! $cleaner) {
+            return redirect()->route('cleaner-profile')
+                ->with('error', 'Please complete your cleaner profile to view inquiries.');
+        }
+
+        $inquiries = Inquiry::with('cleaner')
+            ->where('cleaner_id', $cleaner->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-              $providers = Provider::where('status', 'active')->get();
+        $providers = Provider::where('status', 'active')->get();
 
         return view('panels.provider.messages', compact('inquiries','providers'));
     }
@@ -126,12 +134,14 @@ public function store(Request $request)
 
         $inquiry = Inquiry::findOrFail($request->inquiry_id);
 
-        if (Auth::user()->hasRole('provider')) {
-            $inquiry->status='contacted';
+        $user = Auth::user();
+        // Determine sender type by whether the authenticated user owns the cleaner profile for this inquiry
+        if ($user && $user->cleaner && $user->cleaner->id == $inquiry->cleaner_id) {
+            $inquiry->status = 'contacted';
             $inquiry->save();
-            $type= 'provider';
-        } else{
-            $type= 'parent';
+            $type = 'cleaner';
+        } else {
+            $type = 'customer';
         }
 
         Message::create([

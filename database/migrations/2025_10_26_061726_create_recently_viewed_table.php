@@ -12,11 +12,11 @@ class CreateRecentlyViewedTable extends Migration
         Schema::create('recently_viewed', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('provider_id')->constrained()->onDelete('cascade');
+            $table->foreignId('cleaner_id')->constrained('cleaners')->onDelete('cascade');
             $table->timestamp('viewed_at');
             $table->timestamps();
 
-            $table->unique(['user_id', 'provider_id']);
+            $table->unique(['user_id', 'cleaner_id']);
         });
     }
 

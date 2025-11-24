@@ -32,7 +32,7 @@
                 <div class="serviceflow-step-content active" id="step1">
                     <h3 style="text-align: center; margin-bottom: 32px; color: #1e293b; font-size: 24px;">Choose Your Category</h3>
                     <div class="serviceflow-category-grid">
-                        @foreach(\App\Models\Category::whereNull('parent_id')->get() as $category => $data)
+                        @foreach(\App\Models\Category::whereNull('customer_id')->get() as $category => $data)
                         <div class="serviceflow-category-card" data-category="{{ $data->id }}">
                             <div class="serviceflow-category-icon">
                                 <i class="fa {{ $data->icon }}"></i>

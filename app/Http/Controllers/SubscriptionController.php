@@ -23,7 +23,7 @@ class SubscriptionController extends Controller
        
         // Create subscription (pending, awaiting Stripe confirmation)
         $subscription = Subscription::create([
-            'provider_id' => Auth::user()->provider->id,
+            'cleaner_id' => Auth::user()->cleaner->id,
             'plan_id' => $plan->id,
             'amount' => $plan->monthly_fee,
             'currency' => $plan->currency ?? 'USD',
@@ -58,7 +58,7 @@ class SubscriptionController extends Controller
         // Create initial payment record
         Payment::create([
             'subscription_id' => $subscription->id,
-            'provider_id' => Auth::user()->provider->id,
+            'cleaner_id' => Auth::user()->cleaner->id,
             'payment_method' => 'stripe',
             'transaction_id' => $session->id,
             'amount' => $plan->monthly_fee,
@@ -181,7 +181,7 @@ class SubscriptionController extends Controller
             // Create a new payment record for renewal
             Payment::create([
                 'subscription_id' => $subscription->id,
-                'provider_id' => $subscription->provider_id,
+                'cleaner_id' => $subscription->cleaner_id,
                 'payment_method' => 'stripe',
                 'transaction_id' => $invoice->payment_intent ?? $invoice->id,
                 'amount' => ($invoice->amount_paid / 100),
@@ -221,7 +221,7 @@ class SubscriptionController extends Controller
     public function cancel(Subscription $subscription)
     {
         // Check if user owns this subscription
-        if ($subscription->provider_id !== auth()->id()) {
+        if ($subscription->cleaner_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -255,7 +255,7 @@ class SubscriptionController extends Controller
     public function enable(Subscription $subscription)
     {
         // Check if user owns this subscription
-        if ($subscription->provider_id !== auth()->id()) {
+        if ($subscription->cleaner_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -317,7 +317,7 @@ class SubscriptionController extends Controller
     public function disable(Subscription $subscription)
     {
         // Check if user owns this subscription
-        if ($subscription->provider_id !== auth()->id()) {
+        if ($subscription->cleaner_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -350,7 +350,7 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        $subscriptions = Subscription::where('provider_id', auth()->id())
+        $subscriptions = Subscription::where('cleaner_id', auth()->id())
             ->with('payments')
             ->latest()
             ->paginate(10);
@@ -364,7 +364,7 @@ class SubscriptionController extends Controller
     public function show(Subscription $subscription)
     {
         // Check if user owns this subscription
-        if ($subscription->provider_id !== auth()->id()) {
+        if ($subscription->cleaner_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
 

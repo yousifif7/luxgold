@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\Payment;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 use App\Models\Inquiry;
 use App\Models\Event;
 use App\Models\Review;
-use App\Models\SavedProvider;
-use App\Models\FollowedProvider;
+use App\Models\SavedCleaner;
+use App\Models\FollowedCleaner;
 use App\Models\Notification;
 use App\Services\NotificationService;
 use Illuminate\Support\Facades\DB;
@@ -28,11 +28,11 @@ class ProviderPanelController extends Controller
 
     public function index()
     {
-        $provider = auth()->user()->provider;
+        $provider = auth()->user()->cleaner;
         
         if (!$provider) {
-            return redirect()->route('provider.profile.create')
-                ->with('error', 'Please complete your provider profile first.');
+            return redirect()->route('cleaner-profile')
+                ->with('error', 'Please complete your cleaner profile first.');
         }
 
         $stats = $this->getDashboardStats($provider);
@@ -63,35 +63,35 @@ class ProviderPanelController extends Controller
         $lastMonthViews = $provider->views; // You might need to implement monthly view tracking
 
         // Inquiries
-        $totalInquiries = Inquiry::where('provider_id', $provider->id)->count();
-        $monthlyInquiries = Inquiry::where('provider_id', $provider->id)
+        $totalInquiries = Inquiry::where('cleaner_id', $provider->id)->count();
+        $monthlyInquiries = Inquiry::where('cleaner_id', $provider->id)
             ->where('created_at', '>=', $startOfMonth)
             ->count();
-        $lastMonthInquiries = Inquiry::where('provider_id', $provider->id)
+        $lastMonthInquiries = Inquiry::where('cleaner_id', $provider->id)
             ->whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])
             ->count();
 
         // Events
-        $totalEvents = Event::where('provider_id', $provider->id)->count();
-        $activeEvents = Event::where('provider_id', $provider->id)
+        $totalEvents = Event::where('cleaner_id', $provider->id)->count();
+        $activeEvents = Event::where('cleaner_id', $provider->id)
             ->where('status', 'active')
             ->where('end_date', '>=', now())
             ->count();
 
         // Reviews and ratings
-        $averageRating = Review::where('provider_id', $provider->id)
+        $averageRating = Review::where('cleaner_id', $provider->id)
             ->where('status', 'approved')
             ->avg('rating') ?? 0;
-        $totalReviews = Review::where('provider_id', $provider->id)
+        $totalReviews = Review::where('cleaner_id', $provider->id)
             ->where('status', 'approved')
             ->count();
 
         // Engagement metrics
-        $savesCount = SavedProvider::where('provider_id', $provider->id)->count();
-        $followersCount = FollowedProvider::where('provider_id', $provider->id)->count();
+        $savesCount = SavedCleaner::where('cleaner_id', $provider->id)->count();
+        $followersCount = FollowedCleaner::where('cleaner_id', $provider->id)->count();
 
         // Response metrics
-        $respondedInquiries = Inquiry::where('provider_id', $provider->id)
+        $respondedInquiries = Inquiry::where('cleaner_id', $provider->id)
             ->whereNotNull('responded_at')
             ->count();
         $responseRate = $totalInquiries > 0 ? ($respondedInquiries / $totalInquiries) * 100 : 0;
@@ -122,7 +122,7 @@ class ProviderPanelController extends Controller
             'events' => [
                 'total' => $totalEvents,
                 'active' => $activeEvents,
-                'upcoming' => Event::where('provider_id', $provider->id)
+                'upcoming' => Event::where('cleaner_id', $provider->id)
                     ->where('start_date', '>', now())
                     ->where('status', 'active')
                     ->count()
@@ -143,20 +143,20 @@ class ProviderPanelController extends Controller
             ],
 
             // Business Info
-            'business_name' => $provider->business_name ?? 'Provider',
+            'business_name' => $provider->business_name ?? 'Cleaner',
             'profile_status' => $provider->status,
             'subscription_status' => $subscription,
 
             // Quick Stats
             'quick_stats' => [
-                'pending_inquiries' => Inquiry::where('provider_id', $provider->id)
+                'pending_inquiries' => Inquiry::where('cleaner_id', $provider->id)
                     ->where('status', 'pending')
                     ->count(),
-                'upcoming_events' => Event::where('provider_id', $provider->id)
+                'upcoming_events' => Event::where('cleaner_id', $provider->id)
                     ->where('start_date', '>', now())
                     ->where('status', 'active')
                     ->count(),
-                'new_reviews' => Review::where('provider_id', $provider->id)
+                'new_reviews' => Review::where('cleaner_id', $provider->id)
                     ->where('status', 'pending')
                     ->count(),
             ]
@@ -165,7 +165,7 @@ class ProviderPanelController extends Controller
 
     private function getRatingDistribution(Provider $provider)
     {
-        return Review::where('provider_id', $provider->id)
+        return Review::where('cleaner_id', $provider->id)
             ->where('status', 'approved')
             ->select('rating', DB::raw('COUNT(*) as count'))
             ->groupBy('rating')
@@ -177,7 +177,7 @@ class ProviderPanelController extends Controller
 
     private function getInquiryStats(Provider $provider)
     {
-        $inquiries = Inquiry::where('provider_id', $provider->id)->get();
+        $inquiries = Inquiry::where('cleaner_id', $provider->id)->get();
         
         $statusCounts = $inquiries->groupBy('status')->map->count();
         $totalInquiries = $inquiries->count();
@@ -198,7 +198,7 @@ class ProviderPanelController extends Controller
 
     private function calculateAverageResponseTime(Provider $provider)
     {
-        $respondedInquiries = Inquiry::where('provider_id', $provider->id)
+        $respondedInquiries = Inquiry::where('cleaner_id', $provider->id)
             ->whereNotNull('responded_at')
             ->get();
 
@@ -222,7 +222,7 @@ class ProviderPanelController extends Controller
 
         // Daily profile views (you'll need to implement this tracking)
         $viewsData = DB::table('recently_viewed') // You might need to create this table
-            ->where('provider_id', $provider->id)
+            ->where('cleaner_id', $provider->id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->select('created_at as date', DB::raw('COUNT(*) as views'))
             ->groupBy('created_at')
@@ -231,7 +231,7 @@ class ProviderPanelController extends Controller
             ->toArray();
 
         // Daily inquiries
-        $inquiriesData = Inquiry::where('provider_id', $provider->id)
+        $inquiriesData = Inquiry::where('cleaner_id', $provider->id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as inquiries'))
             ->groupBy('date')
@@ -240,7 +240,7 @@ class ProviderPanelController extends Controller
             ->toArray();
 
         // Monthly saves/follows (example - you might need to adjust based on your tracking)
-        $savesData = SavedProvider::where('provider_id', $provider->id)
+        $savesData = SavedCleaner::where('cleaner_id', $provider->id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as saves'))
             ->groupBy('date')
@@ -278,7 +278,7 @@ class ProviderPanelController extends Controller
     private function getSubscriptionStatus(Provider $provider)
     {
 
-        $subscription = Subscription::where('provider_id', $provider->id)
+        $subscription = Subscription::where('cleaner_id', $provider->id)
             ->where('status', 'active')
             ->first();
 
@@ -314,7 +314,7 @@ class ProviderPanelController extends Controller
         $plans = Plan::where('is_active', true)->get();
         
         // Get current active subscription
-        $currentSubscription = Subscription::where('provider_id', $provider->id)
+        $currentSubscription = Subscription::where('cleaner_id', $provider->id)
             ->where('is_active', true)
             ->orderBy('id','DESC')
             ->where(function($query) {
@@ -325,7 +325,7 @@ class ProviderPanelController extends Controller
             ->first();
 
         // Get billing history
-        $billingHistory = Payment::where('provider_id', $provider->id)
+        $billingHistory = Payment::where('cleaner_id', $provider->id)
             ->where('status', 'completed')
             ->with('subscription.plan')
             ->orderBy('created_at', 'desc')
@@ -348,7 +348,7 @@ class ProviderPanelController extends Controller
         $provider = auth()->user();
         
         // Check if this is the current plan
-        $currentSubscription = Subscription::where('provider_id', $provider->id)
+        $currentSubscription = Subscription::where('cleaner_id', $provider->id)
             ->where('status', 'active')
             ->where('is_active', true)
             ->first();
@@ -366,7 +366,7 @@ class ProviderPanelController extends Controller
 
             // Create new free subscription
             $subscription = Subscription::create([
-                'provider_id' => $provider->id,
+                'cleaner_id' => $provider->id,
                 'plan_id' => $plan->id,
                 'plan' => $plan->name,
                 'amount' => $plan->monthly_fee,
@@ -404,7 +404,7 @@ class ProviderPanelController extends Controller
         ]);
 
         $subscription = Subscription::where('id', $request->subscription_id)
-            ->where('provider_id', auth()->id())
+            ->where('cleaner_id', auth()->id())
             ->firstOrFail();
 
         $subscription->update([

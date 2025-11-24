@@ -1,4 +1,4 @@
-           <form method="POST" action="{{ route('admin.parents.store') }}">
+           <form method="POST" action="{{ route('admin.customers.store') }}">
           @csrf
           <div class="modal-body pb-0">
   @csrf

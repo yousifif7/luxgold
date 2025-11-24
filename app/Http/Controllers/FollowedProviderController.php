@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FollowedProvider;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,17 +14,17 @@ class FollowedProviderController extends Controller
     if (!Auth::check()) {
         return response()->json([
             'followed' => false,
-            'message' => 'Kindly login first'
+            'message' => 'You must be logged in to follow a cleaner.'
         ], 401);
     }
 
     $existingFollow = FollowedProvider::where('user_id', Auth::id())
-        ->where('provider_id', $provider->id)
+        ->where('cleaner_id', $provider->id)
         ->first();
 
     if ($existingFollow) {
         $existingFollow->delete();
-        return response()->json(['followed' => false, 'message' => 'Provider unfollowed']);
+        return response()->json(['followed' => false, 'message' => 'Cleaner unfollowed']);
     }
 
     FollowedProvider::create([
@@ -32,7 +32,7 @@ class FollowedProviderController extends Controller
         'provider_id' => $provider->id
     ]);
 
-    return response()->json(['followed' => true, 'message' => 'Provider followed successfully']);
+    return response()->json(['followed' => true, 'message' => 'Cleaner followed successfully']);
 }
 
 }

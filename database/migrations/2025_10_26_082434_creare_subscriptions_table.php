@@ -11,7 +11,7 @@ return new class extends Migration
         if (! Schema::hasTable('subscriptions')) {
             Schema::create('subscriptions', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('provider_id')->nullable()->index();
+                $table->unsignedBigInteger('cleaner_id')->nullable()->index();
             $table->string('plan_id')->nullable();
             $table->string('status')->default('active');
             $table->decimal('amount', 10, 2)->nullable();
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(0);
             $table->text('meta')->nullable();
             $table->timestamps();
-/*                $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
+/*                $table->foreign('cleaner_id')->references('id')->on('cleaners')->onDelete('cascade');
 */            });
         }
     }

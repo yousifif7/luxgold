@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Notification;
 use App\Models\User;
+use App\Models\Cleaner;
 use App\Models\Provider;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 
 class NotificationService
@@ -30,12 +31,12 @@ class NotificationService
     }
 
     /**
-     * Send notification to a specific provider
+     * Send notification to a specific cleaner
      */
-    public function sendToProvider(Provider $provider, array $data): Notification
+    public function sendToProvider(Cleaner $cleaner, array $data): Notification
     {
-        $data['notifiable_type'] = Provider::class;
-        $data['notifiable_id'] = $provider->id;
+        $data['notifiable_type'] = Cleaner::class;
+        $data['notifiable_id'] = $cleaner->id;
         $data['sent_at'] = now();
 
         return $this->create($data);
@@ -108,81 +109,81 @@ class NotificationService
      */
     
     // Profile approval notifications
-    public function sendProfileApproved(Provider $provider): Notification
+    public function sendProfileApproved(Cleaner $cleaner): Notification
     {
-        return $this->sendToProvider($provider, [
+        return $this->sendToProvider($cleaner, [
             'type' => 'success',
             'title' => 'Profile Approved',
-            'message' => 'Your provider profile has been approved and is now live on the platform.',
-            'action_url' => route('provider.dashboard'),
+            'message' => 'Your cleaner profile has been approved and is now live on the platform.',
+            'action_url' => route('cleaner-home'),
             'action_text' => 'View Dashboard'
         ]);
     }
 
-    public function sendProfileRejected(Provider $provider, string $reason = null): Notification
+    public function sendProfileRejected(Cleaner $cleaner, string $reason = null): Notification
     {
         $message = 'Your provider profile requires additional information.';
         if ($reason) {
             $message .= " Reason: {$reason}";
         }
 
-        return $this->sendToProvider($provider, [
+        return $this->sendToProvider($cleaner, [
             'type' => 'error',
             'title' => 'Profile Requires Updates',
             'message' => $message,
-            'action_url' => route('provider.profile.edit'),
+            'action_url' => route('cleaner-profile'),
             'action_text' => 'Update Profile'
         ]);
     }
 
     // Subscription notifications
-    public function sendSubscriptionExpiring(Provider $provider, int $daysLeft): Notification
+    public function sendSubscriptionExpiring(Cleaner $cleaner, int $daysLeft): Notification
     {
-        return $this->sendToProvider($provider, [
+        return $this->sendToProvider($cleaner, [
             'type' => 'warning',
             'title' => 'Subscription Renewal',
             'message' => "Your subscription renews in {$daysLeft} days. Ensure your payment method is up to date.",
-            'action_url' => route('provider.subscription'),
+            'action_url' => route('cleaner-subscription'),
             'action_text' => 'Manage Subscription',
             'expires_at' => now()->addDays($daysLeft + 1)
         ]);
     }
 
-    public function sendSubscriptionExpired(Provider $provider): Notification
+    public function sendSubscriptionExpired(Cleaner $cleaner): Notification
     {
-        return $this->sendToProvider($provider, [
+        return $this->sendToProvider($cleaner, [
             'type' => 'error',
             'title' => 'Subscription Expired',
             'message' => 'Your subscription has expired. Some features may be limited.',
-            'action_url' => route('provider.subscription'),
+            'action_url' => route('cleaner-subscription'),
             'action_text' => 'Renew Now'
         ]);
     }
 
     // Inquiry notifications
-    public function sendNewInquiry(Provider $provider, int $inquiryCount = 1): Notification
+    public function sendNewInquiry(Cleaner $cleaner, int $inquiryCount = 1): Notification
     {
         $message = $inquiryCount > 1 
             ? "You have {$inquiryCount} new inquiries." 
             : "You have a new inquiry from a parent.";
 
-        return $this->sendToProvider($provider, [
+        return $this->sendToProvider($cleaner, [
             'type' => 'info',
             'title' => 'New Inquiry' . ($inquiryCount > 1 ? 's' : ''),
             'message' => $message,
-            'action_url' => route('provider.inquiries.index'),
+            'action_url' => route('cleaner-inquiries'),
             'action_text' => 'View Inquiries'
         ]);
     }
 
     // Review notifications
-    public function sendNewReview(Provider $provider): Notification
+    public function sendNewReview(Cleaner $cleaner): Notification
     {
-        return $this->sendToProvider($provider, [
+        return $this->sendToProvider($cleaner, [
             'type' => 'info',
             'title' => 'New Review',
             'message' => 'A parent has left a new review for your service.',
-            'action_url' => route('provider.reviews.index'),
+            'action_url' => route('cleaner-home'),
             'action_text' => 'View Reviews'
         ]);
     }

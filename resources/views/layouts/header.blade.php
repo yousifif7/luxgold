@@ -16,7 +16,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('find-provider') ? 'active' : '' }}" href="{{ route('website.find-provider') }}">Find Providers</a>
+          <a class="nav-link {{ request()->is('find-cleaner') ? 'active' : '' }}" href="{{ route('website.find-cleaner') }}">Find Cleaners</a>
         </li>
          <li class="nav-item">
           <a class="nav-link {{ request()->is('find-event') ? 'active' : '' }}" href="{{ route('website.find-event') }}">Find Event</a>
@@ -29,7 +29,7 @@
         @endif
 
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('for-provider') ? 'active' : '' }}" href="{{ route('website.for-provider') }}">For Provider</a>
+          <a class="nav-link {{ request()->is('for-cleaner') ? 'active' : '' }}" href="{{ route('website.for-cleaner') }}">For Provider</a>
         </li>
 
         <li class="nav-item">

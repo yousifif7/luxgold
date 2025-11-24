@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('providers', function (Blueprint $table) {
+        Schema::table('cleaners', function (Blueprint $table) {
             // Add the missing columns
             $table->text('ages_served_id')->nullable()->after('service_description');
             $table->text('operating_hours')->nullable()->after('ages_served_id');
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('providers', function (Blueprint $table) {
+        Schema::table('cleaners', function (Blueprint $table) {
             $table->dropColumn([
                 'ages_served_id',
                 'operating_hours',

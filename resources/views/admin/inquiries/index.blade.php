@@ -83,7 +83,7 @@
                                     </td>
                                     <td>
                                         @if($inq->provider)
-                                            <a href="{{ route('admin.providers.show', $inq->provider->id) }}">{{ $inq->provider->business_name }}</a>
+                                            <a href="{{ route('admin.cleaners.show', $inq->provider->id) }}">{{ $inq->provider->business_name }}</a>
                                         @else
                                             <em>(deleted)</em>
                                         @endif

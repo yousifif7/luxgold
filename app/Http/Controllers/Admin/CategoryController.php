@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $query = Category::with('parent')->orderBy('name');
+        $query = Category::with('customer')->orderBy('name');
 
         if (request()->filled('q')) {
             $query->where('name', 'like', '%' . request('q') . '%');
@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $categories = Category::whereNull('parent_id')->orderBy('name')->get();
+        $categories = Category::whereNull('customer_id')->orderBy('name')->get();
         $icons = $this->getFontAwesomeIcons();
         return view('admin.categories.create', compact('categories','icons'));
     }
@@ -44,7 +44,7 @@ class CategoryController extends Controller
             'slug' => 'nullable|string|max:255|unique:categories,slug',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'parent_id' => 'nullable|exists:categories,id',
+            'customer_id' => 'nullable|exists:categories,id',
             'icon' => 'nullable|string|max:255',
             'providers_count' => 'nullable|integer|min:0',
             'tags' => 'nullable|string',
@@ -87,7 +87,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $categories = Category::where('id', '!=', $category->id)
-                             ->whereNull('parent_id')
+                             ->whereNull('customer_id')
                              ->orderBy('name')
                              ->get();
         $icons = $this->getFontAwesomeIcons();
@@ -105,7 +105,7 @@ class CategoryController extends Controller
             'slug' => 'nullable|string|max:255|unique:categories,slug,' . $category->id,
             'subtitle' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'parent_id' => 'nullable|exists:categories,id',
+            'customer_id' => 'nullable|exists:categories,id',
             'icon' => 'nullable|string|max:255',
             'providers_count' => 'nullable|integer|min:0',
             'tags' => 'nullable|string',

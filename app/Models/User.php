@@ -59,9 +59,9 @@ class User extends Authenticatable
         return $this->hasMany(SavedEvent::class);
     }
 
-     public function provider()
+     public function cleaner()
     {
-        return $this->hasOne(Provider::class,'user_id');
+        return $this->hasOne(Cleaner::class,'user_id');
     }
 
     /**
@@ -72,7 +72,7 @@ class User extends Authenticatable
         return $this->savedEvents()->count();
     }
 
-    public function compareProviders(){
+    public function compareCleaners(){
 
     }
 

@@ -12,7 +12,7 @@ class City extends Model
     protected $fillable = [
         'name',
         'state',
-        'providers_count',
+        'cleaners_count',
         'families_count',
         'icon_url',
         'link',
@@ -22,21 +22,21 @@ class City extends Model
     ];
 
     protected $casts = [
-        'providers_count' => 'integer',
+        'cleaners_count' => 'integer',
         'families_count' => 'integer',
         'is_coming_soon' => 'boolean',
         'sort_order' => 'integer',
         'status' => 'boolean'
     ];
 
-    public function providers(){
+    public function cleaners(){
 
-        return $this->hasMany(Provider::class,'city');
+        return $this->hasMany(Cleaner::class,'city');
     }
 
-    public function totalProvider(){
+    public function totalCleaner(){
 
-        $providers=$this->providers();
+        $providers=$this->cleaners();
 
         return $providers->count();
     }
@@ -62,7 +62,7 @@ class City extends Model
      */
     public function getDisplayProvidersCountAttribute()
     {
-        return $this->providers_count . '+ providers';
+        return $this->providers_count . '+ cleaners';
     }
 
     /**

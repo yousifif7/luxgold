@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 use App\Models\Review;
 use App\Models\Inquiry;
-use App\Models\SavedProvider;
+use App\Models\SavedCleaner;
 use App\Models\Event;
 use App\Models\RecentlyViewed;
 use Auth;
@@ -17,7 +17,7 @@ use App\Models\SavedEvent;
 class ParentPanelController extends Controller
 {
 
-       public function index()
+public function index()
 {
     $user = Auth::user();
     $weekStart = now()->startOfWeek();
@@ -32,7 +32,7 @@ class ParentPanelController extends Controller
         'messages_received' => Message::whereHas('inquiry', function($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
-            ->where('sender_type', 'provider')
+            ->where('sender_type', 'cleaner')
             ->whereBetween('created_at', [$weekStart, $weekEnd])
             ->count(),
         
@@ -47,7 +47,7 @@ class ParentPanelController extends Controller
 
     // Overall Statistics
     $stats = [
-        'saved_providers' => SavedProvider::where('user_id', $user->id)->count(),
+        'saved_providers' => SavedCleaner::where('user_id', $user->id)->count(),
         'upcoming_events' => Event::where('start_date', '>=', now())
             ->whereHas('savedByUsers', function($query) use ($user) {
                 $query->where('user_id', $user->id);
@@ -57,7 +57,7 @@ class ParentPanelController extends Controller
     ];
 
     // Recently Viewed Providers (last 7 days)
-    $recentlyViewed = RecentlyViewed::with(['provider' => function($query) {
+    $recentlyViewed = RecentlyViewed::with(['cleaner' => function($query) {
         $query->withAvg('reviews', 'rating');
     }])
     ->where('user_id', $user->id)
@@ -70,7 +70,7 @@ class ParentPanelController extends Controller
     $recommendations = $this->getProviderRecommendations($user);
 
     // Upcoming Events (next 30 days)
-    $upcomingEvents = Event::with('provider')
+    $upcomingEvents = Event::with('cleaner')
         ->where('start_date', '>=', now())
         ->where('start_date', '<=', now()->addDays(30))
         ->whereHas('savedByUsers', function($query) use ($user) {
@@ -133,7 +133,7 @@ private function getProviderRecommendations($user)
     private function getSuggestedProviders($user)
     {
         // Get user's saved provider types for recommendations
-        $savedProviderTypes = SavedProvider::with('provider')
+        $savedProviderTypes = SavedCleaner::with('cleaner')
             ->where('user_id', $user->id)
             ->get()
             ->pluck('provider.service_categories')
@@ -147,8 +147,8 @@ private function getProviderRecommendations($user)
             })
             ->where('status', 'active')
             ->whereNotIn('id', function($query) use ($user) {
-                $query->select('provider_id')
-                    ->from('saved_providers')
+                $query->select('cleaner_id')
+                    ->from('saved_cleaners')
                     ->where('user_id', $user->id);
             })
             ->orderBy('reviews_avg_rating', 'desc')
@@ -217,20 +217,20 @@ private function getProviderRecommendations($user)
     public function messages(){
        
 
-        $inquiries = Inquiry::with(['provider', 'messages'])
+        $inquiries = Inquiry::with(['cleaner', 'messages'])
             ->where('user_id', Auth::id())
             ->latest()
             ->paginate(10);
 
         $providers = Provider::where('status', 'active')->get();
 
-        return view('panels.parent.messages',compact('inquiries','providers'));
+        return view('panels.parent.messages',compact('inquiries','cleaners'));
 
     }
 
     public function saveItems(){
 
-         $savedProviders = SavedProvider::with(['provider' => function($query) {
+         $savedProviders = SavedCleaner::with(['cleaner' => function($query) {
             $query->withAvg('reviews', 'rating');
         }])
         ->where('user_id', Auth::id())

@@ -13,7 +13,7 @@ class ParentController extends Controller
 {
     public function index(Request $request)
     {
-    $query = User::role('parent')->orderBy('email');
+    $query = User::role('customer')->orderBy('email');
 
         if($request->filled('q')){
             $query->where(function($q){
@@ -51,12 +51,12 @@ class ParentController extends Controller
             'city'=>'nullable|string|max:255',
             'status'=>'nullable|string|in:active,inactive,pending',
         ]);
-        $data['role'] = 'parent';
+        $data['role'] = 'customer';
         $data['password'] = Hash::make($data['password']);
        $user= User::create($data);
 
-         $user->assignRole('parent');
-         return handleResponse($request, 'Parent created successfully!', 'admin.parents.index');
+         $user->assignRole('customer');
+         return handleResponse($request, 'Customer created successfully!', 'admin.customers.index');
     }
 
     public function edit($id)
@@ -67,7 +67,7 @@ class ParentController extends Controller
 
     public function show(User $user)
     {
-        $subscriptions = Subscription::with('service')->where('parent_id', $user->id)->orderByDesc('created_at')->get();
+        $subscriptions = Subscription::with('service')->where('customer_id', $user->id)->orderByDesc('created_at')->get();
         $services = Service::orderBy('title')->get();
         return view('admin.parents.show', compact('parent','subscriptions','services'));
     }
@@ -86,15 +86,15 @@ class ParentController extends Controller
         if(!empty($data['password'])){ $data['password'] = Hash::make($data['password']); } else { unset($data['password']); }
         $user->update($data);
 
-           return handleResponse($request, 'Parent updated successfully!', 'admin.parents.index');
+           return handleResponse($request, 'Customer updated successfully!', 'admin.customers.index');
     }
 
     public function destroy(User $user)
     {
         // delete subscriptions for this parent first
-        Subscription::where('parent_id', $user->id)->delete();
+        Subscription::where('customer_id', $user->id)->delete();
         $user->delete();
-        return redirect()->route('admin.parents.index')->with('success','Parent deleted');
+        return redirect()->route('admin.parents.index')->with('success','Customer deleted');
     }
 
     /**

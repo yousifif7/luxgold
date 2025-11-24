@@ -1,4 +1,4 @@
-<form id="providerForm" method="POST" action="{{ isset($provider) ? route('admin.providers.update', $provider->id) : route('admin.providers.store') }}" enctype="multipart/form-data">
+<form id="providerForm" method="POST" action="{{ isset($provider) ? route('admin.cleaners.update', ['cleaner' => $provider->id]) : route('admin.cleaners.store') }}" enctype="multipart/form-data">
     @csrf
     @if(isset($provider))
         @method('PUT')
@@ -316,9 +316,9 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
             <i class="ti ti-device-floppy me-1"></i>
-            {{ isset($provider) ? 'Update' : 'Create' }} Provider
+            {{ isset($provider) ? 'Update' : 'Create' }} Cleaner
         </button>
     </div>
 </form>

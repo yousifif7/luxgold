@@ -301,12 +301,12 @@
                         <li>
                             <ul>
                                 <li>
-                                    <a href="{{ route('provider-home') }}">
+                                    <a href="{{ route('cleaner-home') }}">
                                         <i class="ti ti-layout-board"></i><span>Dashboard</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('provider.listings.profile') }}">
+                                    <a href="{{ route('cleaner.listings.profile') }}">
                                         <i class="ti ti-list"></i><span>Listing Profile</span>
                                     </a>
                                 </li>
@@ -317,12 +317,12 @@
                                 </li>
 
                                  <li>
-                                    <a href="{{ route('provider-inquiries') }}">
+                                    <a href="{{ route('cleaner-inquiries') }}">
                                         <i class="ti ti-calendar"></i><span>Inqueries</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('provider-subscription') }}">
+                                    <a href="{{ route('cleaner-subscription') }}">
                                         <i class="ti ti-credit-card"></i><span>Subscription</span>
                                     </a>
                                 </li>
@@ -332,7 +332,7 @@
                                     </a>
                                 </li> --}}
                                 <li>
-                                    <a href="{{ route('provider-profile') }}">
+                                    <a href="{{ route('cleaner-profile') }}">
                                         <i class="ti ti-user"></i><span>Profile & Settings</span>
                                     </a>
                                 </li>

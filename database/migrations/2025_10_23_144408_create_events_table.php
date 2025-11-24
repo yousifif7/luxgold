@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('subtitle')->nullable();
             $table->text('description')->nullable();
-            $table->string('provider_name')->nullable();
+            $table->string('cleaner_name')->nullable();
             $table->string('category')->nullable();
             $table->string('location')->nullable();
             $table->string('city')->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->dateTime('published_at')->nullable();
             $table->string('image_url')->nullable();
             $table->string('author')->nullable();
-            $table->foreignId('provider_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('cleaner_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

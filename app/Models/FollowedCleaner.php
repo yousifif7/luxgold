@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FollowedProvider extends Model
+class FollowedCleaner extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'provider_id'];
+    protected $fillable = ['user_id', 'cleaner_id'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function provider()
+    public function cleaner()
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(Cleaner::class);
     }
 }

@@ -36,13 +36,13 @@ class AnalyticsController extends Controller
 
         // Existing data for backward compatibility
         $subscriptions = $this->analytics->getSubscriptionSeries();
-        $providerCats = $this->analytics->getProviderCategories();
+        $providerCats = $this->analytics->getCleanerCategories();
         $arpu = $this->analytics->getArpuSeries();
-        $topProviders = $this->analytics->getTopProviders();
+        $topProviders = $this->analytics->getTopCleaners();
 
         // Additional metrics
-        $totalParents = User::role('parent')->count();
-        $totalProviders = User::role('provider')->count();
+        $totalParents = User::role('customer')->count();
+        $totalProviders = User::role('cleaner')->count();
 
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
@@ -52,14 +52,14 @@ class AnalyticsController extends Controller
 
         // Recent subscriptions
         $recentSubscriptions = [];
-        $subscriptionRows = Subscription::with(['provider', 'plan'])
+        $subscriptionRows = Subscription::with(['cleaner', 'plan'])
             ->orderByDesc('created_at')
             ->limit(10)
             ->get();
 
         $recentSubscriptions = $subscriptionRows->map(function($s){
             return [
-                'provider' => $s->provider->business_name ?? '—',
+                'provider' => $s->cleaner->business_name ?? '—',
                 'plan' => $s->plan->name ?? '—',
                 'amount' => $s->plan->monthly_fee ?? 0,
                 'date' => $s->created_at ? $s->created_at->toDateString() : '',

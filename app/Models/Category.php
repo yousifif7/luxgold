@@ -20,7 +20,7 @@ class Category extends Model
         'image_url',
         'sort_order',
         'status',
-        'parent_id',
+        'customer_id',
         'slug'
 
     ];
@@ -29,25 +29,25 @@ class Category extends Model
         'tags' => 'array',
     ];
 
-    public function providers(){
+    public function cleaners(){
 
-        return $this->hasMany(Provider::class,'categories_id');
+        return $this->hasMany(Cleaner::class,'categories_id');
     }
 
-    public function totalProvider(){
+    public function totalCleaners(){
 
-        $providers=$this->providers();
+        $cleaners=$this->cleaners();
 
-        return $providers->count();
+        return $cleaners->count();
     }
 
-    public function parent()
+    public function customer()
     {
-        return $this->belongsTo(Category::class, 'parent_id');
+        return $this->belongsTo(Category::class, 'customer_id');
     }
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->hasMany(Category::class, 'customer_id');
     }
 }

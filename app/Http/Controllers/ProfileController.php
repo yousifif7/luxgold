@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        $provider = $user->provider;
+        $provider = $user->cleaner;
         
         return view('panels.provider.profile', compact('user', 'provider'));
     }
@@ -39,7 +39,7 @@ class ProfileController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('provider-profile')
+        return redirect()->route('cleaner-profile')
             ->with('success', 'Profile updated successfully.');
     }
 

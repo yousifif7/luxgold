@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreServiceListingRequest;
-use App\Models\Provider;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use App\Models\CareType;
+use App\Models\Category;
 use App\Models\AgesServed;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Models\DiversityBadge;
+use App\Models\ServiceListing;
+use App\Models\ServicesOfferd;
 use App\Models\ProgramsOffered;
 use App\Models\SpecialFeatures;
-use App\Models\ServicesOfferd;
-use App\Models\Category;
+use App\Models\Cleaner as Provider;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreServiceListingRequest;
 
 class ServiceListingController extends Controller
 {
@@ -23,6 +24,10 @@ class ServiceListingController extends Controller
     public function index()
     {
         $serviceListing = Provider::where('user_id', auth()->id())->first();
+        if (! $serviceListing) {
+            return redirect()->route('cleaner-profile')
+                ->with('error', 'Please complete your profile before creating a listing.');
+        }
         $care_types=CareType::get();
         $categories=Category::get();
         $ages_served=AgesServed::get();
@@ -101,7 +106,7 @@ class ServiceListingController extends Controller
 
             \DB::commit();
 
-            return redirect()->route('provider.listings.profile')
+            return redirect()->route('cleaner.listings.profile')
                 ->with('success', 'Service listing updated successfully!');
 
         } catch (\Exception $e) {

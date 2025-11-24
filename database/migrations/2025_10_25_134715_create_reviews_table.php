@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('provider_id')->constrained()->onDelete('cascade');
+            $table->foreignId('cleaner_id')->constrained('cleaners')->onDelete('cascade');
             $table->integer('rating');
             $table->text('comment');
             $table->enum('status', ['pending', 'approved', 'flagged', 'hidden', 'rejected'])->default('pending');
@@ -20,7 +20,7 @@ return new class extends Migration
             // ✅ Add soft delete column
             $table->softDeletes();
 
-            $table->unique(['user_id', 'provider_id']);
+            $table->unique(['user_id', 'cleaner_id']);
         });
     }
 

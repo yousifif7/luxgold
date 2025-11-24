@@ -25,7 +25,7 @@
       <div class="col-lg-3 col-md-6">
         <h6 class="askroro-footer-heading text-teal fw-bold mb-3">For Families</h6>
         <ul class="list-unstyled askroro-footer-links">
-          <li><a href="{{ route('website.find-provider') }}" class="text-decoration-none">Find Providers</a></li>
+          <li><a href="{{ route('website.find-cleaner') }}" class="text-decoration-none">Find Cleaners</a></li>
           <li><a href="{{ route('website.compare') }}" class="text-decoration-none">Write Reviews</a></li>
         </ul>
       </div>
@@ -34,7 +34,7 @@
       <div class="col-lg-3 col-md-6">
         <h6 class="askroro-footer-heading text-teal fw-bold mb-3">For Providers</h6>
         <ul class="list-unstyled askroro-footer-links">
-          <li><a href="{{ route('website.for-provider') }}" class="text-decoration-none">List Your Service</a></li>
+          <li><a href="{{ route('website.for-cleaner') }}" class="text-decoration-none">List Your Service</a></li>
           {{-- <li><a href="#" class="text-decoration-none">Provider Dashboard</a></li> --}}
         </ul>
       </div>

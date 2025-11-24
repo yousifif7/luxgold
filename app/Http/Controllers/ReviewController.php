@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,16 +21,16 @@ class ReviewController extends Controller
 
         // Check if user already reviewed this provider
         $existingReview = Review::where('user_id', Auth::id())
-            ->where('provider_id', $provider->id)
+            ->where('cleaner_id', $provider->id)
             ->first();
 
         if ($existingReview) {
-            return redirect()->back()->with('error', 'You have already reviewed this provider.');
+            return redirect()->back()->with('error', 'You have already reviewed this cleaner.');
         }
 
         Review::create([
             'user_id' => Auth::id(),
-            'provider_id' => $provider->id,
+            'cleaner_id' => $provider->id,
             'rating' => $request->rating,
             'comment' => $request->comment,
             'status' => 'pending' // Admin approval required

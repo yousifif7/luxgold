@@ -1,5 +1,5 @@
 <?php
-// database/migrations/xxxx_xx_xx_xxxxxx_create_followed_providers_table.php
+// database/migrations/xxxx_xx_xx_xxxxxx_create_followed_cleaners_table.php
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,18 +8,18 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('followed_providers', function (Blueprint $table) {
+        Schema::create('followed_cleaners', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('provider_id')->constrained()->onDelete('cascade');
+            $table->foreignId('cleaner_id')->constrained('cleaners')->onDelete('cascade');
             $table->timestamps();
             
-            $table->unique(['user_id', 'provider_id']);
+            $table->unique(['user_id', 'cleaner_id']);
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('followed_providers');
+        Schema::dropIfExists('followed_cleaners');
     }
 };

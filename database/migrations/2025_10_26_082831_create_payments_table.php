@@ -12,7 +12,7 @@ return new class extends Migration
             Schema::create('payments', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('subscription_id')->index();
-                $table->unsignedBigInteger('provider_id')->nullable()->index();
+                $table->unsignedBigInteger('cleaner_id')->nullable()->index();
                 
                 // Payment details
                 $table->string('payment_method')->nullable(); // e.g., stripe, paypal
@@ -29,7 +29,7 @@ return new class extends Migration
 
                 // Foreign keys
                /* $table->foreign('subscription_id')->references('id')->on('subscriptions')->onDelete('cascade');
-                $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');*/
+                $table->foreign('cleaner_id')->references('id')->on('cleaners')->onDelete('cascade');*/
             });
         }
     }

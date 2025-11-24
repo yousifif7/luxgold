@@ -14,7 +14,7 @@ class RecentlyViewed extends Model
 
     protected $fillable = [
         'user_id',
-        'provider_id',
+        'cleaner_id',
         'viewed_at'
     ];
 
@@ -27,8 +27,8 @@ class RecentlyViewed extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function provider()
+    public function cleaner()
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(Cleaner::class);
     }
 }

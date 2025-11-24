@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Auth;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model
 {
@@ -31,7 +31,7 @@ class Event extends Model
         'published_at',
         'image_url',
         'author',
-        'provider_id',
+        'cleaner_id',
     ];
 
     protected $casts = [
@@ -41,7 +41,7 @@ class Event extends Model
         'cost' => 'decimal:2',
     ];
 
-    public function provider()
+    public function cleaner()
     {
         return $this->belongsTo(User::class);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Review;
+use App\Models\Cleaner as Provider;
 use Illuminate\Support\Facades\DB;
 use App\Models\ReviewModerationLog;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class ReviewController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Review::with(['parent','provider'])->orderByDesc('created_at');
+        $query = Review::with(['customer','cleaner'])->orderByDesc('created_at');
         if ($request->filled('q')) {
             $t = $request->get('q');
             $query->where('content', 'like', "%{$t}%");
@@ -25,7 +26,7 @@ class ReviewController extends Controller
         // Additional filters
         if ($request->filled('city')) {
             $city = $request->get('city');
-            $query->whereHas('parent', function($q) use ($city) { $q->where('city', $city); });
+            $query->whereHas('customer', function($q) use ($city) { $q->where('city', $city); });
         }
         if ($request->filled('date_from')) {
             $query->where('created_at', '>=', $request->get('date_from'));
@@ -35,7 +36,7 @@ class ReviewController extends Controller
         }
         if ($request->filled('provider_category')) {
             $cat = $request->get('provider_category');
-            $query->whereHas('provider', function($q) use ($cat) { $q->where('category', $cat); });
+            $query->whereHas('cleaner', function($q) use ($cat) { $q->where('category', $cat); });
         }
         if ($request->filled('min_rating')) {
             $query->where('rating', '>=', (int)$request->get('min_rating'));
@@ -110,17 +111,17 @@ class ReviewController extends Controller
         }
 
         $topFlagged = DB::table('reviews')
-            ->select('provider_id', DB::raw('count(*) as cnt'))
+            ->select('cleaner_id', DB::raw('count(*) as cnt'))
             ->where('status', 'flagged')
-            ->groupBy('provider_id')
+            ->groupBy('cleaner_id')
             ->orderByDesc('cnt')
             ->limit(5)
             ->get();
 
         $providerNames = [];
         if ($topFlagged->isNotEmpty()) {
-            $providerIds = $topFlagged->pluck('provider_id')->toArray();
-            $providerNames = \App\Models\Provider::whereIn('id', $providerIds)->pluck('name','id')->toArray();
+            $providerIds = $topFlagged->pluck('cleaner_id')->toArray();
+            $providerNames = Provider::whereIn('id', $providerIds)->pluck('name','id')->toArray();
         }
 
         $mostActiveCity = $cityTotals->first()->city ?? null;
@@ -133,7 +134,7 @@ class ReviewController extends Controller
                 'Content-Type' => 'text/csv',
                 'Content-Disposition' => "attachment; filename=\"{$filename}\"",
             ];
-            $columns = ['id','user_id','provider_id','rating','status','comment','created_at'];
+            $columns = ['id','user_id','cleaner_id','rating','status','comment','created_at'];
             $callback = function() use ($exportRows, $columns) {
                 $out = fopen('php://output', 'w');
                 fputcsv($out, $columns);

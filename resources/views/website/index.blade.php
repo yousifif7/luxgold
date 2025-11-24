@@ -25,7 +25,7 @@
                 @endif
                 <!-- Search Box -->
                 <div class="search-box">
-                    <form action="{{ route('website.find-provider') }}" class="row g-2">
+                    <form action="{{ route('website.find-cleaner') }}" class="row g-2">
                         <div class="col-md-6">
                             <div class="input-group-div">
                                 <i class="bi bi-search"></i>
@@ -39,10 +39,10 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                           <button type="submit" class="search-provider_btn btn btn-success">
-  <i class="bi bi-lightning-charge-fill me-1"></i>
-  Search Providers
-  <i class="bi bi-chevron-right ms-1"></i>
+                                                     <button type="submit" class="search-provider_btn btn btn-success">
+    <i class="bi bi-lightning-charge-fill me-1"></i>
+    Search Cleaners
+    <i class="bi bi-chevron-right ms-1"></i>
 </button>
 
                         </div>
@@ -201,7 +201,7 @@
                     <button data-id="p{{ $provider->id }}" data-provider-id="{{ $provider->id }}" class="btn-compare compare-btn">
                     Compare
                     </button>
-                    <a class="btn-view" href="{{ route('website.provider-detail', $provider->id) }}">
+                    <a class="btn-view" href="{{ route('website.cleaner-detail', $provider->id) }}">
                         View Details
                     </a>
                 </div>
@@ -209,8 +209,8 @@
         </div>
         @endforeach
     </div>
-    <div class="d-flex justify-content-center align-items-center">
-        <button class="view-all-providers_btn" onclick="window.location.href='{{ route('website.find-provider') }}'">View All Provider <i class="bi bi-chevron-right"></i></button>
+        <div class="d-flex justify-content-center align-items-center">
+        <button class="view-all-providers_btn" onclick="window.location.href='{{ route('website.find-cleaner') }}'">View All Cleaners <i class="bi bi-chevron-right"></i></button>
     </div>
         </div>
 
@@ -325,7 +325,7 @@
                     <img src="{{ $category->image_url ?? 'https://images.unsplash.com/photo-1650504148053-ae51b12dc1d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080' }}" alt="{{ $category->name }}">
                     
                     <!-- Providers Count Badge -->
-                    <div class="edu-badge">{{ $category->totalProvider() }}+ providers</div>
+                    <div class="edu-badge">{{ $category->totalCleaners() }}+ Cleaners</div>
                     
                     <div class="edu-body">
                         <!-- Category Icon -->
@@ -372,8 +372,8 @@
                         @endif
                         
                         <!-- Explore Providers Link -->
-                        <div onclick="window.location.href='{{ route('website.find-provider', ['category' => $category->id]) }}'" class="edu-footer">
-                            Explore providers <i class="bi bi-chevron-right"></i>
+                        <div onclick="window.location.href='{{ route('website.find-cleaner', ['category' => $category->id]) }}'" class="edu-footer">
+                            Explore cleaners <i class="bi bi-chevron-right"></i>
                         </div>
                     </div>
                 </div>
@@ -402,7 +402,7 @@
                         <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" width="30">
                     </div>
                     <div class="city-title">{{ $city->name }}, {{ $city->state }}</div>
-                    <a href="#" class="city-link">{{ $city->totalProvider() }}+ providers</a>
+                    <a href="#" class="city-link">{{ $city->totalCleaner() }}+ cleaners</a>
                     <div class="city-families">{{ $city->families_count }}+ families</div>
                 </div>
             </div>
@@ -607,10 +607,10 @@
             Join thousands of parents who trust AskRoro to connect with quality childcare and<br> family service providers
             in their community.
         </p>
-        <div class="button-group">
-            <button onclick="window.location.href='{{ route('website.find-provider') }}'">Start Searching <i
+            <div class="button-group">
+            <button onclick="window.location.href='{{ route('website.find-cleaner') }}'">Start Searching <i
             class="bi bi-chevron-right ms-1"></i></button>
-            <button onclick="window.location.href='{{ route('website.find-provider') }}'">Learn More</button>
+            <button onclick="window.location.href='{{ route('website.find-cleaner') }}'">Learn More</button>
         </div>
     </div>
 </section>

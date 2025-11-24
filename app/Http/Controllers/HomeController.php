@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Models\City;
+use App\Models\Event;
+use App\Models\Review;
+use App\Models\CareType;
 use App\Models\Category;
-use App\Models\Provider;
 use App\Models\Resource;
+use App\Models\Promotion;
+use App\Models\AgesServed;
 use App\Models\HeroContent;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
-use App\Models\RecentlyViewed;
-use App\Models\Promotion;
-use App\Models\Event;
-use Session;
-use App\Models\Review;
-use App\Models\CareType;
-use App\Models\AgesServed;
 use App\Models\DiversityBadge;
+use App\Models\RecentlyViewed;
+use App\Models\ServicesOfferd;
 use App\Models\ProgramsOffered;
 use App\Models\SpecialFeatures;
-use App\Models\ServicesOfferd;
+use App\Models\Cleaner as Provider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Builder; // Correct one for Eloquent
 
 class HomeController extends Controller
@@ -108,7 +108,7 @@ $query = Event::query();
         
         // Get results
         $events = $query->paginate(12);
-        $categories=Category::whereNull('parent_id')->get();
+        $categories=Category::whereNull('customer_id')->get();
         $ages_served=AgesServed::get();
         $programs_offerd=ProgramsOffered::get();
         $services_offerd=ServicesOfferd::get();
@@ -153,7 +153,7 @@ $query = Event::query();
 }
         // Get results
         $providers = $query->paginate(12);
-        $categories=Category::whereNull('parent_id')->get();
+        $categories=Category::whereNull('customer_id')->get();
         $ages_served=AgesServed::get();
         $programs_offerd=ProgramsOffered::get();
         $services_offerd=ServicesOfferd::get();
@@ -177,7 +177,7 @@ return view('website.event-detail', compact('event'));
         $recent_view = RecentlyViewed::updateOrCreate(
             [
                 'user_id' => auth()->id(),
-                'provider_id' => $provider->id,
+                'cleaner_id' => $provider->id,
             ],
             [
                 'viewed_at' => now(),

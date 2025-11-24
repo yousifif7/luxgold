@@ -34,7 +34,7 @@
 <div class="find-provider-page">
   <div class="site-header">
     <div class="left-head">
-        <a href="{{route('website.find-provider')}}" class="back-btn" id="backBtn"><i class="ti ti-arrow-left"></i>Back to Results</a>
+        <a href="{{route('website.find-cleaner')}}" class="back-btn" id="backBtn"><i class="ti ti-arrow-left"></i>Back to Results</a>
     </div>
 
     <div class="header-actions">
@@ -232,12 +232,20 @@
         <div class="col-lg-4">
             <div class="school-information-detail-card">
                 @php
-                    $serviceCategories = json_decode($provider->service_categories ?? '[]', true);
-                    $category = !empty($serviceCategories) ? $serviceCategories[0] : ($provider->category ?: 'Provider');
+                    // Normalize stored category IDs (some records store JSON arrays)
+                    $categoryIds = $provider->sub_categories ?? [];
+                    if (is_string($categoryIds)) {
+                        $categoryIds = json_decode($categoryIds, true) ?: [];
+                    }
+
+                    // Resolve category models (fall back to provider->category relation)
+                    $serviceCategories = \App\Models\Category::whereIn('id', (array) $categoryIds)->get();
+                    $primaryCategory = $serviceCategories->first() ?? ($provider->category ?? null);
+                    $primaryCategoryName = $primaryCategory ? ($primaryCategory->name ?? $primaryCategory) : 'Provider';
                 @endphp
-                
-                @if($category)
-                <div class="school-information-badge-category">{{ $category->name }}</div>
+
+                @if($primaryCategoryName)
+                <div class="school-information-badge-category">{{ $primaryCategoryName }}</div>
                 @endif
                 
                 <h2 class="school-information-name-heading">{{ $provider->business_name ?? $provider->name }}</h2>

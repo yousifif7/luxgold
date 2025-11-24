@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Provider;
+use App\Models\Cleaner;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -31,11 +31,11 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', 'in:parent,provider'], // ensure valid role
+            'role' => ['required', 'string', 'in:customer,cleaner'], // ensure valid role
         ];
 
         // Additional validation for providers
-        if ($data['role'] === 'provider') {
+        if ($data['role'] === 'cleaner') {
             $rules = array_merge($rules, [
                 'business_name' => ['required', 'string', 'max:255'],
                 'phone' => ['required', 'string', 'max:20'],
@@ -70,8 +70,8 @@ class RegisterController extends Controller
         $user->assignRole($data['role']);
 
         // If provider, store additional provider info
-        if ($data['role'] === 'provider') {
-            Provider::create([
+        if ($data['role'] === 'Cleaner') {
+            Cleaner::create([
                 'name'=> $data['first_name'],
                 'user_id'            => $user->id,
                 'business_name'      => $data['business_name'],

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('zip_code')->nullable();
             $table->integer('search_radius')->default(10); // in miles
             $table->json('notification_preferences')->nullable();
-            $table->string('user_type')->default('parent'); // parent, provider, admin
+            $table->string('user_type')->default('customer'); // customer, cleaner, admin
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

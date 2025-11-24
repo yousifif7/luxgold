@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('admin-title', 'Providers Management - Admin Panel')
+@section('admin-title', 'Cleaners Management - Admin Panel')
 @section('content')
 <div class="page-wrapper">
 
@@ -10,11 +10,11 @@
         <!-- Page Header -->
         <div class="d-flex align-items-center justify-content-between gap-2 mb-4 flex-wrap">
             <div class="breadcrumb-arrow">
-                <h4 class="mb-1">Providers</h4>
+                <h4 class="mb-1">Cleaners</h4>
                 <div class="text-end">
                     <ol class="breadcrumb m-0 py-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin-home') }}">Home</a></li>                            
-                        <li class="breadcrumb-item active">Providers</li>
+                        <li class="breadcrumb-item active">Cleaners</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <a href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download" onclick="exportToCSV()">
                     <i class="ti ti-cloud-download"></i>
                 </a>
-                <a href="#" data-size="xl" data-url="{{ route('admin.providers.create') }}" data-ajax-popup="true" data-title="{{__('New Provider')}}" class="btn btn-primary">New Provider</a>
+                <a href="#" data-size="xl" data-url="{{ route('admin.cleaners.create') }}" data-ajax-popup="true" data-title="{{__('New Cleaner')}}" class="btn btn-primary">New Cleaner</a>
             </div>
         </div>
         <!-- End Page Header -->
@@ -38,7 +38,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <h6 class="text-muted fw-semibold">Total Providers</h6>
+                                <h6 class="text-muted fw-semibold">Total Cleaners</h6>
                                 <h4 class="mb-0" id="total-providers">{{ $providers->total() }}</h4>
                             </div>
                             <div class="flex-shrink-0">
@@ -68,7 +68,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <h6 class="text-muted fw-semibold">Active Providers</h6>
+                                <h6 class="text-muted fw-semibold">Active Cleaners</h6>
                                 <h4 class="mb-0" id="active-providers">0</h4>
                             </div>
                             <div class="flex-shrink-0">
@@ -99,16 +99,16 @@
         <div class="card mb-0">
 
             <div class="card-header d-flex align-items-center flex-wrap gap-2 justify-content-between">
-                <h6 class="d-inline-flex align-items-center mb-0">Total Providers <span class="badge bg-danger ms-2">{{ $providers->total() }}</span></h6>
+                <h6 class="d-inline-flex align-items-center mb-0">Total Cleaners <span class="badge bg-danger ms-2">{{ $providers->total() }}</span></h6>
                 <div class="search-set">
                     <div class="d-flex align-items-center flex-wrap gap-2">
                         <div class="table-search d-flex align-items-center mb-0">
                             <div class="search-input">
-                                <form method="GET" action="{{ route('admin.providers.index') }}" id="searchForm">
+                                <form method="GET" action="{{ route('admin.cleaners.index') }}" id="searchForm">
                                     <a href="javascript:void(0);" class="btn-searchset" onclick="document.getElementById('searchForm').submit()">
                                         <i class="ti ti-search"></i>
                                     </a>
-                                    <input type="text" class="form-control" name="search" placeholder="Search providers..." value="{{ request('search') }}">
+                                    <input type="text" class="form-control" name="search" placeholder="Search cleaners..." value="{{ request('search') }}">
                                 </form>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                             </li>
                             <div id="city-list" style="max-height: 200px; overflow-y: auto;">
                                 @php
-                                    $cities = \App\Models\Provider::distinct('city')->whereNotNull('city')->pluck('city');
+                                    $cities = \App\Models\Cleaner::distinct('city')->whereNotNull('city')->pluck('city');
                                 @endphp
                                 @foreach($cities as $city)
                                     <li>
@@ -237,7 +237,7 @@
                                 <th class="no-sort" width="50">
                                     <input type="checkbox" id="select-all">
                                 </th>
-                                <th>Provider</th>
+                                <th>Cleaner</th>
                                 <th>Contact</th>
                                 <th>Location</th>
                                 <th>Membership</th>
@@ -260,7 +260,7 @@
                                         </span>
                                         <div class="d-flex flex-column">
                                             <span class="fw-semibold">
-                                                <a href="{{ route('admin.providers.show', $provider->id) }}">
+                                                <a href="{{ route('admin.cleaners.show', $provider->id) }}">
                                                     {{ $provider->business_name ?? $provider->name }}
                                                 </a>
                                             </span>
@@ -318,21 +318,21 @@
                                         </a>
                                         <ul class="dropdown-menu p-2">
                                             <li>
-                                                <a href="#" data-size="xl" 
-                                                   data-url="{{ route('admin.providers.show', $provider->id) }}" 
-                                                   data-ajax-popup="true"  
-                                                   data-title="{{ __('Show Provider') }}"  class="dropdown-item">
-                                                    <i class="ti ti-eye me-1"></i> View
-                                                </a>
+                                                        <a href="#" data-size="xl" 
+                                                                       data-url="{{ route('admin.cleaners.show', ['cleaner' => $provider->id]) }}" 
+                                                               data-ajax-popup="true"  
+                                                               data-title="{{ __('Show Cleaner') }}"  class="dropdown-item">
+                                                                <i class="ti ti-eye me-1"></i> View
+                                                            </a>
                                             </li>
                                             <li>
-                                                <a href="#" data-size="xl" 
-                                                   data-url="{{ route('admin.providers.edit', $provider->id) }}" 
-                                                   data-ajax-popup="true"  
-                                                   data-title="{{ __('Edit Provider') }}" 
-                                                   class="dropdown-item">
-                                                    <i class="ti ti-edit me-1"></i> Edit
-                                                </a>
+                                                                                <a href="#" data-size="xl" 
+                                                                                    data-url="{{ route('admin.cleaners.edit', ['cleaner' => $provider->id]) }}" 
+                                                               data-ajax-popup="true"  
+                                                               data-title="{{ __('Edit Cleaner') }}" 
+                                                               class="dropdown-item">
+                                                                <i class="ti ti-edit me-1"></i> Edit
+                                                            </a>
                                             </li>
                                             <li>
                                                 @if($provider->status == 'pending')
@@ -353,7 +353,7 @@
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
-                                                <form action="{{ route('admin.providers.destroy', $provider->id) }}" method="POST" id="delete-form-{{ $provider->id }}">
+                                                <form action="{{ route('admin.cleaners.destroy', ['cleaner' => $provider->id]) }}" method="POST" id="delete-form-{{ $provider->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="dropdown-item text-danger" onclick="confirmDelete({{ $provider->id }})">
@@ -373,7 +373,7 @@
                                         No providers found
                                     </div>
                                     @if(request()->anyFilled(['search', 'status', 'city']))
-                                        <a href="{{ route('admin.providers.index') }}" class="btn btn-sm btn-primary mt-2">
+                                        <a href="{{ route('admin.cleaners.index') }}" class="btn btn-sm btn-primary mt-2">
                                             Clear Filters
                                         </a>
                                     @endif
@@ -406,7 +406,7 @@
 </div>
 
 <!-- Hidden Filter Form -->
-<form id="filterForm" method="GET" action="{{ route('admin.providers.index' ) }}">
+<form id="filterForm" method="GET" action="{{ route('admin.cleaners.index' ) }}">
     <input type="hidden" name="search" id="filter-search" value="{{ request('search') }}">
     <input type="hidden" name="sort" id="filter-sort" value="{{ request('sort', 'newest') }}">
     @foreach((array)request('status', []) as $status)
@@ -538,11 +538,11 @@ function bulkAction(action) {
         return;
     }
 
-    if (action === 'delete' && !confirm('Are you sure you want to delete the selected providers? This action cannot be undone.')) {
+    if (action === 'delete' && !confirm('Are you sure you want to delete the selected cleaners? This action cannot be undone.')) {
         return;
     }
 
-    fetch('{{ route("admin.providers.bulk-action") }}', {
+    fetch('{{ route("admin.cleaners.bulk-action") }}', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -570,8 +570,8 @@ function bulkAction(action) {
 }
 
 // Individual actions
-function updateStatus(providerId, status) {
-    fetch(`/admin/providers/${providerId}/status`, {
+function updateStatus(cleanerId, status) {
+    fetch(`/admin/cleaners/${cleanerId}/status`, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',

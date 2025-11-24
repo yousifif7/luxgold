@@ -8,7 +8,7 @@ use App\Models\Plan;
 use Illuminate\Support\Facades\DB;
 use App\Models\Subscription;
 use App\Models\Payment;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 
 class PricingController extends Controller
 {

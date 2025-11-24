@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -19,7 +19,7 @@ class CompareController extends Controller
             
             return response()->json([
                 'in_compare' => false,
-                'message' => 'Provider removed from compare list'
+                'message' => 'Cleaner removed from compare list'
             ]);
         } else {
             // Add to compare (limit to 4 providers)
@@ -35,7 +35,7 @@ class CompareController extends Controller
             
             return response()->json([
                 'in_compare' => true,
-                'message' => 'Provider added to compare list'
+                'message' => 'Cleaner added to compare list'
             ]);
         }
     }

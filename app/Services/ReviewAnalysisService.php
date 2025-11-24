@@ -32,7 +32,7 @@ class ReviewAnalysisService
         }
 
         $textField = Schema::hasColumn('reviews', 'comment') ? 'comment' : (Schema::hasColumn('reviews', 'content') ? 'content' : null);
-        $select = ['id','provider_id','user_id','created_at'];
+        $select = ['id','cleaner_id','user_id','created_at'];
         if ($textField) $select[] = $textField;
 
         $reviews = $query->get($select);
@@ -71,7 +71,7 @@ class ReviewAnalysisService
             if (!empty($matchedFlags)) {
                 $flagged[] = [
                     'id' => $r->id,
-                    'provider_id' => $r->provider_id,
+                    'cleaner_id' => $r->cleaner_id,
                     'snippet' => mb_substr($r->{$textField} ?? '', 0, 200),
                     'matched' => array_values(array_unique($matchedFlags)),
                     'created_at' => $r->created_at,

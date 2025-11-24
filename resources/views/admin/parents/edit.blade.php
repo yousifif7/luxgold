@@ -1,4 +1,4 @@
-           <form method="POST" action="{{ route('admin.parents.update', $user) }}">
+           <form method="POST" action="{{ route('admin.customers.update', $user) }}">
   @csrf @method('PUT')
           <div class="modal-body pb-0">
   <div class="mb-3"><label>First Name</label><input class="form-control" name="first_name" value="{{ old('first_name',$user->first_name) }}" required></div>

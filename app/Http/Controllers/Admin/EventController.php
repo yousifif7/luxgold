@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Event;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -16,21 +16,21 @@ class EventController extends Controller
     $user = Auth::user();
 
     // ✅ Check if user has 'provider' role (trim any accidental space)
-    if ($user->hasRole('provider')) {
+    if ($user->hasRole('cleaner')) {
         // Only show events belonging to this provider
-        $contents = Event::where('provider_id', $user->id)
+        $contents = Event::where('cleaner_id', $user->id)
             ->orderBy('start_date', 'desc')
             ->get();
 
-        $total = Event::where('provider_id', $user->id)->count();
-        $pending = Event::where('provider_id', $user->id)
+        $total = Event::where('cleaner_id', $user->id)->count();
+        $pending = Event::where('cleaner_id', $user->id)
             ->where('status', 'pending')
             ->count();
-        $thisWeek = Event::where('provider_id', $user->id)
+        $thisWeek = Event::where('cleaner_id', $user->id)
             ->whereBetween('start_date', [now()->startOfWeek(), now()->endOfWeek()])
             ->count();
 
-        $eventsWithCapacity = Event::where('provider_id', $user->id)
+        $eventsWithCapacity = Event::where('cleaner_id', $user->id)
             ->whereNotNull('max_capacity')
             ->where('max_capacity', '>', 0)
             ->get();
@@ -109,7 +109,7 @@ class EventController extends Controller
     }
 
     // Set provider_id automatically for provider users
-    if (Auth::check() && Auth::user()->hasRole('provider')) {
+    if (Auth::check() && Auth::user()->hasRole('cleaner')) {
             $validated['provider_id'] = Auth::id();
                 $validated['provider_name'] = Auth::user()->first_name;
             
@@ -127,7 +127,7 @@ class EventController extends Controller
 
     public function create(){
 
-        $providers=User::role('provider')->get();
+        $providers=User::role('cleaner')->get();
         $categories=Category::get();
 
         return view('admin.events.create',compact('providers','categories'));
@@ -136,7 +136,7 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::findOrFail($id);
-         $providers=User::role('provider')->get();
+         $providers=User::role('cleaner')->get();
          $categories=Category::get();
         // Determine request context
   
@@ -198,7 +198,7 @@ class EventController extends Controller
     // ✅ Save new image URL (accessible via public path)
     $validated['image_url'] = asset($path . '/' . $filename);
 }
-    if (Auth::check() && Auth::user()->hasRole('provider')) {
+    if (Auth::check() && Auth::user()->hasRole('cleaner')) {
             $validated['provider_id'] = Auth::id();
                 $validated['provider_name'] = Auth::user()->first_name;
             
@@ -225,7 +225,7 @@ class EventController extends Controller
     {
         $e = Event::findOrFail($id);
         // if provider user, ensure ownership
-        if (Auth::check() && Auth::user()->role === 'provider') {
+        if (Auth::check() && Auth::user()->role === 'cleaner') {
             $provider = Provider::where('user_id', Auth::id())->first();
             if ($provider && $e->provider_id !== $provider->id) abort(403);
         }
@@ -235,7 +235,7 @@ class EventController extends Controller
         if (request()->is('admin/*') || request()->is('admin')) {
             return redirect()->route('vendor.admin.events.index')->with('success', 'Event deleted successfully');
         }
-        if (request()->is('provider/*') || request()->is('provider')) {
+        if (request()->is('provider/*') || request()->is('cleaner')) {
             return redirect()->route('provider.events.index')->with('success', 'Event deleted successfully');
         }
 

@@ -28,10 +28,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PlansTableSeeder::class,
             CategoriesTableSeeder::class,
+            CitiesTableSeeder::class,
+            CleanerSeeder::class,
+            ServiceListingsSeeder::class,
             ContentManagementSeeder::class,
-            ProviderSeeder::class,
             EventSeeder::class,
-
         ]);
     }
 }

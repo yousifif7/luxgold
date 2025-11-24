@@ -14,18 +14,18 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('subtitle')->nullable();
             $table->text('description')->nullable();
-            $table->integer('providers_count')->default(0);
+            $table->integer('cleaners_count')->default(0);
             $table->string('icon')->nullable();
             $table->json('tags')->nullable();
             $table->string('image_url')->nullable();
             $table->integer('sort_order')->default(0);
             $table->boolean('status')->default(true);
-            $table->foreignId('parent_id')->nullable()->constrained('categories')->onDelete('cascade');
+            $table->foreignId('customer_id')->nullable()->constrained('categories')->onDelete('cascade');
             $table->timestamps();
             
             // Indexes
             $table->index('slug');
-            $table->index('parent_id');
+            $table->index('customer_id');
             $table->index('status');
             $table->index('sort_order');
         });

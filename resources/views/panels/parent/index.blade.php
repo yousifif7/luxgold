@@ -166,7 +166,7 @@
                     @if($recentlyViewed->count() > 0)
                     <a href="{{ url('providers.recent') }}" class="btn btn-primary w-100 mt-3">View All Recent</a>
                     @else
-                    <a href="{{ route('website.find-provider') }}" class="btn btn-primary w-100 mt-3">Browse Providers</a>
+                    <a href="{{ route('website.find-cleaner') }}" class="btn btn-primary w-100 mt-3">Browse Cleaners</a>
                     @endif
                 </div>
             </div>
@@ -270,7 +270,7 @@
                     </div>
                     @endif
 
-                    <a href="{{ route('website.find-provider') }}" class="btn btn-primary w-100 mt-3">Explore All Providers</a>
+                    <a href="{{ route('website.find-cleaner') }}" class="btn btn-primary w-100 mt-3">Explore All Cleaners</a>
                 </div>
 
                 <!-- Upcoming Events -->

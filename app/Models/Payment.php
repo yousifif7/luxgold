@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Payment extends Model
 {
@@ -11,7 +11,7 @@ class Payment extends Model
 
     protected $fillable = [
         'subscription_id',
-        'provider_id',
+        'cleaner_id',
         'payment_method',
         'transaction_id',
         'amount',
@@ -32,11 +32,10 @@ class Payment extends Model
         return $this->belongsTo(Subscription::class);
     }
 
-    public function provider()
+    public function cleaner()
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(\App\Models\Cleaner::class);
     }
-
     // 🧠 Helpers
     public function isCompleted()
     {

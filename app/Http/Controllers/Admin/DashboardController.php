@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 use App\Models\Inquiry;
 use App\Models\Review;
 use App\Models\Event;
@@ -44,7 +44,7 @@ class DashboardController extends Controller
     private function getReportedReviews($limit = 3)
     {
         return Review::where('status', 'flagged')
-            ->with(['parent','provider'])
+            ->with(['customer','cleaner'])
             ->latest()
             ->take($limit)
             ->get();
@@ -74,7 +74,7 @@ class DashboardController extends Controller
     public function exportPaymentsCSV(Request $request)
     {
         $fileName = 'payments_export_' . now()->format('Y_m_d_H_i') . '.csv';
-        $payments = Payment::where('status', 'completed')->with('provider')->orderByDesc('paid_at');
+        $payments = Payment::where('status', 'completed')->with('cleaner')->orderByDesc('paid_at');
 
         $headers = [
             'Content-Type' => 'text/csv',
@@ -83,13 +83,13 @@ class DashboardController extends Controller
 
         $callback = function() use ($payments) {
             $out = fopen('php://output', 'w');
-            fputcsv($out, ['id','provider_id','provider_name','amount','currency','status','paid_at','transaction_id']);
+            fputcsv($out, ['id','cleaner_id','cleaner_name','amount','currency','status','paid_at','transaction_id']);
             $payments->chunk(200, function($rows) use ($out) {
                 foreach ($rows as $p) {
                     fputcsv($out, [
                         $p->id,
-                        $p->provider_id,
-                        $p->provider->business_name ?? $p->provider_id,
+                        $p->cleaner_id,
+                        $p->cleaner->business_name ?? $p->cleaner_id,
                         $p->amount,
                         $p->currency ?? '',
                         $p->status,
@@ -109,11 +109,11 @@ class DashboardController extends Controller
      */
     public function paymentsIndex(Request $request)
     {
-        $query = Payment::with('provider')->orderByDesc('paid_at');
+        $query = Payment::with('cleaner')->orderByDesc('paid_at');
 
         // optional filters
-        if ($request->filled('provider_id')) {
-            $query->where('provider_id', $request->get('provider_id'));
+        if ($request->filled('cleaner_id')) {
+            $query->where('cleaner_id', $request->get('cleaner_id'));
         }
         if ($request->filled('status')) {
             $query->where('status', $request->get('status'));
@@ -136,13 +136,13 @@ class DashboardController extends Controller
      */
     public function inquiriesIndex(Request $request)
     {
-        $query = Inquiry::with(['provider', 'user'])->latest();
+        $query = Inquiry::with(['cleaner', 'user'])->latest();
 
         if ($request->filled('status')) {
             $query->where('status', $request->get('status'));
         }
-        if ($request->filled('provider_id')) {
-            $query->where('provider_id', $request->get('provider_id'));
+        if ($request->filled('cleaner_id')) {
+            $query->where('cleaner_id', $request->get('cleaner_id'));
         }
         if ($request->filled('q')) {
             $q = $request->get('q');
@@ -173,16 +173,16 @@ class DashboardController extends Controller
             ->toArray();
 
         // Top providers by number of inquiries
-        $topProviders = Inquiry::selectRaw('provider_id, COUNT(*) as total')
-            ->whereNotNull('provider_id')
-            ->groupBy('provider_id')
+        $topProviders = Inquiry::selectRaw('cleaner_id, COUNT(*) as total')
+            ->whereNotNull('cleaner_id')
+            ->groupBy('cleaner_id')
             ->orderByDesc('total')
             ->limit(8)
             ->get()
             ->map(function($r){
-                $provider = Provider::find($r->provider_id);
+                $provider = Provider::find($r->cleaner_id);
                 return [
-                    'provider_id' => $r->provider_id,
+                    'provider_id' => $r->cleaner_id,
                     'provider_name' => $provider ? $provider->business_name : '(deleted)',
                     'total' => (int) $r->total
                 ];
@@ -222,7 +222,7 @@ class DashboardController extends Controller
         return [
             'total_providers' => Provider::count(),
             'total_parents' => User::whereHas('roles', function($query) {
-                $query->where('name', 'parent');
+                $query->where('name', 'customer');
             })->count(),
             'active_events' => Event::where('status', 'active')->count(),
             'total_revenue' => Payment::where('status', 'completed')->sum('amount'),
@@ -241,7 +241,7 @@ class DashboardController extends Controller
 
     private function getRecentInquiries()
     {
-        return Inquiry::with(['provider', 'user'])
+        return Inquiry::with(['cleaner', 'user'])
             ->latest()
             ->take(5)
             ->get()
@@ -251,9 +251,9 @@ class DashboardController extends Controller
                     'inquiry_id' => '#INQ' . str_pad($inquiry->id, 3, '0', STR_PAD_LEFT),
                     'parent_name' => $inquiry->name,
                     'parent_email' => $inquiry->email,
-                    'provider_name' => $inquiry->provider->business_name ?? 'N/A',
-                    'provider_id' => $inquiry->provider->id,
-                    'service_type' => $inquiry->provider->category ?? 'General',
+                    'cleaner_name' => $inquiry->cleaner->business_name ?? 'N/A',
+                    'cleaner_id' => $inquiry->cleaner->id,
+                    'service_type' => $inquiry->cleaner->category ?? 'General',
                     'date_time' => $inquiry->created_at->format('d M Y, h:i A'),
                     'status' => $inquiry->status,
                     'message' => $inquiry->message,
@@ -292,14 +292,14 @@ class DashboardController extends Controller
             return ['id'=>$u->id,'name'=>$u->name,'created_at'=>$u->created_at->diffForHumans()];
         });
 
-        $latestInquiries = Inquiry::with('provider')->orderByDesc('created_at')->take(8)->get()->map(function($i){
-            return ['id'=>$i->id,'name'=>$i->name,'provider'=> $i->provider->business_name ?? 'N/A','created_at'=>$i->created_at->diffForHumans()];
+        $latestInquiries = Inquiry::with('cleaner')->orderByDesc('created_at')->take(8)->get()->map(function($i){
+            return ['id'=>$i->id,'name'=>$i->name,'cleaner'=> $i->cleaner->business_name ?? 'N/A','created_at'=>$i->created_at->diffForHumans()];
         });
 
-        $flaggedReviews = Review::where('status','flagged')->with('provider')->latest()->take(6)->get()->map(function($r){
+        $flaggedReviews = Review::where('status','flagged')->with('cleaner')->latest()->take(6)->get()->map(function($r){
             return [
                 'id' => $r->id,
-                'provider' => $r->provider->business_name ?? 'N/A',
+                'cleaner' => $r->cleaner->business_name ?? 'N/A',
                 'snippet' => \Illuminate\Support\Str::limit($r->comment ?? $r->content ?? '', 80),
                 'created_at' => $r->created_at->diffForHumans()
             ];
@@ -389,10 +389,10 @@ class DashboardController extends Controller
      */
     private function getTopEarningCategories($limit = 8)
     {
-        $rows = Payment::selectRaw('providers.category as category, SUM(payments.amount) as total')
-            ->join('providers', 'payments.provider_id', '=', 'providers.id')
+        $rows = Payment::selectRaw('cleaners.category as category, SUM(payments.amount) as total')
+            ->join('cleaners', 'payments.cleaner_id', '=', 'cleaners.id')
             ->where('payments.status', 'completed')
-            ->groupBy('providers.category')
+            ->groupBy('cleaners.category')
             ->orderByDesc('total')
             ->limit($limit)
             ->get();
@@ -411,17 +411,17 @@ class DashboardController extends Controller
     private function getEngagementByCity($limit = 12)
     {
         // inquiries by provider city
-        $inquiries = Inquiry::selectRaw('providers.city as city, COUNT(inquiries.id) as total')
-            ->join('providers', 'inquiries.provider_id', '=', 'providers.id')
-            ->groupBy('providers.city')
+        $inquiries = Inquiry::selectRaw('cleaners.city as city, COUNT(inquiries.id) as total')
+            ->join('cleaners', 'inquiries.cleaner_id', '=', 'cleaners.id')
+            ->groupBy('cleaners.city')
             ->get()
             ->keyBy('city')
             ->map(function($r){ return (int) $r->total; })->toArray();
 
         // reviews by provider city
-        $reviews = Review::selectRaw('providers.city as city, COUNT(reviews.id) as total')
-            ->join('providers', 'reviews.provider_id', '=', 'providers.id')
-            ->groupBy('providers.city')
+        $reviews = Review::selectRaw('cleaners.city as city, COUNT(reviews.id) as total')
+            ->join('cleaners', 'reviews.cleaner_id', '=', 'cleaners.id')
+            ->groupBy('cleaners.city')
             ->get()
             ->keyBy('city')
             ->map(function($r){ return (int) $r->total; })->toArray();

@@ -37,7 +37,7 @@
                                     <td>{{ $p->id }}</td>
                                     <td>
                                         @if($p->provider)
-                                            <a href="{{ route('admin.providers.show', $p->provider->id) }}">{{ $p->provider->business_name }}</a>
+                                            <a href="{{ route('admin.cleaners.show', $p->provider->id) }}">{{ $p->provider->business_name }}</a>
                                         @else
                                             (deleted)
                                         @endif

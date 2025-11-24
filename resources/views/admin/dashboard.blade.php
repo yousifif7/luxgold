@@ -174,7 +174,7 @@
                                     <li class="d-flex align-items-center justify-content-between py-2">
                                         <div>
                                             <div class="fw-medium">
-                                                <a href="{{ route('admin.providers.show', $p->id) }}" class="text-decoration-none">
+                                                <a href="{{ route('admin.cleaners.show', $p->id) }}" class="text-decoration-none">
                                                     {{ $p->business_name ?? 'Unnamed' }}
                                                 </a>
                                             </div>
@@ -206,7 +206,7 @@
                                 <div class="mb-2">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <strong>{{ $rv->provider->business_name ?? 'Provider' }}</strong>
+                                            <strong>{{ $rv->cleaner->business_name ?? 'Provider' }}</strong>
                                             <div class="small text-muted">{{ \Illuminate\Support\Str::limit($rv->comment ?? $rv->content ?? '', 80) }}</div>
                                         </div>
                                         <div>
@@ -233,7 +233,7 @@
                             @foreach($newInquiries as $inq)
                                 <div class="d-flex align-items-center justify-content-between py-2">
                                     <div>
-                                        <div class="fw-medium">{{ $inq->name }} — <small class="text-muted">{{ $inq->provider->business_name ?? 'N/A' }}</small></div>
+                                        <div class="fw-medium">{{ $inq->name }} — <small class="text-muted">{{ $inq->cleaner->business_name ?? 'N/A' }}</small></div>
                                         <small class="text-muted">{{ $inq->created_at->diffForHumans() }}</small>
                                     </div>
                                     <div class="btn-group btn-group-sm">
@@ -263,7 +263,7 @@
         <div class="row">
             <!-- All Providers -->
             <div class="col-xl-2 col-md-4 col-6">
-                <a href="{{ route('admin.providers.index') }}" class="card hover-shadow">
+                <a href="{{ route('admin.cleaners.index') }}" class="card hover-shadow">
                     <div class="card-body text-center">
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
                            <i class="ti ti-building-store"></i>
@@ -275,7 +275,7 @@
 
             <!-- All Parents -->
             <div class="col-xl-2 col-md-4 col-6">
-                <a href="{{ route('admin.parents.index') }}" class="card hover-shadow">
+                <a href="{{ route('admin.customers.index') }}" class="card hover-shadow">
                     <div class="card-body text-center">
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
                            <i class="ti ti-users"></i>
@@ -486,7 +486,7 @@
                                     <div class="d-flex align-items-center">
                                         <div>
                                             <h6 class="fs-14 mb-0 fw-medium">
-                                                <a href="{{ route('admin.providers.show', $inquiry['provider_id']) }}">
+                                                <a href="{{ route('admin.cleaners.show', $inquiry['provider_id']) }}">
                                                     {{ $inquiry['provider_name'] }}
                                                 </a>
                                             </h6>
@@ -822,7 +822,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const isApprove = this.classList.contains('btn-approve');
             const status = isApprove ? 'approved' : 'rejected';
             if (!confirm(`${isApprove ? 'Approve' : 'Reject'} this provider?`)) return;
-            fetch(`/admin/providers/${id}/status`, {
+            fetch(`/admin/cleaners/${id}/status`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token },
                 body: JSON.stringify({ status })

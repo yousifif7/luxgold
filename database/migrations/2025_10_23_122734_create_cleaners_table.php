@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        /*Schema::create('providers', function (Blueprint $table) {
+        Schema::create('cleaners', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('name');
@@ -26,11 +26,11 @@ return new class extends Migration
             $table->unsignedInteger('clicks')->default(0);
             $table->unsignedInteger('inquiries')->default(0);
             $table->timestamps();
-        });*/
+        });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('providers');
+        Schema::dropIfExists('cleaners');
     }
 };

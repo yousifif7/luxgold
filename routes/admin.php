@@ -62,19 +62,19 @@ Route::prefix('admin')->middleware(RoleMiddleware::class . ':admin')->group(func
     // Admin categories & services
     Route::resource('categories', CategoryController::class, ['as'=>'admin']);
     Route::resource('services', ServiceController::class, ['as'=>'admin']);
-    // Admin providers (CRUD)
-    // Public admin providers landing (uses analytics-style panel)
-    Route::get('providers', [ProvidersAdminController::class, 'index'])->name('admin.providers.index');
-    // Export providers CSV (analytics / reports) - keep custom routes BEFORE resource to avoid being captured by the {provider} wildcard
-    Route::get('providers/export', [ProvidersAdminController::class, 'export'])->name('admin.providers.export');
+    // Admin cleaners (CRUD)
+    // Public admin cleaners landing (uses analytics-style panel)
+    Route::get('cleaners', [ProvidersAdminController::class, 'index'])->name('admin.cleaners.index');
+    // Export cleaners CSV (analytics / reports) - keep custom routes BEFORE resource to avoid being captured by the {provider} wildcard
+    Route::get('cleaners/export', [ProvidersAdminController::class, 'export'])->name('admin.cleaners.export');
     // Register resource routes but exclude the index (we provide a dedicated admin landing)
-    Route::resource('providers', ProviderController::class, ['as'=>'admin'])->except(['index']);
+    Route::resource('cleaners', ProviderController::class, ['as'=>'admin'])->except(['index']);
 
-    Route::post('providers/{provider}/status', [ProviderController::class, 'updateStatus'])->name('admin.providers.status');
-    Route::post('providers/bulk-action', [ProviderController::class, 'bulkAction'])->name('admin.providers.bulk-action');
-    Route::get('providers/stats', [ProviderController::class, 'getStats'])->name('admin.providers.stats');
-    // Admin parents
-    Route::resource('parents', ParentController::class, ['as'=>'admin']);
+    Route::post('cleaners/{provider}/status', [ProviderController::class, 'updateStatus'])->name('admin.cleaners.status');
+    Route::post('cleaners/bulk-action', [ProviderController::class, 'bulkAction'])->name('admin.cleaners.bulk-action');
+    Route::get('cleaners/stats', [ProviderController::class, 'getStats'])->name('admin.cleaners.stats');
+    // Admin customers
+    Route::resource('customers', ParentController::class, ['as'=>'admin']);
     // Admin pricing / plans
     Route::resource('pricing', PricingController::class, ['as'=>'admin']);
     // Admin reviews (CRUD + moderation)
@@ -82,8 +82,8 @@ Route::prefix('admin')->middleware(RoleMiddleware::class . ':admin')->group(func
     Route::post('reviews/{review}/action', [ReviewController::class, 'action'])->name('admin.reviews.action');
     Route::post('reviews/bulk/approve', [ReviewController::class, 'bulkApprove'])->name('admin.reviews.bulk.approve');
     Route::get('reviews/{review}/history', [ReviewController::class, 'history'])->name('admin.reviews.history');
-    // Admin: create subscription on behalf of a parent
-    Route::post('parents/{parent}/subscriptions', [ParentController::class, 'storeSubscription'])->name('admin.parents.subscriptions.store');
+    // Admin: create subscription on behalf of a customer
+    Route::post('customers/{parent}/subscriptions', [ParentController::class, 'storeSubscription'])->name('admin.customers.subscriptions.store');
     // Admin: delete a subscription
     Route::delete('subscriptions/{subscription}', [SubscriptionController::class, 'destroy'])->name('admin.subscriptions.destroy');
     
@@ -94,7 +94,7 @@ Route::prefix('admin')->middleware(RoleMiddleware::class . ':admin')->group(func
 
 });
 
-Route::middleware(['role:admin,provider'])->group(function () {
+Route::middleware(['role:admin,cleaner'])->group(function () {
 
  // Admin events (use existing EventController)
     Route::get('user/events', [EventController::class, 'index'])->name('admin.events.index');

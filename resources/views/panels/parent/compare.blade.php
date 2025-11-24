@@ -143,7 +143,7 @@
             <div class="alert alert-info">
                 <h5>No providers to compare</h5>
                 <p>Add providers to your comparison list to see them side by side.</p>
-                <a href="{{ route('website.find-provider') }}" class="btn btn-primary">Browse Providers</a>
+                <a href="{{ route('website.find-cleaner') }}" class="btn btn-primary">Browse Cleaners</a>
             </div>
             @endif
 

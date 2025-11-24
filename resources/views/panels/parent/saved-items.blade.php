@@ -59,7 +59,7 @@
                         </div>
                         <div class="text-end">
                             <div class="text-muted small mb-2">Saved {{ $savedProvider->created_at->format('M d, Y') }}</div>
-                            <a href="{{ route('website.provider-detail', $savedProvider->provider->id) }}" class="btn btn-outline-custom btn-sm me-2">View Details</a>
+                            <a href="{{ route('website.cleaner-detail', $savedProvider->provider->id) }}" class="btn btn-outline-custom btn-sm me-2">View Details</a>
                             <form action="{{ route('saved-providers.destroy', $savedProvider->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -74,7 +74,7 @@
                         <i class="fas fa-heart fa-3x text-muted mb-3"></i>
                         <h5>No Saved Providers</h5>
                         <p class="text-muted">You haven't saved any providers yet.</p>
-                        <a href="{{ route('website.find-provider') }}" class="btn btn-primary">Browse Providers</a>
+                        <a href="{{ route('website.find-cleaner') }}" class="btn btn-primary">Browse Cleaners</a>
                     </div>
                     @endforelse
                 </div>

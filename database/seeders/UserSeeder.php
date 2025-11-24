@@ -5,11 +5,11 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\Provider;
 use App\Models\Plan;
 use App\Models\Subscription;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -32,81 +32,43 @@ class UserSeeder extends Seeder
         }
 
        
-        // Create Parent User
-        if (!User::where('email','parent@gmail.com')->exists()) {
-            $parentUser = User::factory()->create([
-                'first_name' => 'Emily',
-                'last_name' => 'Davis',
-                'email' => 'parent@gmail.com',
-                'phone' => '+1 (555) 987-6543',
-                'city' => 'Springfield',
-                'state' => 'IL',
-                'zip_code' => '62702',
-                'search_radius' => 15,
-                'notification_preferences' => json_encode([
-                    'email_notifications' => true,
-                    'push_notifications' => true,
-                    'weekly_summary' => true,
-                    'new_providers' => true
-                ]),
-                'password' => bcrypt('password'),
-            ]);
-
-            $role = Role::where('name', 'parent')->first();
-            $parentUser->assignRole($role);
-        }
-
-        // Create Additional Test Parents
-        $testParents = [
-            [
-                'first_name' => 'Michael',
-                'last_name' => 'Johnson',
-                'email' => 'michael.johnson@example.com',
-                'phone' => '+1 (555) 234-5678',
-                'city' => 'Springfield',
-                'state' => 'IL',
-                'zip_code' => '62703',
-            ],
-            [
-                'first_name' => 'Jessica',
-                'last_name' => 'Williams',
-                'email' => 'jessica.williams@example.com',
-                'phone' => '+1 (555) 345-6789',
+        // Create a default customer (formerly 'parent')
+        if (! User::where('email', 'customer@example.com')->exists()) {
+            $customer = User::factory()->create([
+                'first_name' => 'Customer',
+                'last_name' => 'User',
+                'email' => 'customer@example.com',
+                'phone' => '+1 (555) 000-0001',
                 'city' => 'Springfield',
                 'state' => 'IL',
                 'zip_code' => '62701',
-            ],
-            [
-                'first_name' => 'David',
-                'last_name' => 'Miller',
-                'email' => 'david.miller@example.com',
-                'phone' => '+1 (555) 456-7890',
-                'city' => 'Springfield',
-                'state' => 'IL',
-                'zip_code' => '62704',
-            ]
+                'password' => bcrypt('password'),
+            ]);
+
+            $role = Role::where('name', 'customer')->first();
+            if ($role) { $customer->assignRole($role); }
+        }
+
+        // Create a few sample cleaners (users with cleaner role)
+        $sampleCleaners = [
+            ['first_name' => 'Laura', 'last_name' => 'Green', 'email' => 'laura.cleaner@example.com', 'phone' => '+1 (555) 111-0001', 'city' => 'Austin', 'state' => 'TX'],
+            ['first_name' => 'Carlos', 'last_name' => 'Martinez', 'email' => 'carlos.cleaner@example.com', 'phone' => '+1 (555) 222-0002', 'city' => 'Dallas', 'state' => 'TX'],
+            ['first_name' => 'Aisha', 'last_name' => 'Khan', 'email' => 'aisha.cleaner@example.com', 'phone' => '+1 (555) 333-0003', 'city' => 'Houston', 'state' => 'TX'],
         ];
 
-        foreach ($testParents as $parentData) {
-            if (!User::where('email', $parentData['email'])->exists()) {
-                $parentUser = User::factory()->create(array_merge($parentData, [
-                    'search_radius' => rand(10, 30),
-                    'notification_preferences' => json_encode([
-                        'email_notifications' => true,
-                        'push_notifications' => rand(0, 1),
-                        'weekly_summary' => rand(0, 1),
-                        'new_providers' => true
-                    ]),
+        foreach ($sampleCleaners as $c) {
+            if (! User::where('email', $c['email'])->exists()) {
+                $user = User::factory()->create(array_merge($c, [
                     'password' => bcrypt('password'),
                 ]));
 
-                $role = Role::where('name', 'parent')->first();
-                $parentUser->assignRole($role);
+                $role = Role::where('name', 'cleaner')->first();
+                if ($role) { $user->assignRole($role); }
             }
         }
 
         $this->command->info('Users seeded successfully!');
         $this->command->info('Admin: admin@supremesecurity.co.uk / password');
-        $this->command->info('Parent: parent@askroro.test / password');
+        $this->command->info('Customer: customer@askroro.test / password');
     }
 }

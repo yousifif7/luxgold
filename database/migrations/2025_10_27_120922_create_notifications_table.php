@@ -16,11 +16,11 @@ return new class extends Migration
             $table->text('action_url')->nullable(); // URL for action button
             $table->string('action_text')->nullable(); // Text for action button
             
-            // Polymorphic relationship - can belong to user, provider, or be global
+            // Polymorphic relationship - can belong to user, cleaner, or be global
             $table->morphs('notifiable');
             
             // For targeting specific user roles
-            $table->string('target_role')->nullable(); // admin, provider, parent
+                $table->string('target_role')->nullable(); // admin, cleaner, customer
             
             // Notification status and timing
             $table->timestamp('sent_at')->nullable();

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inquiry extends Model
 {
     protected $fillable = [
-        'provider_id',
+        'cleaner_id',
         'user_id',
         'name',
         'email',
@@ -29,9 +29,9 @@ class Inquiry extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function provider()
+    public function cleaner()
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(Cleaner::class);
     }
 
     public function messages()

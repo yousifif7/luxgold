@@ -10,7 +10,7 @@ class Subscription extends Model
     use HasFactory;
 
     protected $fillable = [
-        'provider_id',
+        'cleaner_id',
         'plan_id',
         'status',
         'amount',
@@ -30,9 +30,9 @@ class Subscription extends Model
     ];
 
     // 🔗 Relationships
-    public function provider()
+    public function cleaner()
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(Cleaner::class);
     }
 
     public function payments()

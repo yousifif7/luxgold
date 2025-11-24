@@ -42,12 +42,12 @@ class RoleMiddleware
             return redirect()->route('admin-home');
         }
 
-        if ($user->hasRole('provider')) {
-            return redirect()->route('provider-home');
+        if ($user->hasRole('cleaner')) {
+            return redirect()->route('cleaner-home');
         }
 
-        if ($user->hasRole('parent')) {
-            return redirect()->route('parent-home');
+        if ($user->hasRole('customer')) {
+            return redirect()->route('customer-home');
         }
 
         // Fallback to home or login

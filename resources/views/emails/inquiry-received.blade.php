@@ -14,8 +14,8 @@ Sent: {{ $inquiry->created_at->format('M j, Y g:i A') }}
 
 The provider typically responds within 2-4 hours during business hours.
 
-@component('mail::button', ['url' => route('website.find-provider')])
-Find More Providers
+@component('mail::button', ['url' => route('website.find-cleaner')])
+Find More Cleaners
 @endcomponent
 
 Thanks,  

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Provider;
+use App\Models\Cleaner as Provider;
 use App\Models\User;
 use App\Models\Subscription;
 use App\Models\Plan;
@@ -21,6 +21,8 @@ use App\Models\SpecialFeatures;
 use App\Models\ServicesOfferd;
 use Illuminate\Support\Facades\Storage;
 use App\Models\City;
+use App\Models\Cleaner;
+
 class ProviderController extends Controller
 {
     protected $notificationService;
@@ -80,8 +82,8 @@ class ProviderController extends Controller
     public function create()
     {
         $plans = Plan::where('is_active', true)->get();
-        $categories=Category::whereNull('parent_id')->get();
-        $sub_categories=Category::whereNotNull('parent_id')->get();
+        $categories=Category::whereNull('customer_id')->get();
+        $sub_categories=Category::whereNotNull('customer_id')->get();
         $ages_served=AgesServed::get();
         $programs_offerd=ProgramsOffered::get();
         $services_offerd=ServicesOfferd::get();
@@ -146,7 +148,7 @@ class ProviderController extends Controller
             'password' => bcrypt($validated['password']),
         ]);
 
-        $user->assignRole('provider');
+        $user->assignRole('cleaner');
 
         // Handle file uploads
         $avatarPath = $request->file('avatar') ? $request->file('avatar')->store('avatars', 'public') : null;
@@ -220,18 +222,18 @@ class ProviderController extends Controller
             'type' => 'success',
             'title' => 'Welcome to Our Platform',
             'message' => 'Your provider account has been created and is now active.',
-            'action_url' => route('provider-home'),
+            'action_url' => route('cleaner-home'),
             'action_text' => 'Go to Dashboard'
         ]);
     });
 
-    return handleResponse($request, 'Provider created successfully!', 'admin.providers.index');
+    return handleResponse($request, 'Provider created successfully!', 'admin.cleaners.index');
 }
 
-    public function show(Provider $provider)
+    public function show($id)
     {
-        $provider->load(['user', 'subscription.plan', 'inquiries', 'reviews']);
-        
+        $provider = Provider::with(['user', 'subscription.plan', 'inquiries', 'reviews'])->findOrFail($id);
+
         return view('admin.providers.show', compact('provider'));
     }
 
@@ -240,8 +242,8 @@ class ProviderController extends Controller
         $provider->load(['user', 'subscription']);
         $plans = Plan::where('is_active', true)->get();
         $plans = Plan::where('is_active', true)->get();
-        $categories=Category::whereNull('parent_id')->get();
-        $sub_categories=Category::whereNotNull('parent_id')->get();
+        $categories=Category::whereNull('customer_id')->get();
+        $sub_categories=Category::whereNotNull('customer_id')->get();
         $ages_served=AgesServed::get();
         $programs_offerd=ProgramsOffered::get();
         $services_offerd=ServicesOfferd::get();
@@ -391,10 +393,10 @@ public function update(Request $request, Provider $provider)
         }
     });
 
-    return handleResponse($request, 'Provider updated successfully!', 'admin.providers.index');
+    return handleResponse($request, 'Cleaner updated successfully!', 'admin.providers.index');
 }
 
-    public function destroy(Provider $provider)
+    public function destroy(Cleaner $provider)
     {
         DB::transaction(function () use ($provider) {
             // Delete related records first
@@ -405,8 +407,8 @@ public function update(Request $request, Provider $provider)
             $user->delete();
         });
 
-        return redirect()->route('admin.providers.index')
-            ->with('success', 'Provider deleted successfully.');
+        return redirect()->route('admin.cleaners.index')
+            ->with('success', 'Cleaner deleted successfully.');
     }
 
     public function updateStatus(Request $request, Provider $provider)
@@ -427,7 +429,7 @@ public function update(Request $request, Provider $provider)
 
         return response()->json([
             'success' => true,
-            'message' => 'Provider status updated successfully.'
+            'message' => 'Cleaner status updated successfully.'
         ]);
     }
 
@@ -436,7 +438,7 @@ public function update(Request $request, Provider $provider)
         $request->validate([
             'action' => 'required|in:delete,approve,reject',
             'ids' => 'required|array',
-            'ids.*' => 'exists:providers,id'
+            'ids.*' => 'exists:cleaners,id'
         ]);
 
         $providers = Provider::whereIn('id', $request->ids)->get();
@@ -446,7 +448,7 @@ public function update(Request $request, Provider $provider)
                 foreach ($providers as $provider) {
                     $this->destroy($provider);
                 }
-                $message = 'Selected providers deleted successfully.';
+                $message = 'Selected Cleaners deleted successfully.';
                 break;
 
             case 'approve':
@@ -454,7 +456,7 @@ public function update(Request $request, Provider $provider)
                     $provider->update(['status' => 'approved']);
                     $this->notificationService->sendProfileApproved($provider);
                 }
-                $message = 'Selected providers approved successfully.';
+                $message = 'Selected Cleaners approved successfully.';
                 break;
 
             case 'reject':
@@ -462,7 +464,7 @@ public function update(Request $request, Provider $provider)
                     $provider->update(['status' => 'rejected']);
                     $this->notificationService->sendProfileRejected($provider, 'Bulk rejection by administrator.');
                 }
-                $message = 'Selected providers rejected successfully.';
+                $message = 'Selected Cleaners rejected successfully.';
                 break;
         }
 

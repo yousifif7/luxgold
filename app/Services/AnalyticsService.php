@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
+use App\Models\Review;
+use App\Models\Cleaner;
+use App\Models\Inquiry;
+use App\Models\Cleaner as Provider ;
+use App\Models\RecentlyViewed;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Carbon\Carbon;
-use App\Models\RecentlyViewed;
-use App\Models\Inquiry;
-use App\Models\Review;
-use App\Models\Provider;
 
 class AnalyticsService
 {
@@ -474,13 +475,13 @@ class AnalyticsService
         ];
     }
 
-    public function getProviderCategories(): array
+    public function getCleanerCategories(): array
     {
         if (Schema::hasTable('categories')) {
             $rows = DB::table('categories')
-                ->select('name', DB::raw('providers_count as count'))
+                ->select('name', DB::raw('cleaners_count as count'))
                 ->where('status', 1)
-                ->orderBy('providers_count', 'desc')
+                ->orderBy('cleaners_count', 'desc')
                 ->get();
 
             $labels = $rows->pluck('name')->toArray();
@@ -514,10 +515,10 @@ class AnalyticsService
         return ['labels' => $labels, 'data' => $arpu];
     }
 
-    public function getTopProviders(int $limit = 6): array
+    public function getTopCleaners(int $limit = 6): array
 {
-    if (Schema::hasTable('providers')) {
-        $rows = Provider::with('approvedReviews', 'inquiries', 'recentlyViewed') // load relationships
+    if (Schema::hasTable('cleaners')) {
+        $rows = Cleaner::with('approvedReviews', 'inquiries', 'recentlyViewed') // load relationships
             ->select('business_name as name') // you can only select columns from table itself
             ->where('status', 'approved')
             ->get()
@@ -611,10 +612,10 @@ class AnalyticsService
 
         // Most viewed providers
         $mostViewedProviders = DB::table('recently_viewed')
-            ->join('providers', 'recently_viewed.provider_id', '=', 'providers.id')
-            ->select('providers.business_name', DB::raw('COUNT(recently_viewed.id) as view_count'))
+            ->join('cleaners', 'recently_viewed.cleaner_id', '=', 'cleaners.id')
+            ->select('cleaners.business_name', DB::raw('COUNT(recently_viewed.id) as view_count'))
             ->where('recently_viewed.viewed_at', '>=', Carbon::now()->subDays(30))
-            ->groupBy('providers.id', 'providers.business_name')
+            ->groupBy('cleaners.id', 'cleaners.business_name')
             ->orderByDesc('view_count')
             ->limit(10)
             ->get();

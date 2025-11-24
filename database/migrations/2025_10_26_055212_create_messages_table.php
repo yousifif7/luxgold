@@ -12,7 +12,7 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('inquiry_id')->constrained()->onDelete('cascade');
-            $table->enum('sender_type', ['parent', 'provider']);
+            $table->enum('sender_type', ['customer', 'cleaner']);
             $table->text('message');
             $table->timestamp('read_at')->nullable();
             $table->timestamps();

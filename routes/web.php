@@ -21,10 +21,10 @@ use App\Http\Controllers\EventRegistrationController;
 Route::get('/', [HomeController::class,'index']);
 Route::get('/about', fn() => view('website.about'))->name('website.about');
 Route::get('compare', [HomeController::class,'compare'])->name('website.compare');
-Route::get('/find-provider', [HomeController::class,'findProvider'])->name('website.find-provider');
-Route::get('/for-provider', fn() => view('website.for-provider'))->name('website.for-provider');
+Route::get('/find-cleaner', [HomeController::class,'findProvider'])->name('website.find-cleaner');
+Route::get('/for-cleaner', fn() => view('website.for-provider'))->name('website.for-cleaner');
 Route::get('/terms-of-services', fn() => view('website.term-of-services'))->name('website.services');
-Route::get('/provider-detail/{id}', [HomeController::class,'providerDetail'])->name('website.provider-detail');
+Route::get('/cleaner-detail/{id}', [HomeController::class,'providerDetail'])->name('website.cleaner-detail');
 Route::get('/event-detail/{id}', [HomeController::class,'eventDetail'])->name('website.event-detail');
 Route::get('/find-event', [HomeController::class,'findEvents'])->name('website.find-event');
 Route::get('/resource/{slug}', [HomeController::class,'resourceDetails'])->name('website.resource');
@@ -93,25 +93,25 @@ Route::middleware(['auth'])->group(function () {
 
 // Webhook route (should be excluded from CSRF protection)
 Route::post('/stripe/webhook', [SubscriptionController::class, 'webhook'])->name('stripe.webhook');
-Route::middleware(RoleMiddleware::class . ':parent')->group(function () {
+Route::middleware(RoleMiddleware::class . ':customer')->group(function () {
 
-Route::get('/parent/dashboard', [ParentPanelController::class,'index'])->name('parent-home');
+Route::get('/customer/dashboard', [ParentPanelController::class,'index'])->name('customer-home');
 
 
-Route::get('/parent/compare', [ParentPanelController::class,'compare'])->name('parent-compare');
+Route::get('/customer/compare', [ParentPanelController::class,'compare'])->name('customer-compare');
 
-Route::get('/parent/reviews', [ParentPanelController::class,'reviews'])->name('parent-reviews');
+Route::get('/customer/reviews', [ParentPanelController::class,'reviews'])->name('customer-reviews');
 
-Route::get('/parent/messages', [ParentPanelController::class,'messages'])->name('parent-messages');
+Route::get('/customer/messages', [ParentPanelController::class,'messages'])->name('customer-messages');
 
-Route::get('/parent/saved-items', [ParentPanelController::class,'saveItems'])->name('parent-saved-items');
+Route::get('/customer/saved-items', [ParentPanelController::class,'saveItems'])->name('customer-saved-items');
 });
 
-//Provider Routes
-Route::get('/provider/analytics', fn() => view('panels.provider.analytics'))->name('provider-analytics');
-Route::get('/provider/events', fn() => view('panels.provider.events'))->name('provider-events');
+// Cleaner Routes
+Route::get('/cleaner/analytics', fn() => view('panels.provider.analytics'))->name('cleaner-analytics');
+Route::get('/cleaner/events', fn() => view('panels.provider.events'))->name('cleaner-events');
 
-Route::get('/provider/subscription', [ProviderPanelController::class,'subscription'])->name('provider-subscription');
+Route::get('/cleaner/subscription', [ProviderPanelController::class,'subscription'])->name('cleaner-subscription');
 
     Route::post('/subscriptions/change-plan/{plan}', [App\Http\Controllers\ProviderPanelController::class, 'changePlan'])->name('subscriptions.change-plan');
     Route::post('/subscriptions/toggle-auto-renewal', [SubscriptionController::class, 'toggleAutoRenewal'])->name('subscriptions.toggle-auto-renewal');
@@ -122,19 +122,19 @@ Route::get('/provider/subscription', [ProviderPanelController::class,'subscripti
 
 
 // Review routes
-Route::post('/providers/{provider}/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
-Route::put('/providers/{provider}/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update')->middleware('auth');
-Route::delete('/providers/{provider}/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy')->middleware('auth');
+Route::post('/cleaners/{provider}/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
+Route::put('/cleaners/{provider}/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update')->middleware('auth');
+Route::delete('/cleaners/{provider}/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy')->middleware('auth');
 
 // Save/Follow routes
-Route::post('/providers/{provider}/save', [SavedProviderController::class, 'store'])->name('providers.save')->middleware('auth');
-Route::post('/providers/{provider}/follow', [FollowedProviderController::class, 'store'])->name('providers.follow')->middleware('auth');
-Route::get('/saved-providers', [SavedProviderController::class, 'index'])->name('saved-providers.index')->middleware('auth');
+Route::post('/cleaners/{provider}/save', [SavedProviderController::class, 'store'])->name('cleaners.save')->middleware('auth');
+Route::post('/cleaners/{provider}/follow', [FollowedProviderController::class, 'store'])->name('cleaners.follow')->middleware('auth');
+Route::get('/saved-cleaners', [SavedProviderController::class, 'index'])->name('saved-cleaners.index')->middleware('auth');
 
-Route::delete('/saved-providers/{id}/delete', [SavedProviderController::class, 'destroy'])->name('saved-providers.destroy')->middleware('auth');
+Route::delete('/saved-cleaners/{id}/delete', [SavedProviderController::class, 'destroy'])->name('saved-cleaners.destroy')->middleware('auth');
 
 // Compare routes
-Route::post('/providers/{provider}/compare', [CompareController::class, 'toggle'])->name('providers.compare.toggle');
+Route::post('/cleaners/{provider}/compare', [CompareController::class, 'toggle'])->name('cleaners.compare.toggle');
 Route::get('/compare/count', [CompareController::class, 'count'])->name('compare.count');
 Route::get('/compare/list', [CompareController::class, 'list'])->name('compare.list');
 Route::post('/compare/clear', [CompareController::class, 'clear'])->name('compare.clear');
@@ -175,10 +175,9 @@ Route::get('/admin/settings', fn() => view('panels.admin.settings'))->name('admi
 
 Auth::routes();
 
-Route::prefix('provider')->middleware(RoleMiddleware::class . ':provider')->group(function () {
-Route::get('/listing/profile', [ServiceListingController::class, 'index'])->name('provider.listings.profile');
-Route::put('/listing/profile/{id}/update', [ServiceListingController::class, 'update'])->name('provider.listings.update');
-
+Route::prefix('cleaner')->middleware(RoleMiddleware::class . ':cleaner')->group(function () {
+    Route::get('/listing/profile', [ServiceListingController::class, 'index'])->name('cleaner.listings.profile');
+    Route::put('/listing/profile/{id}/update', [ServiceListingController::class, 'update'])->name('cleaner.listings.update');
 
 });
 
@@ -194,4 +193,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 require __DIR__ . '/admin.php';
 require __DIR__ . '/cms.php';
-require __DIR__ . '/provider.php';
+require __DIR__ . '/cleaner.php';

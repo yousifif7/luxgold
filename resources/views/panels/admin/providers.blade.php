@@ -22,7 +22,7 @@
                 
                 <a id="providersRefreshBtn" href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh" data-bs-original-title="Refresh"><i class="ti ti-refresh"></i></a>
                 <a id="providersPrintBtn" href="javascript:void(0);" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Print" data-bs-original-title="Print"><i class="ti ti-printer"></i></a>
-                <a id="providersDownloadBtn" href="{{ route('admin.providers.export') }}" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download"><i class="ti ti-cloud-download"></i></a>
+                <a id="providersDownloadBtn" href="{{ route('admin.cleaners.export') }}" class="btn btn-icon btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Download" data-bs-original-title="Download"><i class="ti ti-cloud-download"></i></a>
                 <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#addproviderModal"  class="btn btn-primary"><i class="ti ti-square-rounded-plus me-1"></i>New Provider</a>
             </div>
         </div>

@@ -8,7 +8,7 @@
             Compare family services side by side <br> find what fits your family best.
         </h1>
         <div class="search-box col-md-7 mx-auto">
-            <form action="{{ route('website.find-provider') }}"  class="row g-2">
+            <form action="{{ route('website.find-cleaner') }}"  class="row g-2">
                 <div class="col-md-6">
                     <div class="input-group-div">
                         <i class="bi bi-search"></i>

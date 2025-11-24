@@ -136,7 +136,7 @@ class SavedEvent extends Model
      */
     public static function getWithEventsForUser($userId)
     {
-        return static::with(['event.provider'])
+        return static::with(['event.cleaner'])
                     ->where('user_id', $userId)
                     ->orderBy('created_at', 'desc')
                     ->get();

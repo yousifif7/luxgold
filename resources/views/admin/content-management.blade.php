@@ -105,7 +105,7 @@
                                         <p><strong>Title Part 1:</strong> {{ $heroContent->title_part1 ?? 'Not set' }}</p>
                                         <p><strong>Title Part 2:</strong> {{ $heroContent->title_part2 ?? 'Not set' }}</p>
                                         <p><strong>Description:</strong> {{ $heroContent->description ?? 'Not set' }}</p>
-                                        <p><strong>Providers Count:</strong> {{ $heroContent->providers_count ?? 'Not set' }}</p>
+                                        <p><strong>Cleaners Count:</strong> {{ $heroContent->cleaners_count ?? 'Not set' }}</p>
                                         <p><strong>Rating:</strong> {{ $heroContent->rating ?? 'Not set' }}</p>
                                         <p><strong>Support Text:</strong> {{ $heroContent->support_text ?? 'Not set' }}</p>
                                         <p><strong>Status:</strong> 
@@ -126,8 +126,8 @@
                                             <p class="text-muted mt-2">{{ $heroContent->description ?? 'Find and compare family services near you! Discover amazing daycare centers, fun activities, and wellness services that kids and parents love!' }}</p>
                                             <div class="d-flex gap-4 mt-3">
                                                 <div>
-                                                    <h6 class="mb-0 text-success">{{ $heroContent->providers_count ?? '500' }}+</h6>
-                                                    <small>Providers</small>
+                                                    <h6 class="mb-0 text-success">{{ $heroContent->cleaners_count ?? '500' }}+</h6>
+                                                    <small>Cleaners</small>
                                                 </div>
                                                 <div>
                                                     <h6 class="mb-0 text-success">{{ $heroContent->rating ?? '4.8' }}</h6>
@@ -187,7 +187,7 @@
                                         </td>
                                         <td>{{ $category->subtitle }}</td>
                                         <td>
-                                            <span class="badge bg-info">{{ $category->providers_count }}+</span>
+                                            <span class="badge bg-info">{{ $category->cleaners_count }}+</span>
                                         </td>
                                         <td>
                                             @php
@@ -259,8 +259,8 @@
                                                                 <textarea class="form-control" name="description" rows="3" required>{{ $category->description }}</textarea>
                                                             </div>
                                                             <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Providers Count</label>
-                                                                <input type="number" class="form-control" name="providers_count" value="{{ $category->providers_count }}" required>
+                                                                <label class="form-label">Cleaners Count</label>
+                                                                <input type="number" class="form-control" name="cleaners_count" value="{{ $category->cleaners_count }}" required>
                                                             </div>
                                                             <div class="col-md-6 mb-3">
                                                                 <label class="form-label">Icon Class</label>
@@ -356,7 +356,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="badge bg-info">{{ $city->providers_count }}+</span>
+                                            <span class="badge bg-info">{{ $city->cleaners_count }}+</span>
                                         </td>
                                         <td>
                                             <span class="badge bg-success">{{ $city->families_count }}+</span>
@@ -412,8 +412,8 @@
                                                                 <input type="text" class="form-control" name="state" value="{{ $city->state }}" required>
                                                             </div>
                                                             <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Providers Count</label>
-                                                                <input type="number" class="form-control" name="providers_count" value="{{ $city->providers_count }}" required>
+                                                                <label class="form-label">Cleaners Count</label>
+                                                                <input type="number" class="form-control" name="cleaners_count" value="{{ $city->cleaners_count }}" required>
                                                             </div>
                                                             <div class="col-md-6 mb-3">
                                                                 <label class="form-label">Families Count</label>
@@ -779,8 +779,8 @@
                                 <textarea class="form-control" name="description" rows="3" required></textarea>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Providers Count</label>
-                                <input type="number" class="form-control" name="providers_count" required>
+                                <label class="form-label">Cleaners Count</label>
+                                <input type="number" class="form-control" name="cleaners_count" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Icon Class</label>
@@ -839,8 +839,8 @@
                                 <input type="text" class="form-control" name="state" value="TX" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Providers Count</label>
-                                <input type="number" class="form-control" name="providers_count" required>
+                                <label class="form-label">Cleaners Count</label>
+                                <input type="number" class="form-control" name="cleaners_count" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Families Count</label>
@@ -1034,8 +1034,8 @@
                                 <textarea class="form-control" name="description" rows="3" required>{{ $heroContent->description ?? '' }}</textarea>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Providers Count</label>
-                                <input type="number" class="form-control" name="providers_count" value="{{ $heroContent->providers_count ?? '' }}" required>
+                                <label class="form-label">Cleaners Count</label>
+                                <input type="number" class="form-control" name="cleaners_count" value="{{ $heroContent->cleaners_count ?? '' }}" required>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Rating</label>

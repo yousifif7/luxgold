@@ -11,7 +11,7 @@
         <h4 class="mb-1">Listing Profile</h4>
         <div class="text-end">
           <ol class="breadcrumb m-0 py-0">
-            <li class="breadcrumb-item"><a href="{{ route('provider-home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('cleaner-home') }}">Home</a></li>
             <li class="breadcrumb-item active">Listing Profile</li>
           </ol>
         </div>
@@ -88,7 +88,7 @@
     </div>
 
     <!-- Step Form -->
-    <form id="serviceListingForm" method="POST" action="{{ route('provider.listings.update', $serviceListing->id) }}" enctype="multipart/form-data">
+    <form id="serviceListingForm" method="POST" action="{{ route('cleaner.listings.update', $serviceListing->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         
@@ -351,7 +351,7 @@
                             $oldServices = old('sub_categories', ($serviceListing->sub_categories) ?? []);
 
                         @endphp
-                        @foreach(\App\Models\Category::whereNotNull('parent_id')->get() as $category)
+                        @foreach(\App\Models\Category::whereNotNull('customer_id')->get() as $category)
                         <div class="service-listing-checkbox-item-wrapper" data-service="{{ $category->id }}">
                             <input type="checkbox" id="service-{{ $category->slug }}" name="sub_categories[]" value="{{ $category->id }}" 
                                    class="service-listing-service-checkbox form-check-input mt-0 @error('sub_categories') is-invalid @enderror"
