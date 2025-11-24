@@ -1,6 +1,6 @@
 @extends('layouts.parent-layout')
 
-@section('parent-title', 'Compare - Parent Portal')
+@section('parent-title', 'Compare - Customer Portal')
 @section('content')
 
 <div class="page-wrapper">
@@ -8,13 +8,13 @@
     <!-- Start Content -->
     <div class="content">
         <div class="section-card">
-            <div class="section-title">Provider Comparisons</div>
-            <div class="section-subtitle">Compare up to 4 providers side by side to make the best choice</div>
+            <div class="section-title">Cleaner Comparisons</div>
+            <div class="section-subtitle">Compare up to 4 cleaners side by side to make the best choice</div>
 
             @if(isset($providers) && count($providers) > 0)
             <div class="row mb-4">
                 <div class="col-md-12">
-                    <h6 class="mb-3">Providers in Comparison</h6>
+                    <h6 class="mb-3">Cleaners in Comparison</h6>
                     <div class="row g-3">
                         @foreach($providers as $provider)
                         <div class="col-md-3">
@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="provider-info">
                                     <div class="provider-name">{{ $provider->business_name ?? $provider->name }}</div>
-                                    <div class="provider-type">{{ $provider->service_categories ?? $provider->category->name ?? 'Provider' }}</div>
+                                    <div class="provider-type">{{ $provider->service_categories ?? $provider->category->name ?? 'Cleaner' }}</div>
                                 </div>
                                 <button class="btn btn-sm btn-danger" onclick="removeFromCompare({{ $provider->id }})">
                                     <i class="fas fa-times"></i>
@@ -141,8 +141,8 @@
             </div>
             @else
             <div class="alert alert-info">
-                <h5>No providers to compare</h5>
-                <p>Add providers to your comparison list to see them side by side.</p>
+                <h5>No Cleaners to compare</h5>
+                <p>Add Cleaners to your comparison list to see them side by side.</p>
                 <a href="{{ route('website.find-cleaner') }}" class="btn btn-primary">Browse Cleaners</a>
             </div>
             @endif
@@ -175,11 +175,11 @@
 <script>
 // Remove provider from compare list using AJAX
 function removeFromCompare(providerId) {
-    if (!confirm('Are you sure you want to remove this provider from comparison?')) {
+    if (!confirm('Are you sure you want to remove this cleaner from comparison?')) {
         return;
     }
 
-    fetch(`/providers/${providerId}/compare`, {
+    fetch(`/cleaners/${providerId}/compare`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -199,13 +199,13 @@ function removeFromCompare(providerId) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showAlert('Error removing provider from comparison', 'error');
+        showAlert('Error removing cleaner from comparison', 'error');
     });
 }
 
 // Clear all providers from compare list using AJAX
 function clearComparison() {
-    if (!confirm('Are you sure you want to clear all providers from comparison?')) {
+    if (!confirm('Are you sure you want to clear all cleaners from comparison?')) {
         return;
     }
 

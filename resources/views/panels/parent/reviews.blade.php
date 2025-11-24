@@ -1,6 +1,6 @@
 @extends('layouts.parent-layout')
 
-@section('parent-title', 'Reviews - Parent Portal')
+@section('parent-title', 'Reviews - Customer Portal')
 @section('content')
 <div class="page-wrapper">
 

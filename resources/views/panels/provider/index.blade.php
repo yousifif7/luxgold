@@ -1,6 +1,6 @@
 @extends('layouts.provider-layout')
 
-@section('provider-title', 'Dashboard - Provider Portal')
+@section('provider-title', 'Dashboard - Cleaner Portal')
 @section('content')
 <div class="page-wrapper">
     <!-- Start Content -->
@@ -468,7 +468,7 @@
                 this.classList.add('active');
 
                 // Fetch new data
-                fetch(`/provider/dashboard/data?period=${period}`)
+                fetch(`/cleaner/dashboard/data?period=${period}`)
                     .then(response => response.json())
                     .then(data => {
                         performanceChart.data.labels = data.labels;

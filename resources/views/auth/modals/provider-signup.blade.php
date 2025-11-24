@@ -8,7 +8,7 @@
                         <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="AskRoro Logo">
                     </div>
                 </div>
-                <h2 class="serviceflow-modal-title">Join as Service Provider</h2>
+                <h2 class="serviceflow-modal-title">Join as Cleaner</h2>
                 <p class="serviceflow-modal-subtitle">Connect with families in your community</p>
             </div>
             <div class="serviceflow-modal-body">
@@ -137,7 +137,7 @@
                     <h3 style="text-align: center; margin-bottom: 32px; color: #1e293b; font-size: 24px;">Complete Your Profile</h3>
                     <form id="providerCompleteForm">
                         @csrf
-                        <input type="hidden" name="role" value="provider">
+                        <input type="hidden" name="role" value="cleaner">
                         <input type="hidden" name="category" id="providerCategory">
                         <input type="hidden" name="pricing_plan" id="providerPricingPlan">
                         <input type="hidden" name="billing_period" id="providerBillingPeriod" value="monthly">

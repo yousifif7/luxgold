@@ -310,7 +310,7 @@ class ProviderPanelController extends Controller
 
     public function subscription()
     {
-        $provider = auth()->user()->provider;
+        $provider = auth()->user()->cleaner;
         $plans = Plan::where('is_active', true)->get();
         
         // Get current active subscription

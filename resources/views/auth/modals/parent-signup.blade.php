@@ -6,13 +6,13 @@
                 <div class="askroro-avatar-box">
                     <div class="askroro-avatar"><img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt=""></div>
                 </div>
-                <h2 class="askroro-modal-title">Parent Sign Up</h2>
-                <p class="askroro-modal-subtitle">Find the perfect care for your family</p>
+                <h2 class="askroro-modal-title">Customer Sign Up</h2>
+                <p class="askroro-modal-subtitle">Find the perfect care for your house</p>
             </div>
             <div class="askroro-modal-body">
                 <form id="parentSignUpForm">
                     @csrf
-                    <input type="hidden" name="role" value="parent">
+                    <input type="hidden" name="role" value="customer">
                     
                     <div class="askroro-name-row">
                         <div class="askroro-form-group">

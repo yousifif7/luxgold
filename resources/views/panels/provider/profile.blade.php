@@ -1,6 +1,6 @@
 @extends('layouts.provider-layout')
 
-@section('provider-title', 'Profile - Provider Portal')
+@section('provider-title', 'Profile - Cleaner Portal')
 @section('content')
 
 <div class="page-wrapper">

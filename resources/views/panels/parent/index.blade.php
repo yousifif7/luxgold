@@ -1,6 +1,6 @@
 @extends('layouts.parent-layout')
 
-@section('parent-title', 'Dashboard - Parent Portal')
+@section('parent-title', 'Dashboard - Cleaner Portal')
 @section('content')
 <div class="page-wrapper">
 
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="activity-info">
                                     <div class="activity-number">{{ $activityStats['providers_viewed'] }}</div>
-                                    <div class="activity-label">Providers Viewed</div>
+                                    <div class="activity-label">Cleaners Viewed</div>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                                 <i class="ti ti-heart fs-20"></i>
                             </span>
                             <div class="ms-3">
-                               <p class="mb-1 text-truncate">Saved Providers</p>
+                               <p class="mb-1 text-truncate">Saved Cleaners</p>
                                <h6 class="mb-0 fw-semibold">{{ $stats['saved_providers'] }}</h6>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
             <div class="col-lg-6">
                 <div class="section-card">
                     <div class="section-title">Recently Viewed</div>
-                    <div class="section-subtitle">Providers you've looked at recently</div>
+                    <div class="section-subtitle">Cleaners you've looked at recently</div>
                     
                     @forelse($recentlyViewed as $viewed)
                     <div class="provider-card">
@@ -159,12 +159,12 @@
                     @empty
                     <div class="text-center py-4">
                         <i class="fas fa-eye-slash fa-2x text-muted mb-2"></i>
-                        <p class="text-muted mb-0">No recently viewed providers</p>
+                        <p class="text-muted mb-0">No recently viewed Cleaners</p>
                     </div>
                     @endforelse
 
                     @if($recentlyViewed->count() > 0)
-                    <a href="{{ url('providers.recent') }}" class="btn btn-primary w-100 mt-3">View All Recent</a>
+                    <a href="{{ url('cleaners.recent') }}" class="btn btn-primary w-100 mt-3">View All Recent</a>
                     @else
                     <a href="{{ route('website.find-cleaner') }}" class="btn btn-primary w-100 mt-3">Browse Cleaners</a>
                     @endif
@@ -175,7 +175,7 @@
             <div class="col-lg-6">
                 <!-- Provider Recommendations -->
                 <div class="section-card">
-                    <div class="section-title">Provider Recommendations</div>
+                    <div class="section-title">Cleaner Recommendations</div>
                     <div class="section-subtitle">Personalized suggestions just for you</div>
                     
                     <!-- Top Rated in Your City Carousel -->
@@ -183,7 +183,7 @@
                     <div class="recommendation-section">
                         <div class="recommendation-header">
                             <h6 class="mb-2">⭐ Top Rated in {{ $user->city ?? 'Your City' }}</h6>
-                            <p class="text-muted small mb-3">Highly recommended by other parents</p>
+                            <p class="text-muted small mb-3">Highly recommended by other customers</p>
                         </div>
                         <div class="recommendation-carousel">
                             @foreach($recommendations['top_rated'] as $provider)
@@ -210,7 +210,7 @@
                     @if($recommendations['new_providers']->count() > 0)
                     <div class="recommendation-section mt-4">
                         <div class="recommendation-header">
-                            <h6 class="mb-2">🆕 Newly Joined Providers</h6>
+                            <h6 class="mb-2">🆕 Newly Joined Cleaners</h6>
                             <p class="text-muted small mb-3">Fresh options to explore</p>
                         </div>
                         <div class="recommendation-carousel">
@@ -238,7 +238,7 @@
                     <div class="recommendation-section mt-4">
                         <div class="recommendation-header">
                             <h6 class="mb-2">👀 Trending Nearby</h6>
-                            <p class="text-muted small mb-3">What other parents in your area are viewing</p>
+                            <p class="text-muted small mb-3">What other customers in your area are viewing</p>
                         </div>
                         <div class="recommendation-carousel">
                             @foreach($recommendations['trending_nearby'] as $provider)

@@ -65,13 +65,13 @@ Route::delete('/saved-events/{savedEvent}', [EventRegistrationController::class,
 
 Route::middleware(['auth'])->group(function () {
     // Parent profile routes
-    Route::get('/parent/profile', [ProfileController::class, 'show'])->name('parent-profile');
-    Route::post('/parent/profile/personal-info', [ProfileController::class, 'updatePersonalInfo'])->name('parent.profile.personal-info');
-    Route::post('/parent/profile/location-preferences', [ProfileController::class, 'updateLocationPreferences'])->name('parent.profile.location-preferences');
-    Route::post('/parent/profile/notification-preferences', [ProfileController::class, 'updateNotificationPreferences'])->name('parent.profile.notification-preferences');
-    Route::get('/parent/profile/data', [ProfileController::class, 'getProfileData'])->name('parent.profile.data');
+    Route::get('/customer/profile', [ProfileController::class, 'show'])->name('customer-profile');
+    Route::post('/customer/profile/personal-info', [ProfileController::class, 'updatePersonalInfo'])->name('customer.profile.personal-info');
+    Route::post('/customer/profile/location-preferences', [ProfileController::class, 'updateLocationPreferences'])->name('customer.profile.location-preferences');
+    Route::post('/customer/profile/notification-preferences', [ProfileController::class, 'updateNotificationPreferences'])->name('customer.profile.notification-preferences');
+    Route::get('/customer/profile/data', [ProfileController::class, 'getProfileData'])->name('customer.profile.data');
         // Parent password update
-        Route::post('/parent/profile/password', [ProfileController::class, 'updatePassword'])->name('parent.profile.password');
+        Route::post('/customer/profile/password', [ProfileController::class, 'updatePassword'])->name('customer.profile.password');
 });
 
 

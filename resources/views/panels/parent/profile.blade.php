@@ -1,6 +1,6 @@
 @extends('layouts.parent-layout')
 
-@section('parent-title', 'Profile - Parent Portal')
+@section('parent-title', 'Profile - Customer Portal')
 @section('content')
 
 <div class="page-wrapper">
@@ -16,7 +16,7 @@
 
             <div class="mb-4">
                 <h6 class="mb-3"><i class="fas fa-user me-2"></i> Personal Information</h6>
-                <form id="personalInfoForm" method="POST" action="{{ route('parent.profile.personal-info') }}" enctype="multipart/form-data">
+                <form id="personalInfoForm" method="POST" action="{{ route('customer.profile.personal-info') }}" enctype="multipart/form-data">
                     @csrf
                     
                     <!-- Profile Picture Section -->
@@ -85,7 +85,7 @@
             <div class="mb-4">
                 <h6 class="mb-3"><i class="fas fa-map-marker-alt me-2"></i> Location Preferences</h6>
                 <div class="section-subtitle">Set your preferred location for provider suggestions</div>
-                <form id="locationPreferencesForm" method="POST" action="{{ route('parent.profile.location-preferences') }}">
+                <form id="locationPreferencesForm" method="POST" action="{{ route('customer.profile.location-preferences') }}">
                     @csrf
                     <div class="row g-3">
                         <div class="col-md-12">
@@ -122,7 +122,7 @@
                 <h6 class="mb-3"><i class="fas fa-bell me-2"></i> Notification Preferences</h6>
                 <div class="section-subtitle">Choose how you'd like to receive updates</div>
                 
-                <form id="notificationPreferencesForm" method="POST" action="{{ route('parent.profile.notification-preferences') }}">
+                <form id="notificationPreferencesForm" method="POST" action="{{ route('customer.profile.notification-preferences') }}">
                     @csrf
                    
                     <div class="d-flex justify-content-between align-items-center py-3 border-bottom">
@@ -176,7 +176,7 @@
             <div class="mb-4">
                 <h6 class="mb-3"><i class="fas fa-key me-2"></i> Change Password</h6>
                 <div class="section-subtitle">Update your account password</div>
-                <form id="passwordChangeForm" method="POST" action="{{ route('parent.profile.password') }}">
+                <form id="passwordChangeForm" method="POST" action="{{ route('customer.profile.password') }}">
                     @csrf
                     <div class="row g-3">
                         <div class="col-md-12">

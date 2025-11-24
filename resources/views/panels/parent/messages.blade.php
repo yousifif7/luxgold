@@ -1,6 +1,6 @@
 @extends('layouts.parent-layout')
 
-@section('parent-title', 'Messages - Parent Portal')
+@section('parent-title', 'Messages - Customer Portal')
 @section('content')
 <div class="page-wrapper">
 
@@ -11,7 +11,7 @@
                 Inquiries & Messages
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#composeModal">Compose Message</button>
             </div>
-            <div class="section-subtitle">Track your communications with childcare providers</div>
+            <div class="section-subtitle">Track your communications with childcare cleaners</div>
 
             <!-- Statistics Cards -->
             <div class="row g-3 mb-4">
@@ -50,8 +50,8 @@
                             {{ substr($inquiry->provider->name ?? 'P', 0, 1) }}
                         </div>
                         <div>
-                            <div class="provider-name">{{ $inquiry->provider->name ?? 'Provider' }}</div>
-                            <div class="provider-type">{{ $inquiry->provider->type ?? 'Childcare Provider' }}</div>
+                            <div class="provider-name">{{ $inquiry->provider->name ?? 'Cleaner' }}</div>
+                            <div class="provider-type">{{ $inquiry->provider->type ?? 'HouseCare Cleaner' }}</div>
                             <div class="mt-2"><strong>{{ $inquiry->subject ?? 'Inquiry' }}</strong></div>
                         </div>
                     </div>
@@ -60,14 +60,14 @@
                             @if($inquiry->status === 'pending')
                                 New
                             @elseif($inquiry->status === 'responded')
-                                Provider Responded
+                                Cleaner Responded
                             @else
                                 Closed
                             @endif
                         </span>
                         <button class="btn btn-light border btn-sm ms-2 chat-toggle" 
                                 data-inquiry-id="{{ $inquiry->id }}"
-                                data-provider-name="{{ $inquiry->provider->name ?? 'Provider' }}">
+                                data-provider-name="{{ $inquiry->provider->name ?? 'Cleaner' }}">
                             View Chat
                         </button>
                     </div>
@@ -83,7 +83,7 @@
             <div class="text-center py-5">
                 <i class="fas fa-envelope-open-text fa-3x text-muted mb-3"></i>
                 <h5>No Inquiries Yet</h5>
-                <p class="text-muted">You haven't sent any inquiries to providers yet.</p>
+                <p class="text-muted">You haven't sent any inquiries to cleaners yet.</p>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#composeModal">
                     Send Your First Inquiry
                 </button>
@@ -114,9 +114,9 @@
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Select Provider</label>
-                        <select class="form-select" name="provider_id" required>
-                            <option value="">Choose a provider...</option>
+                        <label class="form-label">Select Cleaner</label>
+                        <select class="form-select" name="cleaner_id" required>
+                            <option value="">Choose a cleaner...</option>
                             @foreach($providers as $provider)
                             <option value="{{ $provider->id }}">{{ $provider->name }} - {{ $provider->type }}</option>
                             @endforeach
@@ -169,7 +169,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="chatProviderName">Chat with Provider</h5>
+                <h5 class="modal-title" id="chatProviderName">Chat with Cleaner</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">

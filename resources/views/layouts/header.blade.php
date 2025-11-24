@@ -41,8 +41,17 @@
     </div>
 
     <div class="d-flex gap-2">
-      @if(Auth::user())
-<a href="{{ url('parent/dashboard') }}" id="listServiceBtn" class="add-services-btn d-flex align-items-center">Dashboard</a>
+      @if(Auth::check())
+        @php $currentUser = Auth::user(); @endphp
+        @if($currentUser->hasRole('cleaner'))
+          <a href="{{ route('cleaner-home') }}" id="listServiceBtn" class="add-services-btn d-flex align-items-center">Dashboard</a>
+        @elseif($currentUser->hasRole('customer'))
+          <a href="{{ route('customer-home') }}" id="listServiceBtn" class="add-services-btn d-flex align-items-center">Dashboard</a>
+        @elseif($currentUser->hasRole('admin'))
+          <a href="{{ route('admin-home') }}" id="listServiceBtn" class="add-services-btn d-flex align-items-center">Admin</a>
+        @else
+          <a href="{{ url('/home') }}" id="listServiceBtn" class="add-services-btn d-flex align-items-center">Dashboard</a>
+        @endif
       @else
       <a href="#" onclick="openLoginModal()" class="register-btn">Sign In </a>
       <a href="#" id="listServiceBtn" onclick="openSignUpModal()" class="add-services-btn d-flex align-items-center">

@@ -1,6 +1,6 @@
 @extends('layouts.parent-layout')
 
-@section('parent-title', 'Saved Items - Parent Portal')
+@section('parent-title', 'Saved Items - Customer Portal')
 @section('content')
 
 <div class="page-wrapper">
@@ -10,12 +10,12 @@
 
         <div class="section-card">
             <div class="section-title">Saved Items</div>
-            <div class="section-subtitle">Your saved providers and events for easy access</div>
+            <div class="section-subtitle">Your saved cleaners and events for easy access</div>
 
             <ul class="nav nav-pills mb-4" id="savedTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="saved-providers-tab" data-bs-toggle="pill" data-bs-target="#saved-providers" type="button">
-                        Saved Providers ({{ $savedProviders->count() }})
+                        Saved Cleaners ({{ $savedProviders->count() }})
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -63,7 +63,7 @@
                             <form action="{{ route('saved-providers.destroy', $savedProvider->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Remove this provider from saved items?')">
+                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Remove this cleaner from saved items?')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
@@ -72,8 +72,8 @@
                     @empty
                     <div class="text-center py-5">
                         <i class="fas fa-heart fa-3x text-muted mb-3"></i>
-                        <h5>No Saved Providers</h5>
-                        <p class="text-muted">You haven't saved any providers yet.</p>
+                        <h5>No Saved Cleaners</h5>
+                        <p class="text-muted">You haven't saved any cleaners yet.</p>
                         <a href="{{ route('website.find-cleaner') }}" class="btn btn-primary">Browse Cleaners</a>
                     </div>
                     @endforelse
@@ -89,7 +89,7 @@
                             </div>
                             <div class="event-details">
                                 <div class="event-title">{{ $savedEvent->event->title }}</div>
-                                <div class="event-subtitle">{{ $savedEvent->event->provider->name ?? 'Provider' }}</div>
+                                <div class="event-subtitle">{{ $savedEvent->event->provider->name ?? 'Cleaner' }}</div>
                                 <div class="event-meta text-muted small mt-1">
                                     <i class="fas fa-map-marker-alt"></i> {{ $savedEvent->event->location }}
                                 </div>

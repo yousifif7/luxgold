@@ -70,7 +70,7 @@ class RegisterController extends Controller
         $user->assignRole($data['role']);
 
         // If provider, store additional provider info
-        if ($data['role'] === 'Cleaner') {
+        if (strtolower($data['role']) === 'cleaner') {
             Cleaner::create([
                 'name'=> $data['first_name'],
                 'user_id'            => $user->id,

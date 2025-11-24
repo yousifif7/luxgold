@@ -1,6 +1,6 @@
 @extends('layouts.provider-layout')
 
-@section('parent-title', 'Messages - Parent Portal')
+@section('parent-title', 'Messages - Cleaner Portal')
 @section('content')
 <div class="page-wrapper">
 
@@ -49,7 +49,7 @@
                             {{ substr($inquiry->user->name ?? 'P', 0, 1) }}
                         </div>
                         <div>
-                            <div class="provider-name">{{ $inquiry->user->first_name ?? 'Provider' }}</div>
+                            <div class="provider-name">{{ $inquiry->user->first_name ?? 'Cleaner' }}</div>
                             <div class="mt-2"><strong>{{ $inquiry->subject ?? 'Inquiry' }}</strong></div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         </span>
                         <button class="btn btn-light border btn-sm ms-2 chat-toggle" 
                                 data-inquiry-id="{{ $inquiry->id }}"
-                                data-provider-name="{{ $inquiry->user->first_name ?? 'Provider' }}"
+                                data-provider-name="{{ $inquiry->user->first_name ?? 'Cleaner' }}"
                                 data-status="{{ $inquiry->status }}">
                             View Chat
                         </button>
@@ -105,7 +105,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="chatProviderName">Chat with Provider</h5>
+                <h5 class="modal-title" id="chatProviderName">Chat with Cleaner</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">

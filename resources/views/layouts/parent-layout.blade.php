@@ -253,7 +253,7 @@
                                 <img src="{{ asset('panel/assets/img/users/avatar-5.jpg') }}" class="rounded-circle"
                                     width="42" height="42" alt="Profile">
                                 <div class="ms-2">
-                                    <a href="/parent/profile"
+                                    <a href={{ route('customer-profile') }}
                                         class="fw-medium text-dark mb-0">{{ Auth::user()->first_name ?? '' }}
                                         {{ Auth::user()->last_name ?? '' }}</a>
                                 </div>
@@ -304,12 +304,12 @@
                     </a>
 
                     <!-- Logo Small -->
-                    <a href="{{ route('parent-home') }}" class="logo-small">
+                    <a href="/home" class="logo-small">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" alt="Logo">
                     </a>
 
                     <!-- Logo Dark -->
-                    <a href="{{ route('parent-home') }}" class="dark-logo">
+                    <a href="/home" class="dark-logo">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" alt="Logo">
                     </a>
                 </div>
@@ -324,27 +324,27 @@
                         <li>
                             <ul>
                                 <li>
-                                    <a href="{{ route('parent-home') }}">
+                                    <a href="{{ route('customer-home') }}">
                                         <i class="ti ti-layout-board"></i><span>Dashboard</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('parent-saved-items') }}">
+                                    <a href="{{ route('customer-saved-items') }}">
                                         <i class="ti ti-heart"></i><span>Saved Items</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('parent-compare') }}">
+                                    <a href="{{ route('customer-compare') }}">
                                         <i class="ti ti-git-compare"></i><span>Comparison</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('parent-reviews') }}">
+                                    <a href="{{ route('customer-reviews') }}">
                                         <i class="ti ti-star"></i><span>Reviews</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('parent-messages') }}">
+                                    <a href="{{ route('customer-messages') }}">
                                         <i class="ti ti-message-2"></i><span>Messages</span>
                                     </a>
                                 </li>
@@ -354,7 +354,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('parent-profile') }}">
+                                    <a href="{{ route('customer-profile') }}">
                                         <i class="ti ti-user"></i><span>Profile</span>
                                     </a>
                                 </li>
@@ -388,7 +388,7 @@
                                 Completing your profile helps us match you with the best providers.
                             </div>
                             <div class="ms-3">
-                                <a href="{{ route('parent-profile') }}" class="btn btn-sm btn-primary">Verify Profile</a>
+                                <a href="{{ route('customer-profile') }}" class="btn btn-sm btn-primary">Verify Profile</a>
                             </div>
                         </div>
                     </div>

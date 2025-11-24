@@ -1,6 +1,6 @@
 @extends('layouts.provider-layout')
 
-@section('provider-title', 'Subscription - Provider Portal')
+@section('provider-title', 'Subscription - Cleaner Portal')
 @section('content')
 <div class="page-wrapper">
     <!-- Subscription Page -->
@@ -247,7 +247,7 @@ document.getElementById('autoRenewToggle')?.addEventListener('change', function(
 
 function downloadInvoice(paymentId) {
     // Implement invoice download
-    window.location.href = `/provider/invoices/${paymentId}/download`;
+    window.location.href = `/cleaner/invoices/${paymentId}/download`;
 }
 
 function showToast(type, message) {

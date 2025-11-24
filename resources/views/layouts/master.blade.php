@@ -218,7 +218,8 @@
     // AJAX form submissions
     async function submitParentForm(form) {
         const formData = new FormData(form);
-        formData.append('role', 'parent');
+        // Backend expects 'customer' as the role name
+        formData.append('role', 'customer');
         
         try {
             const response = await fetch('/register/parent', {
@@ -254,7 +255,8 @@
         submitBtn.disabled = true;
 
         const formData = new FormData(form);
-        formData.append('role', 'provider');
+        // Backend expects 'cleaner' as the role name
+        formData.append('role', 'cleaner');
         formData.append('category', selectedCategory);
         formData.append('pricing_plan', selectedPlan);
         

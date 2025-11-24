@@ -67,10 +67,10 @@
 
                     <!-- Action Buttons -->
                     <div class="d-grid gap-2 d-md-flex justify-content-center">
-                        <a href="{{ route('provider-home') }}" class="btn btn-primary btn-lg px-5">
+                        <a href="{{ route('cleaner-home') }}" class="btn btn-primary btn-lg px-5">
                             <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
                         </a>
-                        <a href="{{ route('provider-subscription', $subscription->id) }}" class="btn btn-outline-primary btn-lg px-5">
+                        <a href="{{ route('cleaner-subscription', $subscription->id) }}" class="btn btn-outline-primary btn-lg px-5">
                             <i class="fas fa-receipt me-2"></i>View Subscription
                         </a>
                     </div>

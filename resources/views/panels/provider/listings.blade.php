@@ -1,6 +1,6 @@
 @extends('layouts.provider-layout')
 
-@section('provider-title', 'Listings - Provider Portal')
+@section('provider-title', 'Listings - Cleaner Portal')
 @section('provider-content')
 
 

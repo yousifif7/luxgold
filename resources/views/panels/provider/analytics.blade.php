@@ -1,6 +1,6 @@
 @extends('layouts.provider-layout')
 
-@section('provider-title', 'Analytics - Provider Portal')
+@section('provider-title', 'Analytics - Cleaner Portal')
 @section('content')
 <div class="page-wrapper">
 
@@ -64,7 +64,7 @@
             <div class="col-md-6">
               <div class="card card-h-100">
                 <div class="card-header">
-                  <div class="card-title">Provider Categories</div>
+                  <div class="card-title">Cleaner Categories</div>
                   <p class="mb-0 text-muted">Distribution by service category</p>
                 </div>
                 <div class="card-body text-center" style="height:300px;">
@@ -174,7 +174,7 @@
         <!-- card start -->
         <div class="card">
             <div class="card-header">
-              <h5 class="mb-1">Top Performing Providers</h5>
+              <h5 class="mb-1">Top Performing Cleaners</h5>
               <p class="mb-0 text-muted">Views, clicks, inquiries, and conversion rates</p>
             </div>
             <div class="card-body">

@@ -351,7 +351,7 @@
                             $oldServices = old('sub_categories', ($serviceListing->sub_categories) ?? []);
 
                         @endphp
-                        @foreach(\App\Models\Category::whereNotNull('customer_id')->get() as $category)
+                        @foreach(\App\Models\Category::all() as $category)
                         <div class="service-listing-checkbox-item-wrapper" data-service="{{ $category->id }}">
                             <input type="checkbox" id="service-{{ $category->slug }}" name="sub_categories[]" value="{{ $category->id }}" 
                                    class="service-listing-service-checkbox form-check-input mt-0 @error('sub_categories') is-invalid @enderror"

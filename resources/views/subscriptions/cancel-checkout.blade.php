@@ -64,10 +64,10 @@
                         <a href="{{ route('subscriptions.checkout', ['plan' => $subscription->plan_id ?? '']) }}" class="btn btn-primary btn-lg px-5">
                             <i class="fas fa-credit-card me-2"></i>Try Payment Again
                         </a>
-                        <a href="{{ route('provider-subscription') }}" class="btn btn-outline-primary btn-lg px-5">
+                        <a href="{{ route('cleaner-subscription') }}" class="btn btn-outline-primary btn-lg px-5">
                             <i class="fas fa-list me-2"></i>Choose Different Plan
                         </a>
-                        <a href="{{ route('provider-home') }}" class="btn btn-outline-secondary btn-lg px-5">
+                        <a href="{{ route('cleaner-home') }}" class="btn btn-outline-secondary btn-lg px-5">
                             <i class="fas fa-home me-2"></i>Back to Dashboard
                         </a>
                     </div>
