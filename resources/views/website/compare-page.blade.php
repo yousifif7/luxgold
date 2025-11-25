@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Compare - AskRoro')
+@section('title', 'Compare - luxGold')
 @section('content')
 <section class="master-section">
     <div class="container">
         <h1 class="mt-4">
-            Compare family services side by side <br> find what fits your family best.
+          Compare cleaning services side by side <br> find the right cleaner for your space.
         </h1>
         <div class="search-box col-md-7 mx-auto">
             <form action="{{ route('website.find-cleaner') }}"  class="row g-2">
@@ -23,8 +23,8 @@
                 </div>
                 <div class="col-md-12">
                     <button type="submit" class="search-provider_btn">  
-                        <i class="bi bi-lightning-charge-fill me-1"></i> Search Providers
-                    </button>
+                    <i class="bi bi-lightning-charge-fill me-1"></i> Search Cleaners
+                  </button>
                 </div>
             </form>
         </div>

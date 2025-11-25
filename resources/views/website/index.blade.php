@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Welcome to AskRoro - Find Trusted Family Services')
+@section('title', 'Welcome to luxGold - Find Trusted Cleaning Services')
 @section('content')
 <section class="hero-section">
     <div class="container">
@@ -8,19 +8,19 @@
             <div class="col-lg-6">
                 @if($heroContent)
                 <h1 class="hero-title">
-                <span class="highlight-orange">{{ $heroContent->title_part1 ?? 'Your Family\'s' }}</span><br>
-                <span class="highlight-green">{{ $heroContent->title_part2 ?? 'trusted guide to care, learning,' }}</span>                </h1>
+                <span class="highlight-orange">{{ $heroContent->title_part1 ?? 'Premium' }}</span><br>
+                <span class="highlight-green">{{ $heroContent->title_part2 ?? 'cleaning services' }}</span>                </h1>
                 <p class="mt-3" style="color: rgb(100, 116, 139);font-weight: 400;">
-                    {{ $heroContent->description ?? 'Find and compare family services near you! Discover amazing daycare centers, fun activities, and wellness services that kids and parents love!' }}
+                    {{ $heroContent->description ?? 'Find and compare vetted cleaners near you. Book one-time or recurring cleanings with transparent pricing and verified reviews.' }}
                 </p>
                 @else
                 <h1 class="hero-title">
-                <span class="highlight-orange">Your Family's</span><br>
-                <span class="highlight-green">trusted guide to care, learning,</span><br>
-                <span class="highlight-green">activities & wellness services – all in one hub.</span>
+                <span class="highlight-orange">Premium</span><br>
+                <span class="highlight-green">cleaning services</span><br>
+                <span class="highlight-green">trusted professionals for homes & businesses.</span>
                 </h1>
                 <p class="mt-3" style="color: rgb(100, 116, 139);font-weight: 400;">
-                    Find and compare family services near you! Discover amazing daycare centers, fun activities, and wellness services that kids and parents love!
+                    Find and compare vetted cleaners near you. Book one-time or recurring cleanings with transparent pricing and verified reviews.
                 </p>
                 @endif
                 <!-- Search Box -->
@@ -52,7 +52,7 @@
                 <div class="d-flex gap-4 mt-4 stats-box">
                     <div style="background-color: #fff">
                         <h4 style="color: #337d7c">{{ $totalProvider ?? '500' }}+</h4>
-                        <p style="color: #337d7c">Providers</p>
+                        <p style="color: #337d7c">Cleaners</p>
                     </div>
                     <div style="background-color: #fff">
                         <h4 style="color: #337d7c">{{ $avgRating??0 }}</h4>
@@ -87,8 +87,8 @@
 <section class="second-section ">
     <div class="container">
         
-    <h3>Featured Providers</h3>
-    <p class="tagline">Discover some of our highest-rated family service providers trusted by parents in your community</p>
+    <h3>Featured Cleaners</h3>
+    <p class="tagline">Discover some of our highest-rated cleaning professionals trusted by customers in your community</p>
     <div class="row g-4 mt-4">
         <!-- Card 1 -->
         @foreach($providers as $provider)

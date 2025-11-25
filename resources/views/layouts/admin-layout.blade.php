@@ -297,9 +297,9 @@
             <div class="sidebar-logo">
                 <div>
                     <!-- Logo Normal -->
-                    <a href="/home" class="logo logo-normal">
+                        <a href="/home" class="logo logo-normal">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" height="40px" alt="Logo">
-                        <h4>AskRoro</h4>
+                        <h4>luxGold</h4>
                     </a>
         
                     <!-- Logo Small -->

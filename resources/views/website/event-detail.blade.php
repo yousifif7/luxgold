@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Event Detail - AskRoro')
+@section('title', 'Event Detail - luxGold')
 @section('content')
 <style>
 
@@ -768,7 +768,7 @@ Description: ${eventDescription}
 Organizer: {{ $event->provider_name }}
 Cost: {{ $event->cost > 0 ? '$' . number_format($event->cost, 2) : 'Free' }}
 
-Downloaded from AskRoro on ${new Date().toLocaleDateString()}
+Downloaded from luxGold on ${new Date().toLocaleDateString()}
     `;
     
     const blob = new Blob([content], { type: 'text/plain' });
@@ -803,8 +803,8 @@ function printEventInfo() {
             </div>
             
             <hr>
-            <p style="font-size: 12px; color: #999; text-align: center;">
-                Printed from AskRoro on ${new Date().toLocaleDateString()}
+                <p style="font-size: 12px; color: #999; text-align: center;">
+                Printed from luxGold on ${new Date().toLocaleDateString()}
             </p>
         </div>
     `;
@@ -813,7 +813,7 @@ function printEventInfo() {
     printWindow.document.write(`
         <html>
             <head>
-                <title>{{ $event->title }} - AskRoro</title>
+                <title>{{ $event->title }} - luxGold</title>
                 <style>
                     body { font-family: Arial, sans-serif; margin: 20px; }
                     @media print { body { margin: 0; } }

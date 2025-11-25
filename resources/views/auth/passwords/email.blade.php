@@ -1,10 +1,10 @@
 @extends('layouts.auth')
-@section('title','Forgot Password - AskRoro')
+@section('title','Forgot Password - luxGold')
 @section('content')
 <div class="d-flex align-items-center justify-content-center" style="min-height:100vh;padding:24px;">
   <div class="login-card-longkeywordclass">
     <div class="d-flex justify-content-center mb-3">
-        <img src="{{ asset('provider/assets/updated-logo.jpeg') }}" alt="AskRoro">
+      <img src="{{ asset('provider/assets/updated-logo.jpeg') }}" alt="luxGold">
     </div>
     <h1 class="login-title-longkeywordclass">Forgot Password</h1>
           {{-- session / global errors/status --}}

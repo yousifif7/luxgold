@@ -138,10 +138,7 @@
                         <input type="text" name="location" id="locationInput" class="input-ghost" 
                                placeholder="📍 Enter location..." value="{{ request('location') }}">
             
-                       
-                      
-            
-                       
+                        
                         <h6 class="filter-title">Price Range</h6>
                         <div id="priceSlider" class="mb-3"></div>
                         <div class="d-flex gap-2">

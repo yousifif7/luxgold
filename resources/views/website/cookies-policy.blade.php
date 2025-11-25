@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Cookies Policy - AskRoro')
+@section('title', 'Cookies Policy - luxGold')
 @section('content')
   <!-- Hero -->
   <section class="master-section">
     <div class="container">
-      <h1 class="mt-4">AskRoro – Cookie Policy</h1>
+      <h1 class="mt-4">luxGold – Cookie Policy</h1>
     </div>
   </section>
 
@@ -13,10 +13,10 @@
   <section class="container policy-section">
     <h5 class="text-center mb-4"><strong>Effective Date:</strong> January 1, 2026</h5>
 
-    <p>At AskRoro, Inc., a service of Privy Consulting, Inc. (“AskRoro,” “we,” “our,” or “us”), we use cookies and similar technologies to improve your experience on our website and applications (the “Services”). This Cookie Policy explains what cookies are, how we use them, and your choices.</p>
+    <p>At luxGold (“luxGold,” “we,” “our,” or “us”), we use cookies and similar technologies to improve your experience on our website and applications (the “Services”). This Cookie Policy explains what cookies are, how we use them, and your choices.</p>
 
     <h4>What Are Cookies?</h4>
-    <p>Cookies are small text files that are placed on your computer, phone, or tablet when you visit a website. They help us recognize your device, store preferences, and make your interactions with AskRoro faster and more personalized.</p>
+    <p>Cookies are small text files that are placed on your computer, phone, or tablet when you visit a website. They help us recognize your device, store preferences, and make your interactions with luxGold faster and more personalized.</p>
     <p>We also use related technologies such as pixels, tags, and web beacons. Together, we call these “Cookies.”</p>
 
     <h4>Types of Cookies We Use</h4>
@@ -29,7 +29,7 @@
 
     <h4>Why We Use Cookies</h4>
     <ul>
-      <li>To make AskRoro easier to use and navigate.</li>
+      <li>To make luxGold easier to use and navigate.</li>
       <li>To personalize your experience.</li>
       <li>To measure performance and improve services.</li>
       <li>To deliver ads and sponsored content relevant to you.</li>
@@ -44,13 +44,13 @@
       <li>Opt out of targeted advertising via <a href="https://www.networkadvertising.org" target="_blank">Network Advertising Initiative</a> or <a href="https://www.youronlinechoices.com" target="_blank">Your Online Choices</a>.</li>
       <li>Adjust preferences in our Cookie banner upon first visit.</li>
     </ul>
-    <p><em>Note:</em> If you disable Cookies, some features of AskRoro may not work properly.</p>
+    <p><em>Note:</em> If you disable Cookies, some features of luxGold may not work properly.</p>
 
     <h4>Changes to this Policy</h4>
     <p>We may update this Cookie Policy from time to time. Significant changes will be notified on the site or by email.</p>
 
     <h4>Contact Us</h4>
-    <p>Email: <a href="mailto:privacy@askroro.com">privacy@askroro.com</a><br>
+    <p>Email: <a href="mailto:privacy@luxgold.com">privacy@luxgold.com</a><br>
     Privy Consulting, Inc., Prosper, TX [Insert full address]</p>
   </section>
 

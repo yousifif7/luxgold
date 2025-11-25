@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title', 'FAQs - AskRoro')
+@section('title', 'FAQs - luxGold')
 @section('content')
     <!-- Hero Section -->
     <section class="master-section">
         <div class="container">
             <h1 class="mt-4">
-                AskRoro – Frequently Asked Questions
+              luxGold – Frequently Asked Questions
             </h1>
            
         </div>
@@ -17,18 +17,18 @@
     
         <!-- Parents Section -->
         <div class="faq-accordion-section-container">
-          <h2 class="faq-category-title-longkeywordclass">For Parents</h2>
+          <h2 class="faq-category-title-longkeywordclass">For Customers</h2>
           <div class="accordion" id="faqAccordionParents">
     
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingParentOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseParentOne">
-                  Q1. What is AskRoro?
+                  Q1. What is luxGold?
                 </button>
               </h2>
               <div id="collapseParentOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordionParents">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  AskRoro is your family’s trusted guide to finding and comparing local services, including childcare, preschools, afterschool programs, events, and wellness providers — all in one place.
+                  luxGold is a marketplace for professional cleaning services — find, compare, and book vetted cleaners and cleaning companies for homes and businesses.
                 </div>
               </div>
             </div>
@@ -36,12 +36,12 @@
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingParentTwo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseParentTwo">
-                  Q2. How much does it cost for parents to use AskRoro?
+                  Q2. How much does it cost for customers to use luxGold?
                 </button>
               </h2>
               <div id="collapseParentTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordionParents">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  AskRoro is free for parents to browse, search, compare, and review providers. Some premium features may be added in the future, but the core platform will always be free for families.
+                  luxGold is free for customers to browse, search, compare, and review cleaners. Some premium features for providers may be available, while core features remain available to customers.
                 </div>
               </div>
             </div>
@@ -49,12 +49,12 @@
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingParentThree">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseParentThree">
-                  Q3. How do I know providers on AskRoro are trustworthy?
+                  Q3. How do I know cleaners on luxGold are trustworthy?
                 </button>
               </h2>
               <div id="collapseParentThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordionParents">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  We require providers to verify their business information, and parents can leave reviews and ratings. Look for diversity badges (Minority-Owned, Woman-Owned, Veteran-Owned, Family-Owned).
+                  We require providers to verify their business information; customers can leave reviews and ratings to help others choose. Look for trust indicators like verified badges and reviews.
                 </div>
               </div>
             </div>
@@ -62,7 +62,7 @@
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingParentFour">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseParentFour">
-                  Q4. Can I compare providers?
+                  Q4. Can I compare cleaners?
                 </button>
               </h2>
               <div id="collapseParentFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordionParents">
@@ -75,12 +75,12 @@
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingParentFive">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseParentFive">
-                  Q5. Do I book services directly on AskRoro?
+                  Q5. Do I book services directly on luxGold?
                 </button>
               </h2>
               <div id="collapseParentFive" class="accordion-collapse collapse" data-bs-parent="#faqAccordionParents">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  In most cases, AskRoro connects you directly to providers to book. For some events and activities, you may be able to RSVP or purchase tickets directly through the platform.
+                  In most cases, luxGold connects you directly to cleaners to book services. Booking and payment flows depend on the cleaner’s setup and listing.
                 </div>
               </div>
             </div>
@@ -90,13 +90,13 @@
     
         <!-- Providers Section -->
         <div class="faq-accordion-section-container">
-          <h2 class="faq-category-title-longkeywordclass">For Providers</h2>
+          <h2 class="faq-category-title-longkeywordclass">For Cleaners</h2>
           <div class="accordion" id="faqAccordionProviders">
     
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingProviderOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProviderOne">
-                  Q6. How do I list my service on AskRoro?
+                  Q6. How do I list my service on luxGold?
                 </button>
               </h2>
               <div id="collapseProviderOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordionProviders">
@@ -114,7 +114,7 @@
               </h2>
               <div id="collapseProviderTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordionProviders">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  Childcare centers, preschools, private schools (K–12), afterschool programs, tutoring, camps, events, entertainment, and wellness services for families & children.
+                  Cleaning services, home cleaning, commercial cleaning, deep cleaning, move-in/move-out cleaning, and specialty cleaning services offered by independent cleaners and agencies.
                 </div>
               </div>
             </div>
@@ -135,7 +135,7 @@
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingProviderFour">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProviderFour">
-                  Q9. What are the benefits of joining AskRoro?
+                  Q9. What are the benefits of joining luxGold?
                 </button>
               </h2>
               <div id="collapseProviderFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordionProviders">
@@ -156,7 +156,7 @@
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingGeneralOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGeneralOne">
-                  Q10. What cities does AskRoro serve?
+                  Q10. What cities does luxGold serve?
                 </button>
               </h2>
               <div id="collapseGeneralOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordionGeneral">
@@ -169,12 +169,12 @@
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingGeneralTwo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGeneralTwo">
-                  Q11. How does AskRoro make money?
+                  Q11. How does luxGold make money?
                 </button>
               </h2>
               <div id="collapseGeneralTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordionGeneral">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  We offer provider memberships, featured listings, and advertising options. AskRoro is free for parents.
+                  We offer provider memberships, featured listings, and advertising options. luxGold is free for customers to browse listings.
                 </div>
               </div>
             </div>
@@ -182,12 +182,12 @@
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingGeneralThree">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGeneralThree">
-                  Q12. How do I contact AskRoro?
+                  Q12. How do I contact luxGold?
                 </button>
               </h2>
               <div id="collapseGeneralThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordionGeneral">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  You can reach us at <strong>info@askroro.com</strong> or through our Contact & Support page.
+                  You can reach us at <strong>info@luxgold.com</strong> or through our Contact & Support page.
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@
             <div class="accordion-item faq-accordion-item-longkeywordclass">
               <h2 class="accordion-header faq-accordion-header-longkeywordclass" id="headingGeneralFour">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGeneralFour">
-                  Q13. Does AskRoro share my data?
+                  Q13. Does luxGold share my data?
                 </button>
               </h2>
               <div id="collapseGeneralFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordionGeneral">

@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-      <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="AskRoro" class="me-2 rounded">
-      <span>AskRoro</span>
+      <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="luxGold" class="me-2 rounded">
+      <span>luxGold</span>
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -29,7 +29,7 @@
         @endif
 
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('for-cleaner') ? 'active' : '' }}" href="{{ route('website.for-cleaner') }}">For Provider</a>
+          <a class="nav-link {{ request()->is('for-cleaner') ? 'active' : '' }}" href="{{ route('website.for-cleaner') }}">For Cleaner</a>
         </li>
 
         <li class="nav-item">

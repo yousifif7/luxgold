@@ -4,12 +4,12 @@
             <button class="serviceflow-btn-close" onclick="closeModal('providerSignUpModal')">&times;</button>
             <div class="serviceflow-modal-header">
                 <div class="serviceflow-avatar-box">
-                    <div class="serviceflow-avatar">
-                        <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="AskRoro Logo">
+                        <div class="serviceflow-avatar">
+                        <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="luxGold Logo">
                     </div>
                 </div>
                 <h2 class="serviceflow-modal-title">Join as Cleaner</h2>
-                <p class="serviceflow-modal-subtitle">Connect with families in your community</p>
+                <p class="serviceflow-modal-subtitle">Connect with customers and grow your cleaning business</p>
             </div>
             <div class="serviceflow-modal-body">
                 <!-- Step Indicator -->

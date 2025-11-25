@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Find Provider - AskRoro')
+@section('title', 'Find Cleaners - luxGold')
 @section('content')
     @push('links')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.1/tabler-icons.min.css"
@@ -136,8 +136,8 @@
                     </div>
 
                     <form id="searchForm" method="GET" action="{{ route('website.find-cleaner') }}">
-                        <input type="text" name="search" id="searchInput" class="input-ghost" 
-                               placeholder="🔍 Search providers..." value="{{ request('search') }}">
+                           <input type="text" name="search" id="searchInput" class="input-ghost" 
+                               placeholder="🔍 Search cleaners..." value="{{ request('search') }}">
                         <input type="text" name="location" id="locationInput" class="input-ghost" 
                                placeholder="📍 Enter location..." value="{{ request('location') }}">
             
@@ -200,7 +200,7 @@
             <div class="right-col">
                 <div class="providers-header">
                     <div>
-                        <div class="providers-left">{{ count($providers) }} providers found</div>
+                        <div class="providers-left">{{ count($providers) }} cleaners found</div>
                         <div class="small-muted">Showing results for your search criteria</div>
                     </div>
     
@@ -375,8 +375,8 @@
                 <div class="filter-sidebar">
                     <!-- Same filter form content as desktop -->
                     <form id="mobileSearchForm" method="GET" action="{{ route('website.find-cleaner') }}">
-                        <input type="text" name="search" class="input-ghost" 
-                               placeholder="🔍 Search providers..." value="{{ request('search') }}">
+                           <input type="text" name="search" class="input-ghost" 
+                               placeholder="🔍 Search cleaners..." value="{{ request('search') }}">
                         <input type="text" name="location" class="input-ghost" 
                                placeholder="📍 Enter location..." value="{{ request('location') }}">
             

@@ -1,7 +1,7 @@
 
 @extends('layouts.master')
 
-@section('title', 'Privacy Policy - AskRoro')
+@section('title', 'Privacy Policy - luxGold')
 @section('content')
 <!-- Hero -->
   <section class="master-section">
@@ -14,11 +14,11 @@
   <section class="container privacy-section">
     <h5 class="text-center mb-4"><strong>Effective Date:</strong> January 1st, 2026</h5>
 
-    <p>At AskRoro, Inc., a service of Privy Consulting, Inc. (“Privy Consulting,” “AskRoro,” “we,” or “us”), your family’s trust is our highest priority. We are committed to protecting your privacy and handling your data with transparency and care.</p>
+    <p>At luxGold ("luxGold," "we," or "us"), your trust is our highest priority. We are committed to protecting your privacy and handling your data with transparency and care.</p>
 
     <p>This Privacy Policy describes how we collect, use, share, and safeguard personal data when you use our website, applications, and services (the “Services”).</p>
 
-    <p>By using AskRoro, you acknowledge and consent to the practices described here. This Privacy Policy is part of our Terms of Use, which incorporates this policy by reference.</p>
+    <p>By using luxGold, you acknowledge and consent to the practices described here. This Privacy Policy is part of our Terms of Use, which incorporates this policy by reference.</p>
 
     <p><strong>Contact:</strong> <a href="mailto:privacy@askroro.com">privacy@askroro.com</a><br>
     <strong>Business Address:</strong> Privy Consulting, Inc. Prosper TX.</p>
@@ -78,7 +78,7 @@
       <li>Create and manage accounts.</li>
       <li>Provide, customize, and improve Services.</li>
       <li>Facilitate payments.</li>
-      <li>Connect families with providers safely.</li>
+      <li>Connect customers with cleaners safely.</li>
       <li>Send updates and marketing.</li>
       <li>Ensure security, prevent fraud, comply with laws.</li>
     </ul>
@@ -120,8 +120,8 @@
     <p>We may update this Privacy Policy. Significant changes will be notified on the site or by email.</p>
 
     <h4>Contact Us</h4>
-    <p>Email: <a href="mailto:privacy@askroro.com">privacy@askroro.com</a><br>
-    AskRoro, Inc. – Privy Consulting, Inc. Prosper TX</p>
+    <p>Email: <a href="mailto:privacy@luxgold.com">privacy@luxgold.com</a><br>
+    luxGold – Privy Consulting, Inc. Prosper TX</p>
   </section>
 @endsection
 @push("links")

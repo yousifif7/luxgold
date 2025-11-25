@@ -7,14 +7,14 @@
                     <div class="askroro-avatar"><img src="{{ asset('assets/images/logo.png') }}" alt="logo-image"></div>
                 </div>
                 <h2 class="askroro-modal-title">Sign Up</h2>
-                <p class="askroro-modal-subtitle">Create your free account to get started using ASKRORO.</p>
+                <p class="askroro-modal-subtitle">Create your free account to get started with luxGold — find or offer professional cleaning services.</p>
             </div>
             <div class="askroro-modal-body">
                 <button class="askroro-btn-option" onclick="openParentSignUpModal()">
-                    <i class="bi bi-person"></i> I am a parent
+                    <i class="bi bi-person"></i> I am a Customer
                 </button>
                 <button class="askroro-btn-option" onclick="openServiceProviderModal()">
-                    <i class="bi bi-briefcase"></i> I am a Service Provider
+                    <i class="bi bi-briefcase"></i> I am a Cleaner
                 </button>
                 <div class="askroro-text-center">
                     <span class="askroro-text-muted">Already have an account? </span>

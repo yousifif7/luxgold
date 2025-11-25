@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Provider Detail - AskRoro')
+@section('title', 'Cleaner Detail - luxGold')
 @section('content')
 <style>
     .compare-badge {
@@ -120,14 +120,14 @@
                                 <div class="col-12">
                                     <label for="inquiry_message" class="form-label">Message *</label>
                                     <textarea class="form-control" id="inquiry_message" name="message" rows="4" 
-                                              placeholder="Tell the provider about your needs, preferred start date, or any specific requirements..." 
+                                              placeholder="Tell the cleaner about your needs, preferred start date, or any specific requirements..." 
                                               required>Hi, I'm interested in learning more about your services. Could you please provide more information about availability and pricing?</textarea>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="inquiry_newsletter" name="newsletter">
                                         <label class="form-check-label" for="inquiry_newsletter">
-                                            Send me updates about new features and providers
+                                            Send me updates about new features and cleaners
                                         </label>
                                     </div>
                                 </div>
@@ -948,7 +948,7 @@ Thank you!</textarea>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="modal_inquiry_newsletter" name="newsletter" checked>
                                 <label class="form-check-label" for="modal_inquiry_newsletter">
-                                    Send me updates about new features and providers
+                                    Send me updates about new features and cleaners
                                 </label>
                             </div>
                         </div>
@@ -969,7 +969,7 @@ Thank you!</textarea>
 <!-- Compare Modal -->
    <div id="compareBar" class="compare-bar" aria-hidden="true">
             <div class="compare-header">
-                <h3 class="compare-title">Compare Providers</h3>
+                <h3 class="compare-title">Compare Cleaners</h3>
                 <button id="closeCompare"
                     style="background:none; border:none; font-size:18px; color:#6b7280; cursor:pointer;">✕</button>
             </div>
