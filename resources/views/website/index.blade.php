@@ -392,7 +392,7 @@
 <section class="forth-section">
     <div class="container">
         <h3>Now Serving These Cities</h3>
-        <p class="tagline">AskRoro connects families with trusted providers across North Texas!</p>
+        <p class="tagline">luxGold connects customers with trusted cleaning professionals across North Texas!</p>
         @if($cities->count() > 0)
         <div class="row gap-4 justify-content-center mt-4">
             @foreach($cities->where('is_coming_soon', false)->take(5) as $city)
@@ -403,7 +403,7 @@
                     </div>
                     <div class="city-title">{{ $city->name }}, {{ $city->state }}</div>
                     <a href="#" class="city-link">{{ $city->totalCleaner() }}+ cleaners</a>
-                    <div class="city-families">{{ $city->families_count }}+ families</div>
+                    <div class="city-families">{{ $city->families_count }}+ customers</div>
                 </div>
             </div>
             @endforeach
@@ -415,8 +415,8 @@
                 <div class="city-card">
                     <div class="city-icon green-bg"><img src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png" width="30"></div>
                     <div class="city-title">Aubrey, TX</div>
-                    <a href="#" class="city-link">42 providers</a>
-                    <div class="city-families">850+ families</div>
+                    <a href="#" class="city-link">42 cleaners</a>
+                    <div class="city-families">850+ customers</div>
                 </div>
             </div>
             <!-- Add more fallback cities as needed -->
@@ -452,7 +452,7 @@
 <section class="fifth-section" id="how-it-works-section">
     <div class="container">
         <h3>How it Works – Parents</h3>
-        <p class="tagline">Finding the right family services has never been easier</p>
+        <p class="tagline">Finding the right cleaning services has never been easier</p>
         <div class="row justify-content-center mt-5">
             <!-- Step 1 -->
             <div class="col-md-4">
@@ -484,7 +484,7 @@
                     <div class="how-it-works-icon-wrapper">
                         <i class="bi bi-telephone"></i>
                     </div>
-                    <h3 class="how-it-works-title">Reach Providers</h3>
+                    <h3 class="how-it-works-title">Reach Cleaners</h3>
                     <p class="how-it-works-description">
                         Connect directly via phone or email to ask questions and schedule visits.
                     </p>
@@ -497,15 +497,15 @@
 <section class="sixth-section">
     <div class="container">
         <div class="tag tag-red mb-4" style="width: fit-content;margin: 0 auto;">
-            For Service Providers
+            For Cleaners
         </div>
         <h3>
-        Are you a Provider? Use AskRoro
+        Are you a Cleaner? List with luxGold
         </h3>
-        <p class="tagline">Join thousands of providers who trust AskRoro to connect with families in their community.
-        Stand<br> out where families are actively looking and grow your business.</p>
+        <p class="tagline">Join thousands of cleaners who trust luxGold to connect with customers in their community.
+        Stand out where customers are actively looking and grow your business.</p>
         <div class="d-flex justify-content-center align-items-center">
-           @if(Auth::user()) <a href="{{ url('parent/dashboard') }}" class="p1-button">List Your Services - Free <i
+           @if(Auth::user()) <a href="{{ route('cleaner-home') }}" class="p1-button">List Your Services - Free <i
             class="bi bi-chevron-right ms-1"></i></a> @else <button class="p1-button" onclick="openLoginModal()" >List Your Services - Free <i
             class="bi bi-chevron-right ms-1"></i></button> @endif
         </div>
@@ -513,8 +513,8 @@
 </section>
 <!-- Resources Section - Dynamic -->
 <section class="seventh-section container">
-    <h3>Parent Resources</h3>
-    <p class="tagline">Expert advice, tips, and insights to help you make the best decisions for your family</p>
+    <h3>Customer Resources</h3>
+    <p class="tagline">Expert advice, tips, and insights to help you get the most from cleaning services</p>
     <div class="row g-3 mt-4">
         @if($resources->count() > 0)
         @foreach($resources->take(3) as $resource)
@@ -554,8 +554,8 @@
 <!-- Testimonials Section - Dynamic -->
 <section class="testimonial-section">
     <div class="container">
-        <h3>Parent Testimonials</h3>
-        <p class="tagline">See what parents in your community are saying about AskRoro</p>
+        <h3>Customer Testimonials</h3>
+        <p class="tagline">See what customers in your community are saying about luxGold</p>
         <div class="row g-4 mt-4">
             @if($testimonials->count() > 0)
             @foreach($testimonials->take(3) as $testimonial)
@@ -591,7 +591,7 @@
                         </div>
                     </div>
                     <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"AskRoro made finding the perfect daycare so much easier. The verified providers and detailed reviews gave me confidence in my choice."</p>
+                    <p class="testimonial-text">"luxGold made finding the perfect cleaner so much easier. The verified cleaners and detailed reviews gave me confidence in my choice."</p>
                 </div>
             </div>
             <!-- Add more fallback testimonials as needed -->
@@ -602,9 +602,9 @@
 <!-- CTA Section - Dynamic -->
 <section class="cta-section">
     <div class="container">
-        <h3>Ready to find the perfect provider for your<br> family?</h3>
+        <h3>Ready to find the perfect cleaner for your<br> home or business?</h3>
         <p class="tagline">
-            Join thousands of parents who trust AskRoro to connect with quality childcare and<br> family service providers
+            Join thousands of customers who trust luxGold to connect with trusted cleaning professionals
             in their community.
         </p>
             <div class="button-group">
@@ -617,8 +617,8 @@
 <!-- Cookie Banner -->
 <div id="cookieBanner" class="cookie-banner bg-light border-top shadow-sm p-3 fixed-bottom d-flex justify-content-between align-items-center">
     <div class="cookie-text">
-        <strong>Your family's privacy matters.</strong><br>
-        AskRoro uses cookies only to provide a better service and personalize your experience.
+        <strong>Your privacy matters.</strong><br>
+        luxGold uses cookies to provide a better service and personalize your experience.
         <a href="cookies-policy.html" class="text-primary">Learn more in our Cookie Policy</a>.
     </div>
     <button id="acceptCookies" class="btn btn-primary btn-sm ms-3">Accept</button>
