@@ -10,26 +10,52 @@
                 </div>
                 <h2 class="serviceflow-modal-title">Join as Cleaner</h2>
                 <p class="serviceflow-modal-subtitle">Connect with customers and grow your cleaning business</p>
+                <p class="serviceflow-modal-subnote" style="font-size:13px; color:#6b7280; margin-top:6px;">We currently operate in Ireland — please provide an Irish address. Serving Dublin, Cork, Galway, Limerick, and surrounding areas.</p>
             </div>
             <div class="serviceflow-modal-body">
                 <!-- Step Indicator -->
                 <div class="serviceflow-step-indicator">
-                    <div class="serviceflow-step active" id="step1Indicator">
+                    <div class="serviceflow-step active" id="step0Indicator">
                         <i class="bi bi-1-circle"></i>
+                        Eircode
+                    </div>
+                    <div class="serviceflow-step" id="step1Indicator">
+                        <i class="bi bi-2-circle"></i>
                         Category
                     </div>
                     <div class="serviceflow-step" id="step2Indicator">
-                        <i class="bi bi-2-circle"></i>
+                        <i class="bi bi-3-circle"></i>
                         Pricing
                     </div>
                     <div class="serviceflow-step" id="step3Indicator">
-                        <i class="bi bi-3-circle"></i>
+                        <i class="bi bi-4-circle"></i>
                         Details
                     </div>
                 </div>
                 
+                <!-- Step 0: Eircode check -->
+                <div class="serviceflow-step-content active" id="step0">
+                    <h3 style="text-align: center; margin-bottom: 24px; color: #1e293b; font-size: 20px;">Enter your Eircode</h3>
+                    <p style="text-align:center; color:#6b7280; margin-bottom:16px;">Please enter your Eircode to confirm you operate in Ireland.</p>
+                    <div style="max-width:420px; margin:0 auto;">
+                        <div class="serviceflow-form-group">
+                            <label class="serviceflow-form-label">Eircode</label>
+                            <input type="text" id="eircodeInput" class="serviceflow-form-control" placeholder="Eircode (e.g. D02 X285)" required>
+                            <div id="eircodeFeedback" class="invalid-feedback" style="display:none; margin-top:6px;"></div>
+                        </div>
+                        <div style="text-align:center; margin-top:12px;">
+                            <button type="button" class="serviceflow-btn-next" id="checkEircodeBtn">Check Eircode →</button>
+                        </div>
+                    </div>
+                    <div class="serviceflow-btn-navigation" style="margin-top:20px; text-align:center;">
+                        <button type="button" class="serviceflow-btn-back" onclick="closeModal('providerSignUpModal'),backToSignUpOptions()">
+                            ← Back to options
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Step 1: Category Selection -->
-                <div class="serviceflow-step-content active" id="step1">
+                <div class="serviceflow-step-content" id="step1">
                     <h3 style="text-align: center; margin-bottom: 32px; color: #1e293b; font-size: 24px;">Choose Your Category</h3>
                     <div class="serviceflow-category-grid">
                         @foreach(\App\Models\Category::whereNull('customer_id')->get() as $category => $data)
@@ -85,14 +111,14 @@
                                 @else
                                     <!-- Monthly Price -->
                                     <div class="serviceflow-price-option active" data-billing="monthly">
-                                        <div class="serviceflow-price-amount">${{ $plan->monthly_fee }}</div>
+                                        <div class="serviceflow-price-amount">€{{ $plan->monthly_fee }}</div>
                                         <div class="serviceflow-price-period">/month</div>
                                     </div>
                                     <!-- Yearly Price -->
                                     <div class="serviceflow-price-option" data-billing="yearly" style="display: none;">
-                                        <div class="serviceflow-price-amount">${{ $plan->annual_fee }}</div>
+                                        <div class="serviceflow-price-amount">€{{ $plan->annual_fee }}</div>
                                         <div class="serviceflow-price-period">/year</div>
-                                        <div class="serviceflow-price-savings">Save ${{ $plan->monthly_fee * 12- (float)$plan->annual_fee  }}</div>
+                                        <div class="serviceflow-price-savings">Save €{{ $plan->monthly_fee * 12- (float)$plan->annual_fee  }}</div>
                                     </div>
                                 @endif
                             </div>
@@ -136,6 +162,7 @@
                 <div class="serviceflow-step-content" id="step3">
                     <h3 style="text-align: center; margin-bottom: 32px; color: #1e293b; font-size: 24px;">Complete Your Profile</h3>
                     <form id="providerCompleteForm">
+                        <input type="hidden" name="zip_code" id="zip_code_hidden">
                         @csrf
                         <input type="hidden" name="role" value="cleaner">
                         <input type="hidden" name="category" id="providerCategory">
@@ -202,7 +229,7 @@
                                     <label class="serviceflow-form-label">Phone Number</label>
                                     <div class="serviceflow-input-icon-wrapper">
                                         <i class="bi bi-telephone serviceflow-input-icon"></i>
-                                        <input type="tel" name="phone" class="serviceflow-form-control" placeholder="(555) 123-4567" required>
+                                        <input type="tel" name="phone" class="serviceflow-form-control" placeholder="e.g. +353851234567" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
@@ -237,15 +264,11 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="serviceflow-form-group">
-                                    <label class="serviceflow-form-label">State</label>
-                                    <input type="text" name="state" class="serviceflow-form-control" placeholder="State" required>
+                                    <label class="serviceflow-form-label">County</label>
+                                    <input type="text" name="state" class="serviceflow-form-control" placeholder="County (e.g. Dublin)" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="serviceflow-form-group">
-                                    <label class="serviceflow-form-label">ZIP Code</label>
-                                    <input type="text" name="zip_code" class="serviceflow-form-control" placeholder="ZIP" required>
-                                    <div class="invalid-feedback"></div>
-                                </div>
+                                <!-- Eircode is collected in the initial step and stored in a hidden field -->
                             </div>
                             <div class="serviceflow-form-group">
                                 <label class="serviceflow-form-label">Service Description</label>
@@ -297,8 +320,8 @@
 .serviceflow-price-option {
     display: none;
 }
-.active{
-    display:block !important;
+.serviceflow-step-content.active {
+    display: block !important;
 }
 
 .serviceflow-price-option.active {
@@ -325,6 +348,149 @@
 
 <script>
 let selectedBillingPeriod = 'monthly';
+
+// Simple step navigation handlers scoped to this modal
+function showStep(stepId){
+    document.querySelectorAll('.serviceflow-step-content').forEach(el=>{
+        // hide all step contents
+        el.classList.remove('active');
+        el.style.display = 'none';
+    });
+
+    const target = document.getElementById(stepId);
+    if(target){
+        target.classList.add('active');
+        target.style.display = '';
+    }
+
+    // Update indicators
+    ['step0Indicator','step1Indicator','step2Indicator','step3Indicator'].forEach(id=>{
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.classList.remove('active');
+    });
+    const activeIndicator = {
+        'step0':'step0Indicator',
+        'step1':'step1Indicator',
+        'step2':'step2Indicator',
+        'step3':'step3Indicator'
+    }[stepId];
+    if(activeIndicator) document.getElementById(activeIndicator).classList.add('active');
+
+    // Ensure Eircode input/feedback are only visible on step0
+    const eirInput = document.getElementById('eircodeInput');
+    const eirFeedback = document.getElementById('eircodeFeedback');
+    const step0 = document.getElementById('step0');
+    if(stepId !== 'step0'){
+        if(eirInput) eirInput.style.display = 'none';
+        if(eirFeedback) eirFeedback.style.display = 'none';
+        if(step0) step0.style.display = 'none';
+    } else {
+        if(eirInput) eirInput.style.display = '';
+        if(step0) step0.style.display = '';
+    }
+}
+
+function goToStep1(){ showStep('step1'); }
+function goToStep2(){ showStep('step2'); }
+function goToStep3(){ showStep('step3'); }
+
+// CSRF token for AJAX
+const CSRF_TOKEN = '{{ csrf_token() }}';
+
+// Handle Eircode check
+document.addEventListener('DOMContentLoaded', function(){
+    const btn = document.getElementById('checkEircodeBtn');
+    if(btn){
+        btn.addEventListener('click', async function(){
+            const input = document.getElementById('eircodeInput');
+            const feedback = document.getElementById('eircodeFeedback');
+            feedback.style.display = 'none';
+            const value = input.value.trim();
+            if(!value){
+                feedback.innerText = 'Please enter your Eircode.';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = 'Checking...';
+
+            try{
+                const res = await fetch('{{ route('check.eircode') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': CSRF_TOKEN,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ eircode: value })
+                });
+
+                if(!res.ok){
+                    const error = await res.json();
+                    feedback.innerText = error.message || 'Eircode not recognized.';
+                    feedback.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerText = 'Check Eircode →';
+                    return;
+                }
+
+                const data = await res.json();
+                // Set normalized eircode into hidden field so registration will submit it
+                const hidden = document.getElementById('zip_code_hidden');
+                if(hidden) hidden.value = data.eircode;
+
+                // Hide the Eircode input and feedback so they don't appear in other steps
+                const step0El = document.getElementById('step0');
+                const eirInputEl = document.getElementById('eircodeInput');
+                const eirFeedbackEl = document.getElementById('eircodeFeedback');
+                if(eirInputEl) eirInputEl.style.display = 'none';
+                if(eirFeedbackEl) eirFeedbackEl.style.display = 'none';
+                if(step0El) step0El.style.display = 'none';
+
+                // Proceed to category step
+                goToStep1();
+            }catch(err){
+                feedback.innerText = 'Unable to validate Eircode at this time.';
+                feedback.style.display = 'block';
+            }finally{
+                btn.disabled = false;
+                btn.innerText = 'Check Eircode →';
+            }
+        });
+    }
+});
+
+// Observe the modal overlay so we can reset/show step0 only when the modal actually opens
+const providerModalOverlay = document.getElementById('providerSignUpModal');
+if(providerModalOverlay){
+    let prevVisible = window.getComputedStyle(providerModalOverlay).display !== 'none';
+    const observer = new MutationObserver(() => {
+        try{
+            const visible = window.getComputedStyle(providerModalOverlay).display !== 'none';
+            // Only act when visibility changes from hidden -> visible
+            if(visible && !prevVisible){
+                // When modal opens, show step0 so Eircode input is visible first
+                showStep('step0');
+                const eirInput = document.getElementById('eircodeInput');
+                const eirFeedback = document.getElementById('eircodeFeedback');
+                const hidden = document.getElementById('zip_code_hidden');
+                if(eirInput) { eirInput.style.display = ''; eirInput.value = ''; }
+                if(eirFeedback) { eirFeedback.style.display = 'none'; eirFeedback.innerText = ''; }
+                if(hidden) hidden.value = '';
+                // Ensure pricing/category next buttons initially disabled
+                const pricingNextBtn = document.getElementById('pricingNextBtn');
+                if(pricingNextBtn) pricingNextBtn.disabled = true;
+                const categoryNextBtn = document.getElementById('categoryNextBtn');
+                if(categoryNextBtn) categoryNextBtn.disabled = true;
+            }
+            prevVisible = visible;
+        }catch(e){ /* ignore */ }
+    });
+
+    observer.observe(providerModalOverlay, { attributes: true, attributeFilter: ['style', 'class'] });
+}
 
 // Billing period toggle
 document.querySelectorAll('.serviceflow-toggle-option').forEach(option => {

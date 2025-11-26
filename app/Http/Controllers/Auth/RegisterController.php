@@ -45,7 +45,7 @@ class RegisterController extends Controller
                 'address' => ['required', 'string'],
                 'city' => ['required', 'string'],
                 'state' => ['required', 'string'],
-                'zip_code' => ['required', 'string'],
+                'zip_code' => ['required', 'string', 'regex:/^[A-Za-z0-9]{3}\s?[A-Za-z0-9]{4}$/'],
                 'service_description' => ['required', 'string'],
             ]);
         }
@@ -82,7 +82,8 @@ class RegisterController extends Controller
                 'address'            => $data['address'],
                 'city'               => $data['city'],
                 'state'              => $data['state'],
-                'zip_code'           => $data['zip_code'],
+                // Normalize ZIP/Eircode to uppercase with a space after first 3 chars
+                'zip_code'           => strtoupper(preg_replace('/\s+/', ' ', trim($data['zip_code']))),
                 'service_description'=> $data['service_description'],
             ]);
         }

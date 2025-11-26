@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ServiceListingController;
+use App\Http\Controllers\EircodeController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReviewController;
@@ -186,6 +187,9 @@ Route::prefix('cleaner')->middleware(RoleMiddleware::class . ':cleaner')->group(
 
 Route::post('/register/parent', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.parent');
 Route::post('/register/provider', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.provider');
+
+// Eircode check used by provider signup flow (AJAX)
+Route::post('/check-eircode', [EircodeController::class, 'check'])->name('check.eircode');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

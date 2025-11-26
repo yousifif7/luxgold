@@ -97,7 +97,7 @@
                         
                         <form id="quickInquiryForm">
                             @csrf
-                            <input type="hidden" name="provider_id" value="{{ $provider->id }}">
+                            <input type="hidden" name="cleaner_id" value="{{ $provider->id }}">
                             
                             <div class="row g-3">
                                 <div class="col-md-6">
@@ -357,13 +357,13 @@
                         <span>{{ $provider->isFollowedByUser() ? 'Following' : 'Follow' }}</span>
                     </button>
                 </div>
-
+{{-- 
                 <button class="school-add-to-compare-btn {{ $provider->isInCompare() ? 'in-compare' : '' }}" 
                         data-provider-id="{{ $provider->id }}" 
                         id="compareButton">
                     <i class="ti ti-{{ $provider->isInCompare() ? 'check' : 'adjustments' }} me-1"></i>
                     {{ $provider->isInCompare() ? 'Remove from Compare' : 'Add to Compare' }}
-                </button>
+                </button> --}}
             </div>
             
             <div class="quick-action-card_detail-page">
@@ -438,9 +438,26 @@
         @endif
         
         @php
+            // Normalize special features and diversity badges to arrays
             $specialFeatures = $provider->special_features ?? [];
+            if ($specialFeatures instanceof \Illuminate\Support\Collection) {
+                $specialFeatures = $specialFeatures->toArray();
+            } elseif (is_string($specialFeatures)) {
+                $specialFeatures = json_decode($specialFeatures, true) ?: [];
+            } else {
+                $specialFeatures = (array) $specialFeatures;
+            }
+
             $diversityBadges = $provider->diversity_badges ?? [];
-            $amenities = array_merge($specialFeatures ?? [], $diversityBadges ?? []);
+            if ($diversityBadges instanceof \Illuminate\Support\Collection) {
+                $diversityBadges = $diversityBadges->toArray();
+            } elseif (is_string($diversityBadges)) {
+                $diversityBadges = json_decode($diversityBadges, true) ?: [];
+            } else {
+                $diversityBadges = (array) $diversityBadges;
+            }
+
+            $amenities = array_values(array_filter(array_merge($specialFeatures ?? [], $diversityBadges ?? [])));
         @endphp
         
         @if(!empty($amenities))
@@ -513,7 +530,27 @@
 
             <!-- Services Section -->
             @php
-                $services = array_merge($specialFeatures ?? [], $serviceCategories ?? []);
+                // Ensure $specialFeatures is array (might be overwritten above)
+                $specialFeatures = $specialFeatures ?? [];
+                if ($specialFeatures instanceof \Illuminate\Support\Collection) {
+                    $specialFeatures = $specialFeatures->toArray();
+                } elseif (is_string($specialFeatures)) {
+                    $specialFeatures = json_decode($specialFeatures, true) ?: [];
+                } else {
+                    $specialFeatures = (array) $specialFeatures;
+                }
+
+                // Convert service categories collection to an array of names
+                $serviceCategoryNames = [];
+                if (isset($serviceCategories)) {
+                    if ($serviceCategories instanceof \Illuminate\Support\Collection) {
+                        $serviceCategoryNames = $serviceCategories->pluck('name')->toArray();
+                    } elseif (is_array($serviceCategories)) {
+                        $serviceCategoryNames = array_map(function($c){ return is_object($c) ? ($c->name ?? '') : $c; }, $serviceCategories);
+                    }
+                }
+
+                $services = array_values(array_filter(array_merge($specialFeatures, $serviceCategoryNames)));
             @endphp
             
             @if(!empty($services))
@@ -912,7 +949,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <form id="inquiryModalForm">
                 @csrf
-                <input type="hidden" name="provider_id" value="{{ $provider->id }}">
+                <input type="hidden" name="cleaner_id" value="{{ $provider->id }}">
                 
                 <div class="modal-body">
                     <div class="row g-3">

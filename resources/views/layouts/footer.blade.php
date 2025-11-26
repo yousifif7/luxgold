@@ -11,7 +11,7 @@
             <h5 class="askroro-footer-title mb-0 fw-bold">luxGold</h5>
           </div>
           <p class="askroro-footer-description">
-            Your trusted guide to House cleaning, designing, activities & wellness in North Texas.
+            Your trusted guide to house cleaning, home services and wellness across Ireland.
           </p>
           <div class="askroro-footer-social d-flex gap-3 mt-3">
             <a href="#" class="text-dark"><i class="fab fa-facebook-f"></i></a>
@@ -55,7 +55,8 @@
     <!-- Bottom Bar -->
     <div class="askroro-footer-bottom text-center mt-4 pt-3 border-top border-secondary">
       <p class="mb-1">©2026 luxGold. All rights reserved.</p>
-      <p class="mb-0">Powered by Privy Consulting LLC</p>
+      <p class="mb-0">Operating in Ireland — serving Dublin, Cork, Galway, Limerick and surrounding areas.</p>
+      <p class="mb-0">Powered by Privy Consulting</p>
     </div>
   </div>
 </footer>
