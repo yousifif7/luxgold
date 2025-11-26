@@ -68,16 +68,43 @@
             <div class="col-lg-6 d-flex justify-content-center mt-5 mt-lg-0">
                
 
-                    <img src="{{ asset('assets/images/2.png') }}" style="width:100%">
-                  {{--   <div class="icon-card blue"><i class="bi bi-people"></i></div>
-                    <div class="icon-card green"><i class="bi bi-mortarboard"></i></div>
-                    <div class="icon-card purple"><i class="bi bi-book"></i></div>
-                    <div class="icon-card pink"><i class="bi bi-heart"></i></div>
-                    <div class="icon-card orange"><i class="bi bi-emoji-smile"></i></div>
-                    <div class="icon-card yellow"><i class="bi bi-link-45deg"></i></div>
-                    <div class="icon-card teal"><i class="bi bi-stars"></i></div>
-                    <div class="icon-card blue"><i class="bi bi-calendar"></i></div>
-                    <div class="icon-card red"><i class="bi bi-shield"></i></div> --}}
+                    {{-- <img src="{{ asset('assets/images/cleaning-index.jpg') }}" style="width:100%; height:600px;" alt="Cleaning service"> --}}
+                    <div class="icon-grid-cleaning d-flex gap-3 flex-wrap justify-content-center">
+                        <div class="icon-card teal">
+                            <i class="bi bi-broom"></i>
+                            <div class="icon-label">General Clean</div>
+                        </div>
+
+                        <div class="icon-card green">
+                            <i class="bi bi-brush"></i>
+                            <div class="icon-label">Deep Clean</div>
+                        </div>
+
+                        <div class="icon-card blue">
+                            <i class="bi bi-droplet"></i>
+                            <div class="icon-label">Sanitise</div>
+                        </div>
+
+                        <div class="icon-card yellow">
+                            <i class="bi bi-stars"></i>
+                            <div class="icon-label">Detailing</div>
+                        </div>
+
+                        <div class="icon-card orange">
+                            <i class="bi bi-speedometer2"></i>
+                            <div class="icon-label">Same-day</div>
+                        </div>
+
+                        <div class="icon-card purple">
+                            <i class="bi bi-shield-check"></i>
+                            <div class="icon-label">Trusted</div>
+                        </div>
+
+                        <div class="icon-card red">
+                            <i class="bi bi-award"></i>
+                            <div class="icon-label">Top Rated</div>
+                        </div>
+                    </div>
                 
             </div>
         </div>

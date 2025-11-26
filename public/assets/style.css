@@ -3,12 +3,23 @@
 body {
   font-family: "Poppins";
 }
+
+/* Theme variables for luxGold cleaning palette */
+:root{
+  --primary: #00a8a8; /* teal - primary brand color for cleaning */
+  --primary-rgb: 0,168,168;
+  --accent: #ffd54f;  /* warm accent (soft yellow) */
+  --muted: #64748b;   /* muted gray */
+  --brand-dark: #0b7285;
+  --card-bg: #ffffff;
+  --text-color: #222;
+}
 .rating-stars{
   display: flex !important;
   justify-content: center !important;
 }
 .navbar .navbar-brand span {
-  color: rgb(255, 107, 71);
+  color: var(--accent);
   font-weight: 700;
 
   font-size: 20px;
@@ -38,7 +49,7 @@ body {
   outline: none;
   font-weight: 600;
   font-size: 14px;
-  background-color: rgb(255, 107, 71);
+  background-color: var(--brand-dark);
   padding: 7px 10px;
   border-radius: 8.5px;
 }
@@ -53,18 +64,18 @@ body {
   transition: background-color 0.15s ease-in-out;
 }
 .navbar .nav-item:hover .nav-link {
-  color: #f59e0b;
+  color: var(--brand-dark);
 }
 .navbar .nav-item.active {
   background-color: #fef3c7;
   border-radius: 8.5px;
 }
 .navbar .nav-item.active .nav-link {
-  color: #f59e0b;
+  color: var(--brand-dark);
 }
 
 .register-btn:hover {
-  color: #f59e0b;
+  color: var(--brand-dark);
   transition: all 0.15s ease-in-out;
   background-color: #fef3c7;
 }
@@ -94,17 +105,17 @@ body {
   font-weight: 700;
 }
 .hero-title .highlight-orange {
-  color: #ff6b47;
+  color: var(--accent);
 }
 .hero-title .highlight-blue {
   color: #0072ff;
 }
 .hero-title .highlight-green {
-  color: #337d7c;
+  color: var(--primary);
 }
 .search-box {
-  background: #fff;
-  border: 3px solid #337d7c ;
+  background: var(--card-bg);
+  border: 3px solid var(--primary) ;
   border-radius: 12px;
   padding: 1rem;
   margin-top: 2rem;
@@ -136,15 +147,17 @@ body {
   gap: 1rem;
 }
 .icon-card {
-  width: 70px;
-  height: 70px;
-  border-radius: 15px;
+
+  width: 84px;
+  height: 84px;
+  border-radius: 14px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #fff;
-  background-color: rgb(51, 125, 124);
-  font-size: 1.5rem;
+  background-color: var(--primary);
+  font-size: 1.4rem;
 
   /* shadow */
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
@@ -158,6 +171,29 @@ body {
   animation-play-state: running;
   animation-timing-function: ease;
 }
+
+/* Icon label under each icon */
+.icon-card .icon-label{
+  font-size: 12px;
+  margin-top: 6px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Color variants for icon cards (use theme vars where appropriate) */
+.icon-card.teal { background: var(--primary); }
+.icon-card.green { background: rgba(var(--primary-rgb), 0.85); }
+.icon-card.blue { background: #1e90ff; }
+.icon-card.purple { background: #7a3db8; }
+.icon-card.pink { background: #f23b7f; }
+.icon-card.orange { background: var(--accent); color: #0b1420; }
+.icon-card.yellow { background: #ffc04d; color: #0b1420; }
+.icon-card.red { background: #ff6b47; }
+
+/* Responsive grid wrapper spacing */
+.icon-grid-cleaning { max-width: 420px; }
 
 /* Bounce keyframes (up–down) */
 @keyframes bounce {
@@ -198,12 +234,12 @@ body {
 
 .hero-section .custom-badge {
   /* fallback colors first */
-  color: #337d7c;
+  color: var(--primary);
   border: 1px solid #ddd;
   background-color: #fff;
 
   /* OKLCH colors (for modern browsers) */
-  color: #337d7c;
+  color: var(--primary);
 
 
   font-size: 13px;
@@ -243,10 +279,10 @@ body {
   padding: 7px 6px;
   border-radius: 8.5px;
   background-color: #f8fafc;
-  border: 2px solid #337d7c;
+  border: 2px solid var(--primary);
 }
 .search-box .input-group-div i {
-  color: #337d7c;
+  color: var(--primary);
   margin-left: 5px;
 }
 
@@ -260,10 +296,10 @@ body {
 }
 
 .search-box .input-group-div.green {
-  border: 2px solid #337d7c;
+  border: 2px solid var(--primary);
 }
 .search-box .input-group-div.green i {
-  color: #337d7c;
+  color: var(--primary);
 }
 .search-box .search-provider_btn {
   background-color: #337d7c;
@@ -294,7 +330,7 @@ body {
 
 /* specific circles */
 .hero-section .circle.circle-1 {
-  background-color: rgb(51, 125, 124);
+  background-color: var(--primary);
   top: calc(0.25rem * 20);
   left: calc(0.25rem * 10);
   width: 70px;
@@ -304,7 +340,7 @@ body {
 }
 
 .hero-section .circle.circle-2 { 
-  background-color:rgb(51, 125, 124);
+  background-color: var(--primary);
   right: calc(0.25rem * 20);
   top: calc(0.25rem * 42);
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -314,7 +350,7 @@ body {
 }
 
 .hero-section .circle.circle-3 {
-background-color: rgb(51, 125, 124);
+background-color: var(--primary);
   right: calc(0.25rem * 6);
   bottom: calc(0.25rem * -6);
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -373,7 +409,7 @@ background-color: rgb(51, 125, 124);
   position: absolute;
   top: 12px;
   right: 5px;
-  background:#337d7c;
+  background:var(--primary);
   color: #fff;
   font-size: 13px;
   font-weight: 600;
@@ -442,7 +478,7 @@ background-color: rgb(51, 125, 124);
   color: #d66a00;
 }
 .tag-red {
-  background: rgb(255, 107, 71);
+  background: var(--accent);
   color: #fff;
 }
 .tag-gray {
@@ -452,7 +488,7 @@ background-color: rgb(51, 125, 124);
 }
 .view-all-providers_btn {
   margin-top: 40px;
-  background: #337d7c;
+  background: var(--primary);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -475,7 +511,7 @@ background-color: rgb(51, 125, 124);
   transition: all 0.1s ease-in-out;
 }
 .btn-compare:hover {
-  background-color: #337d7c21;
+  background-color: rgba(var(--primary-rgb), 0.13);
   transition: all 0.1s ease-in-out;
 }
 .btn-compare {
@@ -491,7 +527,7 @@ background-color: rgb(51, 125, 124);
   flex: 1;
   text-align: center;
   text-decoration: none;
-  background: #337d7c;
+  background: var(--primary);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -502,7 +538,7 @@ background-color: rgb(51, 125, 124);
 .second-section {
   padding-top: 60px;
   padding-bottom: 60px;
-  background-color: #337d7c21;
+  background-color: rgba(var(--primary-rgb), 0.13);
 }
 
 .btn-compare.compare-btn.in-compare{
@@ -696,7 +732,7 @@ section .tagline {
 }
 
 .city-link {
-  color: rgb(255, 107, 71);
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
   display: block;
@@ -710,7 +746,7 @@ section .tagline {
 
 .city-families {
   font-size: 15px;
-  color: #337d7c;
+  color: var(--primary);
   font-weight: 600;
 }
 
@@ -719,7 +755,7 @@ section .tagline {
   background: #1e90ff;
 }
 .green-bg {
-  background: #337d7c;
+  background: var(--primary);
 }
 .purple-bg {
   background: #a352ff;
@@ -740,13 +776,13 @@ section .tagline {
   margin-bottom: 10px;
   font-size: 24px;
   font-weight: bold;
-  color: #ff5a00;
+  color: var(--accent);
 }
 
 .soon-card {
   width: 220px;
   height: 220px;
-  border: 2px dashed rgb(255, 107, 71);
+  border: 2px dashed var(--accent);
   border-radius: 20px;
   background: #fff;
   padding: 25px 10px;
@@ -761,14 +797,14 @@ section .tagline {
 .soon-card-title {
   font-size: 18px;
   font-weight: 700;
-  color: rgb(255, 107, 71);
+  color: var(--accent);
   margin-bottom: 10px;
 }
 
 .soon-badge {
   font-size: 12px;
   padding: 4px 12px;
-  background-color: rgb(255, 107, 71);
+  background-color: var(--accent);
   border-radius: 12px;
   color: #fff;
   font-weight: bold;
@@ -785,7 +821,7 @@ section .tagline {
 
 .request-btn {
   margin-top: 15px;
-  background: #337d7c;
+  background: var(--primary);
   color: white;
   font-weight: bold;
   padding: 10px 20px;
@@ -801,7 +837,7 @@ section .tagline {
 }
 
 .request-btn:hover {
-  background: #009d85;
+  background: var(--brand-dark);
 }
 
 @media (max-width: 768px) {
@@ -1278,14 +1314,14 @@ body.find-provider-page {
   border-radius: 12px;
   font-weight: 500;
   white-space: nowrap;
-background: rgb(255, 107, 71);
+background: var(--muted);
 color: #fff !important;
 }
 
 .find-provider-page .pill {
 font-size: 13px;
 cursor: pointer;
-color: #000;
+color: var(--primary);
 font-weight: 600;
 }
 .find-provider-page .pill i{
@@ -3248,7 +3284,7 @@ width: 45px;
   display: flex;
 }
 .askroro-footer-title{
-  color: rgb(255, 107, 71) !important;
+  color: var(--brand-dark) !important;
 }
 .askroro-footer-bottom{
   color: rgb(100, 116, 139);

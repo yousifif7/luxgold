@@ -7,16 +7,16 @@
       <div class="col-lg-3 col-md-6">
         <div class="askroro-footer-brand">
           <div class="d-flex align-items-center mb-3">
-            <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="ASKRORO Logo" class="askroro-footer-logo me-2">
-            <h5 class="askroro-footer-title mb-0 fw-bold">AskRoro</h5>
+            <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="luxGold Logo" class="askroro-footer-logo rounded me-2">
+            <h5 class="askroro-footer-title mb-0 fw-bold">luxGold</h5>
           </div>
           <p class="askroro-footer-description">
-            Your trusted guide to childcare, learning, activities & wellness in North Texas.
+            Your trusted guide to House cleaning, designing, activities & wellness in North Texas.
           </p>
           <div class="askroro-footer-social d-flex gap-3 mt-3">
             <a href="#" class="text-dark"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="text-dark"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.instagram.com/askroroofficial?igsh=bnk3djBza2lscHNp" target="_blank" class="text-dark"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank" class="text-dark"><i class="fab fa-instagram"></i></a>
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@
 
       <!-- For Providers -->
       <div class="col-lg-3 col-md-6">
-        <h6 class="askroro-footer-heading text-teal fw-bold mb-3">For Providers</h6>
+        <h6 class="askroro-footer-heading text-teal fw-bold mb-3">For Cleaners</h6>
         <ul class="list-unstyled askroro-footer-links">
           <li><a href="{{ route('website.for-cleaner') }}" class="text-decoration-none">List Your Service</a></li>
           {{-- <li><a href="#" class="text-decoration-none">Provider Dashboard</a></li> --}}
@@ -54,7 +54,7 @@
 
     <!-- Bottom Bar -->
     <div class="askroro-footer-bottom text-center mt-4 pt-3 border-top border-secondary">
-      <p class="mb-1">©2026 ASKRORO. All rights reserved.</p>
+      <p class="mb-1">©2026 luxGold. All rights reserved.</p>
       <p class="mb-0">Powered by Privy Consulting LLC</p>
     </div>
   </div>
