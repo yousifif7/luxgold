@@ -296,16 +296,16 @@
                     <!-- Logo Normal -->
                     <a href="/home" class="logo logo-normal">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" height="40px" alt="Logo">
-                        <h4>AskRoro</h4>
+                        <h4 style="color:#0b7285;">LuxGold</h4>
                     </a>
 
                     <!-- Logo Small -->
-                    <a href="{{ route('admin-home') }}" class="logo-small">
+                    <a href="/home" class="logo-small">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" alt="Logo">
                     </a>
 
                     <!-- Logo Dark -->
-                    <a href="{{ route('admin-home') }}" class="dark-logo">
+                    <a href="/home" class="dark-logo">
                         <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" alt="Logo">
                     </a>
                 </div>
@@ -360,8 +360,13 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="{{ route('admin.hire-requests.index') }}">
+                                        <i class="ti ti-settings"></i><span>Hiring Requests</span>
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ route('admin.support.index') }}">
-                                        <i class="ti ti-settings"></i><span>Support</span>
+                                        <i class="ti ti-speaker"></i><span>Support</span>
                                     </a>
                                 </li>
                                 <li>

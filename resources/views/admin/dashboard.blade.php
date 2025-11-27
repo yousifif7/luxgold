@@ -268,7 +268,7 @@
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
                            <i class="ti ti-building-store"></i>
                        </span>
-                       <p class="text-dark fw-semibold mb-0">All Providers</p>
+                       <p class="text-dark fw-semibold mb-0">All Cleaners</p>
                     </div>
                 </a>
             </div>
@@ -280,7 +280,7 @@
                        <span class="bg-gradient-primary rounded w-100 d-flex p-3 justify-content-center fs-32 text-primary mb-2">
                            <i class="ti ti-users"></i>
                        </span>
-                       <p class="text-dark fw-semibold mb-0">All Parents</p>
+                       <p class="text-dark fw-semibold mb-0">All Customers</p>
                     </div>
                 </a>
             </div>

@@ -233,10 +233,10 @@
 
             const data = await response.json();
             
-            if (response.ok) {
+                if (response.ok) {
                 showAlert('success', 'Registration successful!', 'Redirecting to dashboard...');
                 setTimeout(() => {
-                    window.location.href = '/parent/dashboard';
+                    window.location.href = '{{ route("customer-home") }}';
                 }, 2000);
             } else {
                 showAlert('error', 'Registration Failed', data.message || 'Please check your information and try again.');
@@ -275,7 +275,7 @@
             if (response.ok) {
                 showAlert('success', 'Welcome to ServiceFlow!', 'Your provider account has been created successfully.');
                 setTimeout(() => {
-                    window.location.href = 'provider/dashboard';
+                    window.location.href = '{{ route("cleaner-home") }}';
                 }, 2000);
             } else {
                 showAlert('error', 'Registration Failed', data.message || 'Please check your information and try again.');

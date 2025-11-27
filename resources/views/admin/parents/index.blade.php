@@ -122,7 +122,7 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Parent</th>
+                        <th>Customer</th>
                         <th>Contact</th>
                         <th>Children</th>
                         <th>Activity</th>

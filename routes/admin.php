@@ -70,6 +70,11 @@ Route::prefix('admin')->middleware(RoleMiddleware::class . ':admin')->group(func
     // Register resource routes but exclude the index (we provide a dedicated admin landing)
     Route::resource('cleaners', ProviderController::class, ['as'=>'admin'])->except(['index']);
 
+    // Admin: Hire requests management
+    Route::get('hire-requests', [App\Http\Controllers\Admin\HireRequestController::class, 'index'])->name('admin.hire-requests.index');
+    Route::get('hire-requests/{hireRequest}', [App\Http\Controllers\Admin\HireRequestController::class, 'show'])->name('admin.hire-requests.show');
+    Route::post('hire-requests/{hireRequest}/send', [App\Http\Controllers\Admin\HireRequestController::class, 'send'])->name('admin.hire-requests.send');
+
     Route::post('cleaners/{provider}/status', [ProviderController::class, 'updateStatus'])->name('admin.cleaners.status');
     Route::post('cleaners/bulk-action', [ProviderController::class, 'bulkAction'])->name('admin.cleaners.bulk-action');
     Route::get('cleaners/stats', [ProviderController::class, 'getStats'])->name('admin.cleaners.stats');
