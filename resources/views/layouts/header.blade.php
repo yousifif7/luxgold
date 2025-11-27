@@ -32,10 +32,9 @@
           <a class="nav-link {{ request()->is('for-cleaner') ? 'active' : '' }}" href="{{ route('website.for-cleaner') }}">For Cleaner</a>
         </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link {{ request()->is('compare') ? 'active' : '' }}" href="{{ route('website.compare') }}">Compare</a>
-        </li>
-
+        </li> --}}
 
       </ul>
     </div>

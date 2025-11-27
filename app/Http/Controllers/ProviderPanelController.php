@@ -345,7 +345,7 @@ class ProviderPanelController extends Controller
      */
     public function changePlan(Request $request, Plan $plan)
     {
-        $provider = auth()->user();
+        $provider = auth()->user()->cleaner;
         
         // Check if this is the current plan
         $currentSubscription = Subscription::where('cleaner_id', $provider->id)
@@ -382,10 +382,10 @@ class ProviderPanelController extends Controller
                 ],
             ]);
 
-            // Update provider's plan
-            $provider->update(['plan_id' => $plan->id]);
+            // Update provider's plan (cleaners store plan in `plans_id`)
+            $provider->update(['plans_id' => $plan->id]);
 
-            return redirect()->route('provider-subscription')
+            return redirect()->route('cleaner-subscription')
                 ->with('success', 'Plan changed successfully!');
         }
 

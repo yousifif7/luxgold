@@ -46,4 +46,24 @@ class SavedProviderController extends Controller
         $savedProviders = Auth::user()->SavedCleaner()->with('cleaner')->get();
         return view('website.saved-providers', compact('savedProviders'));
     }
+
+    /**
+     * Remove a saved cleaner for the authenticated user.
+     */
+    public function destroy($id, Request $request)
+    {
+        $saved = SavedCleaner::findOrFail($id);
+
+        if ($saved->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $saved->delete();
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Saved cleaner removed']);
+        }
+
+        return redirect()->back()->with('success', 'Saved cleaner removed');
+    }
 }

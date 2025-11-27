@@ -30,7 +30,7 @@
                                 <i class="ti ti-building-store fs-20"></i>
                             </span>
                             <div class="ms-3">
-                               <p class="mb-1 text-truncate">Total Providers</p>
+                               <p class="mb-1 text-truncate">Total Cleaners</p>
                                <h6 class="mb-0 fw-semibold">{{ $stats['total_providers'] }}</h6>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                 <i class="ti ti-users fs-20"></i>
                             </span>
                             <div class="ms-3">
-                               <p class="mb-1 text-truncate">Total Parents</p>
+                               <p class="mb-1 text-truncate">Total Customers</p>
                                <h6 class="mb-0 fsw-semibold">{{ $stats['total_parents'] }}</h6>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                                 <i class="ti ti-star fs-20"></i>
                             </span>
                             <div class="ms-3">
-                               <p class="mb-1 text-truncate">Featured Providers</p>
+                               <p class="mb-1 text-truncate">Featured Cleaners</p>
                                <h6 class="mb-0 fw-semibold">{{ $stats['featured_providers'] }}</h6>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
                     </div>
                     <div class="card-body">
                         @if($pendingProviders->isEmpty())
-                            <div class="text-muted">No pending providers</div>
+                            <div class="text-muted">No pending Cleaners</div>
                         @else
                             <ul class="list-unstyled mb-0">
                                 @foreach($pendingProviders as $p)
@@ -206,7 +206,7 @@
                                 <div class="mb-2">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <strong>{{ $rv->cleaner->business_name ?? 'Provider' }}</strong>
+                                            <strong>{{ $rv->cleaner->business_name ?? 'Cleaner' }}</strong>
                                             <div class="small text-muted">{{ \Illuminate\Support\Str::limit($rv->comment ?? $rv->content ?? '', 80) }}</div>
                                         </div>
                                         <div>
@@ -486,14 +486,24 @@
                                     <div class="d-flex align-items-center">
                                         <div>
                                             <h6 class="fs-14 mb-0 fw-medium">
-                                                <a href="{{ route('admin.cleaners.show', $inquiry['provider_id']) }}">
-                                                    {{ $inquiry['provider_name'] }}
+                                                <a href="{{ route('admin.cleaners.show', $inquiry['cleaner_id']) }}">
+                                                    {{ $inquiry['cleaner_name'] }}
                                                 </a>
                                             </h6>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ $inquiry['service_type']->name }}</td>
+                                @php
+                                    $serviceType = $inquiry['service_type'] ?? null;
+                                    if (is_object($serviceType)) {
+                                        $serviceDisplay = $serviceType->name ?? '-';
+                                    } elseif (is_array($serviceType)) {
+                                        $serviceDisplay = $serviceType['name'] ?? '-';
+                                    } else {
+                                        $serviceDisplay = $serviceType ?? '-';
+                                    }
+                                @endphp
+                                <td>{{ $serviceDisplay }}</td>
                                 <td>{{ $inquiry['date_time'] }}</td>
                                 <td>
                                     @php
@@ -609,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="row mt-3">
                 <div class="col-12">
                     <h6>Provider</h6>
-                    <p><strong>Name:</strong> ${inquiry.provider_name}</p>
+                    <p><strong>Name:</strong> ${inquiry.cleaner_name}</p>
                 </div>
             </div>
             <div class="row mt-3">
@@ -821,7 +831,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const id = this.dataset.id;
             const isApprove = this.classList.contains('btn-approve');
             const status = isApprove ? 'approved' : 'rejected';
-            if (!confirm(`${isApprove ? 'Approve' : 'Reject'} this provider?`)) return;
+            if (!confirm(`${isApprove ? 'Approve' : 'Reject'} this cleaner?`)) return;
             fetch(`/admin/cleaners/${id}/status`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token },

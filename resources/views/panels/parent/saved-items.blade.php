@@ -31,36 +31,36 @@
                     @forelse($savedProviders as $savedProvider)
                     <div class="provider-card mb-3">
                         <div class="provider-avatar bg-primary">
-                            {{ substr($savedProvider->provider->name, 0, 1) }}
+                            {{ substr($savedProvider->cleaner->name, 0, 1) }}
                         </div>
                         <div class="provider-info">
-                            <div class="provider-name">{{ $savedProvider->provider->name }}</div>
-                            <div class="provider-type">{{ $savedProvider->provider->type ?? 'Childcare Provider' }}</div>
+                            <div class="provider-name">{{ $savedProvider->cleaner->name }}</div>
+                            <div class="provider-type">{{ $savedProvider->cleaner->type ?? 'Childcare Provider' }}</div>
                             <div class="mt-2">
                                 <i class="fas fa-star text-warning"></i>
-                                <span class="rating-number">{{ number_format($savedProvider->provider->averageRating() ?? 0, 1) }}</span>
-                                <span class="ms-3"><i class="fas fa-map-marker-alt"></i> {{ $savedProvider->provider->location ?? 'N/A' }}</span>
+                                <span class="rating-number">{{ number_format($savedProvider->cleaner->averageRating() ?? 0, 1) }}</span>
+                                <span class="ms-3"><i class="fas fa-map-marker-alt"></i> {{ $savedProvider->cleaner->location ?? 'N/A' }}</span>
                             </div>
                             <div class="mt-1">
                                 <strong>
-                                    @if($savedProvider->provider->pricing_type === 'hourly')
-                                        ${{ number_format($savedProvider->provider->price ?? 0) }}/hour
-                                    @elseif($savedProvider->provider->pricing_type === 'monthly')
-                                        ${{ number_format($savedProvider->provider->price ?? 0) }}/month
+                                    @if($savedProvider->cleaner->pricing_type === 'hourly')
+                                        ${{ number_format($savedProvider->cleaner->price ?? 0) }}/hour
+                                    @elseif($savedProvider->cleaner->pricing_type === 'monthly')
+                                        ${{ number_format($savedProvider->cleaner->price ?? 0) }}/month
                                     @else
                                         Contact for pricing
                                     @endif
                                 </strong>
                                 <span class="ms-3">
                                     <i class="fas fa-users"></i> 
-                                    {{ $savedProvider->provider->capacity ?? 'N/A' }} children
+                                    {{ $savedProvider->cleaner->capacity ?? 'N/A' }} children
                                 </span>
                             </div>
                         </div>
                         <div class="text-end">
                             <div class="text-muted small mb-2">Saved {{ $savedProvider->created_at->format('M d, Y') }}</div>
-                            <a href="{{ route('website.cleaner-detail', $savedProvider->provider->id) }}" class="btn btn-outline-custom btn-sm me-2">View Details</a>
-                            <form action="{{ route('saved-providers.destroy', $savedProvider->id) }}" method="POST" class="d-inline">
+                            <a href="{{ route('website.cleaner-detail', $savedProvider->cleaner->id) }}" class="btn btn-outline-custom btn-sm me-2">View Details</a>
+                            <form action="{{ route('saved-cleaners.destroy', $savedProvider->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Remove this cleaner from saved items?')">

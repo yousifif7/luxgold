@@ -13,7 +13,7 @@
                 <button class="askroro-btn-option" onclick="openParentSignUpModal()">
                     <i class="bi bi-person"></i> I am a Customer
                 </button>
-                <button class="askroro-btn-option" onclick="openServiceProviderModal()">
+                <button class="askroro-btn-option signup-as-cleaner" onclick="startProviderSignupFlow()">
                     <i class="bi bi-briefcase"></i> I am a Cleaner
                 </button>
                 <div class="askroro-text-center">

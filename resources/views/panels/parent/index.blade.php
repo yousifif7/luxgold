@@ -1,6 +1,6 @@
 @extends('layouts.parent-layout')
 
-@section('parent-title', 'Dashboard - Cleaner Portal')
+@section('parent-title', 'Dashboard - Customer Portal')
 @section('content')
 <div class="page-wrapper">
 
@@ -134,6 +134,24 @@
             </div>
         </div>
 
+        <!-- Hire Requests Quick Card -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card p-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="mb-1">My Hire Requests</h6>
+                            <p class="mb-0 text-muted">Track bookings and provider responses</p>
+                        </div>
+                        <div class="text-end">
+                            <h4 class="mb-1">{{ $stats['hire_requests'] ?? 0 }}</h4>
+                            <a href="{{ route('hire-requests.index') }}" class="btn btn-outline-primary btn-sm">View Requests</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Main Content Row -->
         <div class="row">
             <!-- Recently Viewed Column -->
@@ -145,15 +163,15 @@
                     @forelse($recentlyViewed as $viewed)
                     <div class="provider-card">
                         <div class="provider-avatar bg-primary">
-                            {{ substr($viewed->provider->name, 0, 1) }}
+                            {{ substr($viewed->cleaner->name, 0, 1) }}
                         </div>
                         <div class="provider-info">
-                            <div class="provider-name">{{ $viewed->provider->name }}</div>
-                            <div class="provider-type">{{ $viewed->provider->type }}</div>
+                            <div class="provider-name">{{ $viewed->cleaner->name }}</div>
+                            <div class="provider-type">{{ $viewed->cleaner->type }}</div>
                         </div>
                         <div class="rating">
                             <i class="fas fa-star"></i>
-                            <span class="rating-number">{{ number_format($viewed->provider->reviews_avg_rating ?? 0, 1) }}</span>
+                            <span class="rating-number">{{ number_format($viewed->cleaner->reviews_avg_rating ?? 0, 1) }}</span>
                         </div>
                     </div>
                     @empty

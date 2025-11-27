@@ -13,6 +13,7 @@ use App\Models\RecentlyViewed;
 use Auth;
 use App\Models\Message;
 use App\Models\SavedEvent;
+use App\Models\HireRequest;
 
 class ParentPanelController extends Controller
 {
@@ -54,6 +55,7 @@ public function index()
             })
             ->count(),
         'reviews_given' => Review::where('user_id', $user->id)->count(),
+            'hire_requests' => HireRequest::where('user_id', $user->id)->count(),
     ];
 
     // Recently Viewed Providers (last 7 days)

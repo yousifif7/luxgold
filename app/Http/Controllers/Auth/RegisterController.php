@@ -8,17 +8,46 @@ use App\Models\Cleaner;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    protected $redirectTo = '/parent/dashboard';
+    /**
+     * Default redirect path (fallback)
+     * We'll override this dynamically in redirectTo() based on role.
+     */
+    protected $redirectTo = '/';
 
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Determine where to redirect users after registration based on their role.
+     * RegistersUsers will call this if present.
+     */
+    protected function redirectTo()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return $this->redirectTo;
+        }
+
+        if ($user->hasRole('cleaner')) {
+            return '/cleaner/dashboard';
+        }
+
+        // Customer/parent role
+        if ($user->hasRole('customer')) {
+            return '/customer/dashboard';
+        }
+
+        // Default fallback
+        return $this->redirectTo;
     }
 
     /**
@@ -82,7 +111,6 @@ class RegisterController extends Controller
                 'address'            => $data['address'],
                 'city'               => $data['city'],
                 'state'              => $data['state'],
-                // Normalize ZIP/Eircode to uppercase with a space after first 3 chars
                 'zip_code'           => strtoupper(preg_replace('/\s+/', ' ', trim($data['zip_code']))),
                 'service_description'=> $data['service_description'],
             ]);

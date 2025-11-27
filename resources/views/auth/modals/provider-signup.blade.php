@@ -1,3 +1,36 @@
+<!-- Eircode dialog: opens first when user clicks 'Sign up as Cleaner' -->
+<div class="serviceflow-modal-overlay" id="providerEircodeModal" style="display: none;">
+    <div class="serviceflow-modal-dialog">
+        <div class="serviceflow-modal-content">
+            <button class="serviceflow-btn-close" onclick="closeEircodeDialog()">&times;</button>
+            <div class="serviceflow-modal-header">
+                <div class="serviceflow-avatar-box">
+                    <div class="serviceflow-avatar">
+                        <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="luxGold Logo">
+                    </div>
+                </div>
+                <h2 class="serviceflow-modal-title">Enter your Eircode</h2>
+                <p class="serviceflow-modal-subtitle">Please enter your Eircode to confirm you operate in Ireland.</p>
+            </div>
+            <div class="serviceflow-modal-body">
+                <div style="max-width:420px; margin:0 auto; text-align:center;">
+                    <div class="serviceflow-form-group">
+                        <label class="serviceflow-form-label">Eircode</label>
+                        <input type="text" id="eircodeInputStandalone" class="serviceflow-form-control" placeholder="Eircode (e.g. D02 X285)">
+                        <div id="eircodeFeedbackStandalone" class="invalid-feedback" style="display:none; margin-top:6px;"></div>
+                    </div>
+                    <div style="margin-top:12px;">
+                        <button type="button" class="serviceflow-btn-next" id="checkEircodeStandaloneBtn">Check Eircode →</button>
+                    </div>
+                    <div style="margin-top:18px;">
+                        <button type="button" class="serviceflow-btn-back" onclick="closeEircodeDialog()">← Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="serviceflow-modal-overlay" id="providerSignUpModal" style="display: none;">
     <div class="serviceflow-modal-dialog">
         <div class="serviceflow-modal-content">
@@ -15,44 +48,21 @@
             <div class="serviceflow-modal-body">
                 <!-- Step Indicator -->
                 <div class="serviceflow-step-indicator">
-                    <div class="serviceflow-step active" id="step0Indicator">
+                    <div class="serviceflow-step active" id="step1Indicator">
                         <i class="bi bi-1-circle"></i>
-                        Eircode
-                    </div>
-                    <div class="serviceflow-step" id="step1Indicator">
-                        <i class="bi bi-2-circle"></i>
                         Category
                     </div>
                     <div class="serviceflow-step" id="step2Indicator">
-                        <i class="bi bi-3-circle"></i>
+                        <i class="bi bi-2-circle"></i>
                         Pricing
                     </div>
                     <div class="serviceflow-step" id="step3Indicator">
-                        <i class="bi bi-4-circle"></i>
+                        <i class="bi bi-3-circle"></i>
                         Details
                     </div>
                 </div>
                 
-                <!-- Step 0: Eircode check -->
-                <div class="serviceflow-step-content active" id="step0">
-                    <h3 style="text-align: center; margin-bottom: 24px; color: #1e293b; font-size: 20px;">Enter your Eircode</h3>
-                    <p style="text-align:center; color:#6b7280; margin-bottom:16px;">Please enter your Eircode to confirm you operate in Ireland.</p>
-                    <div style="max-width:420px; margin:0 auto;">
-                        <div class="serviceflow-form-group">
-                            <label class="serviceflow-form-label">Eircode</label>
-                            <input type="text" id="eircodeInput" class="serviceflow-form-control" placeholder="Eircode (e.g. D02 X285)" required>
-                            <div id="eircodeFeedback" class="invalid-feedback" style="display:none; margin-top:6px;"></div>
-                        </div>
-                        <div style="text-align:center; margin-top:12px;">
-                            <button type="button" class="serviceflow-btn-next" id="checkEircodeBtn">Check Eircode →</button>
-                        </div>
-                    </div>
-                    <div class="serviceflow-btn-navigation" style="margin-top:20px; text-align:center;">
-                        <button type="button" class="serviceflow-btn-back" onclick="closeModal('providerSignUpModal'),backToSignUpOptions()">
-                            ← Back to options
-                        </button>
-                    </div>
-                </div>
+                <!-- NOTE: Eircode step removed. Eircode will be collected in a separate dialog before opening this signup modal. -->
 
                 <!-- Step 1: Category Selection -->
                 <div class="serviceflow-step-content" id="step1">
@@ -320,6 +330,9 @@
 .serviceflow-price-option {
     display: none;
 }
+.serviceflow-step-content {
+    display: none;
+}
 .serviceflow-step-content.active {
     display: block !important;
 }
@@ -344,6 +357,44 @@
     background: #3b82f6;
     color: white;
 }
+
+/* Center these modals and make dialog scrollable when tall */
+#providerEircodeModal,
+#providerSignUpModal {
+    position: fixed;
+    inset: 0;
+    display: none; /* toggled by JS */
+    background: rgba(17,24,39,0.6);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+#providerEircodeModal .serviceflow-modal-dialog,
+#providerSignUpModal .serviceflow-modal-dialog {
+    max-height: calc(100vh - 64px);
+    overflow: auto;
+}
+
+/* Ensure other modal dialog variants also center */
+.serviceflow-modal-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Also center the askroro modal overlay (used on main signup dialog) */
+.askroro-modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(17,24,39,0.6);
+    z-index: 9998;
+}
 </style>
 
 <script>
@@ -351,71 +402,86 @@ let selectedBillingPeriod = 'monthly';
 
 // Simple step navigation handlers scoped to this modal
 function showStep(stepId){
+    // Remove active from all steps and add to the target only
+    // Remove active class and explicitly hide all step content containers.
     document.querySelectorAll('.serviceflow-step-content').forEach(el=>{
-        // hide all step contents
         el.classList.remove('active');
-        el.style.display = 'none';
+        try{ el.style.display = 'none'; }catch(e){}
     });
-
     const target = document.getElementById(stepId);
     if(target){
+        // Ensure the target is visible and marked active. Inline style wins over any conflicting CSS rules.
+        try{ target.style.display = 'block'; }catch(e){}
         target.classList.add('active');
-        target.style.display = '';
     }
 
     // Update indicators
-    ['step0Indicator','step1Indicator','step2Indicator','step3Indicator'].forEach(id=>{
-        const el = document.getElementById(id);
-        if(!el) return;
-        el.classList.remove('active');
-    });
-    const activeIndicator = {
-        'step0':'step0Indicator',
-        'step1':'step1Indicator',
-        'step2':'step2Indicator',
-        'step3':'step3Indicator'
-    }[stepId];
-    if(activeIndicator) document.getElementById(activeIndicator).classList.add('active');
+    // Clear active class from any step indicator and set the new one
+    document.querySelectorAll('.serviceflow-step').forEach(ind => ind.classList.remove('active'));
+    const activeIndicator = document.getElementById(stepId + 'Indicator');
+    if(activeIndicator) activeIndicator.classList.add('active');
 
-    // Ensure Eircode input/feedback are only visible on step0
-    const eirInput = document.getElementById('eircodeInput');
-    const eirFeedback = document.getElementById('eircodeFeedback');
-    const step0 = document.getElementById('step0');
-    if(stepId !== 'step0'){
-        if(eirInput) eirInput.style.display = 'none';
-        if(eirFeedback) eirFeedback.style.display = 'none';
-        if(step0) step0.style.display = 'none';
-    } else {
-        if(eirInput) eirInput.style.display = '';
-        if(step0) step0.style.display = '';
-    }
+    // No need to toggle inline visibility — CSS rules handle showing the active step.
 }
 
-function goToStep1(){ showStep('step1'); }
-function goToStep2(){ showStep('step2'); }
-function goToStep3(){ showStep('step3'); }
+// Generic step navigation: call with the step index (0..3)
+function goToStep(index){
+    showStep('step' + index);
+}
+
+function goToStep0(){ goToStep(0); }
+function goToStep1(){ goToStep(1); }
+function goToStep2(){ goToStep(2); }
+function goToStep3(){ goToStep(3); }
 
 // CSRF token for AJAX
 const CSRF_TOKEN = '{{ csrf_token() }}';
 
-// Handle Eircode check
+// Eircode is handled in a separate dialog before opening this modal.
+// The standalone dialog code below opens first, validates the Eircode via AJAX,
+// and on success populates `#zip_code_hidden` then opens the signup modal.
+
+// Open / close helpers for the Eircode dialog
+function openEircodeDialog(){
+    const dlg = document.getElementById('providerEircodeModal');
+    if(!dlg) return;
+    dlg.style.display = 'flex';
+    const input = document.getElementById('eircodeInputStandalone');
+    if(input){ input.value = ''; input.focus(); }
+    const fb = document.getElementById('eircodeFeedbackStandalone'); if(fb) fb.style.display='none';
+}
+function closeEircodeDialog(){
+    const dlg = document.getElementById('providerEircodeModal');
+    if(!dlg) return;
+    dlg.style.display = 'none';
+}
+
+// Start the provider signup flow (can be called from any button click)
+function startProviderSignupFlow(){
+    openEircodeDialog();
+}
+
+// Attach click listeners to any elements that want to trigger this flow
 document.addEventListener('DOMContentLoaded', function(){
-    const btn = document.getElementById('checkEircodeBtn');
-    if(btn){
-        btn.addEventListener('click', async function(){
-            const input = document.getElementById('eircodeInput');
-            const feedback = document.getElementById('eircodeFeedback');
-            feedback.style.display = 'none';
-            const value = input.value.trim();
+    // Buttons/links with class `signup-as-cleaner` will open the Eircode dialog
+    document.querySelectorAll('.signup-as-cleaner').forEach(el => {
+        el.addEventListener('click', function(e){ e.preventDefault(); startProviderSignupFlow(); });
+    });
+
+    // Handle the Eircode check from the standalone dialog
+    const checkBtn = document.getElementById('checkEircodeStandaloneBtn');
+    if(checkBtn){
+        checkBtn.addEventListener('click', async function(){
+            const input = document.getElementById('eircodeInputStandalone');
+            const feedback = document.getElementById('eircodeFeedbackStandalone');
+            if(feedback) feedback.style.display = 'none';
+            const value = input ? input.value.trim() : '';
             if(!value){
-                feedback.innerText = 'Please enter your Eircode.';
-                feedback.style.display = 'block';
+                if(feedback){ feedback.innerText = 'Please enter your Eircode.'; feedback.style.display='block'; }
                 return;
             }
 
-            btn.disabled = true;
-            btn.innerText = 'Checking...';
-
+            checkBtn.disabled = true; checkBtn.innerText = 'Checking...';
             try{
                 const res = await fetch('{{ route('check.eircode') }}', {
                     method: 'POST',
@@ -428,35 +494,32 @@ document.addEventListener('DOMContentLoaded', function(){
                 });
 
                 if(!res.ok){
-                    const error = await res.json();
-                    feedback.innerText = error.message || 'Eircode not recognized.';
-                    feedback.style.display = 'block';
-                    btn.disabled = false;
-                    btn.innerText = 'Check Eircode →';
+                    let message = 'Eircode not recognized.';
+                    try{ const err = await res.json(); if(err && err.message) message = err.message; }catch(e){}
+                    if(feedback){ feedback.innerText = message; feedback.style.display='block'; }
+                    checkBtn.disabled = false; checkBtn.innerText = 'Check Eircode →';
+                    showAlert('error', 'Eircode Check Failed', message);
                     return;
                 }
 
                 const data = await res.json();
-                // Set normalized eircode into hidden field so registration will submit it
+                // Populate the hidden zip code for the signup form
                 const hidden = document.getElementById('zip_code_hidden');
                 if(hidden) hidden.value = data.eircode;
 
-                // Hide the Eircode input and feedback so they don't appear in other steps
-                const step0El = document.getElementById('step0');
-                const eirInputEl = document.getElementById('eircodeInput');
-                const eirFeedbackEl = document.getElementById('eircodeFeedback');
-                if(eirInputEl) eirInputEl.style.display = 'none';
-                if(eirFeedbackEl) eirFeedbackEl.style.display = 'none';
-                if(step0El) step0El.style.display = 'none';
-
-                // Proceed to category step
-                goToStep1();
+                // Close the eircode dialog and open the signup modal
+                closeEircodeDialog();
+                const signupModal = document.getElementById('providerSignUpModal');
+                if(signupModal) signupModal.style.display = 'flex';
+                // Ensure signup modal shows the Category step
+                try{ showStep('step1'); }catch(e){}
+                showAlert('success', 'Eircode validated', 'Proceeding to signup');
             }catch(err){
-                feedback.innerText = 'Unable to validate Eircode at this time.';
-                feedback.style.display = 'block';
+                const msg = 'Unable to validate Eircode at this time.';
+                if(feedback){ feedback.innerText = msg; feedback.style.display='block'; }
+                showAlert('error', 'Eircode Error', msg);
             }finally{
-                btn.disabled = false;
-                btn.innerText = 'Check Eircode →';
+                checkBtn.disabled = false; checkBtn.innerText = 'Check Eircode →';
             }
         });
     }
@@ -471,14 +534,8 @@ if(providerModalOverlay){
             const visible = window.getComputedStyle(providerModalOverlay).display !== 'none';
             // Only act when visibility changes from hidden -> visible
             if(visible && !prevVisible){
-                // When modal opens, show step0 so Eircode input is visible first
-                showStep('step0');
-                const eirInput = document.getElementById('eircodeInput');
-                const eirFeedback = document.getElementById('eircodeFeedback');
-                const hidden = document.getElementById('zip_code_hidden');
-                if(eirInput) { eirInput.style.display = ''; eirInput.value = ''; }
-                if(eirFeedback) { eirFeedback.style.display = 'none'; eirFeedback.innerText = ''; }
-                if(hidden) hidden.value = '';
+                    // When modal opens, show the first step (Category)
+                        showStep('step1');
                 // Ensure pricing/category next buttons initially disabled
                 const pricingNextBtn = document.getElementById('pricingNextBtn');
                 if(pricingNextBtn) pricingNextBtn.disabled = true;
@@ -540,6 +597,19 @@ document.querySelectorAll('.serviceflow-btn-plan').forEach(button => {
         document.getElementById('pricingNextBtn').disabled = false;
     });
 });
+
+    // Category selection: allow clicking a card to choose a category and enable the next button
+    document.querySelectorAll('.serviceflow-category-card').forEach(card => {
+        card.addEventListener('click', function() {
+            document.querySelectorAll('.serviceflow-category-card').forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            const catId = this.dataset.category;
+            const hidden = document.getElementById('providerCategory');
+            if(hidden) hidden.value = catId;
+            const categoryNextBtn = document.getElementById('categoryNextBtn');
+            if(categoryNextBtn) categoryNextBtn.disabled = false;
+        });
+    });
 
 // Update the goToStep3 function to include billing period
 

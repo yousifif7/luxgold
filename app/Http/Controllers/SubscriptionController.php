@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Plan;
-use App\Models\Subscription;
-use App\Models\Payment;
-use Illuminate\Http\Request;
 use Stripe\Stripe;
-use Stripe\Checkout\Session as StripeSession;
 use Stripe\Webhook;
-use Auth;
+use App\Models\Plan;
+use App\Models\Payment;
+use App\Models\Subscription;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Stripe\Checkout\Session as StripeSession;
 
 class SubscriptionController extends Controller
 {
@@ -19,8 +19,26 @@ class SubscriptionController extends Controller
         $plan=Plan::where('id',$id)->first();
         Stripe::setApiKey(config('stripe.secret'));
 
+        // If the plan is free (zero amount), create a local active subscription and skip Stripe
+        if ($plan->monthly_fee <= 0) {
+            $subscription = Subscription::create([
+                'cleaner_id' => Auth::user()->cleaner->id,
+                'plan_id' => $plan->id,
+                'amount' => 0,
+                'currency' => $plan->currency ?? 'USD',
+                'status' => 'active',
+                'started_at' => now(),
+                'is_active' => true,
+                'renews_at' => now()->addDays($plan->duration_days ?? 30),
+                'meta' => ['plan_id' => $plan->id, 'auto_renew' => false, 'is_free' => true],
+            ]);
+
+            // No payment required; redirect to subscription page
+            return redirect()->route('cleaner-subscription')->with('success', 'You have been subscribed to the free plan.');
+        }
+
         // Create Stripe recurring subscription checkout session
-       
+        
         // Create subscription (pending, awaiting Stripe confirmation)
         $subscription = Subscription::create([
             'cleaner_id' => Auth::user()->cleaner->id,
@@ -221,7 +239,8 @@ class SubscriptionController extends Controller
     public function cancel(Subscription $subscription)
     {
         // Check if user owns this subscription
-        if ($subscription->cleaner_id !== auth()->id()) {
+        $cleanerId = auth()->user()->cleaner->id ?? null;
+        if ($subscription->cleaner_id !== $cleanerId) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -255,7 +274,8 @@ class SubscriptionController extends Controller
     public function enable(Subscription $subscription)
     {
         // Check if user owns this subscription
-        if ($subscription->cleaner_id !== auth()->id()) {
+        $cleanerId = auth()->user()->cleaner->id ?? null;
+        if ($subscription->cleaner_id !== $cleanerId) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -317,7 +337,8 @@ class SubscriptionController extends Controller
     public function disable(Subscription $subscription)
     {
         // Check if user owns this subscription
-        if ($subscription->cleaner_id !== auth()->id()) {
+        $cleanerId = auth()->user()->cleaner->id ?? null;
+        if ($subscription->cleaner_id !== $cleanerId) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -350,7 +371,8 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        $subscriptions = Subscription::where('cleaner_id', auth()->id())
+        $cleanerId = auth()->user()->cleaner->id ?? null;
+        $subscriptions = Subscription::where('cleaner_id', $cleanerId)
             ->with('payments')
             ->latest()
             ->paginate(10);
@@ -364,7 +386,8 @@ class SubscriptionController extends Controller
     public function show(Subscription $subscription)
     {
         // Check if user owns this subscription
-        if ($subscription->cleaner_id !== auth()->id()) {
+        $cleanerId = auth()->user()->cleaner->id ?? null;
+        if ($subscription->cleaner_id !== $cleanerId) {
             abort(403, 'Unauthorized action.');
         }
 

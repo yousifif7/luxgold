@@ -111,12 +111,12 @@
                 <a href="/" class="back-btn" id="backBtn"><i class="ti ti-arrow-left"></i>Back to Home</a>
             </div>
     
-            <div class="header-actions">
+            {{-- <div class="header-actions">
                
                 <div class="pill compare-count-badge" onclick="showCompareModal()" id="comparePill">
                     0 to compare
                 </div>
-            </div>
+            </div> --}}
         </div>
     
         <!-- Mobile Filter Button -->
@@ -345,9 +345,9 @@
                             </div>
                             
                             <div class="card-footer">
-                                <button data-id="p{{ $provider->id }}" data-provider-id="{{ $provider->id }}" class="btn-compare compare-btn">
+                                {{-- <button data-id="p{{ $provider->id }}" data-provider-id="{{ $provider->id }}" class="btn-compare compare-btn">
                                     Compare
-                                </button>
+                                </button> --}}
                                 <a class="btn-view" href="{{ route('website.cleaner-detail', $provider->id) }}">
                                     View Details
                                 </a>
@@ -437,7 +437,7 @@
         </div>
     
         <!-- Enhanced Compare bottom bar -->
-        <div id="compareBar" class="compare-bar" aria-hidden="true">
+        {{-- <div id="compareBar" class="compare-bar" aria-hidden="true">
             <div class="compare-header">
                 <h3 class="compare-title">Compare Providers</h3>
                 <button id="closeCompare" onclick="hideCompareModal()" 
@@ -450,7 +450,7 @@
                 <button id="clearCompare" onclick="clearCompareList()" class="compare-clear">Clear All</button>
                 <button id="doCompare" class="compare-final-btn">View Detail Comparision (0)</button>
             </div>
-        </div>
+        </div> --}}
     </div>
     </div>
 

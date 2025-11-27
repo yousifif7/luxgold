@@ -9,7 +9,7 @@
                 @if($heroContent)
                 <h1 class="hero-title">
                 <span class="highlight-orange">{{ $heroContent->title_part1 ?? 'Premium' }}</span><br>
-                <span class="highlight-green">{{ $heroContent->title_part2 ?? 'cleaning services' }}</span>                </h1>
+                <span class="highlight-green">{{ $heroContent->title_part2 ?? 'cleaning services' }}</span></h1>
                 <p class="mt-3" style="color: rgb(100, 116, 139);font-weight: 400;">
                     {{ $heroContent->description ?? 'Find and compare vetted cleaners near you. Book one-time or recurring cleanings with transparent pricing and verified reviews.' }}
                 </p>
@@ -23,6 +23,17 @@
                     Find and compare vetted cleaners near you. Book one-time or recurring cleanings with transparent pricing and verified reviews.
                 </p>
                 @endif
+                <!-- Eircode quick box to start a general hire request -->
+                <div class="mt-4">
+                    <div class="eircode-hero-box" style="max-width:720px;">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                            <input id="heroEircodeInput" class="form-control" placeholder="Enter your Eircode here">
+                            <button id="heroQuoteBtn" type="button" class="btn btn-success">QUOTE ME</button>
+                        </div>
+                        <div id="heroEircodeError" class="text-danger small mt-2" style="display:none;"></div>
+                    </div>
+                </div>
                 <!-- Search Box -->
                 <div class="search-box">
                     <form action="{{ route('website.find-cleaner') }}" class="row g-2">
@@ -110,6 +121,117 @@
         </div>
     </div>
 </section>
+
+@include('partials.hire_request_modal')
+
+@push('styles')
+<style>
+    .eircode-hero-box .input-group {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 18px 40px rgba(16,24,40,0.12);
+        background: linear-gradient(180deg, #ffffff 0%, #f7fbfa 100%);
+        border: 1px solid rgba(51,125,124,0.08);
+    }
+    .eircode-hero-box .input-group-text {
+        background: transparent;
+        border: none;
+        color: #2c6b68;
+        padding: 0 1rem;
+        font-size: 1.1rem;
+    }
+    .eircode-hero-box .form-control {
+        border: none;
+        padding: 1.25rem 1rem;
+        font-size: 1.05rem;
+        background: transparent;
+        color: #0f1720;
+    }
+    .eircode-hero-box .form-control::placeholder { color: #94a3b8; }
+    .eircode-hero-box .btn {
+        padding: 0.85rem 1.6rem;
+        font-weight:700;
+        background: linear-gradient(90deg,#0f8f84,#0b6c66);
+        border: none;
+        color: #fff;
+        border-radius: 0; /* keep sharp to match group */
+    }
+    /* Focus state */
+    .eircode-hero-box .form-control:focus { outline: none; box-shadow: none; }
+    .eircode-hero-box:focus-within { box-shadow: 0 22px 60px rgba(15,143,132,0.12); border-color: rgba(15,143,132,0.18); }
+
+    @media (max-width: 767px) {
+        .eircode-hero-box .input-group { flex-direction: row; }
+        .eircode-hero-box .btn { padding: 0.75rem 1rem; }
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+// Homepage Eircode -> open generic hire request modal
+document.getElementById('heroQuoteBtn')?.addEventListener('click', function(){
+    const value = document.getElementById('heroEircodeInput').value.trim();
+    const errorEl = document.getElementById('heroEircodeError');
+    errorEl.style.display = 'none';
+    if(!value){ errorEl.textContent = 'Please enter an Eircode'; errorEl.style.display='block'; return; }
+
+    fetch('{{ route('check.eircode') }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN':'{{ csrf_token() }}', 'Accept':'application/json' },
+        body: JSON.stringify({ eircode: value })
+    })
+    .then(r=>r.json())
+    .then(data=>{
+        if(data && data.valid){
+            // Safely pick the normalized eircode value (controller may return `eircode`)
+            const normalized = data.normalized || data.eircode || data.eircode_normalized || null;
+            const zipEl = document.getElementById('hr_zip_code');
+            if(zipEl && normalized) zipEl.value = normalized;
+
+            // Fill either the legacy fields or the checkout-specific fields if present
+            const email = '{{ Auth::check() ? Auth::user()->email : '' }}';
+            const name = '{{ Auth::check() ? Auth::user()->first_name : '' }}';
+            const hrEmail = document.getElementById('hr_email');
+            const hrName = document.getElementById('hr_name');
+            const hrCheckoutEmail = document.getElementById('hr_checkout_email');
+            const hrCheckoutName = document.getElementById('hr_checkout_name');
+            if(email){ if(hrEmail) hrEmail.value = email; if(hrCheckoutEmail) hrCheckoutEmail.value = email; }
+            if(name){ if(hrName) hrName.value = name; if(hrCheckoutName) hrCheckoutName.value = name; }
+
+            const modal = new bootstrap.Modal(document.getElementById('hireRequestModal'));
+            modal.show();
+        } else {
+            errorEl.textContent = (data && data.message) ? data.message : 'Invalid Eircode'; errorEl.style.display='block';
+        }
+    })
+    .catch(err=>{ console.error(err); errorEl.textContent='Error checking Eircode'; errorEl.style.display='block'; });
+});
+
+// Reuse modal submit handler if not present (defensive)
+document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
+    const btn = this; btn.disabled = true; const original = btn.innerHTML; btn.innerHTML = 'Sending...';
+    const payload = new FormData(document.getElementById('hireRequestForm'));
+    const date = document.getElementById('hr_preferred_date')?.value;
+    const time = document.getElementById('hr_preferred_time')?.value;
+    if(date && time){ payload.append('scheduled_at', date + ' ' + time); }
+
+    fetch('{{ route('hire-requests.store') }}', { method: 'POST', body: payload, headers: { 'Accept':'application/json' } })
+    .then(r=>r.json())
+    .then(data=>{
+        if(data.success){
+            const modal = bootstrap.Modal.getInstance(document.getElementById('hireRequestModal'));
+            if(modal) modal.hide();
+            alert('Request sent — the admin will assign a cleaner and get back to you.');
+        } else {
+            document.getElementById('hr_formErrors').textContent = data.message || 'Failed to send';
+        }
+    })
+    .catch(err=>{ console.error(err); document.getElementById('hr_formErrors').textContent = 'Error sending request'; })
+    .finally(()=>{ btn.disabled = false; btn.innerHTML = original; });
+});
+</script>
+@endpush
 
 <section class="second-section ">
     <div class="container">

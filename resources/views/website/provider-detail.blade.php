@@ -340,7 +340,7 @@
                     @endif
                     
                     <button class="school-action-btn-email" data-bs-toggle="modal" data-bs-target="#inquiryModal">
-                        <i class="ti ti-mail me-1"></i> Send Inquiry
+                        <i class="ti ti-mail me-1"></i> Hire Me
                     </button>
                 </div>
 
@@ -898,7 +898,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 
 <!-- Review Modal -->
-<<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -936,67 +936,132 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 
-<!-- Inquiry Modal -->
+<!-- Multi-step Inquiry Modal -->
 <div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="inquiryModalLabel">
                     <i class="ti ti-message-circle text-primary me-2"></i>
-                    Send Inquiry to {{ $provider->business_name }}
+                    Hire {{ $provider->business_name }}
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="inquiryModalForm">
+
+            <form id="inquiryMultiForm">
                 @csrf
                 <input type="hidden" name="cleaner_id" value="{{ $provider->id }}">
-                
+                <input type="hidden" name="cleaning_type" id="cleaning_type_hidden">
+                <input type="hidden" name="selected_items" id="selected_items_hidden">
+                <input type="hidden" name="frequency" id="frequency_hidden">
+                <input type="hidden" name="scheduled_at" id="scheduled_at_hidden">
+
                 <div class="modal-body">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="modal_inquiry_name" class="form-label">Your Name *</label>
-                            <input type="text" class="form-control" id="modal_inquiry_name" name="name" 
-                                   value="{{ auth()->user() ? auth()->user()->name : '' }}" required>
+                    <div class="inquiry-steps">
+                        <!-- Step indicators -->
+                        <div class="d-flex justify-content-center mb-4 gap-3">
+                            <button type="button" class="btn btn-sm btn-outline-secondary step-indicator active" data-step="0">1 Choose Type</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary step-indicator" data-step="1">2 Services & Schedule</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary step-indicator" data-step="2">3 Checkout</button>
                         </div>
-                        <div class="col-md-6">
-                            <label for="modal_inquiry_email" class="form-label">Email *</label>
-                            <input type="email" class="form-control" id="modal_inquiry_email" name="email"
-                                   value="{{ auth()->user() ? auth()->user()->email : '' }}" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="modal_inquiry_phone" class="form-label">Phone *</label>
-                            <input type="tel" class="form-control" id="modal_inquiry_phone" name="phone" required>
-                        </div>
-                       
-                        <div class="col-12">
-                            <label for="modal_inquiry_message" class="form-label">Your Message *</label>
-                            <textarea class="form-control" id="modal_inquiry_message" name="message" rows="5" 
-                                      placeholder="Please provide details about your needs, schedule requirements, and any specific questions you have for the provider..." 
-                                      required>Hello, I'm interested in learning more about your childcare services. Could you please provide information about:
 
-- Current availability
-- Detailed pricing
-- Program details
-- Enrollment process
-
-Thank you!</textarea>
+                        <!-- Step 0: Choose cleaning type -->
+                        <div class="inquiry-step" id="inquiry-step-0">
+                            <h5 class="mb-3">Choose Cleaning Type</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="card p-3 type-option" data-type="one-off" style="cursor:pointer;">
+                                        <h6>One-Off</h6>
+                                        <p class="mb-0 text-muted">Single visit for a deep clean.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card p-3 type-option" data-type="regular" style="cursor:pointer;">
+                                        <h6>Regular</h6>
+                                        <p class="mb-0 text-muted">Weekly / bi-weekly / monthly visits.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card p-3 type-option" data-type="carpet-upholstery" style="cursor:pointer;">
+                                        <h6>Carpet & Upholstery</h6>
+                                        <p class="mb-0 text-muted">Specialised carpet and upholstery cleaning.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card p-3 type-option" data-type="end-tenancy" style="cursor:pointer;">
+                                        <h6>End of Tenancy</h6>
+                                        <p class="mb-0 text-muted">Full clean for move-out inspections.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="modal_inquiry_newsletter" name="newsletter" checked>
-                                <label class="form-check-label" for="modal_inquiry_newsletter">
-                                    Send me updates about new features and cleaners
-                                </label>
+
+                        <!-- Step 1: Services & schedule (dynamic based on type) -->
+                        <div class="inquiry-step" id="inquiry-step-1" style="display:none;">
+                            <h5 class="mb-3">Select Items To Clean & Schedule</h5>
+                            <div id="servicesList" class="mb-3"></div>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Frequency</label>
+                                    <select id="frequencySelect" class="form-select">
+                                        <option value="one_time">One time</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="biweekly">Every 2 weeks</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Preferred Date</label>
+                                    <input type="date" id="preferredDate" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Preferred Time</label>
+                                    <input type="time" id="preferredTime" class="form-control">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Notes (optional)</label>
+                                    <textarea id="serviceNotes" class="form-control" rows="3" placeholder="Any useful notes for the cleaner (access, pets, parking)..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Checkout / Contact -->
+                        <div class="inquiry-step" id="inquiry-step-2" style="display:none;">
+                            <h5 class="mb-3">Contact & Checkout</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Your Name *</label>
+                                    <input type="text" id="checkout_name" class="form-control" value="{{ auth()->user() ? auth()->user()->name : '' }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email *</label>
+                                    <input type="email" id="checkout_email" class="form-control" value="{{ auth()->user() ? auth()->user()->email : '' }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone *</label>
+                                    <input type="tel" id="checkout_phone" class="form-control" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <h6>Order Summary</h6>
+                                    <div id="orderSummary" class="p-3 border rounded mb-3"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="add-services-btn" id="submitModalInquiryBtn">
-                        <i class="ti ti-send me-2"></i>
-                        Send Inquiry
-                    </button>
+                    <div class="w-100 d-flex justify-content-between">
+                        <div>
+                            <button type="button" class="btn btn-secondary" id="btnBack" style="display:none;">← Back</button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-secondary" id="btnNext">Continue →</button>
+                            <button type="button" class="btn btn-primary" id="btnSubmit" style="display:none;"><i class="ti ti-send me-1"></i> Book & Send</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -1553,7 +1618,7 @@ function updateCompareButtonText() {
 
 // Existing functions (keep these as they are)
 function saveProvider(providerId, button) {
-    fetch(`/providers/${providerId}/save`, {
+    fetch(`/cleaners/${providerId}/save`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1580,7 +1645,7 @@ function saveProvider(providerId, button) {
 }
 
 function followProvider(providerId, button) {
-    fetch(`/providers/${providerId}/follow`, {
+    fetch(`/cleaners/${providerId}/follow`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1632,5 +1697,193 @@ function showToast(message, type = 'info') {
     }, 5000);
 }
 
+</script>
+@endpush
+
+@push('scripts')
+<script>
+// Multi-step inquiry modal script
+(function(){
+    const modal = document.getElementById('inquiryModal');
+    if(!modal) return;
+
+    const steps = ['inquiry-step-0','inquiry-step-1','inquiry-step-2'];
+    let current = 0;
+
+    const cleaningOptions = {
+        'one-off':[ {key:'kitchen',label:'Kitchen',duration:45,price:40}, {key:'bathroom',label:'Bathroom',duration:30,price:25}, {key:'living',label:'Living Room',duration:30,price:30} ],
+        'regular':[ {key:'kitchen',label:'Kitchen',duration:30,price:30}, {key:'bathroom',label:'Bathroom',duration:20,price:20}, {key:'living',label:'Living Room',duration:20,price:25} ],
+        'carpet-upholstery':[ {key:'sofa',label:'Sofa',duration:60,price:50}, {key:'carpet_small',label:'Small Carpet',duration:30,price:35}, {key:'carpet_large',label:'Large Carpet',duration:60,price:60} ],
+        'end-tenancy':[ {key:'full_flat',label:'Full Flat Clean',duration:180,price:150}, {key:'oven',label:'Oven Clean',duration:45,price:40} ]
+    };
+
+    const btnNext = document.getElementById('btnNext');
+    const btnBack = document.getElementById('btnBack');
+    const btnSubmit = document.getElementById('btnSubmit');
+
+    function showStep(index){
+        current = index;
+        steps.forEach((id, i)=>{
+            const el = document.getElementById(id);
+            if(!el) return;
+            if(i === index){ el.style.display = ''; } else { el.style.display = 'none'; }
+        });
+        // indicators
+        document.querySelectorAll('.step-indicator').forEach(btn=>{
+            btn.classList.toggle('active', parseInt(btn.dataset.step) === index);
+        });
+
+        btnBack.style.display = index === 0 ? 'none' : '';
+        btnNext.style.display = index === steps.length-1 ? 'none' : '';
+        btnSubmit.style.display = index === steps.length-1 ? '' : 'none';
+    }
+
+    // Type selection
+    document.querySelectorAll('.type-option').forEach(card=>{
+        card.addEventListener('click', function(){
+            document.querySelectorAll('.type-option').forEach(c => c.classList.remove('border-primary'));
+            this.classList.add('border-primary');
+            const type = this.dataset.type;
+            document.getElementById('cleaning_type_hidden').value = type;
+            populateServices(type);
+            showStep(1);
+        });
+    });
+
+    function populateServices(type){
+        const list = document.getElementById('servicesList');
+        list.innerHTML = '';
+        const items = cleaningOptions[type] || [];
+        items.forEach(item=>{
+            const id = `service_${item.key}`;
+            const row = document.createElement('div');
+            row.className = 'd-flex align-items-center justify-content-between p-2 border mb-2';
+            row.innerHTML = `
+                <div>
+                    <div class="fw-bold">${item.label}</div>
+                    <div class="text-muted small">Approx ${item.duration} mins · €${item.price}</div>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input service-checkbox" type="checkbox" value='${JSON.stringify(item)}' id="${id}">
+                </div>
+            `;
+            list.appendChild(row);
+        });
+    }
+
+    btnNext.addEventListener('click', function(){
+        if(current === 0){
+            // shouldn't happen because selection moves directly, but safe
+            const type = document.getElementById('cleaning_type_hidden').value;
+            if(!type){ alert('Please select a cleaning type'); return; }
+            populateServices(type);
+            showStep(1);
+            return;
+        }
+
+        if(current === 1){
+            // collect selected items
+            const checked = Array.from(document.querySelectorAll('.service-checkbox:checked')).map(cb=>JSON.parse(cb.value));
+            if(checked.length === 0){ alert('Please select at least one item to clean'); return; }
+            document.getElementById('selected_items_hidden').value = JSON.stringify(checked);
+            document.getElementById('frequency_hidden').value = document.getElementById('frequencySelect').value;
+            const date = document.getElementById('preferredDate').value;
+            const time = document.getElementById('preferredTime').value;
+            if(!date || !time){ alert('Please choose preferred date and time'); return; }
+            document.getElementById('scheduled_at_hidden').value = `${date} ${time}`;
+            document.getElementById('serviceNotes').value && console.log('notes:', document.getElementById('serviceNotes').value);
+            buildOrderSummary();
+            showStep(2);
+            return;
+        }
+    });
+
+    btnBack.addEventListener('click', function(){
+        showStep(Math.max(0, current-1));
+    });
+
+    btnSubmit.addEventListener('click', function(){
+        submitMultiInquiry();
+    });
+
+    // When modal opens, reset
+    modal.addEventListener('show.bs.modal', function(){
+        // reset fields
+        document.getElementById('cleaning_type_hidden').value = '';
+        document.getElementById('selected_items_hidden').value = '';
+        document.getElementById('frequency_hidden').value = '';
+        document.getElementById('scheduled_at_hidden').value = '';
+        document.getElementById('preferredDate').value = '';
+        document.getElementById('preferredTime').value = '';
+        document.getElementById('serviceNotes').value = '';
+        document.getElementById('orderSummary').innerHTML = '';
+        document.querySelectorAll('.type-option').forEach(c=>c.classList.remove('border-primary'));
+        showStep(0);
+    });
+
+    function buildOrderSummary(){
+        const items = JSON.parse(document.getElementById('selected_items_hidden').value || '[]');
+        const freq = document.getElementById('frequencySelect').value;
+        const scheduled = document.getElementById('scheduled_at_hidden').value;
+        const notes = document.getElementById('serviceNotes').value;
+        let total = 0;
+        const container = document.getElementById('orderSummary');
+        container.innerHTML = '';
+        items.forEach(it => { total += parseFloat(it.price || 0);
+            const div = document.createElement('div');
+            div.className='d-flex justify-content-between';
+            div.innerHTML = `<div>${it.label} <small class="text-muted">(${it.duration} mins)</small></div><div>€${it.price}</div>`;
+            container.appendChild(div);
+        });
+        const hr = document.createElement('hr'); container.appendChild(hr);
+        const freqDiv = document.createElement('div'); freqDiv.className='d-flex justify-content-between'; freqDiv.innerHTML = `<div>Frequency</div><div>${freq}</div>`; container.appendChild(freqDiv);
+        const schedDiv = document.createElement('div'); schedDiv.className='d-flex justify-content-between'; schedDiv.innerHTML = `<div>Scheduled</div><div>${scheduled}</div>`; container.appendChild(schedDiv);
+        if(notes){ const notesDiv = document.createElement('div'); notesDiv.className='mt-2 text-muted'; notesDiv.textContent = 'Notes: '+notes; container.appendChild(notesDiv); }
+        const totalDiv = document.createElement('div'); totalDiv.className='d-flex justify-content-between fw-bold mt-3'; totalDiv.innerHTML = `<div>Total</div><div>€${total.toFixed(2)}</div>`; container.appendChild(totalDiv);
+    }
+
+    function submitMultiInquiry(){
+        const submitBtn = btnSubmit;
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true; submitBtn.innerHTML = '<i class="ti ti-loader me-1"></i>Booking...';
+
+        const payload = {
+            cleaner_id: document.querySelector('input[name="cleaner_id"]').value,
+            cleaning_type: document.getElementById('cleaning_type_hidden').value,
+            selected_items: document.getElementById('selected_items_hidden').value,
+            frequency: document.getElementById('frequency_hidden').value,
+            scheduled_at: document.getElementById('scheduled_at_hidden').value,
+            notes: document.getElementById('serviceNotes').value || '',
+            name: document.getElementById('checkout_name').value,
+            email: document.getElementById('checkout_email').value,
+            phone: document.getElementById('checkout_phone').value,
+            _token: document.querySelector('input[name="_token"]').value
+        };
+
+        const formData = new FormData();
+        Object.keys(payload).forEach(k=> formData.append(k, payload[k]));
+
+        fetch('{{ route("hire-requests.store") }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success){
+                showInquirySuccess('Booking request sent. The provider will contact you soon.');
+                const bsModal = bootstrap.Modal.getInstance(modal);
+                if(bsModal) bsModal.hide();
+            } else {
+                throw new Error(data.message || 'Failed to send booking request');
+            }
+        })
+        .catch(err=>{ console.error(err); showToast(err.message || 'Error sending request','error'); })
+        .finally(()=>{ submitBtn.disabled = false; submitBtn.innerHTML = originalText; });
+    }
+
+})();
 </script>
 @endpush

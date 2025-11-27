@@ -333,11 +333,11 @@
                                         <i class="ti ti-heart"></i><span>Saved Items</span>
                                     </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('customer-compare') }}">
                                         <i class="ti ti-git-compare"></i><span>Comparison</span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a href="{{ route('customer-reviews') }}">
                                         <i class="ti ti-star"></i><span>Reviews</span>
@@ -346,6 +346,11 @@
                                 <li>
                                     <a href="{{ route('customer-messages') }}">
                                         <i class="ti ti-message-2"></i><span>Messages</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('hire-requests.index') }}">
+                                        <i class="fa fa-question"></i><span>Hire Requests</span>
                                     </a>
                                 </li>
                                 <li>

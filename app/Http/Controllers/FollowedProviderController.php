@@ -2,7 +2,7 @@
 // app/Http/Controllers/FollowedProviderController.php
 namespace App\Http\Controllers;
 
-use App\Models\FollowedProvider;
+use App\Models\FollowedCleaner;
 use App\Models\Cleaner as Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +18,7 @@ class FollowedProviderController extends Controller
         ], 401);
     }
 
-    $existingFollow = FollowedProvider::where('user_id', Auth::id())
+    $existingFollow = FollowedCleaner::where('user_id', Auth::id())
         ->where('cleaner_id', $provider->id)
         ->first();
 
@@ -27,9 +27,9 @@ class FollowedProviderController extends Controller
         return response()->json(['followed' => false, 'message' => 'Cleaner unfollowed']);
     }
 
-    FollowedProvider::create([
+    FollowedCleaner::create([
         'user_id' => Auth::id(),
-        'provider_id' => $provider->id
+        'cleaner_id' => $provider->id
     ]);
 
     return response()->json(['followed' => true, 'message' => 'Cleaner followed successfully']);

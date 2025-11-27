@@ -47,11 +47,11 @@
                 <div class="message-header">
                     <div class="d-flex align-items-center">
                         <div class="provider-avatar bg-primary me-3">
-                            {{ substr($inquiry->provider->name ?? 'P', 0, 1) }}
+                            {{ substr($inquiry->cleaner->name ?? 'P', 0, 1) }}
                         </div>
                         <div>
-                            <div class="provider-name">{{ $inquiry->provider->name ?? 'Cleaner' }}</div>
-                            <div class="provider-type">{{ $inquiry->provider->type ?? 'HouseCare Cleaner' }}</div>
+                            <div class="provider-name">{{ $inquiry->cleaner->name ?? 'Cleaner' }}</div>
+                            <div class="provider-type">{{ $inquiry->cleaner->type ?? 'HouseCare Cleaner' }}</div>
                             <div class="mt-2"><strong>{{ $inquiry->subject ?? 'Inquiry' }}</strong></div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                         </span>
                         <button class="btn btn-light border btn-sm ms-2 chat-toggle" 
                                 data-inquiry-id="{{ $inquiry->id }}"
-                                data-provider-name="{{ $inquiry->provider->name ?? 'Cleaner' }}">
+                                data-provider-name="{{ $inquiry->cleaner->name ?? 'Cleaner' }}">
                             View Chat
                         </button>
                     </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\SavedProviderController;
 use App\Http\Controllers\FollowedProviderController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\HireRequestController;
 use App\Http\Controllers\ParentPanelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
@@ -144,6 +145,13 @@ Route::post('/compare/clear', [CompareController::class, 'clear'])->name('compar
 
 // Inquiry routes
 Route::post('/inquiries', [InquiryController::class, 'store'])->name('inquiries.store');
+// Hire requests from the multi-step "Hire Me" flow (guest-friendly)
+Route::post('/hire-requests', [HireRequestController::class, 'store'])->name('hire-requests.store');
+// Customer-side views for their hire requests
+Route::middleware('auth')->group(function(){
+    Route::get('/my-hire-requests', [HireRequestController::class, 'index'])->name('hire-requests.index');
+    Route::get('/my-hire-requests/{hireRequest}', [HireRequestController::class, 'show'])->name('hire-requests.show');
+});
 Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiries.index')->middleware('auth');
 Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show'])->name('inquiries.show')->middleware('auth');
 Route::put('/inquiries/{inquiry}', [InquiryController::class, 'update'])->name('inquiries.update')->middleware('auth');

@@ -45,11 +45,11 @@
                     <div class="d-flex align-items-center">
                         <!-- Provider Avatar - using first letter of provider name -->
                         <div class="provider-avatar me-3 bg-primary">
-                            {{ substr($review->provider->name, 0, 1) }}
+                            {{ substr($review->cleaner->name, 0, 1) }}
                         </div>
                         <div>
-                            <div class="provider-name">{{ $review->provider->name }}</div>
-                            <div class="provider-type">{{ $review->provider->type ?? 'Daycare Center' }}</div>
+                            <div class="provider-name">{{ $review->cleaner->name }}</div>
+                            <div class="provider-type">{{ $review->cleaner->type ?? 'Daycare Center' }}</div>
                         </div>
                     </div>
                     <div class="text-end">
@@ -92,14 +92,14 @@
                 
                 <!-- Action Buttons -->
                 <div class="mt-3">
-<form action="{{ route('reviews.destroy', [$review->provider_id, $review->id]) }}" method="POST" class="d-inline">
+<form action="{{ route('reviews.destroy', [$review->cleaner_id, $review->id]) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this review?')">
                             <i class="fas fa-trash me-1"></i> Delete
                         </button>
                     </form>
-                    <a  href="{{ route('website.cleaner-detail', $review->provider_id) }}" class="btn btn-light border border-1 btn-sm ms-2">View Public Review</a>
+                    <a  href="{{ route('website.cleaner-detail', $review->cleaner_id) }}" class="btn btn-light border border-1 btn-sm ms-2">View Public Review</a>
                 </div>
             </div>
             @empty
