@@ -42,7 +42,7 @@
                                 <div class="list-group">
                                     @foreach($recommended as $cleaner)
                                         <label class="list-group-item">
-                                            <input type="checkbox" name="cleaners[]" value="{{ $cleaner->id }}"> 
+                                            <input type="checkbox" name="cleaner_ids[]" value="{{ $cleaner->id }}"> 
                                             <strong>{{ $cleaner->name }}</strong>
                                             <div class="small text-muted">{{ $cleaner->zip_code }} — {{ $cleaner->categories?->name ?? '—' }}</div>
                                         </label>

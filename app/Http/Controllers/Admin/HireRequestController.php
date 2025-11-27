@@ -25,31 +25,13 @@ class HireRequestController extends Controller
         return view('admin.hire_requests.index', compact('requests'));
     }
 
-    public function show(HireRequest $hireRequest)
+    public function show($id)
     {
-        // Try to find matching cleaners by category/cleaning_type
-        $cleaningType = $hireRequest->cleaning_type;
+        $request = HireRequest::find($id);
+        // Use HireRequest helper to get recommended cleaners
+        $recommended = $request->recommendedCleaners(50);
 
-        $recommended = Cleaner::query();
-
-        if (is_numeric($cleaningType)) {
-            $recommended->where('categories_id', (int)$cleaningType);
-        } else {
-            // Match by category name
-            $cat = Category::where('name', $cleaningType)->first();
-            if ($cat) {
-                $recommended->where('categories_id', $cat->id);
-            }
-        }
-
-        // Also match by zip_code when available
-        if ($hireRequest->zip_code) {
-            $recommended->where('zip_code', $hireRequest->zip_code);
-        }
-
-        $recommended = $recommended->where('status', 'active')->limit(50)->get();
-
-        return view('admin.hire_requests.show', compact('hireRequest', 'recommended'));
+        return view('admin.hire_requests.show', compact('request', 'recommended'));
     }
 
     /**
@@ -58,11 +40,20 @@ class HireRequestController extends Controller
     public function send(Request $request, HireRequest $hireRequest)
     {
         $data = $request->validate([
-            'cleaner_ids' => 'required|array',
-            'cleaner_ids.*' => 'integer|exists:cleaners,id'
+            'cleaner_ids' => 'nullable|array',
+            'cleaner_ids.*' => 'integer|exists:cleaners,id',
+            'cleaners' => 'nullable|array',
+            'cleaners.*' => 'integer|exists:cleaners,id'
         ]);
 
-        $cleaners = Cleaner::whereIn('id', $data['cleaner_ids'])->get();
+        // Accept either `cleaner_ids[]` or `cleaners[]` from the form
+        $ids = $data['cleaner_ids'] ?? $data['cleaners'] ?? [];
+
+        if (empty($ids)) {
+            return redirect()->back()->withErrors(['cleaners' => 'Please select at least one cleaner to notify.']);
+        }
+
+        $cleaners = Cleaner::whereIn('id', $ids)->get();
 
         foreach ($cleaners as $cleaner) {
             $this->notifications->sendToProvider($cleaner, [
