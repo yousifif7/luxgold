@@ -517,9 +517,9 @@ class AnalyticsService
 
     public function getTopCleaners(int $limit = 6): array
 {
-    if (Schema::hasTable('cleaners')) {
+        if (Schema::hasTable('cleaners')) {
         $rows = Cleaner::with('approvedReviews', 'inquiries', 'recentlyViewed') // load relationships
-            ->select('business_name as name') // you can only select columns from table itself
+            ->select('name') // use consolidated name field
             ->where('status', 'approved')
             ->get()
             ->map(function ($r) {
@@ -613,9 +613,9 @@ class AnalyticsService
         // Most viewed providers
         $mostViewedProviders = DB::table('recently_viewed')
             ->join('cleaners', 'recently_viewed.cleaner_id', '=', 'cleaners.id')
-            ->select('cleaners.business_name', DB::raw('COUNT(recently_viewed.id) as view_count'))
+            ->select('cleaners.name', DB::raw('COUNT(recently_viewed.id) as view_count'))
             ->where('recently_viewed.viewed_at', '>=', Carbon::now()->subDays(30))
-            ->groupBy('cleaners.id', 'cleaners.business_name')
+            ->groupBy('cleaners.id', 'cleaners.name')
             ->orderByDesc('view_count')
             ->limit(10)
             ->get();

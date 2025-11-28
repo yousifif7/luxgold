@@ -505,7 +505,7 @@
                             
                             <div class="provider-info-content">
                                 <div class="provider-basic-info mb-3">
-                                    <h6 class="provider-name mb-2">{{ $event->provider->business_name ?? $event->provider->name }}</h6>
+                                    <h6 class="provider-name mb-2">{{ $event->provider->name }}</h6>
                                     @if($event->provider->service_description)
                                         <p class="text-muted mb-3">{{ Str::limit($event->provider->service_description, 200) }}</p>
                                     @endif

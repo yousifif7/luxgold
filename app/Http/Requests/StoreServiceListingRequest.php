@@ -22,10 +22,8 @@ class StoreServiceListingRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            // Step 1: Basic Info
-            'business_name' => 'required|string|max:255',
-            'contact_person' => 'required|string|max:255',
-            'role_title' => 'nullable|string|max:255',
+            // Step 1: Basic Info (solo cleaner)
+            'profile_name' => ['required','string','max:255','regex:/^\S+\s+\S+/'],
             'phone_number' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'physical_address' => 'required|string|max:500',
@@ -34,8 +32,8 @@ class StoreServiceListingRequest extends FormRequest
             'zip_code' => 'required|string|size:5',
 
             // Step 2: Services
-            'service_categories' => 'required|array|min:1',
-            'service_categories.*' => 'string|in:childcare,tutoring,healthcare,recreation,therapy,transportation',
+            'sub_categories' => 'required|array|min:1',
+            'sub_categories.*' => 'integer',
             'service_description' => 'nullable|string|max:2000',
 
             // Step 3: Pricing & Schedule
@@ -47,12 +45,7 @@ class StoreServiceListingRequest extends FormRequest
             'end_time' => 'nullable|date_format:H:i|after:start_time',
             'availability_notes' => 'nullable|string|max:500',
 
-            // Step 4: Credentials
-            'license_number' => 'nullable|string|max:255',
-            'years_operation' => 'nullable|string|max:255',
-            'insurance_coverage' => 'nullable|string|max:500',
-            'diversity_badges' => 'nullable|array',
-            'diversity_badges.*' => 'string|in:women,minority,veteran,family,lgbtq',
+            // Step 4: Credentials (removed)
             'special_features' => 'nullable|array',
             'special_features.*' => 'string|in:stem,arts,special,outdoor,language,sports,organic,technology',
             'website' => 'nullable|url|max:500',
@@ -76,8 +69,8 @@ class StoreServiceListingRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'business_name.required' => 'Business name is required',
-            'contact_person.required' => 'Contact person name is required',
+            'profile_name.required' => 'Profile name is required and must include first and last name',
+            'profile_name.regex' => 'Please provide both first and last name for the cleaner',
             'phone_number.required' => 'Phone number is required',
             'email.required' => 'Email address is required',
             'email.email' => 'Please enter a valid email address',
@@ -85,8 +78,8 @@ class StoreServiceListingRequest extends FormRequest
             'city.required' => 'City is required',
             'zip_code.required' => 'ZIP code is required',
             'zip_code.size' => 'ZIP code must be 5 digits',
-            'service_categories.required' => 'Please select at least one service category',
-            'service_categories.min' => 'Please select at least one service category',
+            'sub_categories.required' => 'Please select at least one service category',
+            'sub_categories.min' => 'Please select at least one service category',
             'price_amount.required' => 'Price amount is required',
             'price_amount.numeric' => 'Price must be a valid number',
             'price_amount.min' => 'Price cannot be negative',
@@ -107,13 +100,12 @@ class StoreServiceListingRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'business_name' => 'business name',
-            'contact_person' => 'contact person',
+            'profile_name' => 'profile name',
             'phone_number' => 'phone number',
             'email' => 'email address',
             'physical_address' => 'physical address',
             'zip_code' => 'ZIP code',
-            'service_categories' => 'service categories',
+            'sub_categories' => 'service categories',
             'price_amount' => 'price amount',
         ];
     }
@@ -125,9 +117,8 @@ class StoreServiceListingRequest extends FormRequest
     {
         // Ensure arrays are properly formatted even if empty
         $this->merge([
-            'service_categories' => $this->service_categories ?? [],
+            'sub_categories' => $this->sub_categories ?? [],
             'available_days' => $this->available_days ?? [],
-            'diversity_badges' => $this->diversity_badges ?? [],
             'special_features' => $this->special_features ?? [],
         ]);
     }

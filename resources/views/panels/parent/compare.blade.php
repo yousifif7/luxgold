@@ -20,10 +20,10 @@
                         <div class="col-md-3">
                             <div class="provider-card">
                                 <div class="provider-avatar bg-primary">
-                                    {{ substr($provider->business_name ?? $provider->name, 0, 1) }}
+                                    {{ substr($provider->name, 0, 1) }}
                                 </div>
                                 <div class="provider-info">
-                                    <div class="provider-name">{{ $provider->business_name ?? $provider->name }}</div>
+                                    <div class="provider-name">{{ $provider->name }}</div>
                                     <div class="provider-type">{{ $provider->service_categories ?? $provider->category->name ?? 'Cleaner' }}</div>
                                 </div>
                                 <button class="btn btn-sm btn-danger" onclick="removeFromCompare({{ $provider->id }})">
@@ -43,7 +43,7 @@
                         <tr>
                             <th style="text-align: left;">Feature</th>
                             @foreach($providers as $provider)
-                            <th>{{ $provider->business_name ?? $provider->name }}</th>
+                            <th>{{ $provider->name }}</th>
                             @endforeach
                         </tr>
                     </thead>
@@ -100,30 +100,7 @@
                             <td>{{ $provider->business_type ?? 'N/A' }}</td>
                             @endforeach
                         </tr>
-                        <tr>
-                            <td style="text-align: left; font-weight: 600;">Years in Operation</td>
-                            @foreach($providers as $provider)
-                            <td>{{ $provider->years_operation ?? 'N/A' }}</td>
-                            @endforeach
-                        </tr>
-                        <tr>
-                            <td style="text-align: left; font-weight: 600;">License Number</td>
-                            @foreach($providers as $provider)
-                            <td>{{ $provider->license_number ?? 'N/A' }}</td>
-                            @endforeach
-                        </tr>
-                        <tr>
-                            <td style="text-align: left; font-weight: 600;">Insurance Coverage</td>
-                            @foreach($providers as $provider)
-                            <td>
-                                @if($provider->insurance_coverage)
-                                <i class="fas fa-check check-icon"></i>
-                                @else
-                                <i class="fas fa-times cross-icon"></i>
-                                @endif
-                            </td>
-                            @endforeach
-                        </tr>
+                        {{-- Years, License, Insurance removed from comparison per product decision --}}
                         <tr>
                             <td style="text-align: left; font-weight: 600;">Capacity</td>
                             @foreach($providers as $provider)

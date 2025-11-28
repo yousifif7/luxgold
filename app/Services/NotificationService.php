@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Cleaner;
-use App\Models\Provider;
 use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 

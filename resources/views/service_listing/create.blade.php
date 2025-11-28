@@ -103,45 +103,12 @@
                     <div class="col-12">
                         <div class="service-listing-form-group-container">
                             <label class="service-listing-form-label-text">
-                                Business/Organization Name <span class="service-listing-required-field-indicator">*</span>
+                                Profile Name <span class="service-listing-required-field-indicator">*</span>
                             </label>
-                            <input type="text" class="service-listing-form-input-field @error('business_name') is-invalid @enderror" 
-                                   id="businessName" name="business_name" 
-                                   value="{{ old('business_name') }}" 
-                                   placeholder="Enter your business name" required>
-                            @error('business_name')
-                                <div class="service-listing-error-message-text show">{{ $message }}</div>
-                            @else
-                                <div class="service-listing-error-message-text">Business name is required</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="service-listing-form-group-container">
-                            <label class="service-listing-form-label-text">
-                                Contact Person <span class="service-listing-required-field-indicator">*</span>
-                            </label>
-                            <input type="text" class="service-listing-form-input-field @error('contact_person') is-invalid @enderror" 
-                                   id="contactPerson" name="contact_person" 
-                                   value="{{ old('contact_person') }}" 
-                                   placeholder="Full name" required>
-                            @error('contact_person')
-                                <div class="service-listing-error-message-text show">{{ $message }}</div>
-                            @else
-                                <div class="service-listing-error-message-text">Contact person name is required</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="service-listing-form-group-container">
-                            <label class="service-listing-form-label-text">Role/Title</label>
-                            <input type="text" class="service-listing-form-input-field @error('role_title') is-invalid @enderror" 
-                                   id="roleTitle" name="role_title" 
-                                   value="{{ old('role_title') }}" 
-                                   placeholder="Owner, Director, etc.">
-                            @error('role_title')
-                                <div class="service-listing-error-message-text show">{{ $message }}</div>
-                            @enderror
+                            <input type="text" class="service-listing-form-input-field" 
+                                   id="profileNameDisplay" value="{{ old('profile_name', auth()->user()->name ?? '') }}" 
+                                   placeholder="Cleaner name" disabled>
+                            <input type="hidden" id="profileName" name="profile_name" value="{{ old('profile_name', auth()->user()->name ?? '') }}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -438,7 +405,7 @@
                 </div>
             </div>
 
-            <!-- Step 4: Credentials -->
+            <!-- Step 4: Credentials removed per product decision -->
             <div class="service-listing-step-content-panel" id="step4Content" style="display: none;">
                 <div class="service-listing-step-title-text">
                     <div class="service-listing-step-title-icon">
@@ -446,72 +413,7 @@
                     </div>
                     Credentials
                 </div>
-                <p class="service-listing-step-description-text">Share your credentials to build trust with families</p>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="service-listing-form-group-container">
-                            <label class="service-listing-form-label-text">License/Certification Number</label>
-                            <input type="text" class="service-listing-form-input-field @error('license_number') is-invalid @enderror" 
-                                   id="licenseNumber" name="license_number" 
-                                   value="{{ old('license_number') }}" 
-                                   placeholder="License number">
-                            @error('license_number')
-                                <div class="service-listing-error-message-text show">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="service-listing-form-group-container">
-                            <label class="service-listing-form-label-text">Years in Operation</label>
-                            <input type="text" class="service-listing-form-input-field @error('years_operation') is-invalid @enderror" 
-                                   id="yearsOperation" name="years_operation" 
-                                   value="{{ old('years_operation') }}" 
-                                   placeholder="Example: Since 2015">
-                            @error('years_operation')
-                                <div class="service-listing-error-message-text show">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-
-                <div class="service-listing-form-group-container">
-                    <label class="service-listing-form-label-text">Insurance Coverage</label>
-                    <input type="text" class="service-listing-form-input-field @error('insurance_coverage') is-invalid @enderror" 
-                           id="insuranceCoverage" name="insurance_coverage" 
-                           value="{{ old('insurance_coverage') }}" 
-                           placeholder="General liability, professional liability, etc.">
-                    @error('insurance_coverage')
-                        <div class="service-listing-error-message-text show">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="service-listing-form-group-container">
-                    <label class="service-listing-form-label-text">Diversity & Ownership Badges</label>
-                    <div class="service-listing-checkbox-group-container">
-                        @php
-                            $oldBadges = old('diversity_badges', []);
-                        @endphp
-                        <div><input type="checkbox" class="form-check-input me-2 @error('diversity_badges') is-invalid @enderror" 
-                                   id="badge-women" name="diversity_badges[]" value="women"
-                                   {{ in_array('women', $oldBadges) ? 'checked' : '' }}><label for="badge-women"> Women-Owned</label></div>
-                        <div><input type="checkbox" class="form-check-input me-2 @error('diversity_badges') is-invalid @enderror" 
-                                   id="badge-minority" name="diversity_badges[]" value="minority"
-                                   {{ in_array('minority', $oldBadges) ? 'checked' : '' }}><label for="badge-minority"> Minority-Owned</label></div>
-                        <div><input type="checkbox" class="form-check-input me-2 @error('diversity_badges') is-invalid @enderror" 
-                                   id="badge-veteran" name="diversity_badges[]" value="veteran"
-                                   {{ in_array('veteran', $oldBadges) ? 'checked' : '' }}><label for="badge-veteran"> Veteran-Owned</label></div>
-                        <div><input type="checkbox" class="form-check-input me-2 @error('diversity_badges') is-invalid @enderror" 
-                                   id="badge-family" name="diversity_badges[]" value="family"
-                                   {{ in_array('family', $oldBadges) ? 'checked' : '' }}><label for="badge-family"> Family-Owned</label></div>
-                        <div><input type="checkbox" class="form-check-input me-2 @error('diversity_badges') is-invalid @enderror" 
-                                   id="badge-lgbtq" name="diversity_badges[]" value="lgbtq"
-                                   {{ in_array('lgbtq', $oldBadges) ? 'checked' : '' }}><label for="badge-lgbtq"> LGBTQ+ Owned</label></div>
-                    </div>
-                    @error('diversity_badges')
-                        <div class="service-listing-error-message-text show">{{ $message }}</div>
-                    @enderror
-                </div>
+                <p class="service-listing-step-description-text">(Credentials are optional and no longer collected here)</p>
 
                 <div class="service-listing-form-group-container">
                     <label class="service-listing-form-label-text">Special Features</label>
@@ -683,12 +585,8 @@
                         <i class="fas fa-info-circle text-primary me-2"></i>Basic Information
                     </h4>
                     <div class="service-listing-review-field-row">
-                        <span class="service-listing-review-field-label">Business Name:</span>
+                        <span class="service-listing-review-field-label">Profile Name:</span>
                         <span class="service-listing-review-field-value" id="reviewBusinessName">-</span>
-                    </div>
-                    <div class="service-listing-review-field-row">
-                        <span class="service-listing-review-field-label">Contact Person:</span>
-                        <span class="service-listing-review-field-value" id="reviewContactPerson">-</span>
                     </div>
                     <div class="service-listing-review-field-row">
                         <span class="service-listing-review-field-label">Phone:</span>
@@ -938,24 +836,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         switch(step) {
             case 1:
-                // Validate basic info
-                const businessName = document.getElementById('businessName');
-                const contactPerson = document.getElementById('contactPerson');
+                // Validate basic info (profile name is derived from account)
                 const phoneNumber = document.getElementById('phoneNumber');
                 const emailAddress = document.getElementById('emailAddress');
                 const physicalAddress = document.getElementById('physicalAddress');
                 const cityinfo = document.getElementById('cityinfo');
                 const zipCode = document.getElementById('zipCode');
-                console.log(errorFields)
-                
-                if (!businessName.value.trim()) {
-                    isValid = false;
-                    errorFields.push('businessName');
-                }
-                if (!contactPerson.value.trim()) {
-                    isValid = false;
-                    errorFields.push('contactPerson');
-                }
+
                 if (!phoneNumber.value.trim()) {
                     isValid = false;
                     errorFields.push('phoneNumber');
@@ -1080,9 +967,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update review data
     function updateReviewData() {
-        // Basic Info
-        document.getElementById('reviewBusinessName').textContent = document.getElementById('businessName').value || '-';
-        document.getElementById('reviewContactPerson').textContent = document.getElementById('contactPerson').value || '-';
+        // Basic Info (use cleaner profile name)
+        document.getElementById('reviewBusinessName').textContent = (document.getElementById('profileName') && document.getElementById('profileName').value) ? document.getElementById('profileName').value : (document.getElementById('businessName') ? document.getElementById('businessName').value : '-');
         document.getElementById('reviewPhone').textContent = document.getElementById('phoneNumber').value || '-';
         document.getElementById('reviewEmail').textContent = document.getElementById('emailAddress').value || '-';
         
@@ -1095,7 +981,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('reviewAddress').textContent = address || '-';
         
         // Services
-        const selectedServices = Array.from(document.querySelectorAll('input[name="service_categories[]"]:checked'))
+        const selectedServices = Array.from(document.querySelectorAll('input[name="sub_categories[]"]:checked'))
             .map(cb => cb.nextElementSibling.textContent).join(', ');
         document.getElementById('reviewServices').textContent = selectedServices || '-';
         document.getElementById('reviewDescription').textContent = document.getElementById('serviceDescription').value || '-';
@@ -1112,14 +998,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const endTime = document.getElementById('end-time').value;
         document.getElementById('reviewWorkingHours').textContent = (startTime && endTime) ? `${startTime} to ${endTime}` : '-';
         
-        // Credentials
-        document.getElementById('reviewLicenseNumber').textContent = document.getElementById('licenseNumber').value || '-';
-        document.getElementById('reviewYearsOperation').textContent = document.getElementById('yearsOperation').value || '-';
-        document.getElementById('reviewInsurance').textContent = document.getElementById('insuranceCoverage').value || '-';
-        
-        const diversityBadges = Array.from(document.querySelectorAll('input[name="diversity_badges[]"]:checked'))
-            .map(cb => cb.nextElementSibling.textContent.trim()).join(', ');
-        document.getElementById('reviewDiversityBadges').textContent = diversityBadges || '-';
+        // Credentials (removed from form) — show placeholders
+        document.getElementById('reviewLicenseNumber').textContent = '-';
+        document.getElementById('reviewYearsOperation').textContent = '-';
+        document.getElementById('reviewInsurance').textContent = '-';
+        document.getElementById('reviewDiversityBadges').textContent = '-';
         
         const specialFeatures = Array.from(document.querySelectorAll('input[name="special_features[]"]:checked'))
             .map(cb => cb.nextElementSibling.textContent.trim()).join(', ');

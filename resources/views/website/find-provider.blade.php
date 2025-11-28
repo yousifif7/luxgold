@@ -231,12 +231,11 @@
                             $serviceCategories = $provider->service_categories ?? [];
                             $firstCategory = !empty($serviceCategories) ? $serviceCategories[0] : ($category ?: 'Provider');
                             
-                            // Parse special features for tags
+                            // Parse special features for tags (diversity badges removed from public lists)
                             $specialFeatures = $provider->special_features ??  [];
-                            $diversityBadges =$provider->diversity_badges ??  [];
                             
                             // Combine tags from various sources
-                            $allTags = array_merge($specialFeatures, $diversityBadges);
+                            $allTags = $specialFeatures;
                             $displayTags = array_slice($allTags, 0, 4);
                             $remainingTags = count($allTags) - count($displayTags);
                             
@@ -256,9 +255,9 @@
 
                         <div class="program-card provider-card position-relative" data-id="p{{ $provider->id }}">
                            @if(!empty($provider->logo_path) && file_exists(public_path($provider->logo_path)) )
-        <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->business_name }}">
+        <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->name }}">
         @else
-        <div style="height: 180px; display: flex; align-items: center; text-align: center; justify-content: center;"><h2 style="color:#337d7c; font-weight: 600; margin-top: 30px">                                    {{ $provider->business_name ?? $provider->name }} 
+        <div style="height: 180px; display: flex; align-items: center; text-align: center; justify-content: center;"><h2 style="color:#337d7c; font-weight: 600; margin-top: 30px">                                    {{ $provider->name }} 
 </h2></div>
     
     @endif
@@ -270,7 +269,7 @@
                             
                             <div class="card-body">
                                 <div class="program-title card-title">
-                                    {{ $provider->business_name ?? $provider->name }} 
+                                    {{ $provider->name }} 
                                     @if($provider->status === 'approved')
                                         <i style="color:#00bfa6" class="ms-1 bi bi-check2-circle"></i>
                                     @endif

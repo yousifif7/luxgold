@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CareType;
 use App\Models\Category;
-use App\Models\AgesServed;
+// AgesServed removed from listing form
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\DiversityBadge;
 use App\Models\ServiceListing;
 use App\Models\ServicesOfferd;
-use App\Models\ProgramsOffered;
 use App\Models\SpecialFeatures;
 use App\Models\Cleaner as Provider;
 use Illuminate\Support\Facades\Storage;
@@ -28,14 +25,10 @@ class ServiceListingController extends Controller
             return redirect()->route('cleaner-profile')
                 ->with('error', 'Please complete your profile before creating a listing.');
         }
-        $care_types=CareType::get();
-        $categories=Category::get();
-        $ages_served=AgesServed::get();
-        $programs_offerd=ProgramsOffered::get();
-        $services_offerd=ServicesOfferd::get();
+        $categories = Category::get();
+        $services_offerd = ServicesOfferd::get();
 
-
-         return view('service_listing.edit', compact('categories','serviceListing','care_types','ages_served','programs_offerd','services_offerd'));
+        return view('service_listing.edit', compact('categories','serviceListing','services_offerd'));
     }
 
 
@@ -63,10 +56,20 @@ class ServiceListingController extends Controller
             $licenseDocsPaths = $this->handleLicenseDocsUpload($request, $provider);
 
             // Update service listing
+            // derive first and last name from profile_name if provided
+            $profileName = $request->input('profile_name', $provider->name);
+            $firstName = null;
+            $lastName = null;
+            if ($profileName) {
+                $parts = preg_split('/\s+/', trim($profileName));
+                $firstName = $parts[0] ?? null;
+                $lastName = isset($parts[1]) ? implode(' ', array_slice($parts, 1)) : null;
+            }
+
             $provider->update([
-                'business_name' => $request->business_name,
-                'contact_person' => $request->contact_person,
-                'role_title' => $request->role_title,
+                'name' => $profileName,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'physical_address' => $request->physical_address,
@@ -86,10 +89,6 @@ class ServiceListingController extends Controller
                 'end_time' => $request->end_time,
                 'availability_notes' => $request->availability_notes,
                 
-                'license_number' => $request->license_number,
-                'years_operation' => $request->years_operation,
-                'insurance_coverage' => $request->insurance_coverage,
-                'diversity_badges' => $request->diversity_badges,
                 'special_features' => $request->special_features,
                 'website' => $request->website,
                 'facebook' => $request->facebook,
@@ -241,9 +240,8 @@ private function handleFileRemovals(Request $request, $provider)
     {
         // Define fields that would require re-approval
         $criticalFields = [
-            'business_name',
-            'service_categories',
-            'license_number',
+            'name',
+            'sub_categories',
             'physical_address'
         ];
 

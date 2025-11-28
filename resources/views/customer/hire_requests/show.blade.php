@@ -9,7 +9,7 @@
     <div class="card">
         <div class="card-body">
             <h4>Hire Request #{{ $hireRequest->id }}</h4>
-            <p class="text-muted">Cleaner: {{ optional($hireRequest->cleaner)->business_name ?? 'Provider' }}</p>
+            <p class="text-muted">Cleaner: {{ optional($hireRequest->cleaner)->name ?? 'Provider' }}</p>
 
             <div class="row mt-3">
                 <div class="col-md-6">

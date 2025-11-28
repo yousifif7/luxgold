@@ -58,23 +58,11 @@
                         </div>
                     </div>
 
-        {{-- Business Info --}}
+        {{-- Provider Name (solo cleaner) --}}
         <div class="col-md-4 mb-3">
-            <label class="form-label">Business Name *</label>
-            <input type="text" class="form-control" name="business_name" 
-                   value="{{ old('business_name', $provider->business_name ?? '') }}" required>
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Contact Person</label>
-            <input type="text" class="form-control" name="contact_person" 
-                   value="{{ old('contact_person', $provider->contact_person ?? '') }}">
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Role Title</label>
-            <input type="text" class="form-control" name="role_title" 
-                   value="{{ old('role_title', $provider->role_title ?? '') }}">
+            <label class="form-label">Name *</label>
+            <input type="text" class="form-control" name="name" 
+                   value="{{ old('name', $provider->name ?? ($provider->user->name ?? '')) }}" required>
         </div>
 
         <div class="col-md-4 mb-3">
@@ -181,32 +169,7 @@
             <textarea class="form-control" name="availability_notes" rows="2">{{ old('availability_notes', $provider->availability_notes ?? '') }}</textarea>
         </div>
 
-        {{-- Legal / Features --}}
-        <div class="col-md-4 mb-3">
-            <label class="form-label">License Number</label>
-            <input type="text" class="form-control" name="license_number" value="{{ old('license_number', $provider->license_number ?? '') }}">
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Years in Operation</label>
-            <input type="number" class="form-control" name="years_operation" value="{{ old('years_operation', $provider->years_operation ?? '') }}">
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Insurance Coverage</label>
-            <input type="text" class="form-control" name="insurance_coverage" value="{{ old('insurance_coverage', $provider->insurance_coverage ?? '') }}">
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Diversity Badges</label>
-            <select class="form-control" name="diversity_badges[]" multiple>
-                @foreach($div_bages as $badge)
-                    <option value="{{ $badge->id }}" {{ in_array($badge->id, old('diversity_badges', $provider->diversity_badges ?? [])) ? 'selected' : '' }}>
-                        {{ $badge->title }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+        {{-- Legal / Features removed per product decision --}}
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Special Features</label>

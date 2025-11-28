@@ -173,8 +173,7 @@ class ServiceListingModal {
 
     updateReviewSection() {
         // Basic Info
-        document.getElementById('reviewBusinessName').textContent = document.getElementById('businessName').value || '-';
-        document.getElementById('reviewContactPerson').textContent = document.getElementById('contactPerson').value || '-';
+        document.getElementById('reviewBusinessName').textContent = (document.getElementById('profileName') && document.getElementById('profileName').value) ? document.getElementById('profileName').value : '-';
         document.getElementById('reviewPhone').textContent = document.getElementById('phoneNumber').value || '-';
         document.getElementById('reviewEmail').textContent = document.getElementById('emailAddress').value || '-';
         
@@ -338,9 +337,7 @@ class ServiceListingModal {
             const formData = new FormData();
             
             // Basic Info
-            formData.append('business_name', document.getElementById('businessName').value);
-            formData.append('contact_person', document.getElementById('contactPerson').value);
-            formData.append('role_title', document.getElementById('roleTitle').value);
+            formData.append('profile_name', (document.getElementById('profileName') && document.getElementById('profileName').value) ? document.getElementById('profileName').value : (document.getElementById('businessName') ? document.getElementById('businessName').value : ''));
             formData.append('phone_number', document.getElementById('phoneNumber').value);
             formData.append('email', document.getElementById('emailAddress').value);
             formData.append('physical_address', document.getElementById('physicalAddress').value);
@@ -349,20 +346,12 @@ class ServiceListingModal {
             formData.append('zip_code', document.getElementById('zipCode').value);
 
             // Services
-            const serviceCategories = Array.from(document.querySelectorAll('.service-listing-service-checkbox:checked'))
+            const serviceCategories = Array.from(document.querySelectorAll('input[name="sub_categories[]"]:checked'))
                 .map(cb => cb.value);
-            formData.append('service_categories', JSON.stringify(serviceCategories));
+            formData.append('sub_categories', JSON.stringify(serviceCategories));
             formData.append('service_description', document.getElementById('serviceDescription').value);
 
-            // Credentials
-            formData.append('license_number', document.getElementById('licenseNumber').value);
-            formData.append('years_operation', document.getElementById('yearsOperation').value);
-            formData.append('insurance_coverage', document.getElementById('insuranceCoverage').value);
-            
-            // Diversity badges
-            const diversityBadges = Array.from(document.querySelectorAll('input[id^="badge-"]:checked'))
-                .map(cb => cb.value);
-            formData.append('diversity_badges', JSON.stringify(diversityBadges));
+            // Credentials removed from UI; no longer appended
 
             // Special features
             const specialFeatures = Array.from(document.querySelectorAll('input[id^="feature-"]:checked'))

@@ -49,9 +49,9 @@
                     @foreach($providers as $provider)
                     <td>
                       <div class="provider-logo">
-                          <img src="{{ asset($provider->logo_path ?? 'assets/images/updated-logo.jpeg') }}" alt="{{ $provider->business_name }}">
+                          <img src="{{ asset($provider->logo_path ?? 'assets/images/updated-logo.jpeg') }}" alt="{{ $provider->name }}">
                       </div>
-                      <div>{{ $provider->business_name }}</div>
+                      <div>{{ $provider->name }}</div>
                     </td>
                     @endforeach
                   </tr>
@@ -121,32 +121,7 @@
                     </td>
                     @endforeach
                   </tr>
-                  <tr>
-                    <td>Years in Operation</td>
-                    @foreach($providers as $provider)
-                    <td data-label="Years in Operation">{{ $provider->years_operation }}</td>
-                    @endforeach
-                  </tr>
-                  <tr>
-                    <td>License Number</td>
-                    @foreach($providers as $provider)
-                    <td data-label="License Number">{{ $provider->license_number ?? 'Not specified' }}</td>
-                    @endforeach
-                  </tr>
-                  <tr>
-                    <td>Diversity Badges</td>
-                    @foreach($providers as $provider)
-                    <td data-label="Diversity Badges">
-                        @php
-                            $badges = $provider->diversity_badges ?? [];
-                            $formattedBadges = array_map(function($badge) {
-                                return str_replace('_', ' ', ucfirst($badge));
-                            }, $badges);
-                        @endphp
-                        {{ implode(', ', $formattedBadges) }}
-                    </td>
-                    @endforeach
-                  </tr>
+                  {{-- Years, License, Diversity removed from public comparison per product decision --}}
                   <tr>
                     <td>Contact</td>
                     @foreach($providers as $provider)

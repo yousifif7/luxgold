@@ -71,10 +71,10 @@
                     $mainImage = !empty($facilityPhotos) ? ($facilityPhotos[0]) : ($provider->logo_path);
                 @endphp
                 @if($mainImage && file_exists(public_path($mainImage)))
-    <img src="{{ asset($mainImage) }}"
-         class="school-profile-main-image-large"
-         id="mainImage"
-         alt="{{ $provider->business_name ?? 'Provider' }} Main Image">
+        <img src="{{ asset($mainImage) }}"
+            class="school-profile-main-image-large"
+            id="mainImage"
+            alt="{{ $provider->name ?? 'Provider' }} Main Image">
 @endif
                 @if(!empty($facilityPhotos) && count($facilityPhotos) > 1)
                 <div class="school-profile-thumbnail-gallery-row">
@@ -248,7 +248,7 @@
                 <div class="school-information-badge-category">{{ $primaryCategoryName }}</div>
                 @endif
                 
-                <h2 class="school-information-name-heading">{{ $provider->business_name ?? $provider->name }}</h2>
+                <h2 class="school-information-name-heading">{{ $provider->name }}</h2>
 
                 @php
                     $reviews = $provider->reviews()->where('status', 'approved')->get();
@@ -437,8 +437,8 @@
         </li>
         @endif
         
-        @php
-            // Normalize special features and diversity badges to arrays
+            @php
+            // Normalize special features to array; diversity badges removed from public profile
             $specialFeatures = $provider->special_features ?? [];
             if ($specialFeatures instanceof \Illuminate\Support\Collection) {
                 $specialFeatures = $specialFeatures->toArray();
@@ -448,16 +448,7 @@
                 $specialFeatures = (array) $specialFeatures;
             }
 
-            $diversityBadges = $provider->diversity_badges ?? [];
-            if ($diversityBadges instanceof \Illuminate\Support\Collection) {
-                $diversityBadges = $diversityBadges->toArray();
-            } elseif (is_string($diversityBadges)) {
-                $diversityBadges = json_decode($diversityBadges, true) ?: [];
-            } else {
-                $diversityBadges = (array) $diversityBadges;
-            }
-
-            $amenities = array_values(array_filter(array_merge($specialFeatures ?? [], $diversityBadges ?? [])));
+            $amenities = array_values(array_filter($specialFeatures ?? []));
         @endphp
         
         @if(!empty($amenities))
@@ -481,29 +472,11 @@
             <!-- About Section -->
             @if($provider->service_description)
             <div class="school-about-card">
-                <div class="provider-detail-tab-content-card-title">About {{ $provider->business_name ?? $provider->name }}</div>
+                <div class="provider-detail-tab-content-card-title">About {{ $provider->name }}</div>
                 <p class="text-muted">{{ $provider->service_description }}</p>
                 
                 <div class="row g-3 mt-3">
-                    @if($provider->years_operation)
-                    <div class="col-md-3">
-                        <div class="school-about-stats-box">
-                            <i class="ti ti-calendar"></i>
-                            <div>{{ $provider->years_operation }}</div>
-                            <small>Years Operating</small>
-                        </div>
-                    </div>
-                    @endif
-                    
-                    @if($provider->license_number)
-                    <div class="col-md-3">
-                        <div class="school-about-stats-box">
-                            <i class="ti ti-shield-check"></i>
-                            <div>Licensed</div>
-                            <small>Provider</small>
-                        </div>
-                    </div>
-                    @endif
+                    {{-- years_operation and license_number removed from public profile per product decision --}}
                     
                     @if($averageRating)
                     <div class="col-md-3">
@@ -693,7 +666,7 @@
                 <h6>Photos ({{ count($facilityPhotos) }})</h6>
                 <div class="provider-detail-images-parent">
                     @foreach($facilityPhotos as $photo)
-                        <img src="{{ asset($photo) }}" alt="{{ $provider->business_name ?? 'Provider' }} photo">
+                        <img src="{{ asset($photo) }}" alt="{{ $provider->name ?? 'Provider' }} photo">
                     @endforeach
                 </div>
             </div>
@@ -801,7 +774,7 @@ function makePhoneCall(phoneNumber) {
 function shareProvider() {
     if (navigator.share) {
         navigator.share({
-            title: '{{ $provider->business_name }}',
+            title: '{{ $provider->name }}',
             text: 'Check out this provider on our platform',
             url: window.location.href
         });
@@ -943,7 +916,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="modal-header">
                 <h5 class="modal-title" id="inquiryModalLabel">
                     <i class="ti ti-message-circle text-primary me-2"></i>
-                    Hire {{ $provider->business_name }}
+                    Hire {{ $provider->name }}
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

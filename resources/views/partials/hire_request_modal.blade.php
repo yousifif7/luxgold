@@ -26,10 +26,20 @@
                         <div class="hr-step" id="hr-step-0">
                             <h5 class="mb-3">Choose Cleaning Type</h5>
                             <div class="row g-3">
-                                <div class="col-md-6"><div class="card p-3 hr-type-option" data-type="one-off" style="cursor:pointer;"> <h6>One-Off</h6><p class="mb-0 text-muted">Single visit for a deep clean.</p></div></div>
-                                <div class="col-md-6"><div class="card p-3 hr-type-option" data-type="regular" style="cursor:pointer;"> <h6>Regular</h6><p class="mb-0 text-muted">Weekly / bi-weekly / monthly visits.</p></div></div>
-                                <div class="col-md-6"><div class="card p-3 hr-type-option" data-type="carpet-upholstery" style="cursor:pointer;"> <h6>Carpet & Upholstery</h6><p class="mb-0 text-muted">Specialised carpet and upholstery cleaning.</p></div></div>
-                                <div class="col-md-6"><div class="card p-3 hr-type-option" data-type="end-tenancy" style="cursor:pointer;"> <h6>End of Tenancy</h6><p class="mb-0 text-muted">Full clean for move-out inspections.</p></div></div>
+                                @php
+                                    $hrCategories = \App\Models\Category::where('status', true)->orderBy('sort_order')->get();
+                                @endphp
+
+                                @forelse($hrCategories as $cat)
+                                    <div class="col-md-6">
+                                        <div class="card p-3 hr-type-option" data-type="{{ $cat->slug }}" style="cursor:pointer;">
+                                            <h6>{{ $cat->name }}</h6>
+                                            <p class="mb-0 text-muted">{{ $cat->subtitle ?? '' }}</p>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="col-12 text-muted">No categories available.</div>
+                                @endforelse
                             </div>
                         </div>
 
@@ -110,10 +120,12 @@
                 let current = 0;
 
                 const servicesMap = {
-                    'one-off':[ {key:'kitchen',label:'Kitchen',duration:45,price:40}, {key:'bathroom',label:'Bathroom',duration:30,price:25}, {key:'living',label:'Living Room',duration:30,price:30} ],
-                    'regular':[ {key:'kitchen',label:'Kitchen',duration:30,price:30}, {key:'bathroom',label:'Bathroom',duration:20,price:20}, {key:'living',label:'Living Room',duration:20,price:25} ],
+                    'home-cleaning':[ {key:'kitchen',label:'Kitchen',duration:30,price:30}, {key:'bathroom',label:'Bathroom',duration:25,price:25}, {key:'living',label:'Living Room',duration:25,price:25} ],
+                    'deep-cleaning':[ {key:'kitchen',label:'Kitchen Deep Clean',duration:90,price:80}, {key:'bathroom',label:'Bathroom Deep Clean',duration:60,price:60}, {key:'whole_home',label:'Whole Home Deep',duration:240,price:220} ],
+                    'move-cleaning':[ {key:'full_property',label:'Full Property Clean',duration:180,price:150}, {key:'oven',label:'Oven Clean',duration:45,price:40} ],
                     'carpet-upholstery':[ {key:'sofa',label:'Sofa',duration:60,price:50}, {key:'carpet_small',label:'Small Carpet',duration:30,price:35}, {key:'carpet_large',label:'Large Carpet',duration:60,price:60} ],
-                    'end-tenancy':[ {key:'full_flat',label:'Full Flat Clean',duration:180,price:150}, {key:'oven',label:'Oven Clean',duration:45,price:40} ]
+                    'window-cleaning':[ {key:'interior',label:'Interior Windows',duration:45,price:40}, {key:'exterior',label:'Exterior Windows',duration:60,price:55} ],
+                    'commercial-cleaning':[ {key:'office_space',label:'Office Space',duration:120,price:120}, {key:'retail',label:'Retail Space',duration:180,price:180} ]
                 };
 
                 const btnNext = document.getElementById('hr_btnNext');

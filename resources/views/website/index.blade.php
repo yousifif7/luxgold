@@ -254,12 +254,11 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
         $serviceCategories = $provider->service_categories ?? [];
         $firstCategory = !empty($serviceCategories) ? $serviceCategories[0] : ($category ?: 'Provider');
         
-        // Parse special features for tags
+        // Parse special features for tags (diversity badges removed from public lists)
         $specialFeatures = $provider->special_features ?? [];
-        $diversityBadges = $provider->diversity_badges ?? [];
-        
+
         // Combine tags from various sources
-        $allTags = array_merge($specialFeatures, $diversityBadges);
+        $allTags = $specialFeatures;
         $displayTags = array_slice($allTags, 0, 4); // Show max 4 tags
         $remainingTags = count($allTags) - count($displayTags);
         
@@ -279,7 +278,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
         <div class="col-md-4">
             <div class="program-card position-relative">
                 @if(!empty($provider->logo_path))
-                <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->business_name }}">
+                <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->name }}">
                 @else
                 <div class="provider-media placeholder-media">
                     <i class="ti ti-building-store"></i>
@@ -289,7 +288,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
                 <div class="card-badge">{{ $firstCategory }}</div>
                 @endif
                 <div class="card-body">
-                    <div class="program-title">  {{ $provider->business_name ?? $provider->name }}
+                    <div class="program-title">  {{ $provider->name }}
                         @if($provider->status === 'approved')
                         <i style="color:#00bfa6" class="ms-1 bi bi-check2-circle"></i>
                     @endif</div>
