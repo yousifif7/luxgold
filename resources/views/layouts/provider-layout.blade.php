@@ -322,6 +322,11 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="{{ route('cleaner.hire-requests') }}">
+                                        <i class="ti ti-mail"></i><span>Hire Requests</span>
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ route('cleaner-subscription') }}">
                                         <i class="ti ti-credit-card"></i><span>Subscription</span>
                                     </a>

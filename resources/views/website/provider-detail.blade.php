@@ -1490,7 +1490,7 @@ function showCompareModal() {
                     item.className = 'compare-item';
                     item.innerHTML = `
                         <img src="${baseUrl+'/'+provider.logo_path || '/default.png'}" alt="">
-                        <div class="small fw-bold mt-1">${provider.business_name}</div>
+                        <div class="small fw-bold mt-1">${provider.name || provider.business_name}</div>
                         <div class="small text-muted">${provider.physical_address || ''}</div>
                     `;
                     console.log(item)

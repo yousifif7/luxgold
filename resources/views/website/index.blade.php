@@ -388,16 +388,16 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
                             {{-- Event Title --}}
                             <div class="program-title">
                                 {{ $event->title }}
-                                @if($event->provider && $event->provider->status === 'approved')
+                                @if($event->cleaner && $event->cleaner->status === 'approved')
                                     <i style="color:#00bfa6" class="ms-1 bi bi-check2-circle"></i>
                                 @endif
                             </div>
 
                             {{-- Provider Name --}}
-                            @if($event->provider)
+                            @if($event->cleaner)
                                 <div class="info small-muted">
                                     <i class="bi bi-building"></i>
-                                    {{ $event->provider->business_name ?? $event->provider_name }}
+                                    {{ $event->cleaner->name ?? $event->cleaner->business_name ?? $event->cleaner_name }}
                                 </div>
                             @endif
 
@@ -466,7 +466,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
         <p class="tagline">From early learning to wellness services, find everything your family needs in one place</p>
         <div class="row g-4 mt-4">
             @foreach($categories as $category)
-            @if($category->parent_id === null) <!-- Only show main categories -->
+            @if($category->customer_id === null) <!-- Only show main categories -->
             <div class="col-md-4">
                 <div class="edu-card position-relative">
                     <!-- Category Image -->

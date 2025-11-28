@@ -175,7 +175,7 @@
                                         <div>
                                             <div class="fw-medium">
                                                 <a href="{{ route('admin.cleaners.show', $p->id) }}" class="text-decoration-none">
-                                                    {{ $p->business_name ?? 'Unnamed' }}
+                                                    {{ $p->name ?? $p->business_name ?? 'Unnamed' }}
                                                 </a>
                                             </div>
                                             <small class="text-muted">{{ $p->created_at->format('d M') }}</small>
@@ -206,7 +206,7 @@
                                 <div class="mb-2">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <strong>{{ $rv->cleaner->business_name ?? 'Cleaner' }}</strong>
+                                            <strong>{{ $rv->cleaner->name ?? $rv->cleaner->business_name ?? 'Cleaner' }}</strong>
                                             <div class="small text-muted">{{ \Illuminate\Support\Str::limit($rv->comment ?? $rv->content ?? '', 80) }}</div>
                                         </div>
                                         <div>
@@ -233,7 +233,7 @@
                             @foreach($newInquiries as $inq)
                                 <div class="d-flex align-items-center justify-content-between py-2">
                                     <div>
-                                        <div class="fw-medium">{{ $inq->name }} — <small class="text-muted">{{ $inq->cleaner->business_name ?? 'N/A' }}</small></div>
+                                        <div class="fw-medium">{{ $inq->name }} — <small class="text-muted">{{ $inq->cleaner->name ?? $inq->cleaner->business_name ?? 'N/A' }}</small></div>
                                         <small class="text-muted">{{ $inq->created_at->diffForHumans() }}</small>
                                     </div>
                                     <div class="btn-group btn-group-sm">

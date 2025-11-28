@@ -83,7 +83,7 @@
                                     </td>
                                     <td>
                                         @if($inq->provider)
-                                            <a href="{{ route('admin.cleaners.show', $inq->provider->id) }}">{{ $inq->provider->business_name }}</a>
+                                            <a href="{{ route('admin.cleaners.show', $inq->provider->id) }}">{{ $inq->provider->name ?? $inq->provider->business_name }}</a>
                                         @else
                                             <em>(deleted)</em>
                                         @endif
@@ -99,7 +99,7 @@
                                                 'email' => $inq->email,
                                                 'message' => $inq->message,
                                                 'subject' => $inq->subject,
-                                                'provider_name' => $inq->provider->business_name ?? '(deleted)',
+                                                'provider_name' => $inq->provider->name ?? $inq->provider->business_name ?? '(deleted)',
                                                 'date_time' => $inq->created_at->format('d M Y, h:i A'),
                                                 'status' => $inq->status
                                             ]) }}' data-bs-toggle="modal" data-bs-target="#viewInquiryModal">View</button>

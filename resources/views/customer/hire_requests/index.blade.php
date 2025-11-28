@@ -26,7 +26,7 @@
                 @foreach($hireRequests as $hire)
                 <tr>
                     <td>{{ $hire->id }}</td>
-                    <td>{{ optional($hire->cleaner)->business_name ?? 'Cleaner' }}</td>
+                    <td>{{ optional($hire->cleaner)->name ?? optional($hire->cleaner)->business_name ?? 'Cleaner' }}</td>
                     <td>{{ ucfirst($hire->cleaning_type ?? '—') }}</td>
                     <td>{{ $hire->scheduled_at ? $hire->scheduled_at->format('d M Y H:i') : '—' }}</td>
                     <td>{{ ucfirst($hire->status) }}</td>

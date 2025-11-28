@@ -65,7 +65,12 @@ class HireRequestController extends Controller
             ]);
         }
 
-        $hireRequest->update(['status' => 'sent', 'responded_at' => now()]);
+        // Persist the notified cleaner ids (store as array/json)
+        $hireRequest->update([
+            'cleaner_ids' => array_values($ids),
+            'status' => 'sent',
+            'responded_at' => now()
+        ]);
 
         return redirect()->route('admin.hire-requests.show', $hireRequest->id)
             ->with('success', 'Hire request sent to selected cleaners.');

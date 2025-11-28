@@ -133,7 +133,7 @@
             <td><input type="checkbox" class="form-check-input"></td>
             <td>
               <div class="d-flex flex-column">
-                <span class="fw-semibold">{{ $listing->business_name }}</span>
+                <span class="fw-semibold">{{ $listing->name ?? $listing->business_name ?? '' }}</span>
                 <span class="text-muted small"><i class="ti ti-map-pin me-1"></i>{{ $listing->physical_address }}</span>
                 
               </div>

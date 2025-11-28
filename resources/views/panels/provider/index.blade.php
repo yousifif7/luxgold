@@ -8,7 +8,7 @@
         <!-- Page Header -->
         <div class="d-flex align-items-center justify-content-between gap-2 mb-4 flex-wrap">
             <div class="breadcrumb-arrow">
-                <h4 class="mb-1">Welcome back, {{ $stats['business_name'] }}!</h4>
+                <h4 class="mb-1">Welcome back, {{ $stats['name'] ?? $stats['business_name'] }}!</h4>
                 <p class="mb-0">Here's what's happening with your account today.</p>
             </div>
             <div class="subscription-status">

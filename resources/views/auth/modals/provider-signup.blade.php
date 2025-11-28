@@ -229,11 +229,6 @@
                         
                         <div class="serviceflow-form-section">
                             <h4 class="serviceflow-form-section-title">Business Information</h4>
-                            <div class="serviceflow-form-group">
-                                <label class="serviceflow-form-label">Business Name</label>
-                                <input type="text" name="business_name" class="serviceflow-form-control" placeholder="Your business or service name" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
                             <div class="serviceflow-form-row">
                                 <div class="serviceflow-form-group">
                                     <label class="serviceflow-form-label">Phone Number</label>

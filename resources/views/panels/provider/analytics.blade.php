@@ -181,7 +181,7 @@
               <table class="table mb-0 align-middle">
                 <thead class="table-light">
                   <tr>
-                    <th>Provider</th>
+                    <th>Cleaner</th>
                     <th>Views</th>
                     <th>Clicks</th>
                     <th>Inquiries</th>

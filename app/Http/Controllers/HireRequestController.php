@@ -14,6 +14,8 @@ class HireRequestController extends Controller
     {
         $request->validate([
             'cleaner_id' => 'nullable',
+            'cleaner_ids' => 'nullable|array',
+            'cleaner_ids.*' => 'integer|exists:cleaners,id',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:40',
@@ -55,8 +57,15 @@ class HireRequestController extends Controller
                 $cleanerId = (int) $rawCleanerId;
             }
 
+            // prepare cleaner ids array (prefer explicit cleaner_ids if provided)
+            $cleanerIds = $request->input('cleaner_ids') ?? [];
+            if ($cleanerId && empty($cleanerIds)) {
+                $cleanerIds = [$cleanerId];
+            }
+
             $hire = HireRequest::create([
                 'cleaner_id' => $cleanerId,
+                'cleaner_ids' => $cleanerIds,
                 'user_id' => Auth::id(),
                 'name' => $request->name,
                 'email' => $request->email,

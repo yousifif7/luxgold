@@ -16,6 +16,7 @@ class HireRequest extends Model
 
     protected $fillable = [
         'cleaner_id',
+        'cleaner_ids',
         'user_id',
         'name',
         'email',
@@ -32,6 +33,7 @@ class HireRequest extends Model
     ];
 
     protected $casts = [
+        'cleaner_ids' => 'array',
         'selected_items' => 'array',
         'scheduled_at' => 'datetime',
     ];
@@ -44,6 +46,18 @@ class HireRequest extends Model
     public function cleaner()
     {
         return $this->belongsTo(Cleaner::class, 'cleaner_id');
+    }
+
+    /**
+     * Return collection of cleaners when `cleaner_ids` is present.
+     */
+    public function cleaners()
+    {
+        if (! $this->cleaner_ids || ! is_array($this->cleaner_ids)) {
+            return collect();
+        }
+
+        return Cleaner::whereIn('id', $this->cleaner_ids)->get();
     }
 
     public function user()

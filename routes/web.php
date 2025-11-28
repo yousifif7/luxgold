@@ -187,6 +187,8 @@ Auth::routes();
 Route::prefix('cleaner')->middleware(RoleMiddleware::class . ':cleaner')->group(function () {
     Route::get('/listing/profile', [ServiceListingController::class, 'index'])->name('cleaner.listings.profile');
     Route::put('/listing/profile/{id}/update', [ServiceListingController::class, 'update'])->name('cleaner.listings.update');
+    // Provider hire requests assigned to this cleaner
+    Route::get('/hire-requests', [App\Http\Controllers\Provider\HireRequestController::class, 'index'])->name('cleaner.hire-requests');
 
 });
 

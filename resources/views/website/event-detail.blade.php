@@ -456,7 +456,7 @@
                                     </div>
                                     <div class="meta-content">
                                         <div class="meta-label">Organizer</div>
-                                        <div class="meta-value">{{ $event->provider_name }}</div>
+                                        <div class="meta-value">{{ $event->cleaner_name }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -492,7 +492,7 @@
                 </div>
 
                 <!-- Provider Information -->
-                @if($event->provider)
+                @if($event->cleaner)
                 <div class="provider-info-card mt-4">
                     <div class="card border-0">
                         <div class="card-body p-4">
@@ -505,31 +505,31 @@
                             
                             <div class="provider-info-content">
                                 <div class="provider-basic-info mb-3">
-                                    <h6 class="provider-name mb-2">{{ $event->provider->name }}</h6>
-                                    @if($event->provider->service_description)
-                                        <p class="text-muted mb-3">{{ Str::limit($event->provider->service_description, 200) }}</p>
+                                    <h6 class="provider-name mb-2">{{ $event->cleaner->name }}</h6>
+                                    @if($event->cleaner->service_description)
+                                        <p class="text-muted mb-3">{{ Str::limit($event->cleaner->service_description, 200) }}</p>
                                     @endif
                                 </div>
                                 
                                 <div class="provider-contact-info mb-3">
-                                    @if($event->provider->phone)
+                                    @if($event->cleaner->phone)
                                     <div class="contact-item mb-2 d-flex align-items-center">
                                         <i class="ti ti-phone me-3 text-muted"></i>
-                                        <span>{{ $event->provider->phone }}</span>
+                                        <span>{{ $event->cleaner->phone }}</span>
                                     </div>
                                     @endif
                                     
-                                    @if($event->provider->email)
+                                    @if($event->cleaner->email)
                                     <div class="contact-item mb-2 d-flex align-items-center">
                                         <i class="ti ti-mail me-3 text-muted"></i>
-                                        <span>{{ $event->provider->email }}</span>
+                                        <span>{{ $event->cleaner->email }}</span>
                                     </div>
                                     @endif
                                     
-                                    @if($event->provider->website)
+                                    @if($event->cleaner->website)
                                     <div class="contact-item mb-2 d-flex align-items-center">
                                         <i class="ti ti-world me-3 text-muted"></i>
-                                        <a href="{{ $event->provider->website }}" target="_blank" class="link">
+                                        <a href="{{ $event->cleaner->website }}" target="_blank" class="link">
                                             Visit Website
                                         </a>
                                     </div>
@@ -537,7 +537,7 @@
                                 </div>
                                 
                                 <div class="provider-actions">
-                                    <a href="{{ route('website.cleaner-detail', $event->provider->id) }}" class="btn btn-outline-primary">
+                                    <a href="{{ route('website.cleaner-detail', $event->cleaner->id) }}" class="btn btn-outline-primary">
                                         <i class="ti ti-external-link me-1"></i>View Provider Profile
                                     </a>
                                 </div>
@@ -619,8 +619,8 @@
                                 <h6 class="card-title mb-3">Quick Actions</h6>
                                 
                                 <div class="quick-actions-list">
-                                    @if($event->provider && $event->provider->phone)
-                                    <div class="quick-action-item" onclick="makePhoneCall('{{ $event->provider->phone }}')">
+                                    @if($event->cleaner && $event->cleaner->phone)
+                                    <div class="quick-action-item" onclick="makePhoneCall('{{ $event->cleaner->phone }}')">
                                         <i class="ti ti-phone"></i>
                                         <span>Call Organizer</span>
                                     </div>
@@ -765,7 +765,7 @@ Date: ${eventDate}
 Location: ${eventLocation}
 Description: ${eventDescription}
 
-Organizer: {{ $event->provider_name }}
+Organizer: {{ $event->cleaner_name }}
 Cost: {{ $event->cost > 0 ? '$' . number_format($event->cost, 2) : 'Free' }}
 
 Downloaded from luxGold on ${new Date().toLocaleDateString()}
@@ -794,7 +794,7 @@ function printEventInfo() {
                 <strong>Date & Time:</strong> {{ \Carbon\Carbon::parse($event->start_date)->format('l, F j, Y g:i A') }}<br>
                 <strong>Location:</strong> {{ $event->location }}{{ $event->city ? ', ' . $event->city : '' }}<br>
                 <strong>Cost:</strong> {{ $event->cost > 0 ? '$' . number_format($event->cost, 2) : 'Free' }}<br>
-                <strong>Organizer:</strong> {{ $event->provider_name }}
+                <strong>Organizer:</strong> {{ $event->cleaner_name }}
             </div>
             
             <div style="margin-bottom: 20px;">

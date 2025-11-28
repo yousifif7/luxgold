@@ -256,12 +256,12 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <span class="avatar avatar-sm rounded-circle bg-success text-white me-2">
-                                            {{ strtoupper(substr($provider->business_name ?? $provider->name, 0, 2)) }}
+                                            {{ strtoupper(substr($provider->name ?? $provider->business_name ?? '', 0, 2)) }}
                                         </span>
                                         <div class="d-flex flex-column">
                                             <span class="fw-semibold">
                                                 <a href="{{ route('admin.cleaners.show', $provider->id) }}">
-                                                    {{ $provider->business_name ?? $provider->name }}
+                                                    {{ $provider->name ?? $provider->business_name }}
                                                 </a>
                                             </span>
                                             <span class="small text-muted">{{ $provider->category->name??'' }}</span>

@@ -1,6 +1,6 @@
     <div class="modal-body">
 
-    <h1 class="mb-4">Provider Details: {{ $provider->business_name }}</h1>
+    <h1 class="mb-4">Provider Details: {{ $provider->name ?? $provider->business_name }}</h1>
 
     <div class="card mb-4">
         <div class="card-header">Basic Information</div>
@@ -10,7 +10,7 @@
             <p><strong>Last Name:</strong> {{ $provider->user->last_name ?? '-' }}</p>
             <p><strong>Email:</strong> {{ $provider->email }}</p>
             <p><strong>Phone:</strong> {{ $provider->phone }}</p>
-            <p><strong>Business Name:</strong> {{ $provider->business_name }}</p>
+            <p><strong>Business Name:</strong> {{ $provider->name ?? $provider->business_name }}</p>
             <p><strong>Category:</strong> {{ $provider->category->name ?? '-' }}</p>
             <p><strong>Status:</strong> {{ ucfirst($provider->status) }}</p>
             <p><strong>Featured:</strong> {{ $provider->is_featured ? 'Yes' : 'No' }}</p>
