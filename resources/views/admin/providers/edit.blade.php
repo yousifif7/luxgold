@@ -218,17 +218,6 @@
             @endif
         </div>
 
-        <div class="col-md-4 mb-3">
-            <label class="form-label">License Documents</label>
-            <input type="file" class="form-control" name="license_docs_paths[]" multiple>
-            @if(isset($provider) && $provider->license_docs_paths)
-                <div class="mt-2">
-                    @foreach($provider->license_docs_paths as $doc)
-                        <a href="{{ asset($doc) }}" target="_blank">View Document</a><br>
-                    @endforeach
-                </div>
-            @endif
-        </div>
 
         {{-- Subscription / Status --}}
         <div class="row">

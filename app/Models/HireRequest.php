@@ -30,6 +30,7 @@ class HireRequest extends Model
         'ip_address',
         'user_agent',
         'zip_code',
+        'city',
     ];
 
     protected $casts = [
@@ -104,20 +105,28 @@ class HireRequest extends Model
         if ($category) {
             $query->where('categories_id', $category->id);
 
-            if ($this->zip_code) {
-                // prefer same-zip cleaners first
-                $sameZip = (clone $query)->where('zip_code', $this->zip_code)->limit($limit)->get();
-                if ($sameZip->isNotEmpty()) {
-                    return $sameZip;
+            if ($this->city) {
+                $city = trim($this->city);
+
+                // exact, case-insensitive city match
+                $sameCity = (clone $query)->whereRaw('lower(city) = ?', [mb_strtolower($city)])->limit($limit)->get();
+                if ($sameCity->isNotEmpty()) {
+                    return $sameCity;
                 }
             }
 
+            // Fallback: return category-matched cleaners (no city preference)
             return $query->limit($limit)->get();
         }
 
         // fallback: match by zip only
-        if ($this->zip_code) {
-            return Cleaner::where('zip_code', $this->zip_code)->where('status', 'active')->limit($limit)->get();
+        // Prefer matching by city if provided
+        if ($this->city) {
+            $city = trim($this->city);
+            $exact = Cleaner::whereRaw('lower(city) = ?', [mb_strtolower($city)])->where('status', 'active')->limit($limit)->get();
+            if ($exact->isNotEmpty()) {
+                return $exact;
+            }
         }
 
         // final fallback: return recent active cleaners

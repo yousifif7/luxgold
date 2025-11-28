@@ -25,6 +25,7 @@ class HireRequestController extends Controller
             'scheduled_at' => 'nullable|date',
             'notes' => 'nullable|string',
             'zip_code' => 'nullable|string|max:20',
+            'city' => 'nullable|string|max:100',
         ]);
 
         try {
@@ -77,6 +78,7 @@ class HireRequestController extends Controller
                 'notes' => $request->notes,
                 'status' => 'pending',
                 'zip_code' => $request->zip_code,
+                'city' => $request->city,
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
             ]);

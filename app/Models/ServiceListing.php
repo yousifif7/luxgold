@@ -29,7 +29,6 @@ class ServiceListing extends Model
         'start_time',
         'end_time',
         'availability_notes',
-        'license_number',
         'years_operation',
         'insurance_coverage',
         'diversity_badges',

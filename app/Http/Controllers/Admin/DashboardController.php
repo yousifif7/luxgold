@@ -38,7 +38,7 @@ class DashboardController extends Controller
         return Provider::where('status', 'pending')
             ->orderBy('created_at', 'asc')
             ->take($limit)
-            ->get(['id','business_name','created_at']);
+            ->get(['id','name','created_at']);
     }
 
     private function getReportedReviews($limit = 3)
@@ -89,7 +89,7 @@ class DashboardController extends Controller
                     fputcsv($out, [
                         $p->id,
                         $p->cleaner_id,
-                        $p->cleaner->business_name ?? $p->cleaner_id,
+                        $p->cleaner->name ?? $p->cleaner_id,
                         $p->amount,
                         $p->currency ?? '',
                         $p->status,

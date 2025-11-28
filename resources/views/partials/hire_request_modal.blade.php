@@ -89,6 +89,17 @@
                                     <input type="tel" id="hr_checkout_phone" class="form-control" required>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <label class="form-label">City *</label>
+                                    @php $hrCities = \App\Models\City::orderBy('name')->get(); @endphp
+                                    <select id="hr_city" name="city" class="form-select" required>
+                                        <option value="">Choose city</option>
+                                        @foreach($hrCities as $c)
+                                            <option value="{{ $c->name }}">{{ $c->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div class="col-12">
                                     <h6>Order Summary</h6>
                                     <div id="hr_orderSummary" class="p-3 border rounded mb-3"></div>
@@ -241,7 +252,7 @@
                         if (!isNaN(rawCleaner)) payloadCleanerId = parseInt(rawCleaner, 10);
                     }
 
-                    const payload = {
+                        const payload = {
                         cleaner_id: payloadCleanerId,
                         cleaning_type: modal.dataset.selectedType || null,
                         selected_items: document.getElementById('hr_selected_items').value || '[]',
@@ -251,7 +262,8 @@
                         name: document.getElementById('hr_checkout_name').value,
                         email: document.getElementById('hr_checkout_email').value,
                         phone: document.getElementById('hr_checkout_phone').value,
-                        zip_code: document.getElementById('hr_zip_code').value || null,
+                            zip_code: document.getElementById('hr_zip_code').value || null,
+                            city: (document.getElementById('hr_city') ? document.getElementById('hr_city').value : null) || null,
                         _token: document.querySelector('input[name="_token"]').value
                     };
 

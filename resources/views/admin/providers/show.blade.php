@@ -57,7 +57,6 @@
     <div class="card mb-4">
         <div class="card-header">Licensing & Operation</div>
         <div class="card-body">
-            <p><strong>License Number:</strong> {{ $provider->license_number ?? '-' }}</p>
             <p><strong>Years in Operation:</strong> {{ $provider->years_operation ?? '-' }}</p>
             <p><strong>Insurance Coverage:</strong> {{ $provider->insurance_coverage ?? '-' }}</p>
         </div>
@@ -66,9 +65,6 @@
     <div class="card mb-4">
         <div class="card-header">Diversity & Special Features</div>
         <div class="card-body">
-            <p><strong>Diversity Badges:</strong> 
-                {{ $provider->diversity_badges ? implode(', ', $provider->diversity_badges) : '-' }}
-            </p>
             <p><strong>Special Features:</strong> 
                 {{ $provider->special_features ? implode(', ', $provider->special_features) : '-' }}
             </p>
@@ -103,16 +99,6 @@
                 <span>No facility photos uploaded</span>
             @endif
 
-            <p class="mt-3"><strong>License Documents:</strong></p>
-            @if($provider->license_docs_paths)
-                <ul>
-                    @foreach($provider->license_docs_paths as $doc)
-                        <li><a href="{{ asset($doc) }}" target="_blank">{{ basename($doc) }}</a></li>
-                    @endforeach
-                </ul>
-            @else
-                <span>No license documents uploaded</span>
-            @endif
         </div>
     </div>
 

@@ -195,10 +195,14 @@
                             <label class="service-listing-form-label-text">
                                 City <span class="service-listing-required-field-indicator">*</span>
                             </label>
-                            <input type="text" class="service-listing-form-input-field @error('city') is-invalid @enderror" 
-                                   id="cityinfo" name="city" 
-                                   value="{{ old('city', $serviceListing->city) }}" 
-                                   placeholder="City" required>
+                            @php $editCities = \App\Models\City::orderBy('name')->get(); @endphp
+                            <select class="service-listing-form-input-field @error('city') is-invalid @enderror" 
+                                    id="cityinfo" name="city" required>
+                                <option value="">Choose city</option>
+                                @foreach($editCities as $c)
+                                    <option value="{{ $c->name }}" {{ (old('city', $serviceListing->city) == $c->name) ? 'selected' : '' }}>{{ $c->name }}</option>
+                                @endforeach
+                            </select>
                             @error('city')
                                 <div class="service-listing-error-message-text show">{{ $message }}</div>
                             @else
@@ -986,10 +990,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     isValid = false;
                     errorFields.push('cityinfo');
                 }
-                if (!zipCode.value.trim() || zipCode.value.length !== 5) {
-                    isValid = false;
-                    errorFields.push('zipCode');
-                }
+                // if (!zipCode.value.trim() || zipCode.value.length !== 5) {
+                //     isValid = false;
+                //     errorFields.push('zipCode');
+                // }
                 break;
                 
             case 2:

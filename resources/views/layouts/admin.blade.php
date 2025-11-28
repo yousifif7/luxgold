@@ -252,7 +252,9 @@
                                 <img src="{{ asset('provider/assets/img/users/avatar-5.jpg') }}"
                                     class="rounded-circle" width="42" height="42" alt="provider/">
                                 <div class="ms-2">
-                                    <p class="fw-medium text-dark mb-0">{{ Auth::user()->first_name ?? 'Adminstrator' }} {{ Auth::user()->last_name ?? '' }}</p>
+                                    <p class="fw-medium text-dark mb-0">
+                                        {{ Auth::user()->first_name ?? 'Adminstrator' }}
+                                        {{ Auth::user()->last_name ?? '' }}</p>
                                 </div>
                             </div>
 
@@ -320,19 +322,19 @@
                             <ul>
                                 <li>
                                     <a href="{{ route('admin-home') }}">
-                                        <i class="ti ti-layout-board"></i><span>Dashboard</span>
+                                        <i class="ti ti-layout-dashboard"></i><span>Dashboard</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{{ route('admin.cleaners.index') }}">
-                                        <i class="ti ti-users"></i><span>Cleaners</span>
+                                        <i class="ti ti-brush"></i><span>Cleaners</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{{ route('admin.customers.index') }}">
-                                        <i class="ti ti-mood-boy"></i><span>Customers</span>
+                                        <i class="ti ti-users"></i><span>Customers</span>
                                     </a>
                                 </li>
 
@@ -344,7 +346,7 @@
 
                                 <li>
                                     <a href="{{ route('admin.reviews.index') }}">
-                                        <i class="ti ti-message-2"></i><span>Reviews & Moderation</span>
+                                        <i class="ti ti-message-chatbot"></i><span>Reviews & Moderation</span>
                                     </a>
                                 </li>
 
@@ -356,22 +358,25 @@
 
                                 <li>
                                     <a href="{{ route('admin.inquiries.index') }}">
-                                        <i class="ti ti-settings"></i><span>Inqueries</span>
+                                        <i class="ti ti-mail-question"></i><span>Inquiries</span>
                                     </a>
                                 </li>
+
                                 <li>
                                     <a href="{{ route('admin.hire-requests.index') }}">
-                                        <i class="ti ti-settings"></i><span>Hiring Requests</span>
+                                        <i class="ti ti-user-plus"></i><span>Hiring Requests</span>
                                     </a>
                                 </li>
+
                                 <li>
                                     <a href="{{ route('admin.support.index') }}">
-                                        <i class="ti ti-speaker"></i><span>Support</span>
+                                        <i class="ti ti-headset"></i><span>Support</span>
                                     </a>
                                 </li>
+
                                 <li>
                                     <a href="{{ route('admin.promotions.index') }}" class="nav-link">
-                                        <i class="ti ti-movie"></i> <span>Promotions</span>
+                                        <i class="ti ti-star"></i> <span>Promotions</span>
                                     </a>
                                 </li>
 
@@ -391,12 +396,10 @@
 
                                 <li>
                                     <a href="{{ route('admin.categories.index') }}">
-                                        <i class="ti ti-settings"></i>
-                                        <span> Categories</span>
+                                        <i class="ti ti-category"></i>
+                                        <span>Categories</span>
                                     </a>
                                 </li>
-
-
                             </ul>
                         </li>
                     </ul>
@@ -539,39 +542,40 @@
     @stack('parentscripts')
     @stack('scripts')
 
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css"
+        rel="stylesheet" />
 
-<!-- JavaScript -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Select2 on all multiple select elements
-    const multiSelects = document.querySelectorAll('select[multiple]');
-    
-    multiSelects.forEach(select => {
-        $(select).select2({
-            placeholder: 'Select options',
-            allowClear: true,
-            width: '100%',
-            theme: 'bootstrap-5'
-        });
-    });
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Select2 on all multiple select elements
+            const multiSelects = document.querySelectorAll('select[multiple]');
 
-    // Optional: If you want to initialize Select2 on single select elements as well
-    const singleSelects = document.querySelectorAll('select:not([multiple])');
-    
-    singleSelects.forEach(select => {
-        $(select).select2({
-            placeholder: 'Select an option',
-            allowClear: true,
-            width: '100%',
-            theme: 'bootstrap-5'
+            multiSelects.forEach(select => {
+                $(select).select2({
+                    placeholder: 'Select options',
+                    allowClear: true,
+                    width: '100%',
+                    theme: 'bootstrap-5'
+                });
+            });
+
+            // Optional: If you want to initialize Select2 on single select elements as well
+            const singleSelects = document.querySelectorAll('select:not([multiple])');
+
+            singleSelects.forEach(select => {
+                $(select).select2({
+                    placeholder: 'Select an option',
+                    allowClear: true,
+                    width: '100%',
+                    theme: 'bootstrap-5'
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
 </body>
 
 

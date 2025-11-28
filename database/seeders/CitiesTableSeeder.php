@@ -18,11 +18,28 @@ class CitiesTableSeeder extends Seeder
             return;
         }
 
+        // Irish cities only
         $cities = [
-            ['name' => 'Austin', 'slug' => 'austin', 'cleaners_count' => 8],
-            ['name' => 'Dallas', 'slug' => 'dallas', 'cleaners_count' => 6],
-            ['name' => 'Houston', 'slug' => 'houston', 'cleaners_count' => 7],
-            ['name' => 'San Antonio', 'slug' => 'san-antonio', 'cleaners_count' => 3],
+            ['name' => 'Dublin', 'slug' => 'dublin', 'cleaners_count' => 0],
+            ['name' => 'Cork', 'slug' => 'cork', 'cleaners_count' => 0],
+            ['name' => 'Galway', 'slug' => 'galway', 'cleaners_count' => 0],
+            ['name' => 'Limerick', 'slug' => 'limerick', 'cleaners_count' => 0],
+            ['name' => 'Waterford', 'slug' => 'waterford', 'cleaners_count' => 0],
+            ['name' => 'Drogheda', 'slug' => 'drogheda', 'cleaners_count' => 0],
+            ['name' => 'Swords', 'slug' => 'swords', 'cleaners_count' => 0],
+            ['name' => 'Dundalk', 'slug' => 'dundalk', 'cleaners_count' => 0],
+            ['name' => 'Bray', 'slug' => 'bray', 'cleaners_count' => 0],
+            ['name' => 'Ennis', 'slug' => 'ennis', 'cleaners_count' => 0],
+            ['name' => 'Kilkenny', 'slug' => 'kilkenny', 'cleaners_count' => 0],
+            ['name' => 'Tralee', 'slug' => 'tralee', 'cleaners_count' => 0],
+            ['name' => 'Letterkenny', 'slug' => 'letterkenny', 'cleaners_count' => 0],
+            ['name' => 'Naas', 'slug' => 'naas', 'cleaners_count' => 0],
+            ['name' => 'Navan', 'slug' => 'navan', 'cleaners_count' => 0],
+            ['name' => 'Mullingar', 'slug' => 'mullingar', 'cleaners_count' => 0],
+            ['name' => 'Athlone', 'slug' => 'athlone', 'cleaners_count' => 0],
+            ['name' => 'Newbridge', 'slug' => 'newbridge', 'cleaners_count' => 0],
+            ['name' => 'Carlow', 'slug' => 'carlow', 'cleaners_count' => 0],
+            ['name' => 'Wexford', 'slug' => 'wexford', 'cleaners_count' => 0],
         ];
 
         $useSlug = Schema::hasColumn('cities', 'slug');

@@ -355,7 +355,7 @@
                                 </li>
                                 <li>
                                     <a href="{{ url('support') }}">
-                                        <i class="ti ti-message-2"></i><span>Support</span>
+                                        <i class="ti ti-headset"></i><span>Support</span>
                                     </a>
                                 </li>
                                 <li>

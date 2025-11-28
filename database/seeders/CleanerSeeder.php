@@ -378,7 +378,6 @@ $cleaners = [
                     'start_time' => '07:00:00',
                     'end_time' => '18:00:00',
                     'availability_notes' => $cleanerData['hours'] ?? '',
-                    'license_number' => '',
                     'years_operation' => '',
                     'insurance_coverage' => '',
                     'diversity_badges' => [],

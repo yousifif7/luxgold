@@ -66,7 +66,6 @@ class RegisterController extends Controller
         // Additional validation for providers
         if ($data['role'] === 'cleaner') {
             $rules = array_merge($rules, [
-                'business_name' => ['required', 'string', 'max:255'],
                 'phone' => ['required', 'string', 'max:20'],
                 'category' => ['required', 'string', 'max:255'],
                 'pricing_plan' => ['required', 'string', 'max:255'],
@@ -101,18 +100,19 @@ class RegisterController extends Controller
         // If provider, store additional provider info
         if (strtolower($data['role']) === 'cleaner') {
             Cleaner::create([
-                'name'=> $data['first_name'],
+                'name'               => trim((($data['first_name'] ?? '') . ' ' . ($data['last_name'] ?? ''))),
+                'first_name'         => $data['first_name'] ?? null,
+                'last_name'          => $data['last_name'] ?? null,
                 'user_id'            => $user->id,
-                'business_name'      => $data['business_name'],
-                'phone'              => $data['phone'],
-                'categories_id'           => $data['category'],
-                'plans_id'           => $data['pricing_plan'],
-                'years_experience'   => $data['years_experience'],
-                'address'            => $data['address'],
-                'city'               => $data['city'],
-                'state'              => $data['state'],
-                'zip_code'           => strtoupper(preg_replace('/\s+/', ' ', trim($data['zip_code']))),
-                'service_description'=> $data['service_description'],
+                'phone'              => $data['phone'] ?? null,
+                'categories_id'      => $data['category'] ?? null,
+                'plans_id'           => $data['pricing_plan'] ?? null,
+                'years_experience'   => $data['years_experience'] ?? null,
+                'address'            => $data['address'] ?? null,
+                'city'               => $data['city'] ?? null,
+                'state'              => $data['state'] ?? null,
+                'zip_code'           => isset($data['zip_code']) ? strtoupper(preg_replace('/\s+/', ' ', trim($data['zip_code']))) : null,
+                'service_description'=> $data['service_description'] ?? null,
             ]);
         }
 
