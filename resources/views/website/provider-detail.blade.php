@@ -1428,7 +1428,7 @@ function toggleCompareProvider(providerId, button) {
         } else {
             button.classList.remove('in-compare');
             button.innerHTML = '<i class="ti ti-adjustments me-1"></i>Add to Compare';
-            showToast('Provider removed from compare list', 'info');
+            showToast('Cleaner removed from compare list', 'info');
             
             // Remove compare badge
             const badge = document.querySelector('.compare-badge');
@@ -1515,7 +1515,7 @@ function removeFromCompare(providerId) {
     .then(response => response.json())
     .then(data => {
         if (!data.in_compare) {
-            showToast('Provider removed from compare list', 'info');
+            showToast('Cleaner removed from compare list', 'info');
             showCompareModal(); // Refresh the modal
             updateCompareBadge();
             
@@ -1608,7 +1608,7 @@ function saveProvider(providerId, button) {
         } else {
             button.classList.remove('saved');
             button.querySelector('span').textContent = 'Save';
-            showToast('Provider removed from saved list', 'info');
+            showToast('Cleaner removed from saved list', 'info');
         }
     })
     .catch(error => {

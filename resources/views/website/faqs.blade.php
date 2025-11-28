@@ -41,7 +41,7 @@
               </h2>
               <div id="collapseParentTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordionParents">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  luxGold is free for customers to browse, search, compare, and review cleaners. Some premium features for providers may be available, while core features remain available to customers.
+                  luxGold is free for customers to browse, search, compare, and review cleaners. Some premium features for cleaners may be available, while core features remain free for customers.
                 </div>
               </div>
             </div>
@@ -54,7 +54,7 @@
               </h2>
               <div id="collapseParentThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordionParents">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  We require providers to verify their business information; customers can leave reviews and ratings to help others choose. Look for trust indicators like verified badges and reviews.
+                  We require cleaners to verify their information; customers can leave reviews and ratings to help others choose. Look for trust indicators like verified badges and reviews.
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@
               </h2>
               <div id="collapseParentFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordionParents">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  Yes! You can compare up to 3 providers side by side on price, ratings, location, and services.
+                  Yes! You can compare up to 3 cleaners side by side on price, ratings, location, and services.
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@
               </h2>
               <div id="collapseProviderThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordionProviders">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  Providers choose from membership tiers: Basic (free/low-cost), Premium (enhanced visibility), and Featured (priority placement, ads, analytics).
+                  Cleaners choose from membership tiers: Basic (free/low-cost), Premium (enhanced visibility), and Featured (priority placement, ads, analytics).
                 </div>
               </div>
             </div>
@@ -174,7 +174,7 @@
               </h2>
               <div id="collapseGeneralTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordionGeneral">
                 <div class="accordion-body faq-accordion-body-longkeywordclass">
-                  We offer provider memberships, featured listings, and advertising options. luxGold is free for customers to browse listings.
+                  We offer cleaner memberships, featured listings, and advertising options. luxGold is free for customers to browse listings.
                 </div>
               </div>
             </div>

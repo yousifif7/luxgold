@@ -56,7 +56,7 @@
     <p>luxGold values the privacy of customers and cleaners. Please review our Privacy Policy for details.</p>
     <p>We comply with the Children’s Online Privacy Protection Act (COPPA) and do not knowingly collect personal information from children under 13. Parents/guardians provide, and control information shared about their children. If we discover information was submitted without parental consent, we will delete it promptly.</p>
 
-    <h4>Using AskRoro</h4>
+    <h4>Using luxGold</h4>
     <p>To access some features, you may need to create an account and provide accurate registration information. You agree:</p>
     <ul>
       <li>Not to impersonate another person.</li>
@@ -69,17 +69,17 @@
     <ul>
       <li>Post false, misleading, or harmful content.</li>
       <li>Infringe on others’ intellectual property rights.</li>
-      <li>Attempt to hack, scrape, or disrupt AskRoro’s systems.</li>
+      <li>Attempt to hack, scrape, or disrupt luxGold’s systems.</li>
       <li>Use the Services to harass, threaten, or harm others.</li>
       <li>Share or resell content without permission.</li>
     </ul>
     <p>Violation of these rules may result in suspension or termination of your account.</p>
 
-    <h4>Provider Listings & Reviews</h4>
+    <h4>Cleaner Listings & Reviews</h4>
     <ul>
-      <li>Providers are responsible for the accuracy of their listings, pricing, and information.</li>
+      <li>Cleaners are responsible for the accuracy of their listings, pricing, and information.</li>
       <li>Reviews must be honest and respectful. We may remove reviews that violate our guidelines.</li>
-      <li>Some provider profiles may include Sponsored or Featured labels; these indicate paid placement.</li>
+      <li>Some cleaner profiles may include Sponsored or Featured labels; these indicate paid placement.</li>
     </ul>
 
     <h4>Intellectual Property</h4>
@@ -87,7 +87,7 @@
     <p>Anything you post (reviews, comments, uploads) remains yours, but you grant luxGold a license to use it for operating the Services.</p>
 
     <h4>Payments & Premium Services</h4>
-    <p>Some Services (e.g., provider memberships, featured listings) may require payment. By subscribing, you agree to:</p>
+    <p>Some Services (e.g., cleaner memberships, featured listings) may require payment. By subscribing, you agree to:</p>
     <ul>
       <li>Pay applicable fees.</li>
       <li>Allow luxGold’s payment processor to charge your selected payment method.</li>
@@ -101,19 +101,19 @@
     <h4>Disclaimers & Limitations of Liability</h4>
     <p>luxGold strives to connect customers with quality cleaners but does not guarantee outcomes. All cleaners are independent businesses, and luxGold is not responsible for their services.</p>
     <p><strong>THE SERVICES ARE PROVIDED “AS IS.” TO THE FULLEST EXTENT PERMITTED BY LAW, LUXGOLD DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED.</strong></p>
-    <p>In no event will AskRoro be liable for indirect, incidental, or consequential damages.</p>
+    <p>In no event will luxGold be liable for indirect, incidental, or consequential damages.</p>
 
     <h4>Indemnity</h4>
-    <p>You agree to indemnify and hold AskRoro harmless against claims, damages, or expenses resulting from your use of the Services or violation of these Terms.</p>
+    <p>You agree to indemnify and hold luxGold harmless against claims, damages, or expenses resulting from your use of the Services or violation of these Terms.</p>
 
     <h4>Governing Law & Dispute Resolution</h4>
     <p>These Terms are governed by the laws of the State of Texas, USA. Any disputes will be resolved through binding arbitration in Dallas County, Texas, unless otherwise required by law.</p>
 
     <h4>Miscellaneous</h4>
     <ul>
-      <li>These Terms, together with our Privacy Policy, are the entire agreement between you and AskRoro.</li>
+      <li>These Terms, together with our Privacy Policy, are the entire agreement between you and luxGold.</li>
       <li>If any provision is found unenforceable, the rest still applies.</li>
-      <li>You may not transfer your rights under these Terms without AskRoro’s consent.</li>
+      <li>You may not transfer your rights under these Terms without luxGold’s consent.</li>
     </ul>
     <p>luxGold exists to help customers find safe, trusted, and professional cleaning services. By using luxGold, you agree to treat others with respect, provide accurate information, and use the platform lawfully.</p>
 

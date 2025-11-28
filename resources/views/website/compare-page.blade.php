@@ -39,7 +39,7 @@
                   <tr>
                     <th>Features</th>
                     @foreach($providers as $index => $provider)
-                    <th>Provider {{ $index + 1 }}</th>
+                    <th>Cleaner {{ $index + 1 }}</th>
                     @endforeach
                   </tr>
                 </thead>

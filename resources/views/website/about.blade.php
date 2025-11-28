@@ -24,7 +24,7 @@
           luxGold was created to solve a simple problem: finding trustworthy, professional cleaners can be time consuming and uncertain. Homeowners deserve a fast way to discover qualified cleaners with clear pricing, verified reviews, and dependable scheduling.
         </p>
         <p class="about-askroro-story-paragraph">
-          Over time we built a marketplace that brings together independent cleaners and small cleaning businesses with customers who need reliable service. Our platform emphasizes safety, transparency, and quality so both customers and providers can succeed.
+          Over time we built a marketplace that brings together independent cleaners and small cleaning businesses with customers who need reliable service. Our platform emphasizes safety, transparency, and quality so both customers and cleaners can succeed.
         </p>
         <p class="about-askroro-story-paragraph">
           luxGold is more than a directory — it’s a trusted cleaning marketplace that helps users find, compare, and book cleaning services confidently.
@@ -50,7 +50,7 @@
         <h3 class="about-askroro-story-title">Our Promise</h3>
         <ul class="about-askroro-promise-bullet-list">
           <li class="about-askroro-promise-bullet-item">For Families: A safe, inclusive space to explore trusted services.</li>
-          <li class="about-askroro-promise-bullet-item">For Providers: A platform to showcase offerings and build community trust.</li>
+          <li class="about-askroro-promise-bullet-item">For Cleaners: A platform to showcase offerings and build community trust.</li>
           <li class="about-askroro-promise-bullet-item">For Communities: Stronger connections that support families, children, and growth.</li>
         </ul>
         <p class="about-askroro-promise-paragraph text-center mb-5">

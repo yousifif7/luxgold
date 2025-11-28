@@ -538,7 +538,7 @@
                                 
                                 <div class="provider-actions">
                                     <a href="{{ route('website.cleaner-detail', $event->cleaner->id) }}" class="btn btn-outline-primary">
-                                        <i class="ti ti-external-link me-1"></i>View Provider Profile
+                                        <i class="ti ti-external-link me-1"></i>View Cleaner Profile
                                     </a>
                                 </div>
                             </div>

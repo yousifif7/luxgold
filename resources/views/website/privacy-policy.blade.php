@@ -6,7 +6,7 @@
 <!-- Hero -->
   <section class="master-section">
     <div class="container">
-      <h1 class="mt-4">AskRoro - Privacy Policy</h1>
+      <h1 class="mt-4">luxGold - Privacy Policy</h1>
     </div>
   </section>
 
@@ -20,11 +20,11 @@
 
     <p>By using luxGold, you acknowledge and consent to the practices described here. This Privacy Policy is part of our Terms of Use, which incorporates this policy by reference.</p>
 
-    <p><strong>Contact:</strong> <a href="mailto:privacy@askroro.com">privacy@askroro.com</a><br>
+    <p><strong>Contact:</strong> <a href="mailto:privacy@luxgold.com">privacy@luxgold.com</a><br>
     <strong>Business Address:</strong> Privy Consulting, Inc. Prosper TX.</p>
 
     <h4>What This Privacy Policy Covers</h4>
-    <p>This Privacy Policy explains how we collect, use, share, and protect personal data when you use AskRoro’s website, applications, and services. “Personal Data” means information that identifies, relates to, or can reasonably be linked to a particular individual.</p>
+    <p>This Privacy Policy explains how we collect, use, share, and protect personal data when you use luxGold’s website, applications, and services. “Personal Data” means information that identifies, relates to, or can reasonably be linked to a particular individual.</p>
 
     <h4>Categories of Personal Data We Collect</h4>
     <table>
@@ -69,7 +69,7 @@
     <ul>
       <li>You (direct submissions via accounts, forms, surveys, reviews).</li>
       <li>Automatic collection (cookies, device/browser interactions, geolocation).</li>
-      <li>Public records (for providers).</li>
+      <li>Public records (for cleaners).</li>
       <li>Third parties (vendors, partners, social media logins).</li>
     </ul>
 
@@ -114,7 +114,7 @@
     <p>We retain Personal Data only as long as needed for Services or legal compliance, then anonymize or delete it securely.</p>
 
     <h4>International Users</h4>
-    <p>If you access AskRoro outside the U.S., your data may be stored in the U.S.</p>
+    <p>If you access luxGold outside the U.S., your data may be stored in the U.S.</p>
 
     <h4>Updates to this Policy</h4>
     <p>We may update this Privacy Policy. Significant changes will be notified on the site or by email.</p>

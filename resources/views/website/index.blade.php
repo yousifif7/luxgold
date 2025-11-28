@@ -505,7 +505,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
                         <div class="edu-subtitle">{{ $category->subtitle ?? 'Discover amazing services' }}</div>
                         
                         <!-- Category Description -->
-                        <div class="edu-desc">{{ $category->description ?? 'Find trusted providers for your family needs.' }}</div>
+                        <div class="edu-desc">{{ $category->description ?? 'Find trusted cleaners for your home and business needs.' }}</div>
                         
                         <!-- Category Tags -->
                         @if($category->tags && count($category->tags) > 0)
@@ -622,7 +622,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
                     </div>
                     <h3 class="how-it-works-title">Compare &amp; Shortlist</h3>
                     <p class="how-it-works-description">
-                        See key details, insights, and reviews on providers to make informed decisions.
+                        See key details, insights, and reviews on cleaners to make informed decisions.
                     </p>
                 </div>
             </div>
@@ -690,7 +690,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
                 </div>
                 <div class="custom-card-body">
                     <h3 class="custom-card-title">Choosing the Right Daycare: A Parent's Guide</h3>
-                    <p class="custom-card-text">Essential tips and questions to ask when selecting a daycare provider for your child.</p>
+                    <p class="custom-card-text">Essential tips and questions to ask when selecting a cleaner or cleaning service for your home.</p>
                     <a href="#" class="custom-card-link">Read More <i class="bi bi-chevron-right"></i></a>
                 </div>
             </div>

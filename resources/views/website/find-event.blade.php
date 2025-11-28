@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Find Provider - AskRoro')
+@section('title', 'Find Cleaner - luxGold')
 @section('content')
     @push('links')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.1/tabler-icons.min.css"
@@ -309,7 +309,7 @@
         <!-- Enhanced Compare bottom bar -->
         <div id="compareBar" class="compare-bar" aria-hidden="true">
             <div class="compare-header">
-                <h3 class="compare-title">Compare Providers</h3>
+            <h3 class="compare-title">Compare Cleaners</h3>
                 <button id="closeCompare"
                     style="background:none; border:none; font-size:18px; color:#6b7280; cursor:pointer;">✕</button>
             </div>
@@ -502,7 +502,7 @@ function toggleCompareProvider(providerId, button) {
         if (data.in_compare) {
             button.classList.add('in-compare');
             button.innerHTML = '<i class="ti ti-check me-1"></i>Remove from Compare';
-            showToast('Provider added to compare list!', 'success');
+            showToast('Cleaner added to compare list!', 'success');
             
      
         } else {
@@ -587,7 +587,7 @@ function removeFromCompare(providerId) {
     .then(response => response.json())
     .then(data => {
         if (!data.in_compare) {
-            showToast('Provider removed from compare list', 'info');
+            showToast('Cleaner removed from compare list', 'info');
             showCompareModal(); // Refresh the modal
             updateCompareBadge();
             
