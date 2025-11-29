@@ -346,9 +346,6 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
                     @endif
                 </div>
                 <div class="card-footer">
-                    <button data-id="p{{ $provider->id }}" data-provider-id="{{ $provider->id }}" class="btn-compare compare-btn">
-                    Compare
-                    </button>
                     <a class="btn-view" href="{{ route('website.cleaner-detail', $provider->id) }}">
                         View Details
                     </a>
@@ -364,101 +361,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
 
 </section>
 
-<section class="sixth-section">
-    <div class="container">
-        <h3>Latest Events</h3>
-        <p class="tagline">Discover some of our latest events happening near you</p>
 
-        <div class="row g-4 mt-4">
-            @foreach($latestEvents as $event)
-                <div class="col-md-4">
-                    <div class="program-card position-relative">
-                        {{-- Event Image --}}
-                        @if(!empty($event->image_url))
-                            <img class="provider-media" 
-                                 src="{{ $event->image_url }}" 
-                                 alt="{{ $event->title }}">
-                        @else
-                            <div class="provider-media placeholder-media">
-                                <i class="ti ti-calendar-event"></i>
-                            </div>
-                        @endif
-
-                        <div class="card-body">
-                            {{-- Event Title --}}
-                            <div class="program-title">
-                                {{ $event->title }}
-                                @if($event->cleaner && $event->cleaner->status === 'approved')
-                                    <i style="color:#00bfa6" class="ms-1 bi bi-check2-circle"></i>
-                                @endif
-                            </div>
-
-                            {{-- Provider Name --}}
-                            @if($event->cleaner)
-                                <div class="info small-muted">
-                                    <i class="bi bi-building"></i>
-                                    {{ $event->cleaner->name ?? $event->cleaner->business_name ?? $event->cleaner_name }}
-                                </div>
-                            @endif
-
-                            {{-- Event Dates --}}
-                            @if($event->start_date && $event->end_date)
-                                <div class="info small-muted">
-                                    <i class="bi bi-calendar-event"></i>
-                                    {{ $event->start_date->format('M d, Y') }} - {{ $event->end_date->format('M d, Y') }}
-                                </div>
-                            @endif
-
-                            {{-- Event Location --}}
-                            @if($event->location)
-                                <div class="info small-muted">
-                                    <i class="bi bi-geo-alt"></i>
-                                    {{ \Illuminate\Support\Str::limit($event->location, 40) }}
-                                </div>
-                            @endif
-
-                            {{-- Event Cost --}}
-                            @if(!is_null($event->cost))
-                                <div class="info small-muted">
-                                    <i class="bi bi-currency-dollar"></i>
-                                    {{ number_format($event->cost, 2) }}
-                                </div>
-                            @endif
-
-                            {{-- Age Group --}}
-                            @if($event->age_group)
-                                <div class="info">
-                                    Ages: <b>{{ $event->age_group }}</b>
-                                </div>
-                            @endif
-
-                            {{-- Category --}}
-                            @if($event->category)
-                                <div class="tags mt-2">
-                                    <div class="tag tag-gray">{{ ucfirst($event->category) }}</div>
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="card-footer">
-                            <a class="btn-view" href="{{ route('website.event-detail', $event->id) }}">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-        {{-- View All --}}
-        <div class="d-flex justify-content-center align-items-center">
-            <button class="view-all-providers_btn" 
-                    onclick="window.location.href='{{ route('website.find-event') }}'">
-                View All Events <i class="bi bi-chevron-right"></i>
-            </button>
-        </div>
-    </div>
-</section>
 <!-- Categories Section (Keeping Static as requested) -->
 <section class="third-section">
     <div class="container">
@@ -599,7 +502,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
 <!-- How It Works Section - Dynamic -->
 <section class="fifth-section" id="how-it-works-section">
     <div class="container">
-        <h3>How it Works – Parents</h3>
+        <h3>How it Works – Customers</h3>
         <p class="tagline">Finding the right cleaning services has never been easier</p>
         <div class="row justify-content-center mt-5">
             <!-- Step 1 -->

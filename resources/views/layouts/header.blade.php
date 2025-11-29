@@ -18,9 +18,16 @@
         <li class="nav-item">
           <a class="nav-link {{ request()->is('find-cleaner') ? 'active' : '' }}" href="{{ route('website.find-cleaner') }}">Find Cleaners</a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link {{ request()->is('find-event') ? 'active' : '' }}" href="{{ route('website.find-event') }}">Find Event</a>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->is('services') ? 'active' : '' }}" href="{{ route('website.services') }}">Services</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->is('locations') ? 'active' : '' }}" href="{{ route('website.locations') }}">Locations</a>
+        </li>
+        
+         {{-- <li class="nav-item">
+          <a class="nav-link {{ request()->is('find-event') ? 'active' : '' }}" href="{{ route('website.find-event') }}">Find Event</a>
+        </li> --}}
 
         @if (Request::is('/') || Request::is('home'))          
         <li class="nav-item">

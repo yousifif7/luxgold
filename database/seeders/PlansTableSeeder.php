@@ -17,37 +17,38 @@ class PlansTableSeeder extends Seeder
                 'type' => 'Basic',
                 'monthly_fee' => 10.00,
                 'annual_fee' => 100.00,
-                'description' => 'Basic',
+                'description' => 'Basic listing for cleaners: profile, contact and search visibility.',
                 'features' => json_encode([
-                    "Business Name, Address, Contact Info" => "1",
-                    "Update Basic Profile Info" => "1",
-                    "Appear in Comparison Tool" => "1",
-                    "Save & Share Parent Leads" => "1",
-                    "Verified Provider Badge" => "1",
-                    "“Trusted Choice” Badge" => "1"
+                    "Profile Listing (name, contact, address)" => "1",
+                    "Edit Basic Profile" => "1",
+                    "Appear In Search Results" => "1",
+                    "Receive Leads (contact details)" => "1",
+                    "Verified Cleaner Badge" => "0",
+                    "Featured Listing" => "0"
                 ]),
                 'is_active' => 1,
-                'created_at' => Carbon::parse('2025-10-26 04:07:13'),
-                'updated_at' => Carbon::parse('2025-10-26 04:07:13'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 'id' => 2,
                 'name' => 'Standard',
                 'type' => 'Standard',
-                'monthly_fee' => 20.00,
-                'annual_fee' => 200.00,
-                'description' => 'Basic',
+                'monthly_fee' => 25.00,
+                'annual_fee' => 250.00,
+                'description' => 'Standard plan: adds featured placement and priority support for cleaners.',
                 'features' => json_encode([
-                    "Business Name, Address, Contact Info" => "1",
-                    "Update Basic Profile Info" => "1",
-                    "Appear in Comparison Tool" => "1",
-                    "Save & Share Parent Leads" => "1",
-                    "Verified Provider Badge" => "1",
-                    "“Trusted Choice” Badge" => "1"
+                    "Profile Listing (name, contact, address)" => "1",
+                    "Edit Full Profile" => "1",
+                    "Appear In Search Results" => "1",
+                    "Receive Leads (contact details)" => "1",
+                    "Verified Cleaner Badge" => "1",
+                    "Featured Listing" => "1",
+                    "Priority Support" => "1"
                 ]),
                 'is_active' => 1,
-                'created_at' => Carbon::parse('2025-10-26 04:07:13'),
-                'updated_at' => Carbon::parse('2025-10-26 04:07:13'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         ]);
     }

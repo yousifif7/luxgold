@@ -17,7 +17,21 @@
                         <small>{{ ucfirst($hr->status) }}</small>
                     </div>
                     <p class="mb-1">Type: {{ $hr->cleaning_type ?? '-' }} | Zip: {{ $hr->zip_code ?? '-' }}</p>
-                    <p class="mb-1">Items: {{ is_array($hr->selected_items) ? implode(', ', $hr->selected_items) : $hr->selected_items }}</p>
+                    <p class="mb-1">Items:
+                        @if(is_array($hr->selected_items))
+                            @php
+                                $labels = collect($hr->selected_items)->map(function($it){
+                                    if (is_string($it)) return $it;
+                                    if (is_array($it) && isset($it['label'])) return $it['label'];
+                                    if (is_object($it) && isset($it->label)) return $it->label;
+                                    return json_encode($it);
+                                })->filter()->toArray();
+                            @endphp
+                            {{ implode(', ', $labels) }}
+                        @else
+                            {{ $hr->selected_items }}
+                        @endif
+                    </p>
                 </a>
             @endforeach
         </div>

@@ -6,12 +6,12 @@
                 <div class="askroro-avatar-box">
                     <div class="askroro-avatar">
                         <div class="askroro-avatar-inner">
-                            <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="ASKRORO Logo">
+                            <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="LuxGold Logo">
                         </div>
                     </div>
                 </div>
                 <h2 class="askroro-modal-title">Welcome Back</h2>
-                <p class="askroro-modal-subtitle">Sign in to your ASKRORO account</p>
+                <p class="askroro-modal-subtitle">Sign in to your LuxGold account</p>
             </div>
             <div class="askroro-modal-body">
                 <div id="loginAlertContainer"></div>

@@ -21,17 +21,17 @@
     <meta name="author" content="AskRoro Team">
 
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.askroro.com/">
+    <meta property="og:url" content="https://www.luxgold.com/">
     <meta property="og:title" content="AskRoro - Ask. Compare. Choose. That’s Roro!">
     <meta property="og:description"
-          content="AskRoro helps you ask, compare, and choose the best options with ease.">
-    <meta property="og:image" content="https://www.askroro.com/assets/images/logo.png">
+          content="LuxGold helps you ask, compare, and choose the best options with ease.">
+    <meta property="og:image" content="https://www.luxgold.com/assets/images/logo.png">
 
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.askroro.com/">
+    <meta property="twitter:url" content="https://www.luxgold.com/">
     <meta property="twitter:title" content="AskRoro - Ask. Compare. Choose. That’s Roro!">
     <meta property="twitter:description"
-          content="AskRoro helps you ask, compare, and choose the best options with ease.">
+          content="LuxGold helps you ask, compare, and choose the best options with ease.">
     <meta property="twitter:image" content="https://www.askroro.com/assets/images/logo.png">
 
     <meta name="theme-color" content="#ffffff">
@@ -346,9 +346,7 @@
     {{-- Fixed Header --}}
     @include('layouts.header')
 
-
     @yield('content')
-
 
     {{-- Fixed Footer --}}
     @include('layouts.footer')

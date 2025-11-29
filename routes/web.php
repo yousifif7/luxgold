@@ -25,7 +25,12 @@ Route::get('/about', fn() => view('website.about'))->name('website.about');
 Route::get('compare', [HomeController::class,'compare'])->name('website.compare');
 Route::get('/find-cleaner', [HomeController::class,'findProvider'])->name('website.find-cleaner');
 Route::get('/for-cleaner', fn() => view('website.for-provider'))->name('website.for-cleaner');
-Route::get('/terms-of-services', fn() => view('website.term-of-services'))->name('website.services');
+Route::get('/terms-of-services', fn() => view('website.term-of-services'))->name('website.terms');
+Route::get('/services', fn() => view('website.services'))->name('website.services');
+Route::get('/locations', function(){
+    $cities = \App\Models\City::orderBy('name')->pluck('name');
+    return view('website.locations', compact('cities'));
+})->name('website.locations');
 Route::get('/cleaner-detail/{id}', [HomeController::class,'providerDetail'])->name('website.cleaner-detail');
 Route::get('/event-detail/{id}', [HomeController::class,'eventDetail'])->name('website.event-detail');
 Route::get('/find-event', [HomeController::class,'findEvents'])->name('website.find-event');

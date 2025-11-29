@@ -32,16 +32,16 @@ class UserSeeder extends Seeder
         }
 
        
-        // Create a default customer (formerly 'parent')
-        if (! User::where('email', 'customer@example.com')->exists()) {
+        // Create a default customer (Irish demo)
+        if (! User::where('email', 'customer@luxgold.test')->exists()) {
             $customer = User::factory()->create([
                 'first_name' => 'Customer',
                 'last_name' => 'User',
-                'email' => 'customer@example.com',
-                'phone' => '+1 (555) 000-0001',
-                'city' => 'Springfield',
-                'state' => 'IL',
-                'zip_code' => '62701',
+                'email' => 'customer@luxgold.test',
+                'phone' => '+353 87 000 0001',
+                'city' => 'Dublin',
+                'state' => '',
+                'zip_code' => '',
                 'password' => bcrypt('password'),
             ]);
 
@@ -49,11 +49,13 @@ class UserSeeder extends Seeder
             if ($role) { $customer->assignRole($role); }
         }
 
-        // Create a few sample cleaners (users with cleaner role)
+        // Create a few sample cleaners (Irish cities)
         $sampleCleaners = [
-            ['first_name' => 'Laura', 'last_name' => 'Green', 'email' => 'laura.cleaner@example.com', 'phone' => '+1 (555) 111-0001', 'city' => 'Austin', 'state' => 'TX'],
-            ['first_name' => 'Carlos', 'last_name' => 'Martinez', 'email' => 'carlos.cleaner@example.com', 'phone' => '+1 (555) 222-0002', 'city' => 'Dallas', 'state' => 'TX'],
-            ['first_name' => 'Aisha', 'last_name' => 'Khan', 'email' => 'aisha.cleaner@example.com', 'phone' => '+1 (555) 333-0003', 'city' => 'Houston', 'state' => 'TX'],
+            ['first_name' => 'Aoife', 'last_name' => 'Murphy', 'email' => 'aoife.murphy@luxgold.test', 'phone' => '+353 87 111 0001', 'city' => 'Dublin'],
+            ['first_name' => 'Sean', 'last_name' => "O'Brien", 'email' => 'sean.obrien@luxgold.test', 'phone' => '+353 87 222 0002', 'city' => 'Cork'],
+            ['first_name' => 'Ciara', 'last_name' => 'Walsh', 'email' => 'ciara.walsh@luxgold.test', 'phone' => '+353 87 333 0003', 'city' => 'Galway'],
+            ['first_name' => 'Liam', 'last_name' => "O'Sullivan", 'email' => 'liam.osullivan@luxgold.test', 'phone' => '+353 87 444 0004', 'city' => 'Limerick'],
+            ['first_name' => 'Niamh', 'last_name' => 'Kelly', 'email' => 'niamh.kelly@luxgold.test', 'phone' => '+353 87 555 0005', 'city' => 'Waterford'],
         ];
 
         foreach ($sampleCleaners as $c) {
@@ -68,7 +70,7 @@ class UserSeeder extends Seeder
         }
 
         $this->command->info('Users seeded successfully!');
-        $this->command->info('Admin: admin@supremesecurity.co.uk / password');
-        $this->command->info('Customer: customer@askroro.test / password');
+        $this->command->info('Admin: admin@gmail.com / password');
+        $this->command->info('Customer: customer@luxgold.test / password');
     }
 }

@@ -6,10 +6,10 @@ body {
 
 /* Theme variables for luxGold cleaning palette */
 :root{
-  --primary: #00a8a8; /* teal - primary brand color for cleaning */
+  --primary: gray; 
   --primary-rgb: 0,168,168;
-  --accent: #ffd54f;  /* warm accent (soft yellow) */
-  --muted: #64748b;   /* muted gray */
+  --accent: #ffd54f;  
+  --muted: #64748b;   
   --brand-dark: #0b7285;
   --card-bg: #ffffff;
   --text-color: #222;
@@ -105,13 +105,13 @@ body {
   font-weight: 700;
 }
 .hero-title .highlight-orange {
-  color: var(--accent);
+  color: black;
 }
 .hero-title .highlight-blue {
   color: #0072ff;
 }
 .hero-title .highlight-green {
-  color: var(--primary);
+  color: black;
 }
 .search-box {
   background: var(--card-bg);
@@ -2274,14 +2274,13 @@ border: 1px solid #00b86b;
 }
 .master-section {
   position: relative;
-  background: url('https://images.unsplash.com/photo-1719834826635-742c7a986716?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzYWZlJTIwc2Nob29sJTIwYnVpbGRpbmclMjBleHRlcmlvcnxlbnwxfHx8fDE3NTY5NzAyMjB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral') 
+  background: url('https://plus.unsplash.com/premium_photo-1678304224523-d25b4117558f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 
     no-repeat center center/cover;
   min-height:400px; 
   display: flex;
-  
   align-items: center;
   justify-content: center;
-  color: #fff; /* text white so contrast ache se aaye */
+  color: white; /* text white so contrast ache se aaye */
   z-index: 1;
 }
 .for-providers-hero-section{
