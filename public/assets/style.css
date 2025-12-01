@@ -101,7 +101,7 @@ body {
 }
 .hero-title {
   font-size: 44px;
-  font-family: "Poppins";
+  font-family: "Roboto", sans-serif;
   font-weight: 700;
 }
 .hero-title .highlight-orange {
