@@ -25,14 +25,14 @@
     <meta property="og:title" content="AskRoro - Ask. Compare. Choose. That’s Roro!">
     <meta property="og:description"
           content="LuxGold helps you ask, compare, and choose the best options with ease.">
-    <meta property="og:image" content="https://www.luxgold.com/assets/images/logo.png">
+    <meta property="og:image" content="https://www.luxgold.com/assets/images/luxgold-trans.png">
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.luxgold.com/">
     <meta property="twitter:title" content="AskRoro - Ask. Compare. Choose. That’s Roro!">
     <meta property="twitter:description"
           content="LuxGold helps you ask, compare, and choose the best options with ease.">
-    <meta property="twitter:image" content="https://www.askroro.com/assets/images/logo.png">
+    <meta property="twitter:image" content="https://www.askroro.com/assets/images/luxgold-trans.png">
 
     <meta name="theme-color" content="#ffffff">
 
@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
     @stack('links')
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/logo.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/luxgold-trans.png') }}">
           <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
 @stack('styles')
 @yield('styles')

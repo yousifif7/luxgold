@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
             CitiesTableSeeder::class,
             CleanerSeeder::class,
             ContentManagementSeeder::class,
-            EventSeeder::class,
         ]);
     }
 }

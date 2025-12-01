@@ -1,8 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-      <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="luxGold" class="me-2 rounded">
-      <span>luxGold</span>
+      <img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="luxGold" class="me-2 rounded">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

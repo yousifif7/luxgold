@@ -41,13 +41,13 @@ class ProviderPanelController extends Controller
         $notifications = $this->getNotifications($provider);
         $subscription=$this->getSubscriptionStatus($provider);
 
-        if (empty($subscription) || $subscription==null) {
+        // if (empty($subscription) || $subscription==null) {
 
-            if ($provider->currentPlan->monthly_fee>0) {
-                return redirect()->route('subscriptions.checkout', ['plan' => $provider->plans_id]);
-            }
+        //     if ($provider->currentPlan->monthly_fee>0) {
+        //         return redirect()->route('subscriptions.checkout', ['plan' => $provider->plans_id]);
+        //     }
             
-        }
+        // }
 
         return view('panels.provider.index', compact('stats', 'chartData', 'inquiryStats', 'notifications'));
     }

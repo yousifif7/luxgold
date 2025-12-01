@@ -7,8 +7,7 @@
       <div class="col-lg-3 col-md-6">
         <div class="askroro-footer-brand">
           <div class="d-flex align-items-center mb-3">
-            <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="luxGold Logo" class="askroro-footer-logo rounded me-2">
-            <h5 class="askroro-footer-title mb-0 fw-bold">luxGold</h5>
+            <img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="luxGold Logo" class="askroro-footer-logo rounded me-2">
           </div>
           <p class="askroro-footer-description">
             Your trusted guide to house cleaning, home services and wellness across Ireland.

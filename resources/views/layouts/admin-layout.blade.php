@@ -15,10 +15,10 @@
     <meta name="author" content="dreamstechnologies">    
 
       <!-- Favicon -->
-      <link rel="shortcut icon" href="assets/updated-logo.jpeg">
+      <link rel="shortcut icon" href="assets/images/luxgold-trans.png">
 
       <!-- Apple Icon -->
-      <link rel="apple-touch-icon" href="assets/updated-logo.jpeg">
+      <link rel="apple-touch-icon" href="assets/images/luxgold-trans.png">
   
       <!-- Theme Config Js -->
       <script src="assets/js/theme-script.js" type="04dbc81d7559b6c889b410c1-text/javascript"></script>
@@ -67,17 +67,17 @@
                         <!-- Logo Normal -->
                         <span class="logo-light">
                             <span class="logo-lg">
-                                <img src="{{ asset('provider/assets/updated-logo.jpeg') }}" alt="logo">
+                                <img src="{{ asset('assets/images/luxgold.jpg') }}" alt="logo">
                             </span>
                             <span class="logo-sm">
-                                <img src="{{ asset('provider/assets/updated-logo.jpeg') }}" alt="small logo">
+                                <img src="{{ asset('assets/images/luxgold.jpg') }}" alt="small logo">
                             </span>
                         </span>
                         
                         <!-- Logo Dark -->
                         <span class="logo-dark">
                             <span class="logo-lg">
-                                <img src="{{ asset('provider/assets/updated-logo.jpeg') }}" alt="dark logo">
+                                <img src="{{ asset('assets/images/luxgold.jpg') }}" alt="dark logo">
                             </span>
                         </span>
                         
@@ -298,18 +298,17 @@
                 <div>
                     <!-- Logo Normal -->
                         <a href="/home" class="logo logo-normal">
-                        <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" height="40px" alt="Logo">
-                        <h4 style="color:#0b7285;">luxGold</h4>
+                        <img src="{{ asset('assets/images/luxgold.jpg') }}" height="40px" alt="Logo">
                     </a>
         
                     <!-- Logo Small -->
                     <a href="{{ route('admin-home') }}" class="logo-small">
-                        <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" alt="Logo">
+                        <img src="{{ asset('assets/images/luxgold.jpg') }}" alt="Logo">
                     </a>
         
                     <!-- Logo Dark -->
                     <a href="{{ route('admin-home') }}" class="dark-logo">
-                        <img src="{{ asset('panel/assets/updated-logo.jpeg') }}" alt="Logo">
+                        <img src="{{ asset('assets/images/luxgold.jpg') }}" alt="Logo">
                     </a>
                 </div>
             </div>
