@@ -4,7 +4,7 @@
             <button class="askroro-btn-close" onclick="closeModal('signUpModal')">&times;</button>
             <div class="askroro-modal-header">
                 <div class="askroro-avatar-box">
-                    <div class="askroro-avatar"><img src="{{ asset('assets/images/logo.png') }}" alt="logo-image"></div>
+                    <div class="askroro-avatar"><img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="logo-image"></div>
                 </div>
                 <h2 class="askroro-modal-title">Sign Up</h2>
                 <p class="askroro-modal-subtitle">Create your free account to get started with luxGold — find or offer professional cleaning services.</p>

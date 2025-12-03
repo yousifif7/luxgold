@@ -63,12 +63,11 @@ class RegisterController extends Controller
             'role' => ['required', 'string', 'in:customer,cleaner'], // ensure valid role
         ];
 
-        // Additional validation for providers
+        // Additional validation for cleaners (no subscription fields required)
         if ($data['role'] === 'cleaner') {
             $rules = array_merge($rules, [
                 'phone' => ['required', 'string', 'max:20'],
                 'category' => ['required', 'string', 'max:255'],
-                'pricing_plan' => ['required', 'string', 'max:255'],
                 'years_experience' => ['required', 'string'],
                 'address' => ['required', 'string'],
                 'city' => ['required', 'string'],
@@ -97,7 +96,7 @@ class RegisterController extends Controller
         // Assign role via Spatie
         $user->assignRole($data['role']);
 
-        // If provider, store additional provider info
+        // If cleaner, store additional cleaner info (do not store subscription fields)
         if (strtolower($data['role']) === 'cleaner') {
             Cleaner::create([
                 'name'               => trim((($data['first_name'] ?? '') . ' ' . ($data['last_name'] ?? ''))),
@@ -106,7 +105,6 @@ class RegisterController extends Controller
                 'user_id'            => $user->id,
                 'phone'              => $data['phone'] ?? null,
                 'categories_id'      => $data['category'] ?? null,
-                'plans_id'           => $data['pricing_plan'] ?? null,
                 'years_experience'   => $data['years_experience'] ?? null,
                 'address'            => $data['address'] ?? null,
                 'city'               => $data['city'] ?? null,

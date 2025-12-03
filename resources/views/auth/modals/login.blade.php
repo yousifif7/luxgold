@@ -6,7 +6,7 @@
                 <div class="askroro-avatar-box">
                     <div class="askroro-avatar">
                         <div class="askroro-avatar-inner">
-                            <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="LuxGold Logo">
+                            <img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="LuxGold Logo">
                         </div>
                     </div>
                 </div>

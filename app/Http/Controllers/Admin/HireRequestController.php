@@ -25,13 +25,32 @@ class HireRequestController extends Controller
         return view('admin.hire_requests.index', compact('requests'));
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $request = HireRequest::find($id);
-        // Use HireRequest helper to get recommended cleaners
-        $recommended = $request->recommendedCleaners(50);
+        $hireRequest = HireRequest::findOrFail($id);
 
-        return view('admin.hire_requests.show', compact('request', 'recommended'));
+        // Allow admin to choose how cleaners are listed via ?filter=city|all
+        $filter = $request->query('filter');
+
+        if ($filter === 'all') {
+            // return all active cleaners
+            $recommended = Cleaner::all();
+        } elseif ($filter === 'city') {
+            // match cleaners by the hire request city (case-insensitive)
+            if ($hireRequest->city) {
+                $city = trim($hireRequest->city);
+                $recommended = Cleaner::whereRaw('lower(city) = ?', [mb_strtolower($city)])
+                    ->where('status', 'active')
+                    ->get();
+            } else {
+                $recommended = collect();
+            }
+        } else {
+            // default behaviour: use the HireRequest helper (category + city preference)
+            $recommended = $hireRequest->recommendedCleaners(50);
+        }
+
+        return view('admin.hire_requests.show', compact('hireRequest', 'recommended', 'filter'));
     }
 
     /**
@@ -43,7 +62,8 @@ class HireRequestController extends Controller
             'cleaner_ids' => 'nullable|array',
             'cleaner_ids.*' => 'integer|exists:cleaners,id',
             'cleaners' => 'nullable|array',
-            'cleaners.*' => 'integer|exists:cleaners,id'
+            'cleaners.*' => 'integer|exists:cleaners,id',
+            'admin_message' => 'nullable|string'
         ]);
 
         // Accept either `cleaner_ids[]` or `cleaners[]` from the form
@@ -55,6 +75,7 @@ class HireRequestController extends Controller
 
         $cleaners = Cleaner::whereIn('id', $ids)->get();
 
+        // Send notifications to the selected cleaners
         foreach ($cleaners as $cleaner) {
             $this->notifications->sendToProvider($cleaner, [
                 'type' => 'info',
@@ -65,14 +86,22 @@ class HireRequestController extends Controller
             ]);
         }
 
-        // Persist the notified cleaner ids (store as array/json)
+        // If admin selected at least one cleaner, set the primary assigned cleaner to the first selected id
+        $primaryCleanerId = is_array($ids) && count($ids) ? intval($ids[0]) : null;
+
+        // Determine new status: if a single cleaner is selected treat as assigned, otherwise mark as sent
+        $newStatus = (count($ids) === 1) ? 'assigned' : 'sent';
+
+        // Persist the notified cleaner ids and admin message and optionally the assigned cleaner
         $hireRequest->update([
             'cleaner_ids' => array_values($ids),
-            'status' => 'sent',
+            'cleaner_id' => $primaryCleanerId,
+            'status' => $newStatus,
+            'admin_message' => $data['admin_message'] ?? null,
             'responded_at' => now()
         ]);
 
         return redirect()->route('admin.hire-requests.show', $hireRequest->id)
-            ->with('success', 'Hire request sent to selected cleaners.');
+            ->with('success', 'Hire request processed and notifications sent to selected cleaners.');
     }
 }

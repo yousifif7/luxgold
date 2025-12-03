@@ -160,7 +160,7 @@
 
         <!-- Admin Quick Controls (expanded) -->
         <div class="row mt-3">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h6 class="mb-0">Pending Approvals</h6>
@@ -192,7 +192,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h6 class="mb-0">Reported Reviews</h6>
@@ -220,7 +220,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h6 class="mb-0">New Inquiries</h6>
@@ -246,7 +246,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h6 class="mb-0">Revenue Actions</h6>
@@ -256,7 +256,7 @@
                         <a href="{{ route('admin.payments.index') }}" class="btn btn-primary w-100">View Transaction Log</a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Quick Actions -->

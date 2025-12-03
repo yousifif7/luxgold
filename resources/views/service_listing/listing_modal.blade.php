@@ -751,7 +751,7 @@ document.addEventListener('DOMContentLoaded', function() {
             option.classList.add('selected');
         }
         
-        option.addEventListener('click', function() {
+            option.addEventListener('click', function() {
             // Remove selected class from all options
             pricingOptions.forEach(opt => opt.classList.remove('selected'));
             // Add selected class to clicked option
@@ -759,13 +759,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update selected pricing type
             selectedPricingType = this.dataset.type;
             pricingTypeInput.value = selectedPricingType;
-            
-            // Update price amount placeholder based on selection
-            const priceAmount = document.getElementById('price-amount');
-            const priceSpan = this.querySelector('.pricing-option-price span');
-            if (priceSpan) {
-                priceAmount.placeholder = `e.g., ${priceSpan.textContent}`;
-            }
+            // Pricing is managed externally; cleaners do not set price here.
         });
     });
     
@@ -887,12 +881,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
                 
             case 3:
-                // Validate pricing
-                const priceAmount = document.getElementById('price-amount');
-                if (!priceAmount.value.trim() || parseFloat(priceAmount.value) <= 0) {
-                    isValid = false;
-                    errorFields.push('price-amount');
-                }
+                // Pricing step removed from validation here; pricing is set externally.
                 break;
                 
             // Add validation for other steps as needed
@@ -938,7 +927,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Pricing & Schedule
         document.getElementById('reviewPricingType').textContent = selectedPricingType.charAt(0).toUpperCase() + selectedPricingType.slice(1);
-        document.getElementById('reviewPriceAmount').textContent = '$' + (document.getElementById('price-amount').value || '0');
+        document.getElementById('reviewPriceAmount').textContent = 'Pricing available on request';
         
         const availableDays = Array.from(document.querySelectorAll('input[name="available_days[]"]:checked'))
             .map(cb => cb.value.charAt(0).toUpperCase() + cb.value.slice(1)).join(', ');

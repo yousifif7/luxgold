@@ -4,33 +4,32 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
-/* Theme variables for luxGold cleaning palette */
 :root{
-  --primary: #0074C8; 
-  --primary-rgb: 0,168,168;
-  --accent: #ffd54f;  
-  --muted: #64748b;   
-  --brand-dark: #0b7285;
+  --primary: #0074C8;
+  --primary-rgb: 0,116,200;
+  --accent: var(--primary);
+  --muted: rgba(var(--primary-rgb), 0.7);
+  --brand-dark: var(--primary);
   --card-bg: #ffffff;
-  --text-color: #222;
+  --text-color: var(--primary);
 }
 .rating-stars{
   display: flex !important;
   justify-content: center !important;
 }
 .navbar .navbar-brand span {
-  color: var(--accent);
+  color: var(--primary);
   font-weight: 700;
 
   font-size: 20px;
 }
 .active>.page-link, .page-link.active {
     z-index: 3;
-    background-color: #337d7c;
-    border-color: #337d7c;
+    background-color: var(--primary);
+    border-color: var(--primary);
 }
 .page-link{
-  color: #337d7c;
+  color: var(--primary);
 }
 .navbar .navbar-brand img {
   width: auto;
@@ -40,10 +39,10 @@ body {
 .navbar .nav-link {
   font-weight: 600;
   font-size: 14px;
-  color: #000;
+  color: var(--primary);
 }
 .add-services-btn {
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid rgba(255,255,255,0.08);
   text-decoration: none;
   color: #fff;
   outline: none;
@@ -59,25 +58,25 @@ body {
   margin-right: calc(0.25rem * 2);
 }
 .navbar .nav-item:hover {
-  background-color: #fef3c7;
+  background-color: rgba(var(--primary-rgb), 0.06);
   border-radius: 8.5px;
   transition: background-color 0.15s ease-in-out;
 }
 .navbar .nav-item:hover .nav-link {
-  color: var(--brand-dark);
+  color: var(--primary);
 }
 .navbar .nav-item.active {
-  background-color: #fef3c7;
+  background-color: rgba(var(--primary-rgb), 0.06);
   border-radius: 8.5px;
 }
 .navbar .nav-item.active .nav-link {
-  color: var(--brand-dark);
+  color: var(--primary);
 }
 
 .register-btn:hover {
-  color: var(--brand-dark);
+  color: var(--primary);
   transition: all 0.15s ease-in-out;
-  background-color: #fef3c7;
+  background-color: rgba(var(--primary-rgb), 0.06);
 }
 .register-btn {
   border: 1px solid rgba(148, 163, 184, 0.2);
@@ -104,14 +103,10 @@ body {
   font-family: "Roboto", sans-serif;
   font-weight: 700;
 }
-.hero-title .highlight-orange {
-  color: #0b7280;
-}
-.hero-title .highlight-blue {
-  color: #0072ff;
-}
+.hero-title .highlight-orange,
+.hero-title .highlight-blue,
 .hero-title .highlight-green {
-  color: #0074C8;
+  color: var(--primary);
 }
 .search-box {
   background: var(--card-bg);
@@ -185,12 +180,10 @@ body {
 /* Color variants for icon cards (use theme vars where appropriate) */
 .icon-card.teal { background: var(--primary); }
 .icon-card.green { background: rgba(var(--primary-rgb), 0.85); }
-.icon-card.blue { background: #1e90ff; }
-.icon-card.purple { background: #7a3db8; }
-.icon-card.pink { background: #f23b7f; }
-.icon-card.orange { background: var(--accent); color: #0b1420; }
-.icon-card.yellow { background: #ffc04d; color: #0b1420; }
-.icon-card.red { background: #ff6b47; }
+/* unify icon-card colors to brand */
+.icon-card.blue, .icon-card.purple, .icon-card.pink, .icon-card.orange, .icon-card.yellow, .icon-card.red {
+  background: var(--primary);
+}
 
 /* Responsive grid wrapper spacing */
 .icon-grid-cleaning { max-width: 420px; }
@@ -302,7 +295,7 @@ body {
   color: var(--primary);
 }
 .search-box .search-provider_btn {
-  background-color: #337d7c;
+  background-color: var(--primary);
   padding: 0 14px;
   min-height: 44px;
   font-size: 14px;
@@ -2687,7 +2680,7 @@ border-radius: 14px;
     .askroro-avatar-box { display: flex; justify-content: center; margin-bottom: 16px; }
     .askroro-avatar {
       width: 75px; height: 75px;
-      background: linear-gradient(135deg, #ff7b7b, #ff6b35);
+      background: linear-gradient(135deg, white, #666);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
     }

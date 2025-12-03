@@ -28,6 +28,7 @@ class CleanerSeeder extends Seeder
                 'price' => 35.00,
                 'featured' => true,
                 'special_features' => ['Eco-friendly products','Pet-friendly'],
+                'avatar' => 'https://media.istockphoto.com/id/609061902/photo/pretty-clean-right.jpg?b=1&s=612x612&w=0&k=20&c=y-l5au4criXy3NGUsCPqytmoZfA7bhDkoatGcI1Jk0A=',
             ],
             [
                 'name' => 'Emerald Sparkle',
@@ -37,6 +38,7 @@ class CleanerSeeder extends Seeder
                 'price' => 80.00,
                 'featured' => false,
                 'special_features' => ['Oven cleaning','Carpet cleaning'],
+                'avatar' => 'https://images.pexels.com/photos/3768914/pexels-photo-3768914.jpeg',
             ],
             [
                 'name' => 'Shamrock Shine',
@@ -46,6 +48,7 @@ class CleanerSeeder extends Seeder
                 'price' => 45.00,
                 'featured' => false,
                 'special_features' => ['Same-week booking','Satisfaction guarantee'],
+                'avatar' => 'https://images.pexels.com/photos/9462161/pexels-photo-9462161.jpeg',
             ],
             [
                 'name' => 'Sea Breeze Cleaners',
@@ -55,6 +58,7 @@ class CleanerSeeder extends Seeder
                 'price' => 50.00,
                 'featured' => false,
                 'special_features' => ['Holiday lets','Deep sea-salt removal'],
+                'avatar' => 'https://images.pexels.com/photos/9462338/pexels-photo-9462338.jpeg',
             ],
         ];
 
@@ -104,8 +108,9 @@ class CleanerSeeder extends Seeder
                     'end_time' => '18:00:00',
                     'availability_notes' => 'Weekday availability, weekend on request',
                     'special_features' => $cdata['special_features'] ?? [],
-                    'logo_path' => 'service-listings/logos/' . Str::slug($cdata['name']) . '.png',
-                    'facility_photos_paths' => [],
+                    'logo_path' => $cdata['avatar'] ?? ('service-listings/logos/' . Str::slug($cdata['name']) . '.png'),
+                    'avatar' => $cdata['avatar'] ?? null,
+                    'facility_photos_paths' => $cdata['facility_photos'] ?? [],
                     'license_docs_paths' => [],
                     'status' => 'approved',
                     'is_featured' => $cdata['featured'] ? 1 : 0,

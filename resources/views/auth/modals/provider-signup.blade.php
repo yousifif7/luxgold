@@ -6,7 +6,7 @@
             <div class="serviceflow-modal-header">
                 <div class="serviceflow-avatar-box">
                     <div class="serviceflow-avatar">
-                        <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="luxGold Logo">
+                        <img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="luxGold Logo">
                     </div>
                 </div>
                 <h2 class="serviceflow-modal-title">Enter your Eircode</h2>
@@ -38,7 +38,7 @@
             <div class="serviceflow-modal-header">
                 <div class="serviceflow-avatar-box">
                         <div class="serviceflow-avatar">
-                        <img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt="luxGold Logo">
+                        <img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="luxGold Logo">
                     </div>
                 </div>
                 <h2 class="serviceflow-modal-title">Join as Cleaner</h2>
@@ -54,10 +54,6 @@
                     </div>
                     <div class="serviceflow-step" id="step2Indicator">
                         <i class="bi bi-2-circle"></i>
-                        Pricing
-                    </div>
-                    <div class="serviceflow-step" id="step3Indicator">
-                        <i class="bi bi-3-circle"></i>
                         Details
                     </div>
                 </div>
@@ -88,96 +84,16 @@
                     </div>
                 </div>
                 
-                <!-- Step 2: Pricing Selection -->
-                <div class="serviceflow-step-content" id="step2">
-                    <h3 style="text-align: center; margin-bottom: 32px; color: #1e293b; font-size: 24px;" id="pricingTitle">Choose Your Plan</h3>
-                    
-                    <!-- Billing Toggle -->
-                    <div class="serviceflow-billing-toggle" style="text-align: center; margin-bottom: 24px;">
-                        <div class="serviceflow-toggle-group" style="display: inline-flex; background: #f8fafc; padding: 4px; border-radius: 8px;">
-                            <button type="button" class="serviceflow-toggle-option active" data-billing="monthly">
-                                Monthly Billing
-                            </button>
-                            <button type="button" class="serviceflow-toggle-option" data-billing="yearly">
-                                Yearly Billing (Save 20%)
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="serviceflow-pricing-grid" id="pricingGrid">
-                        @foreach(\App\Models\Plan::get() as $plan)
-                        <div class="serviceflow-pricing-card" data-plan="{{ strtolower($plan->id) }}">
-                            
-                            <div class="serviceflow-plan-header">
-                                <h4 class="serviceflow-plan-name">{{ $plan->name }}</h4>
-                                @if($plan->description)
-                                    <p class="serviceflow-plan-tagline">{{ $plan->description }}</p>
-                                @endif
-                            </div>
-
-                            <div class="serviceflow-plan-price">
-                                @if($plan->monthly_fee == 0)
-                                    <div class="serviceflow-price-amount">Free</div>
-                                @else
-                                    <!-- Monthly Price -->
-                                    <div class="serviceflow-price-option active" data-billing="monthly">
-                                        <div class="serviceflow-price-amount">€{{ $plan->monthly_fee }}</div>
-                                        <div class="serviceflow-price-period">/month</div>
-                                    </div>
-                                    <!-- Yearly Price -->
-                                    <div class="serviceflow-price-option" data-billing="yearly" style="display: none;">
-                                        <div class="serviceflow-price-amount">€{{ $plan->annual_fee }}</div>
-                                        <div class="serviceflow-price-period">/year</div>
-                                        <div class="serviceflow-price-savings">Save €{{ $plan->monthly_fee * 12- (float)$plan->annual_fee  }}</div>
-                                    </div>
-                                @endif
-                            </div>
-
-                            <div class="serviceflow-plan-features">
-                                @foreach($plan->features as $feature => $enabled)
-                                    @if($enabled)
-                                        <div class="serviceflow-feature">
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            <span>{{ $feature }}</span>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-
-                            <button class="serviceflow-btn-plan" type="button" data-plan="{{ strtolower($plan->id) }}">
-                                @if($plan->monthly_fee == 0)
-                                    Start Free
-                                @elseif(strtolower($plan->type) == 'featured')
-                                    Go Featured
-                                @else
-                                    Get {{ $plan->name }}
-                                @endif
-                            </button>
-
-                        </div>
-                        @endforeach
-                    </div>
-
-                    <div class="serviceflow-btn-navigation">
-                        <button type="button" class="serviceflow-btn-back" onclick="goToStep1()">
-                            ← Back to Category
-                        </button>
-                        <button type="button" class="serviceflow-btn-next" id="pricingNextBtn" disabled onclick="goToStep3()">
-                            Continue to Setup →
-                        </button>
-                    </div>
-                </div>
+                <!-- Step 2: Profile Setup will be shown next -->
                 
-                <!-- Step 3: Profile Setup -->
-                <div class="serviceflow-step-content" id="step3">
+                <!-- Profile Setup -->
+                <div class="serviceflow-step-content" id="step2">
                     <h3 style="text-align: center; margin-bottom: 32px; color: #1e293b; font-size: 24px;">Complete Your Profile</h3>
                     <form id="providerCompleteForm">
                         <input type="hidden" name="zip_code" id="zip_code_hidden">
                         @csrf
                         <input type="hidden" name="role" value="cleaner">
                         <input type="hidden" name="category" id="providerCategory">
-                        <input type="hidden" name="pricing_plan" id="providerPricingPlan">
-                        <input type="hidden" name="billing_period" id="providerBillingPeriod" value="monthly">
                         
                         <div class="serviceflow-form-section">
                             <h4 class="serviceflow-form-section-title">Basic Information</h4>
@@ -283,10 +199,10 @@
                         </div>
                         
                         <div class="serviceflow-btn-navigation">
-                            <button type="button" class="serviceflow-btn-back" onclick="goToStep2()">
-                                ← Back to Pricing
-                            </button>
-                            <button type="submit" class="serviceflow-btn-next" id="providerSubmitBtn">
+                                <button type="button" class="serviceflow-btn-back" onclick="goToStep1()">
+                                    ← Back to Category
+                                </button>
+                                <button type="submit" class="serviceflow-btn-next" id="providerSubmitBtn">
                                 <span class="btn-text">Create Provider Account →</span>
                                 <span class="btn-loading" style="display: none;">
                                     <i class="bi bi-arrow-repeat spin"></i> Creating Account...
@@ -531,11 +447,9 @@ if(providerModalOverlay){
             if(visible && !prevVisible){
                     // When modal opens, show the first step (Category)
                         showStep('step1');
-                // Ensure pricing/category next buttons initially disabled
-                const pricingNextBtn = document.getElementById('pricingNextBtn');
-                if(pricingNextBtn) pricingNextBtn.disabled = true;
-                const categoryNextBtn = document.getElementById('categoryNextBtn');
-                if(categoryNextBtn) categoryNextBtn.disabled = true;
+                    // Ensure category next button initially disabled
+                    const categoryNextBtn = document.getElementById('categoryNextBtn');
+                    if(categoryNextBtn) categoryNextBtn.disabled = true;
             }
             prevVisible = visible;
         }catch(e){ /* ignore */ }
@@ -543,55 +457,6 @@ if(providerModalOverlay){
 
     observer.observe(providerModalOverlay, { attributes: true, attributeFilter: ['style', 'class'] });
 }
-
-// Billing period toggle
-document.querySelectorAll('.serviceflow-toggle-option').forEach(option => {
-    option.addEventListener('click', function() {
-        const billingPeriod = this.dataset.billing;
-        
-        // Update toggle buttons
-        document.querySelectorAll('.serviceflow-toggle-option').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        this.classList.add('active');
-        console.log(billingPeriod)
-        // Update price displays
-        document.querySelectorAll('.serviceflow-price-option').forEach(priceOption => {
-            priceOption.classList.remove('active');
-        });
-        document.querySelectorAll(`.serviceflow-price-option[data-billing="${billingPeriod}"]`).forEach(priceOption => {
-            priceOption.classList.add('active');
-        });
-        
-        selectedBillingPeriod = billingPeriod;
-        document.getElementById('providerBillingPeriod').value = billingPeriod;
-    });
-});
-
-// Plan selection
-document.querySelectorAll('.serviceflow-btn-plan').forEach(button => {
-    button.addEventListener('click', function() {
-        const planType = this.dataset.plan;
-        
-        // Remove selected class from all cards and buttons
-        document.querySelectorAll('.serviceflow-pricing-card').forEach(card => {
-            card.classList.remove('selected');
-        });
-        document.querySelectorAll('.serviceflow-btn-plan').forEach(btn => {
-            btn.classList.remove('selected');
-        });
-        
-        // Add selected class to current card and button
-        this.closest('.serviceflow-pricing-card').classList.add('selected');
-        this.classList.add('selected');
-        
-        selectedPlan = planType;
-        document.getElementById('providerPricingPlan').value = planType;
-        
-        // Enable the next button
-        document.getElementById('pricingNextBtn').disabled = false;
-    });
-});
 
     // Category selection: allow clicking a card to choose a category and enable the next button
     document.querySelectorAll('.serviceflow-category-card').forEach(card => {

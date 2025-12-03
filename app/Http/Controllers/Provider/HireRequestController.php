@@ -23,10 +23,14 @@ class HireRequestController extends Controller
 
         $id = $provider->id;
 
-        $hireRequests = HireRequest::where(function ($q) use ($id) {
-            $q->whereJsonContains('cleaner_ids', $id)
-              ->orWhere('cleaner_id', $id);
-        })->orderBy('created_at', 'desc')->paginate(12);
+                $hireRequests = HireRequest::where(function ($q) use ($id) {
+                        // Matches when cleaner is in the `cleaner_ids` JSON array
+                        $q->whereJsonContains('cleaner_ids', $id)
+                            // Matches when cleaner_id is stored as a scalar integer
+                            ->orWhere('cleaner_id', $id)
+                            // Matches when cleaner_id itself is a JSON array (some installs store IDs in JSON)
+                            ->orWhereJsonContains('cleaner_id', $id);
+                })->orderBy('created_at', 'desc')->paginate(12);
 
         return view('panels.provider.hire_requests.index', compact('hireRequests'));
     }

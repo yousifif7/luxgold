@@ -254,13 +254,18 @@
                         @endphp
 
                         <div class="program-card provider-card position-relative" data-id="p{{ $provider->id }}">
-                           @if(!empty($provider->logo_path) && file_exists(public_path($provider->logo_path)) )
-        <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->name }}">
-        @else
-        <div style="height: 180px; display: flex; align-items: center; text-align: center; justify-content: center;"><h2 style="color:#337d7c; font-weight: 600; margin-top: 30px">                                    {{ $provider->name }} 
-</h2></div>
-    
-    @endif
+                            @if(!empty($provider->logo_path))
+                                <img class="provider-media" src="{{ asset($provider->logo_path) }}" alt="{{ $provider->name }}">
+                            @elseif(!empty($provider->avatar))
+                                @php
+                                    $avatarSrc = (\Illuminate\Support\Str::startsWith($provider->avatar, ['http://','https://'])) ? $provider->avatar : asset($provider->avatar);
+                                @endphp
+                                <img class="provider-media" src="{{ $avatarSrc }}" alt="{{ $provider->name }}">
+                            @else
+                                <div style="height: 180px; display: flex; align-items: center; text-align: center; justify-content: center;">
+                                    <h2 style="color:#337d7c; font-weight: 600; margin-top: 30px">{{ $provider->name }}</h2>
+                                </div>
+                            @endif
                                
                             
                             @if($firstCategory)
@@ -304,23 +309,7 @@
                                             {{ $hoursDisplay }}
                                         </div>
                                     @endif
-                                    
-                                    @if($provider->price_amount)
-                                        <div class="info small-muted">
-                                            <i class="bi bi-currency-dollar"></i> 
-                                            {{ $priceDisplay }}
-                                            @if($provider->pricing_description)
-                                                <small>({{ $provider->pricing_description }})</small>
-                                            @endif
-                                        </div>
-                                    @endif
                                 </div>
-                                
-                                @if($ageGroup)
-                                    <div class="info">
-                                        Ages: <b class="ageText-class">{{ $ageGroup }}</b>
-                                    </div>
-                                @endif
                                 
                                 @if(!empty($displayTags))
                                     <div class="tags">

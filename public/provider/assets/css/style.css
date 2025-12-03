@@ -7872,7 +7872,7 @@ html[data-bs-theme=dark] #light-dark-mode .ti-moon::before {
 }
 .sidebar .sidebar-logo .logo {
     display: flex;
-    justify-content: normal;
+    justify-content: center;
     align-items: center;
     padding-top: 10px;
 }

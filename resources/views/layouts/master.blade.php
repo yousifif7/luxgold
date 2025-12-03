@@ -84,7 +84,10 @@
 
     function openServiceProviderModal() {
         closeModal('signUpModal');
-        document.getElementById('providerSignUpModal').style.display = 'flex';
+        // Launch the Eircode-first provider signup flow
+        try { if(typeof startProviderSignupFlow === 'function'){ startProviderSignupFlow(); return; } } catch(e){}
+        // Fallback: open the signup modal directly if the flow isn't available
+        const dlg = document.getElementById('providerSignUpModal'); if(dlg) dlg.style.display = 'flex';
     }
 
     function openLoginModal() {
@@ -123,7 +126,6 @@
 
     // Service Provider Modal Steps
     let selectedCategory = '';
-    let selectedPlan = '';
 
     function goToStep1() {
         document.getElementById('step1').classList.add('active');
@@ -151,18 +153,15 @@
     }
 
     function goToStep3() {
-        if (!selectedPlan) {
-            showAlert('warning', 'Please select a pricing plan');
-            return;
-        }
+        // Proceed to step 3 (if present). No subscription required.
+        document.getElementById('step1')?.classList.remove('active');
+        document.getElementById('step2')?.classList.remove('active');
+        const s3 = document.getElementById('step3');
+        if(s3) s3.classList.add('active');
         
-        document.getElementById('step1').classList.remove('active');
-        document.getElementById('step2').classList.remove('active');
-        document.getElementById('step3').classList.add('active');
-        
-        document.getElementById('step1Indicator').classList.remove('active');
-        document.getElementById('step2Indicator').classList.remove('active');
-        document.getElementById('step3Indicator').classList.add('active');
+        document.getElementById('step1Indicator')?.classList.remove('active');
+        document.getElementById('step2Indicator')?.classList.remove('active');
+        document.getElementById('step3Indicator')?.classList.add('active');
     }
 
     // Initialize category selection
@@ -178,16 +177,7 @@
             });
         });
 
-        // Plan selection
-        const planCards = document.querySelectorAll('.serviceflow-plan-card');
-        planCards.forEach(card => {
-            card.addEventListener('click', function() {
-                planCards.forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedPlan = this.getAttribute('data-plan');
-                document.getElementById('planNextBtn').disabled = false;
-            });
-        });
+        // Plan selection removed (subscription not required for signup)
 
         // Form submissions
         document.getElementById('parentSignUpForm')?.addEventListener('submit', function(e) {
@@ -258,7 +248,6 @@
         // Backend expects 'cleaner' as the role name
         formData.append('role', 'cleaner');
         formData.append('category', selectedCategory);
-        formData.append('pricing_plan', selectedPlan);
         
         try {
             const response = await fetch('/register/provider', {

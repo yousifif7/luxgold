@@ -311,17 +311,13 @@
                     <div class="service-listing-form-group-container mt-4">
                         <label class="service-listing-form-label-text">Price Amount <span class="service-listing-required-field-indicator">*</span></label>
                         <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="number" class="service-listing-form-input-field @error('price_amount') is-invalid @enderror" 
-                                   id="price-amount" name="price_amount" 
-                                   value="{{ old('price_amount') }}" 
-                                   placeholder="Enter price amount" min="0" step="1" required>
+                            {{-- Pricing removed: cleaners do not choose a price in this flow --}}
                         </div>
-                        @error('price_amount')
+                        {{-- @error('price_amount')
                             <div class="service-listing-error-message-text show">{{ $message }}</div>
                         @else
                             <small class="form-text text-muted">Enter the specific price amount based on your selected pricing type</small>
-                        @enderror
+                        @enderror --}}
                     </div>
                     
                     <div class="service-listing-form-group-container">
@@ -759,12 +755,7 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedPricingType = this.dataset.type;
             pricingTypeInput.value = selectedPricingType;
             
-            // Update price amount placeholder based on selection
-            const priceAmount = document.getElementById('price-amount');
-            const priceSpan = this.querySelector('.pricing-option-price span');
-            if (priceSpan) {
-                priceAmount.placeholder = `e.g., ${priceSpan.textContent}`;
-            }
+            // Pricing is managed externally; cleaners do not set price here.
         });
     });
     
@@ -880,12 +871,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
                 
             case 3:
-                // Validate pricing
-                const priceAmount = document.getElementById('price-amount');
-                if (!priceAmount.value.trim() || parseFloat(priceAmount.value) <= 0) {
-                    isValid = false;
-                    errorFields.push('price-amount');
-                }
+                // Pricing step removed; skip validation here.
                 break;
                 
             // Add validation for other steps as needed
@@ -988,7 +974,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Pricing & Schedule
         document.getElementById('reviewPricingType').textContent = selectedPricingType.charAt(0).toUpperCase() + selectedPricingType.slice(1);
-        document.getElementById('reviewPriceAmount').textContent = '$' + (document.getElementById('price-amount').value || '0');
         
         const availableDays = Array.from(document.querySelectorAll('input[name="available_days[]"]:checked'))
             .map(cb => cb.value.charAt(0).toUpperCase() + cb.value.slice(1)).join(', ');

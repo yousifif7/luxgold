@@ -124,7 +124,7 @@
 
 @include('partials.hire_request_modal')
 
-@push('styles')
+    @push('styles')
 <style>
     .eircode-hero-box .input-group {
         border-radius: 12px;
@@ -163,6 +163,25 @@
     @media (max-width: 767px) {
         .eircode-hero-box .input-group { flex-direction: row; }
         .eircode-hero-box .btn { padding: 0.75rem 1rem; }
+    }
+
+    /* City icon styles: make image fill the circle and crop nicely */
+    .city-icon-container {
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.06);
+    }
+    .city-icon {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
 </style>
 @endpush
@@ -230,13 +249,53 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
     .catch(err=>{ console.error(err); document.getElementById('hr_formErrors').textContent = 'Error sending request'; })
     .finally(()=>{ btn.disabled = false; btn.innerHTML = original; });
 });
+
+// CTA section Quote Me handler: use CTA Eircode input, validate, and open hire request modal
+document.getElementById('ctaQuoteBtn')?.addEventListener('click', function(){
+    const input = document.getElementById('ctaEircodeInput');
+    const value = input ? input.value.trim() : '';
+    const errorEl = document.getElementById('ctaEircodeError') || document.getElementById('heroEircodeError');
+    if(errorEl) { errorEl.style.display = 'none'; }
+    if(!value){ if(errorEl){ errorEl.textContent = 'Please enter an Eircode'; errorEl.style.display='block'; } return; }
+
+    fetch('{{ route('check.eircode') }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN':'{{ csrf_token() }}', 'Accept':'application/json' },
+        body: JSON.stringify({ eircode: value })
+    })
+    .then(r=>r.json())
+    .then(data=>{
+        if(data && data.valid){
+            const normalized = data.normalized || data.eircode || data.eircode_normalized || null;
+            const zipEl = document.getElementById('hr_zip_code');
+            if(zipEl && normalized) zipEl.value = normalized;
+
+            // Prefill if possible
+            const email = '{{ Auth::check() ? Auth::user()->email : '' }}';
+            const name = '{{ Auth::check() ? Auth::user()->first_name : '' }}';
+            const hrEmail = document.getElementById('hr_email');
+            const hrName = document.getElementById('hr_name');
+            const hrCheckoutEmail = document.getElementById('hr_checkout_email');
+            const hrCheckoutName = document.getElementById('hr_checkout_name');
+            if(email){ if(hrEmail) hrEmail.value = email; if(hrCheckoutEmail) hrCheckoutEmail.value = email; }
+            if(name){ if(hrName) hrName.value = name; if(hrCheckoutName) hrCheckoutName.value = name; }
+
+            const modal = new bootstrap.Modal(document.getElementById('hireRequestModal'));
+            modal.show();
+        } else {
+            if(errorEl){ errorEl.textContent = (data && data.message) ? data.message : 'Invalid Eircode'; errorEl.style.display='block'; }
+            else alert((data && data.message) ? data.message : 'Invalid Eircode');
+        }
+    })
+    .catch(err=>{ console.error(err); if(errorEl){ errorEl.textContent='Error checking Eircode'; errorEl.style.display='block'; } else alert('Error checking Eircode'); });
+});
 </script>
 @endpush
 
 <section class="second-section ">
     <div class="container">
         
-    <h3>Featured Cleaners</h3>
+    <h3>Meet our best Cleaners</h3>
     <p class="tagline">Discover some of our highest-rated cleaning professionals trusted by customers in your community</p>
     <div class="row g-4 mt-4">
         <!-- Card 1 -->
@@ -365,7 +424,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
 <!-- Categories Section (Keeping Static as requested) -->
 <section class="third-section">
     <div class="container">
-        <h3>Browse by Category</h3>
+        <h3>Services we provide</h3>
         <p class="tagline">From early learning to wellness services, find everything your family needs in one place</p>
         <div class="row g-4 mt-4">
             @foreach($categories as $category)
@@ -440,110 +499,187 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
 <!-- Featured Providers Section (Keeping Static as requested) -->
 
 <!-- Cities Section - Dynamic -->
-<section class="forth-section">
+<section class="forth-section py-5 bg-light">
     <div class="container">
-        <h3>Now Serving These Cities</h3>
-        <p class="tagline">luxGold connects customers with trusted cleaning professionals across North Texas!</p>
-        @if($cities->count() > 0)
-        <div class="row gap-4 justify-content-center mt-4">
-            @foreach($cities->where('is_coming_soon', false)->take(5) as $city)
-            <div class="col-md-2 col-6">
-                <div class="city-card">
-                    <div class="city-icon green-bg">
-                        <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" width="30">
-                    </div>
-                    <div class="city-title">{{ $city->name }}, {{ $city->state }}</div>
-                    <a href="#" class="city-link">{{ $city->totalCleaner() }}+ cleaners</a>
-                    <div class="city-families">{{ $city->families_count }}+ customers</div>
-                </div>
+        <div class="d-flex align-items-start justify-content-between mb-3">
+            <div>
+                <h3 class="mb-1">Now Serving These Cities</h3>
+                <p class="tagline mb-0">luxGold connects customers with trusted cleaning professionals across Ireland.</p>
             </div>
-            @endforeach
-        </div>
-        @else
-        <!-- Fallback static cities -->
-        <div class="row g-4 mt-4">
-            <div class="col-md-2 col-6">
-                <div class="city-card">
-                    <div class="city-icon green-bg"><img src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png" width="30"></div>
-                    <div class="city-title">Aubrey, TX</div>
-                    <a href="#" class="city-link">42 cleaners</a>
-                    <div class="city-families">850+ customers</div>
-                </div>
+            <div class="text-end">
+                <a href="{{ route('website.locations') }}" class="btn btn-outline-secondary btn-sm">View all locations</a>
             </div>
-            <!-- Add more fallback cities as needed -->
         </div>
-        @endif
-        @if($cities->where('is_coming_soon', true)->count() > 0)
-      <div class="coming-soon text-warning fw-bold">
-  <i class="bi bi-clock me-2" style="font-size: 1.5rem;"></i>
-  Coming Soon!
-  <i class="bi bi-clock ms-2" style="font-size: 1.5rem;"></i>
-</div>
 
-        <div class="row justify-content-center gap-4 mt-4">
-            @foreach($cities->where('is_coming_soon', true)->take(3) as $city)
-            <div class="col-md-2 col-6">
-                <div class="soon-card">
-                    <div class="city-icon yellow-bg">
-                        <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" width="30">
+        @if($cities->count() > 0)
+        <div class="row g-3">
+            @foreach($cities->where('is_coming_soon', false)->take(12) as $city)
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3 city-icon-container">
+                                <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" class="city-icon">
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="mb-0">{{ $city->name }}</h5>
+                                <small class="text-muted">{{ $city->state }}</small>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span class="badge bg-primary">{{ $city->cleaners_count ?? $city->totalCleaner() }} cleaners</span>
+                                </div>
+                                <div class="text-muted small">{{ $city->families_count ?? 0 }}+ customers</div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <a href="{{ route('website.find-cleaner', ['city' => $city->name]) }}" class="btn btn-sm btn-outline-primary">View Cleaners</a>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('heroEircodeInput').value='';openSignUpModal();">Request Service</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="soon-card-title">{{ $city->name }}, {{ $city->state }}</div>
-                    <div class="soon-badge">Launching Soon!</div>
                 </div>
             </div>
             @endforeach
         </div>
         @else
-        <!-- Fallback static coming soon cities -->
+        <div class="alert alert-secondary">No locations available yet. Please check back soon or contact us to request service in your area.</div>
         @endif
-        
+
+        @if($cities->where('is_coming_soon', true)->count() > 0)
+        <div class="mt-4">
+            <h6 class="mb-2">Launching Soon</h6>
+            <div class="row g-3">
+                @foreach($cities->where('is_coming_soon', true)->take(6) as $city)
+                <div class="col-md-3 col-sm-4">
+                    <div class="d-flex align-items-center gap-3 p-2 border rounded">
+                        <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" width="36" height="36">
+                        <div>
+                            <div class="fw-semibold">{{ $city->name }}</div>
+                            <div class="small text-muted">Launching soon</div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+
     </div>
 </section>
 <!-- How It Works Section - Dynamic -->
 <section class="fifth-section" id="how-it-works-section">
     <div class="container">
         <h3>How it Works – Customers</h3>
-        <p class="tagline">Finding the right cleaning services has never been easier</p>
+        <p class="tagline">Request a cleaner in three simple steps</p>
         <div class="row justify-content-center mt-5">
-            <!-- Step 1 -->
+            <!-- Step 1: Choose Service -->
             <div class="col-md-4">
                 <div class="how-it-works-card">
                     <div class="how-it-works-icon-wrapper">
-                        <i class="bi bi-search"></i>
+                        <i class="bi bi-list-check"></i>
                     </div>
-                    <h3 class="how-it-works-title">Search &amp; Filter</h3>
+                    <h3 class="how-it-works-title">Choose Your Service</h3>
                     <p class="how-it-works-description">
-                        Find nearby options by category, location, price, and ratings that match your family's needs.
+                        Pick the cleaning service you need (regular clean, deep clean, oven, carpet, etc.), enter your postcode or city, and request a quote.
                     </p>
                 </div>
             </div>
-            <!-- Step 2 -->
+
+            <!-- Step 2: Assignment & Service -->
             <div class="col-md-4">
                 <div class="how-it-works-card">
                     <div class="how-it-works-icon-wrapper">
-                        <i class="bi bi-check2-circle"></i>
+                        <i class="bi bi-people"></i>
                     </div>
-                    <h3 class="how-it-works-title">Compare &amp; Shortlist</h3>
+                    <h3 class="how-it-works-title">We Assign Cleaners</h3>
                     <p class="how-it-works-description">
-                        See key details, insights, and reviews on cleaners to make informed decisions.
+                        Our team assigns available, vetted cleaners to your request and they will complete the job at the scheduled time.
                     </p>
                 </div>
             </div>
-            <!-- Step 3 -->
+
+            <!-- Step 3: Rate & Review -->
             <div class="col-md-4">
                 <div class="how-it-works-card">
                     <div class="how-it-works-icon-wrapper">
-                        <i class="bi bi-telephone"></i>
+                        <i class="bi bi-star"></i>
                     </div>
-                    <h3 class="how-it-works-title">Reach Cleaners</h3>
+                    <h3 class="how-it-works-title">Rate &amp; Review</h3>
                     <p class="how-it-works-description">
-                        Connect directly via phone or email to ask questions and schedule visits.
+                        After the service, search for your cleaner on the "Find Cleaners" page and leave a rating and review to help others choose with confidence.
                     </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Why Choose LuxGold Section -->
+<section class="why-choose-section py-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h3>Why Choose luxGold Cleaning Services</h3>
+            <p class="tagline">Trusted, vetted cleaners and transparent service designed for busy homes and businesses.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100 text-center border rounded">
+                    <div class="feature-icon mb-3"><i class="bi bi-shield-check" style="font-size:1.6rem;color:#0b7285"></i></div>
+                    <h5 class="mb-2">Vetted & Garda-Checked</h5>
+                    <p class="small text-muted mb-0">All cleaners are identity-checked, background screened and verified to give you peace of mind.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100 text-center border rounded">
+                    <div class="feature-icon mb-3"><i class="bi bi-currency-pound" style="font-size:1.6rem;color:#0b7285"></i></div>
+                    <h5 class="mb-2">Transparent Pricing</h5>
+                    <p class="small text-muted mb-0">Clear, upfront pricing and easy quotes so there are no surprises after the job is done.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100 text-center border rounded">
+                    <div class="feature-icon mb-3"><i class="bi bi-calendar-check" style="font-size:1.6rem;color:#0b7285"></i></div>
+                    <h5 class="mb-2">Flexible Scheduling</h5>
+                    <p class="small text-muted mb-0">Book one-off, recurring, or same-day cleans — manage bookings easily through your dashboard.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-3">
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100 text-center border rounded">
+                    <div class="feature-icon mb-3"><i class="bi bi-journal-check" style="font-size:1.6rem;color:#0b7285"></i></div>
+                    <h5 class="mb-2">Satisfaction Guarantee</h5>
+                    <p class="small text-muted mb-0">If something isn’t right, tell us and we’ll make it right—customer satisfaction is our priority.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100 text-center border rounded">
+                    <div class="feature-icon mb-3"><i class="bi bi-droplet" style="font-size:1.6rem;color:#0b7285"></i></div>
+                    <h5 class="mb-2">Eco-Friendly Options</h5>
+                    <p class="small text-muted mb-0">Choose cleaners who use non-toxic and biodegradable products for a healthier home.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100 text-center border rounded">
+                    <div class="feature-icon mb-3"><i class="bi bi-headset" style="font-size:1.6rem;color:#0b7285"></i></div>
+                    <h5 class="mb-2">Local Support</h5>
+                    <p class="small text-muted mb-0">Regional support teams to help with booking, changes, and any post-job follow-up.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Service Provider Section - Dynamic -->
 <section class="sixth-section">
     <div class="container">
@@ -551,13 +687,13 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
             For Cleaners
         </div>
         <h3>
-        Are you a Cleaner? List with luxGold
+        Are you a Cleaner? Join luxGold
         </h3>
         <p class="tagline">Join thousands of cleaners who trust luxGold to connect with customers in their community.
         Stand out where customers are actively looking and grow your business.</p>
         <div class="d-flex justify-content-center align-items-center">
-           @if(Auth::user()) <a href="{{ route('cleaner-home') }}" class="p1-button">List Your Services - Free <i
-            class="bi bi-chevron-right ms-1"></i></a> @else <button class="p1-button" onclick="openLoginModal()" >List Your Services - Free <i
+           @if(Auth::user()) <a href="{{ route('cleaner-home') }}" class="p1-button">Become a cleaner - Free <i
+            class="bi bi-chevron-right ms-1"></i></a> @else <button class="p1-button" onclick="openServiceProviderModal()" >Become a cleaner - Free <i
             class="bi bi-chevron-right ms-1"></i></button> @endif
         </div>
     </div>
@@ -592,7 +728,7 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
                     <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnRlcnNjaG9vbCUyMGFjdGl2aXRpZXN8ZW58MXx8fHwxNzU2MTcwNTU5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Daycare">
                 </div>
                 <div class="custom-card-body">
-                    <h3 class="custom-card-title">Choosing the Right Daycare: A Parent's Guide</h3>
+                    <h3 class="custom-card-title">Choosing the Right Daycare: A Customer's Guide</h3>
                     <p class="custom-card-text">Essential tips and questions to ask when selecting a cleaner or cleaning service for your home.</p>
                     <a href="#" class="custom-card-link">Read More <i class="bi bi-chevron-right"></i></a>
                 </div>
@@ -658,11 +794,16 @@ document.getElementById('hr_submitBtn')?.addEventListener('click', function(){
             Join thousands of customers who trust luxGold to connect with trusted cleaning professionals
             in their community.
         </p>
-            <div class="button-group">
-            <button onclick="window.location.href='{{ route('website.find-cleaner') }}'">Start Searching <i
-            class="bi bi-chevron-right ms-1"></i></button>
-            <button onclick="window.location.href='{{ route('website.find-cleaner') }}'">Learn More</button>
-        </div>
+            <div class="button-group d-flex flex-column flex-sm-row align-items-center gap-3">
+                <div class="eircode-hero-box" style="max-width:420px;">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                        <input id="ctaEircodeInput" class="form-control" placeholder="Enter your Eircode here">
+                        <button id="ctaQuoteBtn" type="button" class="btn btn-success">QUOTE ME</button>
+                    </div>
+                    <div id="ctaEircodeError" class="text-danger small mt-2" style="display:none;"></div>
+                </div>
+            </div>
     </div>
 </section>
 <!-- Cookie Banner -->

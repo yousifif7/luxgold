@@ -16,7 +16,7 @@ class Cleaner extends Model
         'phone',
         'categories_id',
         'phone_number',
-        'plans_id',
+        //'plans_id',
         'email',
         'physical_address',
         'city',

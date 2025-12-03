@@ -30,6 +30,7 @@ class HireRequest extends Model
         'ip_address',
         'user_agent',
         'zip_code',
+        'admin_message',
         'city',
     ];
 

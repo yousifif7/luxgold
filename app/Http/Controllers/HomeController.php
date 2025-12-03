@@ -19,6 +19,7 @@ use App\Models\ServicesOfferd;
 use App\Models\ProgramsOffered;
 use App\Models\SpecialFeatures;
 use App\Models\Cleaner as Provider;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Builder; // Correct one for Eloquent
@@ -42,6 +43,20 @@ class HomeController extends Controller
 
         $heroContent = HeroContent::active()->first();
         $cities = City::active()->ordered()->get();
+
+        // Populate live counts per city:
+        foreach ($cities as $city) {
+            // Count customers (users with role 'customer') in this city (matching by name)
+            try {
+                $city->families_count = User::role('customer')->where('city', $city->name)->count();
+            } catch (\Exception $e) {
+                // If Spatie role scope not available or error, fallback to zero
+                $city->families_count = User::where('city', $city->name)->count();
+            }
+
+            // Count cleaners registered in this city (match by city field)
+            $city->cleaners_count = Provider::where('city', $city->name)->count();
+        }
         $resources = Resource::active()->ordered()->take(3)->get();
         $testimonials = Testimonial::active()->ordered()->take(3)->get();
         $categories=Category::get();

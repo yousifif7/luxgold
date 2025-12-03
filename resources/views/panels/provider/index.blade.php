@@ -11,7 +11,7 @@
                 <h4 class="mb-1">Welcome back, {{ $stats['name'] ?? $stats['business_name'] }}!</h4>
                 <p class="mb-0">Here's what's happening with your account today.</p>
             </div>
-            <div class="subscription-status">
+            {{-- <div class="subscription-status">
                 @if(isset($stats['subscription_status']['status']) && $stats['subscription_status']['status'] === 'active')
                     <span class="badge bg-success">
                         <i class="ti ti-crown me-1"></i>
@@ -26,7 +26,7 @@
                         No Active Subscription
                     </span>
                 @endif
-            </div>
+            </div> --}}
         </div>
         <!-- End Page Header -->
 

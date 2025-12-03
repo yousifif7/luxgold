@@ -295,21 +295,21 @@
         <div class="sidebar" id="sidebar">
 
             <!-- Start Logo -->
-            <div class="sidebar-logo">
+            <div class="sidebar-logo text-center">
                 <div>
                     <!-- Logo Normal -->
                     <a href="/home" class="logo logo-normal">
-                        <img src="{{ asset('panel/assets/luxgold.jpg') }}" height="40px" alt="Logo">
+                        <img src="{{ asset('assets/images/luxgold-trans.png') }}" height="40px" alt="Logo">
                     </a>
 
                     <!-- Logo Small -->
                     <a href="/home" class="logo-small">
-                        <img src="{{ asset('panel/assets/luxgold.jpg') }}" alt="Logo">
+                        <img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="Logo">
                     </a>
 
                     <!-- Logo Dark -->
                     <a href="/home" class="dark-logo">
-                        <img src="{{ asset('panel/assets/luxgold.jpg') }}" alt="Logo">
+                        <img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="Logo">
                     </a>
                 </div>
             </div>
@@ -349,7 +349,7 @@
                                 </li>
                                 <li>
                                     <a href="{{ route('hire-requests.index') }}">
-                                        <i class="fa fa-question"></i><span>Hire Requests</span>
+                                        <i class="fa fa-question"></i><span>Cleaning Requests</span>
                                     </a>
                                 </li>
                                 <li>

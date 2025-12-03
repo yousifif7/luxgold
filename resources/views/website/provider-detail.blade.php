@@ -69,17 +69,66 @@
 
                         @php
                             $facilityPhotos = $provider->facility_photos_paths ?? [];
-                            $mainImage = !empty($facilityPhotos) ? $facilityPhotos[0] : $provider->logo_path;
+                            // Normalize string-stored JSON arrays
+                            if (is_string($facilityPhotos)) {
+                                $decoded = json_decode($facilityPhotos, true);
+                                $facilityPhotos = is_array($decoded) ? $decoded : [];
+                            }
+
+                            $isRemote = function ($path) {
+                                return \Illuminate\Support\Str::startsWith($path, ['http://', 'https://']);
+                            };
+
+                            // Find the first available image: facility photos -> logo_path -> avatar
+                            $mainImage = null;
+                            if (!empty($facilityPhotos)) {
+                                foreach ($facilityPhotos as $p) {
+                                    if ($p && ($isRemote($p) || file_exists(public_path($p)))) {
+                                        $mainImage = $p;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (!$mainImage) {
+                                if (!empty($provider->logo_path) && ($isRemote($provider->logo_path) || file_exists(public_path($provider->logo_path)))) {
+                                    $mainImage = $provider->logo_path;
+                                } elseif (!empty($provider->avatar) && ($isRemote($provider->avatar) || file_exists(public_path($provider->avatar)))) {
+                                    $mainImage = $provider->avatar;
+                                }
+                            }
                         @endphp
-                        @if ($mainImage && file_exists(public_path($mainImage)))
-                            <img src="{{ asset($mainImage) }}" class="school-profile-main-image-large" id="mainImage"
-                                alt="{{ $provider->name ?? 'Cleaner' }} Main Image">
+
+                        @if (!empty($mainImage))
+                            @if (\Illuminate\Support\Str::startsWith($mainImage, ['http://', 'https://']))
+                                <img src="{{ $mainImage }}" class="school-profile-main-image-large" id="mainImage"
+                                    alt="{{ $provider->name ?? 'Cleaner' }} Main Image">
+                            @else
+                                <img src="{{ asset($mainImage) }}" class="school-profile-main-image-large" id="mainImage"
+                                    alt="{{ $provider->name ?? 'Cleaner' }} Main Image">
+                            @endif
                         @endif
-                        @if (!empty($facilityPhotos) && count($facilityPhotos) > 1)
+
+                        @php
+                            // Prepare thumbnails list from facility photos (only those that exist or are remote)
+                            $thumbnailPhotos = [];
+                            foreach ($facilityPhotos as $p) {
+                                if ($p && ($isRemote($p) || file_exists(public_path($p)))) {
+                                    $thumbnailPhotos[] = $p;
+                                }
+                            }
+                        @endphp
+
+                        @if (!empty($thumbnailPhotos) && count($thumbnailPhotos) > 1)
                             <div class="school-profile-thumbnail-gallery-row">
-                                @foreach ($facilityPhotos as $photo)
-                                    <img src="{{ asset($photo) }}" class="school-profile-thumbnail-small-image"
-                                        onclick="changeImage(this)">
+                                @foreach ($thumbnailPhotos as $photo)
+                                    @if (\Illuminate\Support\Str::startsWith($photo, ['http://', 'https://']))
+                                        <img src="{{ $photo }}" class="school-profile-thumbnail-small-image"
+                                            onclick="changeImage(this)">
+                                    @else
+                                        <img src="{{ asset($photo) }}" class="school-profile-thumbnail-small-image"
+                                            onclick="changeImage(this)">
+                                    @endif
                                 @endforeach
                             </div>
                         @endif

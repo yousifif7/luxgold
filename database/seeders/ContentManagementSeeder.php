@@ -23,7 +23,6 @@ class ContentManagementSeeder extends Seeder
         $this->createCities();
         $this->createHeroContent();
         $this->createTestimonials();
-        $this->createResources();
 
         $this->command->info('Content management data seeded successfully!');
     }
@@ -63,9 +62,9 @@ class ContentManagementSeeder extends Seeder
     private function createTestimonials()
     {
         $testimonials = [
-            ['name' => 'Sarah Johnson', 'location' => 'Dallas, TX', 'rating' => 5, 'content' => 'Sparkle cleaned our house spotless! Highly recommended.', 'avatar_url' => 'dummy.png', 'sort_order' => 1, 'status' => true],
-            ['name' => 'Michael Chen', 'location' => 'Houston, TX', 'rating' => 5, 'content' => 'Great move-out cleaning service. Got my deposit back!', 'avatar_url' => 'dummy.png', 'sort_order' => 2, 'status' => true],
-            ['name' => 'Emily Rodriguez', 'location' => 'Austin, TX', 'rating' => 5, 'content' => 'Quick booking and professional cleaners. Love the eco option.', 'avatar_url' => 'dummy.png', 'sort_order' => 3, 'status' => true],
+            ['name' => 'Sarah Johnson', 'location' => 'Dublin, TX', 'rating' => 5, 'content' => 'Sparkle cleaned our house spotless! Highly recommended.', 'avatar_url' => 'https://images.pexels.com/photos/7752810/pexels-photo-7752810.jpeg', 'sort_order' => 1, 'status' => true],
+            ['name' => 'Michael Chen', 'location' => 'Cork, TX', 'rating' => 5, 'content' => 'Great move-out cleaning service. Got my deposit back!', 'avatar_url' => 'https://images.pexels.com/photos/7752893/pexels-photo-7752893.jpeg?_gl=1*14eqa77*_ga*NTA5NjQwOTY0LjE3NjQ3NTIwMTI.*_ga_8JE65Q40S6*czE3NjQ3NTIwMTEkbzEkZzAkdDE3NjQ3NTIwMTEkajYwJGwwJGgw', 'sort_order' => 2, 'status' => true],
+            ['name' => 'Emily Rodriguez', 'location' => 'Carlow, TX', 'rating' => 5, 'content' => 'Quick booking and professional cleaners. Love the eco option.', 'avatar_url' => 'https://images.pexels.com/photos/14596539/pexels-photo-14596539.jpeg?_gl=1*14d6cgp*_ga*NTA5NjQwOTY0LjE3NjQ3NTIwMTI.*_ga_8JE65Q40S6*czE3NjQ3NTIwMTEkbzEkZzAkdDE3NjQ3NTIwMTEkajYwJGwwJGgw', 'sort_order' => 3, 'status' => true],
         ];
 
         foreach ($testimonials as $t) {
@@ -74,15 +73,4 @@ class ContentManagementSeeder extends Seeder
         }
     }
 
-    private function createResources()
-    {
-        $resources = [
-            ['title' => 'How to Prepare for a Cleaner Visit', 'description' => 'Tips to get the most from your first cleaning.', 'category' => 'Guides', 'image_url' => '', 'content' => '<p>Simple checklist to prepare.</p>', 'read_time' => '3 min read', 'slug' => 'prepare-for-cleaner', 'meta_title' => 'Prepare for Cleaner', 'meta_description' => 'Checklist to prepare for cleaner visits.', 'sort_order' => 1, 'status' => true],
-            ['title' => 'Deep Cleaning vs Regular Cleaning', 'description' => 'When to choose a deep clean vs a recurring service.', 'category' => 'Guides', 'image_url' => '', 'content' => '<p>Differences explained.</p>', 'read_time' => '4 min read', 'slug' => 'deep-vs-regular', 'meta_title' => 'Deep vs Regular Cleaning', 'meta_description' => 'Understand services and pricing.', 'sort_order' => 2, 'status' => true],
-        ];
-
-        foreach ($resources as $r) {
-            Resource::create($r);
-        }
-    }
 }

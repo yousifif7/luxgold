@@ -18,14 +18,14 @@ class HireRequestController extends Controller
             'cleaner_ids.*' => 'integer|exists:cleaners,id',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:40',
+            'phone' => 'required|string|max:40',
             'cleaning_type' => 'nullable|string|max:100',
             'selected_items' => 'required',
-            'frequency' => 'nullable|string|max:100',
+            'frequency' => 'required|string|max:100',
             'scheduled_at' => 'nullable|date',
             'notes' => 'nullable|string',
-            'zip_code' => 'nullable|string|max:20',
-            'city' => 'nullable|string|max:100',
+            'zip_code' => 'required|string|max:20',
+            'city' => 'required|string|max:100',
         ]);
 
         try {

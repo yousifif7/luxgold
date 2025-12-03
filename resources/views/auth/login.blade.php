@@ -3,8 +3,8 @@
 @section('content')
 <div class="d-flex align-items-center justify-content-center" style="min-height:100vh;padding:24px;">
   <div class="login-card-longkeywordclass">
-    <div class="d-flex justify-content-center mb-3">
-        <img src="{{ asset('provider/assets/updated-logo.jpeg') }}" alt="LuxGold">
+    <div class="d-flex justify-content-center mb-3 ">
+        <img src="{{ asset('assets/images/luxgold-trans.png') }}" height="100" alt="LuxGold">
     </div>
     <h1 class="login-title-longkeywordclass">Login to LuxGold</h1>
     <form method="POST" action="{{ route('login') }}">

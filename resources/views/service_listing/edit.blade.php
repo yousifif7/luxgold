@@ -327,63 +327,35 @@
                     <p class="service-listing-step-description-text">Select how you'd like to structure your pricing:</p>
                     
                     <div class="pricing-options">
-                        <div class="pricing-option @if(old('pricing_type', $serviceListing->pricing_type ?? 'package') == 'hourly') selected @endif" data-type="hourly">
-                            <div class="pricing-option-name">Hourly Rate</div>
-                            <div class="pricing-option-price">$<span>25</span></div>
-                            <ul class="pricing-option-features">
-                                <li>Charge by the hour</li>
-                                <li>Flexible scheduling</li>
-                                <li>Best for variable services</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="pricing-option @if(old('pricing_type', $serviceListing->pricing_type ?? 'package') == 'fixed') selected @endif" data-type="fixed">
-                            <div class="pricing-option-name">Fixed Price</div>
-                            <div class="pricing-option-price">$<span>150</span></div>
-                            <ul class="pricing-option-features">
-                                <li>Flat fee per session</li>
-                                <li>Clear pricing for clients</li>
-                                <li>Great for standard packages</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="pricing-option @if(old('pricing_type', $serviceListing->pricing_type ?? 'package') == 'package') selected @endif" data-type="package">
-                            <div class="pricing-option-name">Package Deal</div>
-                            <div class="pricing-option-price">$<span>500</span></div>
-                            <ul class="pricing-option-features">
-                                <li>Multiple sessions bundled</li>
-                                <li>Discount for commitment</li>
-                                <li>Encourages long-term engagement</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="pricing-option @if(old('pricing_type', $serviceListing->pricing_type ?? 'package') == 'custom') selected @endif" data-type="custom">
-                            <div class="pricing-option-name">Custom Pricing</div>
-                            <div class="pricing-option-price">$<span>0</span></div>
-                            <ul class="pricing-option-features">
-                                <li>Set your own terms</li>
-                                <li>Negotiate with clients</li>
-                                <li>Perfect for unique services</li>
-                            </ul>
-                        </div>
+                                {{-- Pricing removed: Cleaners do not select price in this product flow --}}
+                                <div class="pricing-option" data-type="hourly">
+                                    <div class="pricing-option-name">Hourly Rate</div>
+                                    <div class="pricing-option-price">$<span>25</span></div>
+                                </div>
+                                <div class="pricing-option" data-type="fixed">
+                                    <div class="pricing-option-name">Fixed Price</div>
+                                    <div class="pricing-option-price">$<span>150</span></div>
+                                </div>
+                                <div class="pricing-option" data-type="package">
+                                    <div class="pricing-option-name">Package Deal</div>
+                                    <div class="pricing-option-price">$<span>500</span></div>
+                                </div>
+                                <div class="pricing-option" data-type="custom">
+                                    <div class="pricing-option-name">Custom Pricing</div>
+                                    <div class="pricing-option-price">$<span>0</span></div>
+                                </div>
                     </div>
                     
                     <input type="hidden" name="pricing_type" id="pricingType" value="{{ old('pricing_type', $serviceListing->pricing_type ?? 'package') }}">
                     
                     <div class="service-listing-form-group-container mt-4">
-                        <label class="service-listing-form-label-text">Price Amount <span class="service-listing-required-field-indicator">*</span></label>
-                        <div class="d-flex" style="display: flex;">
-                            <span class="input-group-text">$</span>
-                            <input type="number" class="service-listing-form-input-field @error('price_amount') is-invalid @enderror" 
-                                   id="price-amount" name="price_amount" 
-                                   value="{{ old('price_amount', $serviceListing->price_amount) }}" 
-                                   placeholder="Enter price amount" min="0" step="1" required>
-                        </div>
-                        @error('price_amount')
-                            <div class="service-listing-error-message-text show">{{ $message }}</div>
-                        @else
-                            <small class="form-text text-muted">Enter the specific price amount based on your selected pricing type</small>
-                        @enderror
+                            <label class="service-listing-form-label-text">Pricing Description</label>
+                            <textarea class="service-listing-form-textarea-field @error('pricing_description') is-invalid @enderror" 
+                                      id="pricing-description" name="pricing_description" rows="3" 
+                                      placeholder="Describe your pricing structure, any discounts, payment methods, cancellation policy, etc.">{{ old('pricing_description', $serviceListing->pricing_description) }}</textarea>
+                            @error('pricing_description')
+                                <div class="service-listing-error-message-text show">{{ $message }}</div>
+                            @enderror
                     </div>
                     
                     <div class="service-listing-form-group-container">
@@ -477,7 +449,7 @@
                 </div>
                 <p class="service-listing-step-description-text">(Credentials section has been simplified)</p>
 
-                <div class="service-listing-form-group-container">
+                {{-- <div class="service-listing-form-group-container">
                     <label class="service-listing-form-label-text">Special Features</label>
                     <div class="service-listing-checkbox-group-container">
                         @php
@@ -511,10 +483,10 @@
                     @error('special_features')
                         <div class="service-listing-error-message-text show">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="row">
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <div class="service-listing-form-group-container">
                             <label class="service-listing-form-label-text">Website</label>
                             <input type="url" class="service-listing-form-input-field @error('website') is-invalid @enderror" 
@@ -525,7 +497,7 @@
                                 <div class="service-listing-error-message-text show">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-6">
                         <div class="service-listing-form-group-container">
                             <label class="service-listing-form-label-text">Facebook Page</label>
@@ -583,7 +555,7 @@
                     @endif
 
 
-                    @if($serviceListing->facility_photos_paths && count($serviceListing->facility_photos_paths) > 0)
+                    {{-- @if($serviceListing->facility_photos_paths && count($serviceListing->facility_photos_paths) > 0)
                     <div class="existing-file-item mb-3">
                         <label class="service-listing-form-label-text">Current Facility Photos:</label>
                         <div class="row">
@@ -601,9 +573,9 @@
                         </div>
                         <small class="text-danger">Check photos you want to remove</small>
                     </div>
-                    @endif
+                    @endif --}}
 
-                    @if($serviceListing->license_docs_paths && count($serviceListing->license_docs_paths) > 0)
+                    {{-- @if($serviceListing->license_docs_paths && count($serviceListing->license_docs_paths) > 0)
                     <div class="existing-file-item mb-3">
                         <label class="service-listing-form-label-text">Current License Documents:</label>
                         <div class="row">
@@ -624,13 +596,13 @@
                         </div>
                         <small class="text-danger">Check documents you want to remove</small>
                     </div>
-                    @endif
+                    @endif --}}
                 </div>
                 @endif
 
-                <h6 class="mt-3">Business Logo</h6>
+                <h6 class="mt-3">Profile Logo</h6>
                 <div class="service-listing-form-group-container">
-                    <label class="service-listing-form-label-text">Upload your business logo (recommended: square format, 500x500px minimum)</label>
+                    <label class="service-listing-form-label-text">Upload your Profile logo (recommended: square format, 500x500px minimum)</label>
                     <div class="service-listing-file-upload-area @error('logo') is-invalid @enderror" id="logoUploadArea">
                         <div class="service-listing-upload-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
@@ -887,12 +859,7 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedPricingType = this.dataset.type;
             pricingTypeInput.value = selectedPricingType;
             
-            // Update price amount placeholder based on selection
-            const priceAmount = document.getElementById('price-amount');
-            const priceSpan = this.querySelector('.pricing-option-price span');
-            if (priceSpan) {
-                priceAmount.placeholder = `e.g., ${priceSpan.textContent}`;
-            }
+            // Pricing is managed externally; cleaners do not set price here.
         });
     });
     
@@ -1011,12 +978,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
                 
             case 3:
-                // Validate pricing
-                const priceAmount = document.getElementById('price-amount');
-                if (!priceAmount.value.trim() || parseFloat(priceAmount.value) <= 0) {
-                    isValid = false;
-                    errorFields.push('price-amount');
-                }
+                // Pricing step removed; skip validation here.
                 break;
                 
             // Add validation for other steps as needed
@@ -1119,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Pricing & Schedule
         document.getElementById('reviewPricingType').textContent = selectedPricingType.charAt(0).toUpperCase() + selectedPricingType.slice(1);
-        document.getElementById('reviewPriceAmount').textContent = '$' + (document.getElementById('price-amount').value || '0');
+        document.getElementById('reviewPriceAmount').textContent = 'Pricing available on request';
         
         const availableDays = Array.from(document.querySelectorAll('input[name="available_days[]"]:checked'))
             .map(cb => cb.value.charAt(0).toUpperCase() + cb.value.slice(1)).join(', ');

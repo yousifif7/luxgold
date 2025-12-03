@@ -4,7 +4,7 @@
             <button class="askroro-btn-close" onclick="closeModal('parentSignUpModal')">&times;</button>
                 <div class="askroro-modal-header">
                 <div class="askroro-avatar-box">
-                    <div class="askroro-avatar"><img src="{{ asset('assets/images/updated-logo.jpeg') }}" alt=""></div>
+                    <div class="askroro-avatar"><img src="{{ asset('assets/images/luxgold-trans.png') }}" alt=""></div>
                 </div>
                 <h2 class="askroro-modal-title">Customer Sign Up</h2>
                 <p class="askroro-modal-subtitle">Find trusted cleaning services for your home</p>

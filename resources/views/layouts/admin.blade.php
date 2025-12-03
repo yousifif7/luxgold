@@ -338,11 +338,11 @@
                                     </a>
                                 </li>
 
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('admin.events.index') }}">
                                         <i class="ti ti-calendar-event"></i><span>Events</span>
                                     </a>
-                                </li>
+                                </li> --}}
 
                                 <li>
                                     <a href="{{ route('admin.reviews.index') }}">
@@ -364,7 +364,7 @@
 
                                 <li>
                                     <a href="{{ route('admin.hire-requests.index') }}">
-                                        <i class="ti ti-user-plus"></i><span>Hiring Requests</span>
+                                        <i class="ti ti-user-plus"></i><span>Cleaning Requests</span>
                                     </a>
                                 </li>
 
@@ -373,19 +373,19 @@
                                         <i class="ti ti-headset"></i><span>Support</span>
                                     </a>
                                 </li>
-
+{{-- 
                                 <li>
                                     <a href="{{ route('admin.promotions.index') }}" class="nav-link">
                                         <i class="ti ti-star"></i> <span>Promotions</span>
                                     </a>
-                                </li>
-
+                                </li> --}}
+{{-- 
                                 <li>
                                     <a href="{{ route('admin.pricing.index') }}">
                                         <i class="ti ti-currency-dollar"></i>
                                         <span>Monetization & Pricing</span>
                                     </a>
-                                </li>
+                                </li> --}}
 
                                 <li>
                                     <a href="{{ route('admin.analytics') }}">
@@ -394,12 +394,12 @@
                                     </a>
                                 </li>
 
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('admin.categories.index') }}">
                                         <i class="ti ti-category"></i>
                                         <span>Categories</span>
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
                     </ul>

@@ -23,11 +23,11 @@ class DatabaseSeeder extends Seeder
             SpecialFeaturesSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            PlansTableSeeder::class,
             CategoriesTableSeeder::class,
             CitiesTableSeeder::class,
             CleanerSeeder::class,
             ContentManagementSeeder::class,
+            ResourcesTableSeeder::class,
         ]);
     }
 }
