@@ -10,7 +10,7 @@
                 <h1 class="hero-title">
                 <span class="highlight-orange">{{ $heroContent->title_part1 ?? 'Premium' }}</span><br>
                 <span class="highlight-green">{{ $heroContent->title_part2 ?? 'cleaning services' }}</span></h1>
-                <p class="mt-3" style="color: rgb(100, 116, 139);font-weight: 400;">
+                <p class="mt-3" style="color: rgba(18,18,18,0.65);font-weight: 400;">
                     {{ $heroContent->description ?? 'Find and compare vetted cleaners near you. Book one-time or recurring cleanings with transparent pricing and verified reviews.' }}
                 </p>
                 @else
@@ -19,7 +19,7 @@
                 <span class="highlight-green">cleaning services</span><br>
                 <span class="highlight-green">trusted professionals for homes & businesses.</span>
                 </h1>
-                <p class="mt-3" style="color: rgb(100, 116, 139);font-weight: 400;">
+                <p class="mt-3" style="color: rgba(18,18,18,0.65);font-weight: 400;">
                     Find and compare vetted cleaners near you. Book one-time or recurring cleanings with transparent pricing and verified reviews.
                 </p>
                 @endif
@@ -60,18 +60,18 @@
                     </form>
                 </div>
                 <!-- Stats -->
-                <div class="d-flex gap-4 mt-4 stats-box">
+                    <div class="d-flex gap-4 mt-4 stats-box">
                     <div style="background-color: #fff">
-                        <h4 style="color: #337d7c">{{ $totalProvider ?? '500' }}+</h4>
-                        <p style="color: #337d7c">Cleaners</p>
+                        <h4 style="color: var(--brand-gold-200)">{{ $totalProvider ?? '500' }}+</h4>
+                        <p style="color: var(--brand-gold-200)">Cleaners</p>
                     </div>
                     <div style="background-color: #fff">
-                        <h4 style="color: #337d7c">{{ $avgRating??0 }}</h4>
-                        <p style="color: #337d7c">Avg Rating</p>
+                        <h4 style="color: var(--brand-gold-200)">{{ $avgRating??0 }}</h4>
+                        <p style="color: var(--brand-gold-200)">Avg Rating</p>
                     </div>
                     <div style="background-color: #fff">
-                        <h4 style="color: #337d7c">{{ $heroContent->support_text ?? '24/7' }}</h4>
-                        <p style="color: #337d7c">Support</p>
+                        <h4 style="color: var(--brand-gold-200)">{{ $heroContent->support_text ?? '24/7' }}</h4>
+                        <p style="color: var(--brand-gold-200)">Support</p>
                     </div>
                 </div>
             </div>
@@ -125,18 +125,18 @@
 @include('partials.hire_request_modal')
 
     @push('styles')
-<style>
+    <style>
     .eircode-hero-box .input-group {
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 18px 40px rgba(16,24,40,0.12);
         background: linear-gradient(180deg, #ffffff 0%, #f7fbfa 100%);
-        border: 1px solid rgba(51,125,124,0.08);
+        border: 1px solid rgba(212,175,55,0.12); /* subtle gold ring */
     }
     .eircode-hero-box .input-group-text {
         background: transparent;
         border: none;
-        color: #2c6b68;
+        color: var(--brand-dark);
         padding: 0 1rem;
         font-size: 1.1rem;
     }
@@ -145,20 +145,20 @@
         padding: 1.25rem 1rem;
         font-size: 1.05rem;
         background: transparent;
-        color: #0f1720;
+        color: var(--brand-dark);
     }
     .eircode-hero-box .form-control::placeholder { color: #94a3b8; }
     .eircode-hero-box .btn {
         padding: 0.85rem 1.6rem;
         font-weight:700;
-        background: linear-gradient(90deg,#0f8f84,#0b6c66);
-        border: none;
-        color: #fff;
+        background: var(--brand-gold-200);
+        border: 2px solid rgba(18,18,18,0.06);
+        color: var(--brand-dark);
         border-radius: 0; /* keep sharp to match group */
     }
     /* Focus state */
     .eircode-hero-box .form-control:focus { outline: none; box-shadow: none; }
-    .eircode-hero-box:focus-within { box-shadow: 0 22px 60px rgba(15,143,132,0.12); border-color: rgba(15,143,132,0.18); }
+    .eircode-hero-box:focus-within { box-shadow: 0 22px 60px rgba(212,175,55,0.12); border-color: rgba(212,175,55,0.18); }
 
     @media (max-width: 767px) {
         .eircode-hero-box .input-group { flex-direction: row; }
@@ -289,10 +289,34 @@ document.getElementById('ctaQuoteBtn')?.addEventListener('click', function(){
     })
     .catch(err=>{ console.error(err); if(errorEl){ errorEl.textContent='Error checking Eircode'; errorEl.style.display='block'; } else alert('Error checking Eircode'); });
 });
+
+// Open hire request modal and prefill with selected city (from city cards)
+function openHireModalWithCity(cityName){
+    try{
+        const zipEl = document.getElementById('hr_zip_code');
+        const cityEls = [
+            document.getElementById('hr_city'),
+            document.getElementById('hr_location'),
+            document.getElementById('hr_address')
+        ];
+        if(zipEl) zipEl.value = cityName;
+        for(const el of cityEls){ if(el) el.value = cityName; }
+
+        // Prefill email/name if available
+        const email = '{{ Auth::check() ? Auth::user()->email : '' }}';
+        const name = '{{ Auth::check() ? Auth::user()->first_name : '' }}';
+        if(email){ if(document.getElementById('hr_email')) document.getElementById('hr_email').value = email; if(document.getElementById('hr_checkout_email')) document.getElementById('hr_checkout_email').value = email; }
+        if(name){ if(document.getElementById('hr_name')) document.getElementById('hr_name').value = name; if(document.getElementById('hr_checkout_name')) document.getElementById('hr_checkout_name').value = name; }
+
+        const modalEl = document.getElementById('hireRequestModal');
+        if(modalEl){ const modal = new bootstrap.Modal(modalEl); modal.show(); }
+        else { console.warn('hireRequestModal not found'); }
+    }catch(err){ console.error('openHireModalWithCity error', err); }
+}
 </script>
 @endpush
 
-<section class="second-section ">
+<section class="second-section">
     <div class="container">
         
     <h3>Meet our best Cleaners</h3>
@@ -311,7 +335,7 @@ document.getElementById('ctaQuoteBtn')?.addEventListener('click', function(){
         
         // Parse service categories if available
         $serviceCategories = $provider->service_categories ?? [];
-        $firstCategory = !empty($serviceCategories) ? $serviceCategories[0] : ($category ?: 'Provider');
+        $firstCategory = !empty($serviceCategories) ? $serviceCategories[0] : ($category ?: 'Cleaner');
         
         // Parse special features for tags (diversity badges removed from public lists)
         $specialFeatures = $provider->special_features ?? [];
@@ -523,7 +547,7 @@ document.getElementById('ctaQuoteBtn')?.addEventListener('click', function(){
                             </div>
                             <div class="flex-grow-1">
                                 <h5 class="mb-0">{{ $city->name }}</h5>
-                                <small class="text-muted">{{ $city->state }}</small>
+                                {{-- <small class="text-muted">{{ $city->state }}</small> --}}
                             </div>
                         </div>
 
@@ -537,7 +561,7 @@ document.getElementById('ctaQuoteBtn')?.addEventListener('click', function(){
 
                             <div class="d-flex gap-2">
                                 <a href="{{ route('website.find-cleaner', ['city' => $city->name]) }}" class="btn btn-sm btn-outline-primary">View Cleaners</a>
-                                <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('heroEircodeInput').value='';openSignUpModal();">Request Service</button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="openHireModalWithCity({{ json_encode($city->name) }})">Request Service</button>
                             </div>
                         </div>
                     </div>

@@ -15,10 +15,10 @@
     <meta name="author" content="dreamstechnologies">    
 
       <!-- Favicon -->
-      <link rel="shortcut icon" href="assets/images/luxgold-trans.png">
+      <link rel="shortcut icon" href="assets/images/luxgold_favicon.png">
 
       <!-- Apple Icon -->
-      <link rel="apple-touch-icon" href="assets/images/luxgold-trans.png">
+      <link rel="apple-touch-icon" href="assets/images/luxgold_favicon.png">
   
       <!-- Theme Config Js -->
       <script src="assets/js/theme-script.js" type="04dbc81d7559b6c889b410c1-text/javascript"></script>

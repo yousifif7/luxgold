@@ -5,13 +5,30 @@ body {
 }
 
 :root{
-  --primary: #0074C8;
-  --primary-rgb: 0,116,200;
+  /* Brand palette (extracted from provided logo) */
+  --brand-gold-100: #FFD54A;
+  --brand-gold-200: #D4AF37;
+  --brand-gold-300: #B8860B;
+
+  /* primary maps to the site's main accent used throughout (keeps existing usage) */
+  --primary: var(--brand-gold-200);
+  --primary-rgb: 212,175,55;
   --accent: var(--primary);
   --muted: rgba(var(--primary-rgb), 0.7);
-  --brand-dark: var(--primary);
-  --card-bg: #ffffff;
-  --text-color: var(--primary);
+
+  /* dark text / brand neutral */
+  --brand-dark: #121212;
+  --text-color: #222222;
+
+  /* surfaces */
+  --bg: #FAF9F7;
+  --card-bg: #FFFFFF;
+  --white: #FFFFFF;
+
+  /* utilities */
+  --gradient-gold: linear-gradient(90deg, var(--brand-gold-100) 0%, var(--brand-gold-200) 50%, var(--brand-gold-300) 100%);
+  --shadow-soft: 0 6px 18px rgba(18,18,18,0.08);
+  --radius: 8px;
 }
 .rating-stars{
   display: flex !important;
@@ -98,6 +115,9 @@ body {
     #0000 100%
   ); */
 }
+.hero-section {
+  color: var(--brand-dark);
+}
 .hero-title {
   font-size: 44px;
   font-family: "Roboto", sans-serif;
@@ -106,7 +126,7 @@ body {
 .hero-title .highlight-orange,
 .hero-title .highlight-blue,
 .hero-title .highlight-green {
-  color: var(--primary);
+  color: var(--brand-dark);
 }
 .search-box {
   background: var(--card-bg);
@@ -295,22 +315,24 @@ body {
   color: var(--primary);
 }
 .search-box .search-provider_btn {
-  background-color: var(--primary);
+  background-color: var(--brand-gold-200);
   padding: 0 14px;
   min-height: 44px;
   font-size: 14px;
   border-radius: 14.5px;
-  border: none;
+  border: 2px solid rgba(18,18,18,0.06);
   width: 100%;
-  color: #fff;
+  color: var(--brand-dark);
   font-weight: 600;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 18px;
   outline: none;
-  transition: all 0.1s ease-in-out;
+  transition: transform 0.12s ease, background-color 0.12s ease, color 0.12s ease;
   margin-top: 6px;
 }
 .search-box .search-provider_btn:hover {
-  scale: 1.03;
+  transform: translateY(-2px) scale(1.02);
+  background-color: var(--brand-gold-300);
+  color: var(--white);
 }
 .hero-section .circle {
   opacity: 0.5;
