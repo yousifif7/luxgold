@@ -229,7 +229,7 @@
                             
                             // Parse service categories if available
                             $serviceCategories = $provider->service_categories ?? [];
-                            $firstCategory = !empty($serviceCategories) ? $serviceCategories[0] : ($category ?: 'Provider');
+                            $firstCategory = !empty($serviceCategories) ? $serviceCategories[0] : ($category ?: 'Cleaner');
                             
                             // Parse special features for tags (diversity badges removed from public lists)
                             $specialFeatures = $provider->special_features ??  [];

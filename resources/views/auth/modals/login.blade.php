@@ -157,9 +157,9 @@ function closeModal(modalId) {
 }
 
 .alert-success {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    border: 1px solid #c8e6c9;
+    background-color: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(var(--primary-rgb), 0.3);
 }
 
 .alert-error {

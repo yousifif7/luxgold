@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
     @stack('styles')
     <style>
-      body { background: #f9fafc; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto; }
+      body { background: var(--bg); font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto; }
 
       /* Auth card styles copied from the static theme to match screenshots */
       .login-card-longkeywordclass,
       .register-card-longkeywordclass {
-        background: #fff;
+        background: var(--white);
         border-radius: 16px;
         padding: 40px 35px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -29,14 +29,14 @@
         font-weight: 700;
         text-align: center;
         margin-bottom: 25px;
-        color: #2a2d34;
+        color: var(--text-color);
       }
 
       .login-form-label-longkeywordclass,
       .register-form-label-longkeywordclass {
         font-weight: 600;
         margin-bottom: 6px;
-        color: #2a2d34;
+        color: var(--text-color);
       }
 
       .login-form-control-longkeywordclass,
@@ -44,13 +44,13 @@
         border-radius: 10px;
         padding: 12px 14px;
         font-size: 0.95rem;
-        border: 1px solid #ddd;
+        border: 1px solid rgba(var(--primary-rgb), 0.2);
       }
 
       .login-form-control-longkeywordclass:focus,
       .register-form-control-longkeywordclass:focus {
-        border-color: #337d7c;
-        box-shadow: 0 0 0 0.2rem rgba(51,125,124,0.15);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.15);
       }
 
       .login-forgot-password-longkeywordclass {
@@ -58,7 +58,7 @@
         text-align: right;
         margin-top: 8px;
         font-size: 0.9rem;
-        color: #337d7c;
+        color: var(--primary);
         text-decoration: none;
       }
 
@@ -66,25 +66,25 @@
 
       .login-btn-longkeywordclass,
       .register-btn-longkeywordclass {
-        background: #337d7c;
+        background: var(--primary);
         border: none;
         padding: 12px;
         width: 100%;
         border-radius: 10px;
         font-size: 1rem;
         font-weight: 600;
-        color: #fff;
+        color: var(--white);
         transition: background 0.3s;
         margin-top: 20px;
       }
 
       .login-btn-longkeywordclass:hover,
-      .register-btn-longkeywordclass:hover { background: #285e5d; }
+      .register-btn-longkeywordclass:hover { background: var(--brand-gold-300); }
 
       .login-bottom-text-longkeywordclass,
-      .register-bottom-text-longkeywordclass { margin-top: 20px; text-align: center; font-size: 0.95rem; color: #444; }
+      .register-bottom-text-longkeywordclass { margin-top: 20px; text-align: center; font-size: 0.95rem; color: var(--text-color); }
       .login-bottom-text-longkeywordclass a,
-      .register-bottom-text-longkeywordclass a { color: #337d7c; font-weight: 600; text-decoration: none; }
+      .register-bottom-text-longkeywordclass a { color: var(--primary); font-weight: 600; text-decoration: none; }
       .login-bottom-text-longkeywordclass a:hover,
       .register-bottom-text-longkeywordclass a:hover { text-decoration: underline; }
 

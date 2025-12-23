@@ -303,9 +303,6 @@
                                 : 'Provider';
                         @endphp
 
-                        @if ($primaryCategoryName)
-                            <div class="school-information-badge-category">{{ $primaryCategoryName }}</div>
-                        @endif
 
                         <h2 class="school-information-name-heading">{{ $provider->name }}</h2>
 

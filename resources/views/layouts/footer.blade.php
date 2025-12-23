@@ -54,8 +54,6 @@
     <!-- Bottom Bar -->
     <div class="askroro-footer-bottom text-center mt-4 pt-3 border-top border-secondary">
       <p class="mb-1">©2026 luxGold. All rights reserved.</p>
-      <p class="mb-0">Operating in Ireland — serving Dublin, Cork, Galway, Limerick and surrounding areas.</p>
-      <p class="mb-0">Powered by Privy Consulting</p>
     </div>
   </div>
 </footer>

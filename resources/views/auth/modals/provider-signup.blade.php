@@ -233,9 +233,9 @@
 }
 
 .serviceflow-billing-toggle .serviceflow-toggle-option.active {
-    background: #3b82f6;
-    color: white;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: 0 2px 4px rgba(var(--primary-rgb), 0.3);
 }
 
 .serviceflow-price-option {
@@ -254,19 +254,19 @@
 
 .serviceflow-price-savings {
     font-size: 12px;
-    color: #10b981;
+    color: var(--primary);
     font-weight: 600;
     margin-top: 4px;
 }
 
 .serviceflow-pricing-card.selected {
-    border-color: #3b82f6;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.15);
 }
 
 .serviceflow-btn-plan.selected {
-    background: #3b82f6;
-    color: white;
+    background: var(--primary);
+    color: var(--white);
 }
 
 /* Center these modals and make dialog scrollable when tall */
@@ -275,7 +275,7 @@
     position: fixed;
     inset: 0;
     display: none; /* toggled by JS */
-    background: rgba(17,24,39,0.6);
+    background: rgba(var(--brand-dark), 0.6);
     z-index: 9999;
     align-items: center;
     justify-content: center;
@@ -303,7 +303,7 @@
     align-items: center;
     justify-content: center;
     padding: 24px;
-    background: rgba(17,24,39,0.6);
+    background: rgba(var(--brand-dark), 0.6);
     z-index: 9998;
 }
 </style>

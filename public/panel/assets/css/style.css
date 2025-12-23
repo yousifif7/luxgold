@@ -22,7 +22,7 @@ Author URL: https://themeforest.net/user/dreamstechnologies
     --topbar-item-color: #111827;
     --topbar-item-hover-color: var(--primary);
     --topbar-item-hover-bg: #F3F4F6;
-    --menu-bg: var(--dark);
+    --menu-bg: #2D3748;
     --menu-title-color: var(--light);
     --menu-item-heading: var(--light);
     --menu-item-color: var(--white);
@@ -387,7 +387,7 @@ Author URL: https://themeforest.net/user/dreamstechnologies
     --topbar-item-bg: rgba(255, 255, 255, 0.1);
 }
 [data-bs-theme=light] {
-    --primary: rgb(51, 125, 124);
+    --primary: #D4AF37;
     --secondary: #A83000;
     --success: #04BD6C;
     --info: #155EEF;
@@ -400,7 +400,7 @@ Author URL: https://themeforest.net/user/dreamstechnologies
     --teal: #0E9384;
     --warning: #FDAF22;
     --light: #E4EBF1;
-    --dark: #0B0D0E;
+    --dark: #1A202C;
     --black: #000;
     --white: #fff;
     --gray-100: #C9CBCF;
@@ -429,7 +429,7 @@ Author URL: https://themeforest.net/user/dreamstechnologies
     --info-hover: #1152D3;
     --orange-hover: #C54512;
     --pink-hover: #C31F7E;
-    --primary-hover: #025170;
+    --primary-hover: #B8860B;
     --purple-hover: #700070;
     --secondary-hover: #942900;
     --success-hover: #03A65E;
@@ -443,20 +443,20 @@ Author URL: https://themeforest.net/user/dreamstechnologies
     --light-transparent: #FDFDFE;
     --orange-transparent: #FFF0EB;
     --pink-transparent: #FFEEF5;
-    --primary-transparent: #E9F0F3;
+    --primary-transparent: #FFF9E6;
     --purple-transparent: #F5EAF4;
     --secondary-transparent: #F9ECE9;
     --success-transparent: #EEF9F1;
     --teal-transparent: #ECF5F3;
     --warning-transparent: #FFF8EF;
-    --primary-rgb: 2, 93, 128;
+    --primary-rgb: 212, 175, 55;
     --body-color: #4E5561;
     --body-color-rgb: 107, 114, 128;
     --body-bg: #fff;
     --body-bg-rgb: 255, 255, 255;
     --secondary-bg: #fff;
     --heading-color: #111827;
-    --link-hover-color: rgb(51, 125, 124);
+    --link-hover-color: #D4AF37;
     --border-color: #e5e7eb;
     --box-shadow: 0px 4px 14px 0px rgba(238, 238, 238, 0.25);
     --box-shadow-sm: 0 0.125rem 0.25rem rgba(107, 114, 128, 0.15);
