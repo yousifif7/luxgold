@@ -135,17 +135,23 @@ $query = Event::query();
     {
         $query = Provider::query();
 
-        // Search by business name or description
+        // Search by name, city, or service description
         if ($request->has('search') && $request->search) {
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
-                $q->where('business_name', 'like', "%{$searchTerm}%")
-                    ->orWhere('service_description', 'like', "%{$searchTerm}%")
-                    ->orWhere('contact_person', 'like', "%{$searchTerm}%");
+                $q->where('name', 'like', "%{$searchTerm}%")
+                    ->orWhere('first_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('last_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('city', 'like', "%{$searchTerm}%")
+                    ->orWhere('physical_address', 'like', "%{$searchTerm}%")
+                    ->orWhere('service_description', 'like', "%{$searchTerm}%");
             });
         }
 
-        // Filter by location
+        // Filter by city/location
+        if ($request->has('city') && $request->city) {
+            $query->where('city', 'like', "%{$request->city}%");
+        }
         
         // Filter by category
         if ($request->has('category') && $request->category != 'all') {

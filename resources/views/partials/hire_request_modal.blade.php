@@ -1,10 +1,336 @@
 <!-- Generic Hire Request Modal (used on home page) -->
-<div class="modal fade" id="hireRequestModal" tabindex="-1" aria-labelledby="hireRequestModalLabel" aria-hidden="true">
+<style>
+/* Hire Request Modal Styling */
+.hire-modal .modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.hire-modal .modal-header {
+    background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+    color: white;
+    padding: 2rem;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.hire-modal .modal-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+}
+
+.hire-modal .modal-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+.hire-modal .btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.hire-modal .btn-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Step Indicators */
+.hire-step-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.hr-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #dee2e6;
+    background: white;
+    border-radius: 50px;
+    font-weight: 600;
+    color: #6c757d;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.hr-step-indicator .step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.hr-step-indicator.active {
+    border-color: #D4AF37;
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF5D6 100%);
+    color: #B8860B;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212,175,55,0.2);
+}
+
+.hr-step-indicator.active .step-number {
+    background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+    color: white;
+}
+
+/* Type Selection Cards */
+.hr-type-option {
+    padding: 1.5rem;
+    border: 2px solid #dee2e6;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    height: 100%;
+}
+
+.hr-type-option:hover {
+    border-color: #D4AF37;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(212,175,55,0.15);
+}
+
+.hr-type-option.border-primary {
+    border-color: #D4AF37 !important;
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF5D6 100%);
+    box-shadow: 0 8px 20px rgba(212,175,55,0.25);
+}
+
+.hr-type-option i {
+    font-size: 2.5rem;
+    color: #D4AF37;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.hr-type-option h6 {
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.hr-type-option p {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* Form Controls */
+.hire-modal .form-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.hire-modal .form-control,
+.hire-modal .form-select {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.hire-modal .form-control:focus,
+.hire-modal .form-select:focus {
+    border-color: #D4AF37;
+    box-shadow: 0 0 0 0.2rem rgba(212,175,55,0.15);
+    outline: none;
+}
+
+.hire-modal textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Service List Items */
+#hr_servicesList .border {
+    border: 2px solid #e9ecef !important;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+#hr_servicesList .border:hover {
+    border-color: #D4AF37 !important;
+    box-shadow: 0 4px 12px rgba(212,175,55,0.1);
+}
+
+#hr_servicesList .fw-bold {
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+#hr_servicesList .text-muted {
+    color: #6c757d;
+}
+
+#hr_servicesList .form-check-input {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid #dee2e6;
+    cursor: pointer;
+}
+
+#hr_servicesList .form-check-input:checked {
+    background-color: #D4AF37;
+    border-color: #D4AF37;
+}
+
+/* Order Summary */
+#hr_orderSummary {
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF5D6 100%);
+    border: 2px solid #D4AF37 !important;
+    border-radius: 15px;
+}
+
+#hr_orderSummary .fw-bold {
+    color: #B8860B;
+    font-size: 1.125rem;
+}
+
+/* Modal Footer */
+.hire-modal .modal-footer {
+    padding: 1.5rem 2rem;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.hire-modal .btn {
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.hire-modal .btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.hire-modal .btn-secondary:hover {
+    background: #5a6268;
+    transform: translateX(-5px);
+}
+
+.hire-modal .btn-outline-secondary {
+    border: 2px solid #D4AF37;
+    color: #B8860B;
+    background: white;
+}
+
+.hire-modal .btn-outline-secondary:hover {
+    background: #D4AF37;
+    color: white;
+    transform: translateX(5px);
+}
+
+.hire-modal .btn-primary {
+    background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(212,175,55,0.3);
+}
+
+.hire-modal .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+}
+
+.hire-modal .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Section Headers */
+.hire-modal h6 {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #D4AF37;
+    display: inline-block;
+}
+
+/* Modal Body */
+.hire-modal .modal-body {
+    padding: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hire-step-indicators {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .hr-step-indicator {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .hr-step-indicator .step-text {
+        display: none;
+    }
+    
+    .hire-modal .modal-title {
+        font-size: 1.5rem;
+    }
+    
+    .hire-modal .modal-body {
+        padding: 1.5rem;
+    }
+}
+</style>
+
+<div class="modal fade hire-modal" id="hireRequestModal" tabindex="-1" aria-labelledby="hireRequestModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="hireRequestModalLabel">Request a Cleaner</h5>
+                <h5 class="modal-title" id="hireRequestModalLabel">
+                    <i class="ti ti-sparkles me-2"></i>Request a Cleaner
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- Step Indicators -->
+            <div class="hire-step-indicators">
+                <button type="button" class="hr-step-indicator" data-step="0">
+                    <span class="step-number">1</span>
+                    <span class="step-text">Choose Type</span>
+                </button>
+                <button type="button" class="hr-step-indicator active" data-step="1">
+                    <span class="step-number">2</span>
+                    <span class="step-text">Services & Schedule</span>
+                </button>
+                <button type="button" class="hr-step-indicator" data-step="2">
+                    <span class="step-number">3</span>
+                    <span class="step-text">Checkout</span>
+                </button>
             </div>
             <form id="hireRequestForm">
                 @csrf
@@ -16,12 +342,6 @@
 
                 <div class="modal-body">
                     <div class="inquiry-steps">
-                        <div class="d-flex justify-content-center mb-3 gap-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary hr-step-indicator active" data-step="0">1 Choose Type</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary hr-step-indicator" data-step="1">2 Services & Schedule</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary hr-step-indicator" data-step="2">3 Checkout</button>
-                        </div>
-
                         <!-- Step 0 -->
                         <div class="hr-step" id="hr-step-0">
                             <h5 class="mb-3">Choose Cleaning Type</h5>

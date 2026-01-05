@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Welcome to luxGold - Find Trusted Cleaning Services')
 @section('content')
-<section class="hero-section">
+<section id="hero-section" class="hero-section" style="background: linear-gradient(135deg, rgba(250, 249, 247, 0.97) 0%, rgba(255, 255, 255, 0.94) 50%, rgba(250, 249, 247, 0.96) 100%), url('{{ asset('images/luxgold-16.jpeg') }}'); background-size: cover; background-position: center; background-attachment: fixed; position: relative;">
     <div class="container">
         <div class="row align-items-center">
             <!-- Left Content -->
@@ -25,13 +25,26 @@
                 @endif
                 <!-- Eircode quick box to start a general hire request -->
                 <div class="mt-4">
-                    <div class="eircode-hero-box" style="max-width:720px;">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-                            <input id="heroEircodeInput" class="form-control" placeholder="Enter your Eircode here">
-                            <button id="heroQuoteBtn" type="button" class="btn btn-success">QUOTE ME</button>
+                    <div class="quote-request-box">
+                        <div class="quote-box-header mb-3">
+                            <h5 class="quote-title mb-1">Get Your Free Quote</h5>
+                            <p class="quote-subtitle mb-0">Enter your Eircode and we'll connect you with vetted cleaners</p>
                         </div>
-                        <div id="heroEircodeError" class="text-danger small mt-2" style="display:none;"></div>
+                        <div class="input-group-modern">
+                            <div class="input-icon">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <input id="heroEircodeInput" class="form-control-modern" placeholder="Enter your Eircode (e.g., D02 XY45)">
+                            <button id="heroQuoteBtn" type="button" class="btn-modern-primary">
+                                <i class="bi bi-lightning-charge-fill me-2"></i>Get Quote
+                            </button>
+                        </div>
+                        <div id="heroEircodeError" class="error-message mt-2" style="display:none;"></div>
+                        <div class="trust-badges mt-3">
+                            <span class="trust-badge"><i class="bi bi-shield-check me-1"></i>Vetted Cleaners</span>
+                            <span class="trust-badge"><i class="bi bi-clock me-1"></i>Quick Response</span>
+                            <span class="trust-badge"><i class="bi bi-star-fill me-1"></i>Top Rated</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Search Box -->
@@ -75,48 +88,19 @@
                     </div>
                 </div>
             </div>
-            <!-- Right Icons -->
+            <!-- Right Images -->
             <div class="col-lg-6 d-flex justify-content-center mt-5 mt-lg-0">
-               
-
-                    {{-- <img src="{{ asset('assets/images/cleaning-index.jpg') }}" style="width:100%; height:600px;" alt="Cleaning service"> --}}
-                    <div class="icon-grid-cleaning d-flex gap-3 flex-wrap justify-content-center">
-                        <div class="icon-card teal">
-                            <i class="bi bi-broom"></i>
-                            <div class="icon-label">General Clean</div>
-                        </div>
-
-                        <div class="icon-card green">
-                            <i class="bi bi-brush"></i>
-                            <div class="icon-label">Deep Clean</div>
-                        </div>
-
-                        <div class="icon-card blue">
-                            <i class="bi bi-droplet"></i>
-                            <div class="icon-label">Sanitise</div>
-                        </div>
-
-                        <div class="icon-card yellow">
-                            <i class="bi bi-stars"></i>
-                            <div class="icon-label">Detailing</div>
-                        </div>
-
-                        <div class="icon-card orange">
-                            <i class="bi bi-speedometer2"></i>
-                            <div class="icon-label">Same-day</div>
-                        </div>
-
-                        <div class="icon-card purple">
-                            <i class="bi bi-shield-check"></i>
-                            <div class="icon-label">Trusted</div>
-                        </div>
-
-                        <div class="icon-card red">
-                            <i class="bi bi-award"></i>
-                            <div class="icon-label">Top Rated</div>
-                        </div>
+                <div class="hero-images-grid">
+                    <div class="hero-img-item hero-img-main">
+                        <img src="{{ asset('images/luxgold-02.jpeg') }}" alt="Professional Cleaning Service">
                     </div>
-                
+                    <div class="hero-img-item hero-img-secondary">
+                        <img src="{{ asset('images/luxgold-03.jpeg') }}" alt="Deep Cleaning">
+                    </div>
+                    <div class="hero-img-item hero-img-secondary">
+                        <img src="{{ asset('images/luxgold-04.jpeg') }}" alt="Home Cleaning">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -126,6 +110,310 @@
 
     @push('styles')
     <style>
+    /* Quote Request Box - Hero Section */
+    .quote-request-box {
+        max-width: 720px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(250,249,247,0.95) 100%);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(212,175,55,0.15), 0 0 0 1px rgba(212,175,55,0.1);
+        border: 2px solid rgba(212,175,55,0.2);
+        backdrop-filter: blur(10px);
+    }
+    .quote-box-header {
+        text-align: center;
+    }
+    .quote-title {
+        color: var(--brand-dark);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin: 0;
+    }
+    .quote-subtitle {
+        color: var(--text-color);
+        opacity: 0.75;
+        font-size: 0.95rem;
+    }
+    .input-group-modern {
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(18,18,18,0.08);
+        overflow: hidden;
+        border: 2px solid rgba(212,175,55,0.15);
+        transition: all 0.3s ease;
+    }
+    .input-group-modern:focus-within {
+        border-color: var(--brand-gold-200);
+        box-shadow: 0 12px 32px rgba(212,175,55,0.25);
+        transform: translateY(-2px);
+    }
+    .input-icon {
+        padding: 0 1.25rem;
+        color: var(--brand-gold-200);
+        font-size: 1.3rem;
+        display: flex;
+        align-items: center;
+        background: rgba(212,175,55,0.08);
+    }
+    .form-control-modern {
+        flex: 1;
+        border: none;
+        padding: 1.25rem 1rem;
+        font-size: 1.05rem;
+        color: var(--brand-dark);
+        background: transparent;
+        outline: none;
+    }
+    .form-control-modern::placeholder {
+        color: #94a3b8;
+    }
+    .btn-modern-primary {
+        background: linear-gradient(135deg, var(--brand-gold-200), var(--brand-gold-300));
+        color: white;
+        border: none;
+        padding: 1.25rem 2rem;
+        font-weight: 700;
+        font-size: 1.05rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+    }
+    .btn-modern-primary:hover {
+        background: linear-gradient(135deg, var(--brand-gold-300), var(--brand-gold-200));
+        box-shadow: 0 8px 24px rgba(212,175,55,0.4);
+        transform: translateX(4px);
+    }
+    .error-message {
+        color: #dc2626;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        background: rgba(220,38,38,0.1);
+        border-radius: 8px;
+        border-left: 3px solid #dc2626;
+    }
+    .trust-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+    .trust-badge {
+        background: rgba(212,175,55,0.1);
+        color: var(--brand-gold-300);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+    }
+    .trust-badge i {
+        color: var(--brand-gold-200);
+    }
+
+    /* CTA Quote Box */
+    .cta-quote-box {
+        max-width: 800px;
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 24px 80px rgba(212,175,55,0.2);
+        border: 2px solid rgba(212,175,55,0.2);
+    }
+    .quote-box-header-cta {
+        text-align: center;
+    }
+    .quote-title-cta {
+        color: var(--brand-dark);
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .quote-title-cta i {
+        color: var(--brand-gold-200);
+    }
+    .quote-subtitle-cta {
+        color: var(--text-color);
+        opacity: 0.75;
+        font-size: 1rem;
+    }
+    .input-group-modern-cta {
+        display: flex;
+        align-items: center;
+        background: #FAF9F7;
+        border-radius: 14px;
+        box-shadow: 0 8px 24px rgba(18,18,18,0.08);
+        overflow: hidden;
+        border: 2px solid rgba(212,175,55,0.2);
+        transition: all 0.3s ease;
+    }
+    .input-group-modern-cta:focus-within {
+        border-color: var(--brand-gold-200);
+        box-shadow: 0 12px 40px rgba(212,175,55,0.3);
+        transform: translateY(-2px);
+    }
+    .input-icon-cta {
+        padding: 0 1.5rem;
+        color: var(--brand-gold-200);
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+        background: rgba(212,175,55,0.12);
+    }
+    .form-control-modern-cta {
+        flex: 1;
+        border: none;
+        padding: 1.4rem 1rem;
+        font-size: 1.1rem;
+        color: var(--brand-dark);
+        background: transparent;
+        outline: none;
+        font-weight: 500;
+    }
+    .form-control-modern-cta::placeholder {
+        color: #94a3b8;
+    }
+    .btn-modern-primary-cta {
+        background: linear-gradient(135deg, var(--brand-gold-200), var(--brand-gold-300));
+        color: white;
+        border: none;
+        padding: 1.4rem 2.5rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+    }
+    .btn-modern-primary-cta:hover {
+        background: linear-gradient(135deg, var(--brand-gold-300), #b8860b);
+        box-shadow: 0 8px 32px rgba(212,175,55,0.5);
+        transform: scale(1.02);
+    }
+    .error-message-cta {
+        color: #dc2626;
+        font-size: 0.95rem;
+        font-weight: 500;
+        padding: 0.75rem 1.25rem;
+        background: rgba(220,38,38,0.1);
+        border-radius: 10px;
+        border-left: 4px solid #dc2626;
+    }
+    .trust-badges-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+    .trust-badge-cta {
+        background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.08));
+        color: var(--brand-gold-300);
+        padding: 0.6rem 1.2rem;
+        border-radius: 24px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(212,175,55,0.2);
+    }
+    .trust-badge-cta i {
+        color: var(--brand-gold-200);
+    }
+
+    @media (max-width: 768px) {
+        .quote-request-box {
+            padding: 1.5rem;
+        }
+        .input-group-modern, .input-group-modern-cta {
+            flex-direction: column;
+        }
+        .input-icon, .input-icon-cta {
+            width: 100%;
+            padding: 1rem;
+            justify-content: center;
+        }
+        .form-control-modern, .form-control-modern-cta {
+            padding: 1rem;
+            text-align: center;
+        }
+        .btn-modern-primary, .btn-modern-primary-cta {
+            width: 100%;
+            justify-content: center;
+            padding: 1rem 2rem;
+        }
+        .cta-quote-box {
+            padding: 1.5rem;
+        }
+        .quote-title-cta {
+            font-size: 1.3rem;
+        }
+        .trust-badges, .trust-badges-cta {
+            justify-content: center;
+        }
+    }
+
+    /* Hero Images Grid */
+    .hero-images-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 240px 240px;
+        gap: 1.25rem;
+        width: 100%;
+        max-width: 550px;
+    }
+    .hero-img-item {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(18,18,18,0.12);
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+        position: relative;
+    }
+    .hero-img-item:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 50px rgba(212,175,55,0.25);
+        z-index: 2;
+    }
+    .hero-img-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    .hero-img-main {
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+    }
+    .hero-img-secondary {
+        grid-column: 2 / 3;
+    }
+    @media (max-width: 991px) {
+        .hero-images-grid {
+            grid-template-rows: 200px 200px;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+    }
+    @media (max-width: 576px) {
+        .hero-images-grid {
+            grid-template-columns: 1fr;
+            grid-template-rows: 250px 200px 200px;
+            gap: 1rem;
+        }
+        .hero-img-main, .hero-img-secondary {
+            grid-column: 1;
+            grid-row: auto;
+        }
+    }
+
     .eircode-hero-box .input-group {
         border-radius: 12px;
         overflow: hidden;
@@ -182,6 +470,76 @@
         height: 100%;
         object-fit: cover;
         display: block;
+    }
+
+    /* Gallery Section Styles */
+    .luxgold-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    .gallery-item {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(18,18,18,0.08);
+        transition: all 0.35s ease;
+        height: 320px;
+        width: 100%;
+    }
+    .gallery-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 48px rgba(212,175,55,0.25);
+        z-index: 10;
+    }
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease;
+    }
+    .gallery-item:hover img {
+        transform: scale(1.08);
+    }
+    .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(18,18,18,0.9) 0%, rgba(18,18,18,0.4) 70%, transparent 100%);
+        padding: 2rem 1.5rem 1.5rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+    }
+    .gallery-overlay h5 {
+        color: var(--brand-gold-200);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    @media (max-width: 992px) {
+        .luxgold-gallery {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+        .gallery-item {
+            height: 280px;
+        }
+    }
+    @media (max-width: 576px) {
+        .luxgold-gallery {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        .gallery-item {
+            height: 300px;
+        }
     }
 </style>
 @endpush
@@ -704,6 +1062,75 @@ function openHireModalWithCity(cityName){
     </div>
 </section>
 
+<!-- Professional Gallery Section -->
+<section class="gallery-section py-5" style="background: linear-gradient(180deg, #FAF9F7 0%, #FFFFFF 100%);">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h3>Our Premium Cleaning Services</h3>
+            <p class="tagline">Delivering excellence in every detail - see our professional cleaning in action</p>
+        </div>
+        <div class="luxgold-gallery">
+            <!-- Row 1 -->
+            <div class="gallery-item">
+                <img src="{{ asset('images/luxgold-19.jpeg') }}" alt="Professional Cleaning Service">
+                <div class="gallery-overlay">
+                    <h5>Professional Excellence</h5>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="{{ asset('images/luxgold-20.jpeg') }}" alt="Deep Cleaning">
+                <div class="gallery-overlay">
+                    <h5>Deep Cleaning</h5>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="{{ asset('images/luxgold-08.jpeg') }}" alt="Home Cleaning">
+                <div class="gallery-overlay">
+                    <h5>Kitchen Clean</h5>
+                </div>
+            </div>
+            <!-- Row 2 -->
+            <div class="gallery-item">
+                <img src="{{ asset('images/luxgold-16.jpeg') }}" alt="Office Cleaning">
+                <div class="gallery-overlay">
+                    <h5>Office Spaces</h5>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="{{ asset('images/luxgold-10.jpeg') }}" alt="Sanitization Service">
+                <div class="gallery-overlay">
+                    <h5>Sanitization</h5>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="{{ asset('images/luxgold-05.jpeg') }}" alt="Detail Cleaning">
+                <div class="gallery-overlay">
+                    <h5>Detail Work</h5>
+                </div>
+            </div>
+            <!-- Row 3 -->
+            <div class="gallery-item">
+                <img src="{{ asset('images/luxgold-07.jpeg') }}" alt="Kitchen Cleaning">
+                <div class="gallery-overlay">
+                    <h5>Home Care</h5>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="{{ asset('images/luxgold-13.jpeg') }}" alt="Bathroom Cleaning">
+                <div class="gallery-overlay">
+                    <h5>Bathroom Care</h5>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="{{ asset('images/luxgold-19.jpeg') }}" alt="Window Cleaning">
+                <div class="gallery-overlay">
+                    <h5>Windows</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Service Provider Section - Dynamic -->
 <section class="sixth-section">
     <div class="container">
@@ -818,16 +1245,28 @@ function openHireModalWithCity(cityName){
             Join thousands of customers who trust luxGold to connect with trusted cleaning professionals
             in their community.
         </p>
-            <div class="button-group d-flex flex-column flex-sm-row align-items-center gap-3">
-                <div class="eircode-hero-box" style="max-width:420px;">
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-                        <input id="ctaEircodeInput" class="form-control" placeholder="Enter your Eircode here">
-                        <button id="ctaQuoteBtn" type="button" class="btn btn-success">QUOTE ME</button>
-                    </div>
-                    <div id="ctaEircodeError" class="text-danger small mt-2" style="display:none;"></div>
-                </div>
+        <div class="cta-quote-box mx-auto">
+            <div class="quote-box-header-cta mb-3">
+                <h5 class="quote-title-cta mb-1"><i class="bi bi-star-fill me-2"></i>Request Your Free Quote</h5>
+                <p class="quote-subtitle-cta mb-0">Enter your Eircode and get matched with professional cleaners in minutes</p>
             </div>
+            <div class="input-group-modern-cta">
+                <div class="input-icon-cta">
+                    <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <input id="ctaEircodeInput" class="form-control-modern-cta" placeholder="Enter your Eircode (e.g., D02 XY45)">
+                <button id="ctaQuoteBtn" type="button" class="btn-modern-primary-cta">
+                    <i class="bi bi-lightning-charge-fill me-2"></i>Get Free Quote
+                </button>
+            </div>
+            <div id="ctaEircodeError" class="error-message-cta mt-2" style="display:none;"></div>
+            <div class="trust-badges-cta mt-3">
+                <span class="trust-badge-cta"><i class="bi bi-shield-check me-1"></i>100% Verified</span>
+                <span class="trust-badge-cta"><i class="bi bi-clock me-1"></i>Fast Booking</span>
+                <span class="trust-badge-cta"><i class="bi bi-star-fill me-1"></i>Highly Rated</span>
+                <span class="trust-badge-cta"><i class="bi bi-award me-1"></i>Satisfaction Guaranteed</span>
+            </div>
+        </div>
     </div>
 </section>
 <!-- Cookie Banner -->
