@@ -112,7 +112,7 @@
                         <p class="service-description">Professional oven cleaning using safe, eco-friendly degreasers with hand finishing for a spotless result.</p>
                         <div class="service-price">
                             <span class="price-label">Starting from</span>
-                            <span class="price-amount">€40<span class="price-unit">/oven</span></span>
+                            <span class="price-amount">€40<span class="price-unit">/hour</span></span>
                         </div>
                         <ul class="service-features">
                             <li><i class="bi bi-check-circle-fill"></i> Interior oven degrease</li>
@@ -139,7 +139,7 @@
                         <p class="service-description">Hot water extraction for carpets and rugs to effectively remove stains, odors, and allergens.</p>
                         <div class="service-price">
                             <span class="price-label">Starting from</span>
-                            <span class="price-amount">€30<span class="price-unit">/room</span></span>
+                            <span class="price-amount">€30<span class="price-unit">/hour</span></span>
                         </div>
                         <ul class="service-features">
                             <li><i class="bi bi-check-circle-fill"></i> Pre-treatment & stain removal</li>

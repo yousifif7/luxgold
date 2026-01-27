@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-      <img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="luxGold" class="me-2 rounded">
+      <img src="{{ asset('assets/images/luxgold-trans.png') }}" alt="luxGold" style="height:65px; width:130px;"class="me-2 rounded">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -10,6 +10,13 @@
 
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav gap-3">
+        <style>
+          .navbar-nav .nav-link {
+            font-size: 1.0rem !important;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+          }
+        </style>
         <li class="nav-item">
           <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
         </li>

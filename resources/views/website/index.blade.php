@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Welcome to luxGold - Find Trusted Cleaning Services')
 @section('content')
-<section id="hero-section" class="hero-section" style="background: linear-gradient(135deg, rgba(250, 249, 247, 0.97) 0%, rgba(255, 255, 255, 0.94) 50%, rgba(250, 249, 247, 0.96) 100%), url('{{ asset('images/luxgold-16.jpeg') }}'); background-size: cover; background-position: center; background-attachment: fixed; position: relative;">
+<section id="hero-section" class="hero-section">
     <div class="container">
         <div class="row align-items-center">
             <!-- Left Content -->
@@ -92,13 +92,13 @@
             <div class="col-lg-6 d-flex justify-content-center mt-5 mt-lg-0">
                 <div class="hero-images-grid">
                     <div class="hero-img-item hero-img-main">
-                        <img src="{{ asset('images/luxgold-02.jpeg') }}" alt="Professional Cleaning Service">
+                        <img src="{{ asset('images/luxgold-32.png') }}" alt="Professional Cleaning Service">
                     </div>
                     <div class="hero-img-item hero-img-secondary">
-                        <img src="{{ asset('images/luxgold-03.jpeg') }}" alt="Deep Cleaning">
+                        <img src="{{ asset('images/luxgold-10.jpeg') }}" alt="Deep Cleaning">
                     </div>
                     <div class="hero-img-item hero-img-secondary">
-                        <img src="{{ asset('images/luxgold-04.jpeg') }}" alt="Home Cleaning">
+                        <img src="{{ asset('images/luxgold-24.png') }}" alt="Home Cleaning">
                     </div>
                 </div>
             </div>
@@ -881,77 +881,77 @@ function openHireModalWithCity(cityName){
 <!-- Featured Providers Section (Keeping Static as requested) -->
 
 <!-- Cities Section - Dynamic -->
-<section class="forth-section py-5 bg-light">
-    <div class="container">
-        <div class="d-flex align-items-start justify-content-between mb-3">
-            <div>
-                <h3 class="mb-1">Now Serving These Cities</h3>
-                <p class="tagline mb-0">luxGold connects customers with trusted cleaning professionals across Ireland.</p>
-            </div>
-            <div class="text-end">
-                <a href="{{ route('website.locations') }}" class="btn btn-outline-secondary btn-sm">View all locations</a>
-            </div>
-        </div>
+<!--<section class="forth-section py-5 bg-light">-->
+<!--    <div class="container">-->
+<!--        <div class="d-flex align-items-start justify-content-between mb-3">-->
+<!--            <div>-->
+<!--                <h3 class="mb-1">Now Serving These Cities</h3>-->
+<!--                <p class="tagline mb-0">luxGold connects customers with trusted cleaning professionals across Ireland.</p>-->
+<!--            </div>-->
+<!--            <div class="text-end">-->
+<!--                <a href="{{ route('website.locations') }}" class="btn btn-outline-secondary btn-sm">View all locations</a>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        @if($cities->count() > 0)
-        <div class="row g-3">
-            @foreach($cities->where('is_coming_soon', false)->take(12) as $city)
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="me-3 city-icon-container">
-                                <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" class="city-icon">
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="mb-0">{{ $city->name }}</h5>
-                                {{-- <small class="text-muted">{{ $city->state }}</small> --}}
-                            </div>
-                        </div>
+<!--        @if($cities->count() > 0)-->
+<!--        <div class="row g-3">-->
+<!--            @foreach($cities->where('is_coming_soon', false)->take(12) as $city)-->
+<!--            <div class="col-lg-3 col-md-4 col-sm-6">-->
+<!--                <div class="card h-100 shadow-sm border-0">-->
+<!--                    <div class="card-body d-flex flex-column">-->
+<!--                        <div class="d-flex align-items-center mb-3">-->
+<!--                            <div class="me-3 city-icon-container">-->
+<!--                                <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" class="city-icon">-->
+<!--                            </div>-->
+<!--                            <div class="flex-grow-1">-->
+<!--                                <h5 class="mb-0">{{ $city->name }}</h5>-->
+<!--                                {{-- <small class="text-muted">{{ $city->state }}</small> --}}-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span class="badge bg-primary">{{ $city->cleaners_count ?? $city->totalCleaner() }} cleaners</span>
-                                </div>
-                                <div class="text-muted small">{{ $city->families_count ?? 0 }}+ customers</div>
-                            </div>
+<!--                        <div class="mt-auto">-->
+<!--                            <div class="d-flex justify-content-between align-items-center mb-2">-->
+<!--                                <div>-->
+<!--                                    <span class="badge bg-primary">{{ $city->cleaners_count ?? $city->totalCleaner() }} cleaners</span>-->
+<!--                                </div>-->
+<!--                                <div class="text-muted small">{{ $city->families_count ?? 0 }}+ customers</div>-->
+<!--                            </div>-->
 
-                            <div class="d-flex gap-2">
-                                <a href="{{ route('website.find-cleaner', ['city' => $city->name]) }}" class="btn btn-sm btn-outline-primary">View Cleaners</a>
-                                <button type="button" class="btn btn-sm btn-primary" onclick="openHireModalWithCity({{ json_encode($city->name) }})">Request Service</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-        @else
-        <div class="alert alert-secondary">No locations available yet. Please check back soon or contact us to request service in your area.</div>
-        @endif
+<!--                            <div class="d-flex gap-2">-->
+<!--                                <a href="{{ route('website.find-cleaner', ['city' => $city->name]) }}" class="btn btn-sm btn-outline-primary">View Cleaners</a>-->
+<!--                                <button type="button" class="btn btn-sm btn-primary" onclick="openHireModalWithCity({{ json_encode($city->name) }})">Request Service</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            @endforeach-->
+<!--        </div>-->
+<!--        @else-->
+<!--        <div class="alert alert-secondary">No locations available yet. Please check back soon or contact us to request service in your area.</div>-->
+<!--        @endif-->
 
-        @if($cities->where('is_coming_soon', true)->count() > 0)
-        <div class="mt-4">
-            <h6 class="mb-2">Launching Soon</h6>
-            <div class="row g-3">
-                @foreach($cities->where('is_coming_soon', true)->take(6) as $city)
-                <div class="col-md-3 col-sm-4">
-                    <div class="d-flex align-items-center gap-3 p-2 border rounded">
-                        <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" width="36" height="36">
-                        <div>
-                            <div class="fw-semibold">{{ $city->name }}</div>
-                            <div class="small text-muted">Launching soon</div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-        @endif
+<!--        @if($cities->where('is_coming_soon', true)->count() > 0)-->
+<!--        <div class="mt-4">-->
+<!--            <h6 class="mb-2">Launching Soon</h6>-->
+<!--            <div class="row g-3">-->
+<!--                @foreach($cities->where('is_coming_soon', true)->take(6) as $city)-->
+<!--                <div class="col-md-3 col-sm-4">-->
+<!--                    <div class="d-flex align-items-center gap-3 p-2 border rounded">-->
+<!--                        <img src="{{ $city->icon_url }}" alt="{{ $city->name }}" width="36" height="36">-->
+<!--                        <div>-->
+<!--                            <div class="fw-semibold">{{ $city->name }}</div>-->
+<!--                            <div class="small text-muted">Launching soon</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                @endforeach-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        @endif-->
 
-    </div>
-</section>
+<!--    </div>-->
+<!--</section>-->
 <!-- How It Works Section - Dynamic -->
 <section class="fifth-section" id="how-it-works-section">
     <div class="container">
@@ -1070,63 +1070,19 @@ function openHireModalWithCity(cityName){
             <p class="tagline">Delivering excellence in every detail - see our professional cleaning in action</p>
         </div>
         <div class="luxgold-gallery">
-            <!-- Row 1 -->
-            <div class="gallery-item">
-                <img src="{{ asset('images/luxgold-19.jpeg') }}" alt="Professional Cleaning Service">
-                <div class="gallery-overlay">
-                    <h5>Professional Excellence</h5>
+            @php
+                $allImages = range(21, 49);
+                shuffle($allImages);
+                $selectedImages = array_slice($allImages, 0, 12);
+            @endphp
+            @foreach ($selectedImages as $i)
+                <div class="gallery-item">
+                    <img src="{{ asset('images/luxgold-' . $i . '.png') }}" alt="LuxGold Cleaning Service {{ $i }}">
+                    <div class="gallery-overlay">
+                        <h5>LuxGold Service</h5>
+                    </div>
                 </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('images/luxgold-20.jpeg') }}" alt="Deep Cleaning">
-                <div class="gallery-overlay">
-                    <h5>Deep Cleaning</h5>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('images/luxgold-08.jpeg') }}" alt="Home Cleaning">
-                <div class="gallery-overlay">
-                    <h5>Kitchen Clean</h5>
-                </div>
-            </div>
-            <!-- Row 2 -->
-            <div class="gallery-item">
-                <img src="{{ asset('images/luxgold-16.jpeg') }}" alt="Office Cleaning">
-                <div class="gallery-overlay">
-                    <h5>Office Spaces</h5>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('images/luxgold-10.jpeg') }}" alt="Sanitization Service">
-                <div class="gallery-overlay">
-                    <h5>Sanitization</h5>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('images/luxgold-05.jpeg') }}" alt="Detail Cleaning">
-                <div class="gallery-overlay">
-                    <h5>Detail Work</h5>
-                </div>
-            </div>
-            <!-- Row 3 -->
-            <div class="gallery-item">
-                <img src="{{ asset('images/luxgold-07.jpeg') }}" alt="Kitchen Cleaning">
-                <div class="gallery-overlay">
-                    <h5>Home Care</h5>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('images/luxgold-13.jpeg') }}" alt="Bathroom Cleaning">
-                <div class="gallery-overlay">
-                    <h5>Bathroom Care</h5>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('images/luxgold-19.jpeg') }}" alt="Window Cleaning">
-                <div class="gallery-overlay">
-                    <h5>Windows</h5>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>

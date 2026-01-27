@@ -9,8 +9,12 @@
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h5 class="mb-0">Ticket #{{ $ticket->id }} - {{ $ticket->subject }}</h5>
                 <div>
-                    <button class="btn btn-sm btn-outline-success btn-change-status" data-id="{{ $ticket->id }}" data-status="in_progress">Mark In Progress</button>
-                    <button class="btn btn-sm btn-outline-secondary btn-change-status" data-id="{{ $ticket->id }}" data-status="closed">Close</button>
+                    @if($ticket->status === 'open')
+                        <button class="btn btn-sm btn-outline-success btn-change-status" data-id="{{ $ticket->id }}" data-status="in_progress">Mark In Progress</button>
+                        <button class="btn btn-sm btn-outline-secondary btn-change-status" data-id="{{ $ticket->id }}" data-status="closed">Close</button>
+                    @elseif($ticket->status === 'in_progress')
+                        <button class="btn btn-sm btn-outline-secondary btn-change-status" data-id="{{ $ticket->id }}" data-status="closed">Close</button>
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -38,12 +42,32 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const token = '{{ csrf_token() }}';
+    // Use window-scoped variable to avoid redeclaration and check if already defined
+    if (!window._adminSupportStatusToken) {
+        window._adminSupportStatusToken = '{{ csrf_token() }}';
+    }
     document.querySelectorAll('.btn-change-status').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const id = this.dataset.id; const status = this.dataset.status;
-            fetch(`/admin/support/${id}/status`, { method: 'POST', headers: { 'Content-Type':'application/json','X-CSRF-TOKEN': token }, body: JSON.stringify({ status }) })
-            .then(r => r.json()).then(j => { if (j.success) location.reload(); else alert('Error') }).catch(e => { console.error(e); alert('Error') });
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (btn.disabled) return;
+            btn.disabled = true;
+            var id = this.dataset.id; var status = this.dataset.status;
+            fetch(`/admin/support/${id}/status`, { method: 'POST', headers: { 'Content-Type':'application/json','X-CSRF-TOKEN': window._adminSupportStatusToken }, body: JSON.stringify({ status }) })
+            .then(r => r.json())
+            .then(j => {
+                console.log('Status change response:', j);
+                if (j.success) {
+                    setTimeout(() => location.reload(), 700); // short delay to see console
+                } else {
+                    btn.disabled = false;
+                    alert('Error changing status (see console)');
+                }
+            })
+            .catch(e => {
+                btn.disabled = false;
+                console.error('Status change error:', e);
+                alert('Error changing status (see console)');
+            });
         });
     });
 });

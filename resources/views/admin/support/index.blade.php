@@ -41,7 +41,9 @@
                                     <td>{{ $t->created_at->diffForHumans() }}</td>
                                     <td>
                                         <a href="{{ route('admin.support.show', $t->id) }}" class="btn btn-sm btn-outline-primary">View</a>
-                                        <button class="btn btn-sm btn-outline-success btn-change-status" data-id="{{ $t->id }}" data-status="in_progress">Mark In Progress</button>
+                                        @if($t->status === 'open')
+                                            <button class="btn btn-sm btn-outline-success btn-change-status" data-id="{{ $t->id }}" data-status="in_progress">Mark In Progress</button>
+                                        @endif
                                         <button class="btn btn-sm btn-outline-danger btn-delete-ticket" data-id="{{ $t->id }}">Delete</button>
                                     </td>
                                 </tr>
@@ -62,10 +64,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const token = '{{ csrf_token() }}';
     document.querySelectorAll('.btn-change-status').forEach(btn => {
         btn.addEventListener('click', function() {
+            if (btn.disabled) return;
+            btn.disabled = true;
             const id = this.dataset.id;
             const status = this.dataset.status;
             fetch(`/admin/support/${id}/status`, { method: 'POST', headers: { 'Content-Type':'application/json', 'X-CSRF-TOKEN': token }, body: JSON.stringify({ status }) })
-            .then(r => r.json()).then(j => { if (j.success) location.reload(); else alert('Error'); }).catch(e => { console.error(e); alert('Error'); });
+            .then(r => r.json()).then(j => {
+                if (j.success) {
+                    setTimeout(() => location.reload(), 700);
+                } else {
+                    btn.disabled = false;
+                    alert('Error');
+                }
+            }).catch(e => {
+                btn.disabled = false;
+                console.error(e); alert('Error');
+            });
         });
     });
 

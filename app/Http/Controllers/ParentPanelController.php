@@ -224,7 +224,7 @@ private function getProviderRecommendations($user)
             ->latest()
             ->paginate(10);
 
-        $providers = Provider::where('status', 'active')->get();
+        $cleaners = Provider::where('status', 'active')->get();
 
         return view('panels.parent.messages',compact('inquiries','cleaners'));
 

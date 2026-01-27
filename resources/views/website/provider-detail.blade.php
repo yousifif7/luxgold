@@ -2,6 +2,20 @@
 
 @section('title', 'Cleaner Detail - luxGold')
 @section('content')
+        @if (session('success'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    showToast(@json(session('success')), 'success');
+                });
+            </script>
+        @endif
+        @if (session('error'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    showToast(@json(session('error')), 'error');
+                });
+            </script>
+        @endif
     <style>
         .compare-badge {
             position: absolute;
@@ -443,10 +457,10 @@
                                 </div>
                             @endauth
 
-                            <div class="quick-action-item" data-bs-toggle="modal" data-bs-target="#inquiryModal">
+                            {{-- <div class="quick-action-item" data-bs-toggle="modal" data-bs-target="#inquiryModal">
                                 <i class="ti ti-message-circle"></i>
                                 <span>Send Inquiry</span>
-                            </div>
+                            </div> --}}
 
                             @if ($providerEvents->count() > 0)
                                 <div class="quick-action-item" onclick="scrollToEvents()">
@@ -1505,10 +1519,16 @@
             const reviewForm = document.getElementById('reviewForm');
             if (reviewForm) {
                 reviewForm.addEventListener('submit', function(e) {
-                    if (!ratingInput.value) {
+                    const ratingInput = document.getElementById('rating');
+                    if (!ratingInput || !ratingInput.value) {
                         e.preventDefault();
                         document.getElementById('ratingError').style.display = 'block';
+                        return;
                     }
+
+                    // Show toast for successful submission (optimistically, since form is submitted)
+                    // If you want to show only after actual backend success, use AJAX instead of normal submit
+                    showToast('Thank you! Your review has been submitted.', 'success');
                 });
             }
 
@@ -1776,8 +1796,7 @@
 
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
-            toast.className = `alert alert-${type} position-fixed`;
-            toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            toast.className = `custom-toast custom-toast-${type}`;
             toast.innerHTML = `<i class="ti ti-${type === 'success' ? 'check' : 'alert-triangle'} me-2"></i>${message}`;
             document.body.appendChild(toast);
 
@@ -1785,6 +1804,40 @@
                 toast.remove();
             }, 5000);
         }
+
+        // Toast styles
+        const toastStyle = document.createElement('style');
+        toastStyle.innerHTML = `
+        .custom-toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 99999;
+            min-width: 320px;
+            max-width: 90vw;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            opacity: 0.98;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.3s;
+        }
+        .custom-toast-success {
+            background: linear-gradient(90deg, #00bfa6 80%, #009688 100%);
+        }
+        .custom-toast-error {
+            background: linear-gradient(90deg, #e74c3c 80%, #c0392b 100%);
+        }
+        .custom-toast-info {
+            background: linear-gradient(90deg, #3498db 80%, #2980b9 100%);
+        }
+        `;
+        document.head.appendChild(toastStyle);
     </script>
 @endpush
 
