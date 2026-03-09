@@ -42,6 +42,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/chatbot.css') }}">
     @stack('links')
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/luxgold-trans.png') }}">
           <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
@@ -58,6 +59,8 @@
 <!-- Include CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
+@include('chatbot.style')
 <!-- Include JavaScript -->
     <!-- Signup Options Modal -->
   <!-- Include your modals here -->
@@ -342,7 +345,7 @@
 
 @stack('scripts')
 
-
+@include('chatbot.script')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 

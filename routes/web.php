@@ -48,6 +48,9 @@ Route::get('/support/{ticket}', [App\Http\Controllers\SupportController::class, 
 Route::get('/support/{ticket}/messages', [App\Http\Controllers\SupportMessageController::class, 'index']);
 Route::post('/support/messages', [App\Http\Controllers\SupportMessageController::class, 'store'])->name('support.messages.store');
 
+// Chatbot
+Route::post('/api/chatbot', [App\Http\Controllers\ChatbotController::class, 'handleMessage'])->name('chatbot.message');
+
 Route::post('/events/{event}/save', [EventRegistrationController::class, 'save'])
     ->middleware('auth')
     ->name('events.save');

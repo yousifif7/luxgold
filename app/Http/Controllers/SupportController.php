@@ -11,7 +11,7 @@ class SupportController extends Controller
 {
     public function index()
     {
-        $tickets = [];
+        $tickets = collect();
         if (Auth::check()) {
             $tickets = SupportTicket::where('user_id', Auth::id())->latest()->get();
         }
